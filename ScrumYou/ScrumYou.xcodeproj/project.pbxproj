@@ -1,0 +1,461 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		08C2C8591E70852500609F97 /* AddProjectScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C2C8571E70852500609F97 /* AddProjectScreenViewController.m */; };
+		08C2C85A1E70852500609F97 /* AddProjectScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C2C8581E70852500609F97 /* AddProjectScreenViewController.xib */; };
+		08C2C85F1E70875F00609F97 /* UserHomeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C2C85D1E70875F00609F97 /* UserHomeScreenViewController.m */; };
+		08C2C8601E70875F00609F97 /* UserHomeScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C2C85E1E70875F00609F97 /* UserHomeScreenViewController.xib */; };
+		08C2C8651E70879000609F97 /* AddTaskScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C2C8631E70879000609F97 /* AddTaskScreenViewController.m */; };
+		08C2C8661E70879000609F97 /* AddTaskScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C2C8641E70879000609F97 /* AddTaskScreenViewController.xib */; };
+		08C2C86B1E7087B500609F97 /* ScrumBoardScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C2C8691E7087B500609F97 /* ScrumBoardScreenViewController.m */; };
+		08C2C86C1E7087B500609F97 /* ScrumBoardScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C2C86A1E7087B500609F97 /* ScrumBoardScreenViewController.xib */; };
+		08C2C8711E7087E200609F97 /* ProjectSettingsScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C2C86F1E7087E200609F97 /* ProjectSettingsScreenViewController.m */; };
+		08C2C8721E7087E200609F97 /* ProjectSettingsScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C2C8701E7087E200609F97 /* ProjectSettingsScreenViewController.xib */; };
+		08C2C8771E70880900609F97 /* AccountSettingsScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C2C8751E70880900609F97 /* AccountSettingsScreenViewController.m */; };
+		08C2C8781E70880900609F97 /* AccountSettingsScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C2C8761E70880900609F97 /* AccountSettingsScreenViewController.xib */; };
+		08E23AAA1E708338007534E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E23AA91E708338007534E0 /* main.m */; };
+		08E23AAD1E708338007534E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E23AAC1E708338007534E0 /* AppDelegate.m */; };
+		08E23AB51E708338007534E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08E23AB41E708338007534E0 /* Assets.xcassets */; };
+		08E23AB81E708338007534E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08E23AB61E708338007534E0 /* LaunchScreen.storyboard */; };
+		08E23AC91E708435007534E0 /* HomeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E23AC71E708435007534E0 /* HomeScreenViewController.m */; };
+		08E23ACA1E708435007534E0 /* HomeScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08E23AC81E708435007534E0 /* HomeScreenViewController.xib */; };
+		08E23ACE1E708454007534E0 /* LoginScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E23ACC1E708454007534E0 /* LoginScreenViewController.m */; };
+		08E23ACF1E708454007534E0 /* LoginScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08E23ACD1E708454007534E0 /* LoginScreenViewController.xib */; };
+		08E23AD41E708483007534E0 /* SignUpScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E23AD21E708483007534E0 /* SignUpScreenViewController.m */; };
+		08E23AD51E708483007534E0 /* SignUpScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08E23AD31E708483007534E0 /* SignUpScreenViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		08C2C8561E70852500609F97 /* AddProjectScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProjectScreenViewController.h; sourceTree = "<group>"; };
+		08C2C8571E70852500609F97 /* AddProjectScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProjectScreenViewController.m; sourceTree = "<group>"; };
+		08C2C8581E70852500609F97 /* AddProjectScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddProjectScreenViewController.xib; sourceTree = "<group>"; };
+		08C2C85C1E70875F00609F97 /* UserHomeScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserHomeScreenViewController.h; sourceTree = "<group>"; };
+		08C2C85D1E70875F00609F97 /* UserHomeScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserHomeScreenViewController.m; sourceTree = "<group>"; };
+		08C2C85E1E70875F00609F97 /* UserHomeScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserHomeScreenViewController.xib; sourceTree = "<group>"; };
+		08C2C8621E70879000609F97 /* AddTaskScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTaskScreenViewController.h; sourceTree = "<group>"; };
+		08C2C8631E70879000609F97 /* AddTaskScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTaskScreenViewController.m; sourceTree = "<group>"; };
+		08C2C8641E70879000609F97 /* AddTaskScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddTaskScreenViewController.xib; sourceTree = "<group>"; };
+		08C2C8681E7087B500609F97 /* ScrumBoardScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrumBoardScreenViewController.h; sourceTree = "<group>"; };
+		08C2C8691E7087B500609F97 /* ScrumBoardScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrumBoardScreenViewController.m; sourceTree = "<group>"; };
+		08C2C86A1E7087B500609F97 /* ScrumBoardScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScrumBoardScreenViewController.xib; sourceTree = "<group>"; };
+		08C2C86E1E7087E200609F97 /* ProjectSettingsScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectSettingsScreenViewController.h; sourceTree = "<group>"; };
+		08C2C86F1E7087E200609F97 /* ProjectSettingsScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettingsScreenViewController.m; sourceTree = "<group>"; };
+		08C2C8701E7087E200609F97 /* ProjectSettingsScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectSettingsScreenViewController.xib; sourceTree = "<group>"; };
+		08C2C8741E70880900609F97 /* AccountSettingsScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountSettingsScreenViewController.h; sourceTree = "<group>"; };
+		08C2C8751E70880900609F97 /* AccountSettingsScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountSettingsScreenViewController.m; sourceTree = "<group>"; };
+		08C2C8761E70880900609F97 /* AccountSettingsScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountSettingsScreenViewController.xib; sourceTree = "<group>"; };
+		08E23AA51E708338007534E0 /* ScrumYou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrumYou.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		08E23AA91E708338007534E0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		08E23AAB1E708338007534E0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		08E23AAC1E708338007534E0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		08E23AB41E708338007534E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		08E23AB71E708338007534E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		08E23AB91E708338007534E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		08E23AC61E708435007534E0 /* HomeScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeScreenViewController.h; sourceTree = "<group>"; };
+		08E23AC71E708435007534E0 /* HomeScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeScreenViewController.m; sourceTree = "<group>"; };
+		08E23AC81E708435007534E0 /* HomeScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeScreenViewController.xib; sourceTree = "<group>"; };
+		08E23ACB1E708454007534E0 /* LoginScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginScreenViewController.h; sourceTree = "<group>"; };
+		08E23ACC1E708454007534E0 /* LoginScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginScreenViewController.m; sourceTree = "<group>"; };
+		08E23ACD1E708454007534E0 /* LoginScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginScreenViewController.xib; sourceTree = "<group>"; };
+		08E23AD11E708483007534E0 /* SignUpScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpScreenViewController.h; sourceTree = "<group>"; };
+		08E23AD21E708483007534E0 /* SignUpScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpScreenViewController.m; sourceTree = "<group>"; };
+		08E23AD31E708483007534E0 /* SignUpScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignUpScreenViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		08E23AA21E708337007534E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08C2C8551E7084F800609F97 /* AddProjectScreen */ = {
+			isa = PBXGroup;
+			children = (
+				08C2C8561E70852500609F97 /* AddProjectScreenViewController.h */,
+				08C2C8571E70852500609F97 /* AddProjectScreenViewController.m */,
+				08C2C8581E70852500609F97 /* AddProjectScreenViewController.xib */,
+			);
+			name = AddProjectScreen;
+			sourceTree = "<group>";
+		};
+		08C2C85B1E70852A00609F97 /* UserHomeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				08C2C85C1E70875F00609F97 /* UserHomeScreenViewController.h */,
+				08C2C85D1E70875F00609F97 /* UserHomeScreenViewController.m */,
+				08C2C85E1E70875F00609F97 /* UserHomeScreenViewController.xib */,
+			);
+			name = UserHomeScreen;
+			sourceTree = "<group>";
+		};
+		08C2C8611E70876A00609F97 /* AddTaskScreen */ = {
+			isa = PBXGroup;
+			children = (
+				08C2C8621E70879000609F97 /* AddTaskScreenViewController.h */,
+				08C2C8631E70879000609F97 /* AddTaskScreenViewController.m */,
+				08C2C8641E70879000609F97 /* AddTaskScreenViewController.xib */,
+			);
+			name = AddTaskScreen;
+			sourceTree = "<group>";
+		};
+		08C2C8671E70879A00609F97 /* ScrumBoardScreen */ = {
+			isa = PBXGroup;
+			children = (
+				08C2C8681E7087B500609F97 /* ScrumBoardScreenViewController.h */,
+				08C2C8691E7087B500609F97 /* ScrumBoardScreenViewController.m */,
+				08C2C86A1E7087B500609F97 /* ScrumBoardScreenViewController.xib */,
+			);
+			name = ScrumBoardScreen;
+			sourceTree = "<group>";
+		};
+		08C2C86D1E7087B900609F97 /* ProjectSettingsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				08C2C86E1E7087E200609F97 /* ProjectSettingsScreenViewController.h */,
+				08C2C86F1E7087E200609F97 /* ProjectSettingsScreenViewController.m */,
+				08C2C8701E7087E200609F97 /* ProjectSettingsScreenViewController.xib */,
+			);
+			name = ProjectSettingsScreen;
+			sourceTree = "<group>";
+		};
+		08C2C8731E7087E800609F97 /* AccountSettingsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				08C2C8741E70880900609F97 /* AccountSettingsScreenViewController.h */,
+				08C2C8751E70880900609F97 /* AccountSettingsScreenViewController.m */,
+				08C2C8761E70880900609F97 /* AccountSettingsScreenViewController.xib */,
+			);
+			name = AccountSettingsScreen;
+			sourceTree = "<group>";
+		};
+		08E23A9C1E708337007534E0 = {
+			isa = PBXGroup;
+			children = (
+				08E23AA71E708338007534E0 /* ScrumYou */,
+				08E23AA61E708338007534E0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		08E23AA61E708338007534E0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				08E23AA51E708338007534E0 /* ScrumYou.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		08E23AA71E708338007534E0 /* ScrumYou */ = {
+			isa = PBXGroup;
+			children = (
+				08E23AAB1E708338007534E0 /* AppDelegate.h */,
+				08E23AAC1E708338007534E0 /* AppDelegate.m */,
+				08E23ABF1E708359007534E0 /* HomeScreen */,
+				08E23AC51E7083F1007534E0 /* LoginScreen */,
+				08E23AD01E70846C007534E0 /* SignUpScreen */,
+				08C2C8551E7084F800609F97 /* AddProjectScreen */,
+				08C2C85B1E70852A00609F97 /* UserHomeScreen */,
+				08C2C8611E70876A00609F97 /* AddTaskScreen */,
+				08C2C8671E70879A00609F97 /* ScrumBoardScreen */,
+				08C2C86D1E7087B900609F97 /* ProjectSettingsScreen */,
+				08C2C8731E7087E800609F97 /* AccountSettingsScreen */,
+				08E23AB41E708338007534E0 /* Assets.xcassets */,
+				08E23AB61E708338007534E0 /* LaunchScreen.storyboard */,
+				08E23AB91E708338007534E0 /* Info.plist */,
+				08E23AA81E708338007534E0 /* Supporting Files */,
+			);
+			path = ScrumYou;
+			sourceTree = "<group>";
+		};
+		08E23AA81E708338007534E0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				08E23AA91E708338007534E0 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		08E23ABF1E708359007534E0 /* HomeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				08E23AC61E708435007534E0 /* HomeScreenViewController.h */,
+				08E23AC71E708435007534E0 /* HomeScreenViewController.m */,
+				08E23AC81E708435007534E0 /* HomeScreenViewController.xib */,
+			);
+			name = HomeScreen;
+			sourceTree = "<group>";
+		};
+		08E23AC51E7083F1007534E0 /* LoginScreen */ = {
+			isa = PBXGroup;
+			children = (
+				08E23ACB1E708454007534E0 /* LoginScreenViewController.h */,
+				08E23ACC1E708454007534E0 /* LoginScreenViewController.m */,
+				08E23ACD1E708454007534E0 /* LoginScreenViewController.xib */,
+			);
+			name = LoginScreen;
+			sourceTree = "<group>";
+		};
+		08E23AD01E70846C007534E0 /* SignUpScreen */ = {
+			isa = PBXGroup;
+			children = (
+				08E23AD11E708483007534E0 /* SignUpScreenViewController.h */,
+				08E23AD21E708483007534E0 /* SignUpScreenViewController.m */,
+				08E23AD31E708483007534E0 /* SignUpScreenViewController.xib */,
+			);
+			name = SignUpScreen;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		08E23AA41E708337007534E0 /* ScrumYou */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08E23ABC1E708338007534E0 /* Build configuration list for PBXNativeTarget "ScrumYou" */;
+			buildPhases = (
+				08E23AA11E708337007534E0 /* Sources */,
+				08E23AA21E708337007534E0 /* Frameworks */,
+				08E23AA31E708337007534E0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ScrumYou;
+			productName = ScrumYou;
+			productReference = 08E23AA51E708338007534E0 /* ScrumYou.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08E23A9D1E708337007534E0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Bérangère La Touche";
+				TargetAttributes = {
+					08E23AA41E708337007534E0 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 08E23AA01E708337007534E0 /* Build configuration list for PBXProject "ScrumYou" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 08E23A9C1E708337007534E0;
+			productRefGroup = 08E23AA61E708338007534E0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				08E23AA41E708337007534E0 /* ScrumYou */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		08E23AA31E708337007534E0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08C2C8601E70875F00609F97 /* UserHomeScreenViewController.xib in Resources */,
+				08E23AB81E708338007534E0 /* LaunchScreen.storyboard in Resources */,
+				08E23ACA1E708435007534E0 /* HomeScreenViewController.xib in Resources */,
+				08E23AB51E708338007534E0 /* Assets.xcassets in Resources */,
+				08C2C86C1E7087B500609F97 /* ScrumBoardScreenViewController.xib in Resources */,
+				08C2C8781E70880900609F97 /* AccountSettingsScreenViewController.xib in Resources */,
+				08C2C8721E7087E200609F97 /* ProjectSettingsScreenViewController.xib in Resources */,
+				08C2C85A1E70852500609F97 /* AddProjectScreenViewController.xib in Resources */,
+				08C2C8661E70879000609F97 /* AddTaskScreenViewController.xib in Resources */,
+				08E23AD51E708483007534E0 /* SignUpScreenViewController.xib in Resources */,
+				08E23ACF1E708454007534E0 /* LoginScreenViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		08E23AA11E708337007534E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08C2C8771E70880900609F97 /* AccountSettingsScreenViewController.m in Sources */,
+				08E23AC91E708435007534E0 /* HomeScreenViewController.m in Sources */,
+				08E23AAD1E708338007534E0 /* AppDelegate.m in Sources */,
+				08C2C86B1E7087B500609F97 /* ScrumBoardScreenViewController.m in Sources */,
+				08C2C8591E70852500609F97 /* AddProjectScreenViewController.m in Sources */,
+				08C2C8651E70879000609F97 /* AddTaskScreenViewController.m in Sources */,
+				08E23ACE1E708454007534E0 /* LoginScreenViewController.m in Sources */,
+				08E23AAA1E708338007534E0 /* main.m in Sources */,
+				08C2C8711E7087E200609F97 /* ProjectSettingsScreenViewController.m in Sources */,
+				08C2C85F1E70875F00609F97 /* UserHomeScreenViewController.m in Sources */,
+				08E23AD41E708483007534E0 /* SignUpScreenViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		08E23AB61E708338007534E0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				08E23AB71E708338007534E0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		08E23ABA1E708338007534E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		08E23ABB1E708338007534E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		08E23ABD1E708338007534E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = ScrumYou/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = esgi.ScrumYou;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		08E23ABE1E708338007534E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = ScrumYou/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = esgi.ScrumYou;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		08E23AA01E708337007534E0 /* Build configuration list for PBXProject "ScrumYou" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08E23ABA1E708338007534E0 /* Debug */,
+				08E23ABB1E708338007534E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		08E23ABC1E708338007534E0 /* Build configuration list for PBXNativeTarget "ScrumYou" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08E23ABD1E708338007534E0 /* Debug */,
+				08E23ABE1E708338007534E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08E23A9D1E708337007534E0 /* Project object */;
+}
