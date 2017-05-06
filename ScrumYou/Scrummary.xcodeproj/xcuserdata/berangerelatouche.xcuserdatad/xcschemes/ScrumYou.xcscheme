@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "08E23AA41E708337007534E0"
-               BuildableName = "ScrumYou.app"
-               BlueprintName = "ScrumYou"
-               ReferencedContainer = "container:ScrumYou.xcodeproj">
+               BuildableName = "Scrummary.app"
+               BlueprintName = "Scrummary"
+               ReferencedContainer = "container:Scrummary.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "08E23AA41E708337007534E0"
-            BuildableName = "ScrumYou.app"
-            BlueprintName = "ScrumYou"
-            ReferencedContainer = "container:ScrumYou.xcodeproj">
+            BuildableName = "Scrummary.app"
+            BlueprintName = "Scrummary"
+            ReferencedContainer = "container:Scrummary.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "08E23AA41E708337007534E0"
-            BuildableName = "ScrumYou.app"
-            BlueprintName = "ScrumYou"
-            ReferencedContainer = "container:ScrumYou.xcodeproj">
+            BuildableName = "Scrummary.app"
+            BlueprintName = "Scrummary"
+            ReferencedContainer = "container:Scrummary.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "08E23AA41E708337007534E0"
-            BuildableName = "ScrumYou.app"
-            BlueprintName = "ScrumYou"
-            ReferencedContainer = "container:ScrumYou.xcodeproj">
+            BuildableName = "Scrummary.app"
+            BlueprintName = "Scrummary"
+            ReferencedContainer = "container:Scrummary.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

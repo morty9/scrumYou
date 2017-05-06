@@ -17,6 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    UINavigationBar* bar = [self.navigationController navigationBar];
+    [bar setHidden:TRUE];
 }
 
 - (void)didReceiveMemoryWarning {

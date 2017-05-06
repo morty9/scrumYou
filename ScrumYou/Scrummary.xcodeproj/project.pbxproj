@@ -50,7 +50,7 @@
 		08C2C8741E70880900609F97 /* AccountSettingsScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountSettingsScreenViewController.h; sourceTree = "<group>"; };
 		08C2C8751E70880900609F97 /* AccountSettingsScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountSettingsScreenViewController.m; sourceTree = "<group>"; };
 		08C2C8761E70880900609F97 /* AccountSettingsScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountSettingsScreenViewController.xib; sourceTree = "<group>"; };
-		08E23AA51E708338007534E0 /* ScrumYou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrumYou.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		08E23AA51E708338007534E0 /* Scrummary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrummary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08E23AA91E708338007534E0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		08E23AAB1E708338007534E0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		08E23AAC1E708338007534E0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -150,7 +150,7 @@
 		08E23AA61E708338007534E0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				08E23AA51E708338007534E0 /* ScrumYou.app */,
+				08E23AA51E708338007534E0 /* Scrummary.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -218,9 +218,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		08E23AA41E708337007534E0 /* ScrumYou */ = {
+		08E23AA41E708337007534E0 /* Scrummary */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 08E23ABC1E708338007534E0 /* Build configuration list for PBXNativeTarget "ScrumYou" */;
+			buildConfigurationList = 08E23ABC1E708338007534E0 /* Build configuration list for PBXNativeTarget "Scrummary" */;
 			buildPhases = (
 				08E23AA11E708337007534E0 /* Sources */,
 				08E23AA21E708337007534E0 /* Frameworks */,
@@ -230,9 +230,9 @@
 			);
 			dependencies = (
 			);
-			name = ScrumYou;
+			name = Scrummary;
 			productName = ScrumYou;
-			productReference = 08E23AA51E708338007534E0 /* ScrumYou.app */;
+			productReference = 08E23AA51E708338007534E0 /* Scrummary.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -246,11 +246,12 @@
 				TargetAttributes = {
 					08E23AA41E708337007534E0 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 9GDJ425SV6;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = 08E23AA01E708337007534E0 /* Build configuration list for PBXProject "ScrumYou" */;
+			buildConfigurationList = 08E23AA01E708337007534E0 /* Build configuration list for PBXProject "Scrummary" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -263,7 +264,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				08E23AA41E708337007534E0 /* ScrumYou */,
+				08E23AA41E708337007534E0 /* Scrummary */,
 			);
 		};
 /* End PBXProject section */
@@ -416,9 +417,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 9GDJ425SV6;
 				INFOPLIST_FILE = ScrumYou/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = esgi.ScrumYou;
+				PRODUCT_BUNDLE_IDENTIFIER = esgi.Scrummary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -427,9 +429,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 9GDJ425SV6;
 				INFOPLIST_FILE = ScrumYou/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = esgi.ScrumYou;
+				PRODUCT_BUNDLE_IDENTIFIER = esgi.Scrummary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -437,7 +440,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		08E23AA01E708337007534E0 /* Build configuration list for PBXProject "ScrumYou" */ = {
+		08E23AA01E708337007534E0 /* Build configuration list for PBXProject "Scrummary" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				08E23ABA1E708338007534E0 /* Debug */,
@@ -446,7 +449,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		08E23ABC1E708338007534E0 /* Build configuration list for PBXNativeTarget "ScrumYou" */ = {
+		08E23ABC1E708338007534E0 /* Build configuration list for PBXNativeTarget "Scrummary" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				08E23ABD1E708338007534E0 /* Debug */,
