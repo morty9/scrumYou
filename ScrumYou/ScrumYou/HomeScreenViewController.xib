@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,7 +18,65 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_mobile" translatesAutoresizingMaskIntoConstraints="NO" id="cvo-h8-mkX">
+                    <rect key="frame" x="30" y="86" width="315" height="255"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="315" id="Njm-TG-reP"/>
+                        <constraint firstAttribute="height" constant="255" id="avj-Y3-eCi"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2WI-n8-gTq">
+                    <rect key="frame" x="16" y="495" width="343" height="41"/>
+                    <color key="backgroundColor" red="0.1341971755027771" green="0.21487870812416077" blue="0.269073486328125" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="343" id="EoR-Kl-GOS"/>
+                        <constraint firstAttribute="height" constant="41" id="nVT-KK-hfH"/>
+                    </constraints>
+                    <state key="normal" title="S'inscrire via une adresse e-mail">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G4K-7L-wO9">
+                    <rect key="frame" x="16" y="552" width="343" height="41"/>
+                    <color key="backgroundColor" red="0.88225668670000001" green="0.88240832089999999" blue="0.88224714989999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="343" id="66p-7O-RaF"/>
+                        <constraint firstAttribute="height" constant="41" id="tEA-pp-GM7"/>
+                    </constraints>
+                    <state key="normal" title="Se connecter">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </state>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Become a scrummer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qh5-ji-YVi">
+                    <rect key="frame" x="81" y="383" width="212" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="5de-QD-Hrn"/>
+                        <constraint firstAttribute="width" constant="212" id="SAY-Na-BC4"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="italicSystem" pointSize="21"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="2WI-n8-gTq" secondAttribute="trailing" constant="16" id="2XM-VZ-uQ3"/>
+                <constraint firstAttribute="trailing" secondItem="G4K-7L-wO9" secondAttribute="trailing" constant="16" id="4aD-cm-PGG"/>
+                <constraint firstItem="qh5-ji-YVi" firstAttribute="top" secondItem="cvo-h8-mkX" secondAttribute="bottom" constant="42" id="5Im-ub-vft"/>
+                <constraint firstItem="cvo-h8-mkX" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="6Js-HA-oqZ"/>
+                <constraint firstItem="2WI-n8-gTq" firstAttribute="top" secondItem="cvo-h8-mkX" secondAttribute="bottom" constant="154" id="Dxh-J2-iLg"/>
+                <constraint firstItem="cvo-h8-mkX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="86" id="HTt-rx-aPt"/>
+                <constraint firstItem="G4K-7L-wO9" firstAttribute="top" secondItem="2WI-n8-gTq" secondAttribute="bottom" constant="16" id="IhI-Ez-G4Z"/>
+                <constraint firstAttribute="trailing" secondItem="qh5-ji-YVi" secondAttribute="trailing" constant="82" id="Qb9-V3-2DK"/>
+                <constraint firstItem="2WI-n8-gTq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="S05-kg-X9X"/>
+                <constraint firstItem="G4K-7L-wO9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="Yo2-Ky-C7Y"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <point key="canvasLocation" x="34.5" y="53.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="logo_mobile" width="591" height="479"/>
+    </resources>
 </document>

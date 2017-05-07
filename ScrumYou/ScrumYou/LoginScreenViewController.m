@@ -14,9 +14,19 @@
 
 @implementation LoginScreenViewController
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    CALayer *border = [CALayer layer];
+    CGFloat borderWidth = 2;
+    border.borderColor = [UIColor darkGrayColor].CGColor;
+    border.frame = CGRectMake(0, emailTextField.frame.size.height - borderWidth, emailTextField.frame.size.width, emailTextField.frame.size.height);
+    border.borderWidth = borderWidth;
+    [emailTextField.layer addSublayer:border];
+    emailTextField.layer.masksToBounds = YES;
+    
 }
 
 - (void)didReceiveMemoryWarning {
