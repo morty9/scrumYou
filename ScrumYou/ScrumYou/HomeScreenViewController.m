@@ -7,6 +7,7 @@
 //
 
 #import "HomeScreenViewController.h"
+#import "LoginScreenViewController.h"
 
 @interface HomeScreenViewController ()
 
@@ -17,14 +18,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    UINavigationBar* bar = [self.navigationController navigationBar];
-    [bar setHidden:TRUE];
+    [self designPage];
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void) designPage {
+    
+    UINavigationBar* bar = [self.navigationController navigationBar];
+    [bar setHidden:TRUE];
+}
+
+- (IBAction)connectionPage:(id)sender {
+    LoginScreenViewController* loginVc = [[LoginScreenViewController alloc] init];
+    [self.navigationController pushViewController:loginVc animated:YES];
+}
+
+- (IBAction)inscriptionPage:(id)sender {
+}
+
 
 /*
 #pragma mark - Navigation

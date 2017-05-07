@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HomeScreenViewController : UIViewController
+@interface HomeScreenViewController : UIViewController {
+    
+    __weak IBOutlet UIButton *inscriptionButton;
+    __weak IBOutlet UIButton *connectionButton;
+    
+    
+}
 
 @end
