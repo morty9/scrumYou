@@ -8,6 +8,7 @@
 
 #import "HomeScreenViewController.h"
 #import "LoginScreenViewController.h"
+#import "SignUpScreenViewController.h"
 
 @interface HomeScreenViewController ()
 
@@ -17,7 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     [self designPage];
     
 }
@@ -39,6 +39,8 @@
 }
 
 - (IBAction)inscriptionPage:(id)sender {
+    SignUpScreenViewController* signUpVc = [[SignUpScreenViewController alloc] init];
+    [self.navigationController pushViewController:signUpVc animated:YES];
 }
 
 

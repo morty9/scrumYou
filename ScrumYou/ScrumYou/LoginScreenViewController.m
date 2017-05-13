@@ -8,6 +8,7 @@
 
 #import "LoginScreenViewController.h"
 #import "HomeScreenViewController.h"
+#import "UserHomeScreenViewController.h"
 
 @interface LoginScreenViewController ()
 
@@ -59,6 +60,11 @@
 - (void) cancelButton:(id)sender {
     HomeScreenViewController* homeVc = [[HomeScreenViewController alloc] init];
     [self.navigationController pushViewController:homeVc animated:YES];
+}
+
+- (IBAction)connectionButton:(id)sender {
+    UserHomeScreenViewController* userHomeVc = [[UserHomeScreenViewController alloc] init];
+    [self.navigationController pushViewController:userHomeVc animated:YES];
 }
 
 /*

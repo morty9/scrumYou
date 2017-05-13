@@ -10,4 +10,6 @@
 
 @interface UserHomeScreenViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
+
 @end

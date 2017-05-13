@@ -14,15 +14,26 @@
 
 @implementation UserHomeScreenViewController
 
+@synthesize toolBar = _toolBar;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [self designPage];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void) designPage {
+    
+    self.navigationItem.title = [NSString stringWithFormat:@"Scrummary"];
+
+    UIImage *image2 = [[UIImage imageNamed:@"heart3.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *favoriteButton = [[UIBarButtonItem alloc] initWithImage:image2 style:UIBarButtonItemStylePlain target:self action:@selector(touchFavorite:)];
+    
+    self.navigationItem.rightBarButtonItem = favoriteButton;
+    favoriteButton.tintColor = [UIColor grayColor];
+    
 }
+
+
 
 /*
 #pragma mark - Navigation
