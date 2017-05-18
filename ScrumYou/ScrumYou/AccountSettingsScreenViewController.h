@@ -9,5 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface AccountSettingsScreenViewController : UIViewController
+{
+    __weak IBOutlet UITextField *nameTextField;
+    __weak IBOutlet UITextField *firstnameTextField;
+    __weak IBOutlet UITextField *nicknameTextField;
+    __weak IBOutlet UITextField *emailTextField;
+    __weak IBOutlet UITextField *pwdTextField;
+    __weak IBOutlet UIImageView *profilImage;
+}
 
 @end

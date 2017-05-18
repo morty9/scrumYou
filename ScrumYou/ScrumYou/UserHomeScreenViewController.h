@@ -7,9 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Data.h"
 
 @interface UserHomeScreenViewController : UIViewController
+{
+    NSMutableArray<Data*>* _dataArray;
+}
 
-@property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
+@property (nonatomic, strong) NSMutableArray<Data*>* dataArray;
+
+- (void) backHome;
+
+- (void) search;
+
+- (void) chat;
+
+- (void) settings;
 
 @end

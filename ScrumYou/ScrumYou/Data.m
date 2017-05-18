@@ -1,22 +1,35 @@
 //
-//  ToolBar.m
+//  Data.m
 //  Scrummary
 //
-//  Created by Bérangère La Touche on 13/05/2017.
+//  Created by Bérangère La Touche on 18/05/2017.
 //  Copyright © 2017 Bérangère La Touche. All rights reserved.
 //
 
-#import "ToolBar.h"
+#import "Data.h"
 
-@interface ToolBar ()
+@interface Data ()
 
 @end
 
-@implementation ToolBar
+@implementation Data
+
+@synthesize id_data = _id_data;
+@synthesize title_data = _title_data;
+
+- (instancetype) initWithId:(NSString*)id_data title:(NSString*)title_data {
+    self = [super init];
+    if(self != nil) {
+        self.id_data = id_data;
+        self.title_data = title_data;
+        
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {

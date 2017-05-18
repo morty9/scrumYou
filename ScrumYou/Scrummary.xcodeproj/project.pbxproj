@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		085E2C0A1EC74E8F00E6BC8B /* ToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 085E2C081EC74E8F00E6BC8B /* ToolBar.m */; };
-		085E2C0B1EC74E8F00E6BC8B /* ToolBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085E2C091EC74E8F00E6BC8B /* ToolBar.xib */; };
+		08178A7C1ECDD85100BE9810 /* Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 08178A7B1ECDD85100BE9810 /* Data.m */; };
+		08178A801ECDE77700BE9810 /* CellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08178A7E1ECDE77700BE9810 /* CellView.m */; };
+		08178A811ECDE77700BE9810 /* CellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08178A7F1ECDE77700BE9810 /* CellView.xib */; };
 		08C2C8591E70852500609F97 /* AddProjectScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C2C8571E70852500609F97 /* AddProjectScreenViewController.m */; };
 		08C2C85A1E70852500609F97 /* AddProjectScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C2C8581E70852500609F97 /* AddProjectScreenViewController.xib */; };
 		08C2C85F1E70875F00609F97 /* UserHomeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C2C85D1E70875F00609F97 /* UserHomeScreenViewController.m */; };
@@ -23,7 +24,6 @@
 		08C2C8781E70880900609F97 /* AccountSettingsScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C2C8761E70880900609F97 /* AccountSettingsScreenViewController.xib */; };
 		08E23AAA1E708338007534E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E23AA91E708338007534E0 /* main.m */; };
 		08E23AAD1E708338007534E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E23AAC1E708338007534E0 /* AppDelegate.m */; };
-		08E23AB51E708338007534E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08E23AB41E708338007534E0 /* Assets.xcassets */; };
 		08E23AB81E708338007534E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08E23AB61E708338007534E0 /* LaunchScreen.storyboard */; };
 		08E23AC91E708435007534E0 /* HomeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E23AC71E708435007534E0 /* HomeScreenViewController.m */; };
 		08E23ACA1E708435007534E0 /* HomeScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08E23AC81E708435007534E0 /* HomeScreenViewController.xib */; };
@@ -31,12 +31,15 @@
 		08E23ACF1E708454007534E0 /* LoginScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08E23ACD1E708454007534E0 /* LoginScreenViewController.xib */; };
 		08E23AD41E708483007534E0 /* SignUpScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E23AD21E708483007534E0 /* SignUpScreenViewController.m */; };
 		08E23AD51E708483007534E0 /* SignUpScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08E23AD31E708483007534E0 /* SignUpScreenViewController.xib */; };
+		08E7A5361EC7699400A87DA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08E7A5351EC7699400A87DA0 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		085E2C071EC74E8F00E6BC8B /* ToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolBar.h; sourceTree = "<group>"; };
-		085E2C081EC74E8F00E6BC8B /* ToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolBar.m; sourceTree = "<group>"; };
-		085E2C091EC74E8F00E6BC8B /* ToolBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolBar.xib; sourceTree = "<group>"; };
+		08178A7A1ECDD85100BE9810 /* Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Data.h; sourceTree = "<group>"; };
+		08178A7B1ECDD85100BE9810 /* Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Data.m; sourceTree = "<group>"; };
+		08178A7D1ECDE77700BE9810 /* CellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellView.h; sourceTree = "<group>"; };
+		08178A7E1ECDE77700BE9810 /* CellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellView.m; sourceTree = "<group>"; };
+		08178A7F1ECDE77700BE9810 /* CellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellView.xib; sourceTree = "<group>"; };
 		08C2C8561E70852500609F97 /* AddProjectScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProjectScreenViewController.h; sourceTree = "<group>"; };
 		08C2C8571E70852500609F97 /* AddProjectScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProjectScreenViewController.m; sourceTree = "<group>"; };
 		08C2C8581E70852500609F97 /* AddProjectScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddProjectScreenViewController.xib; sourceTree = "<group>"; };
@@ -59,7 +62,6 @@
 		08E23AA91E708338007534E0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		08E23AAB1E708338007534E0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		08E23AAC1E708338007534E0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		08E23AB41E708338007534E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		08E23AB71E708338007534E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		08E23AB91E708338007534E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08E23AC61E708435007534E0 /* HomeScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeScreenViewController.h; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 		08E23AD11E708483007534E0 /* SignUpScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpScreenViewController.h; sourceTree = "<group>"; };
 		08E23AD21E708483007534E0 /* SignUpScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpScreenViewController.m; sourceTree = "<group>"; };
 		08E23AD31E708483007534E0 /* SignUpScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignUpScreenViewController.xib; sourceTree = "<group>"; };
+		08E7A5351EC7699400A87DA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,14 +87,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		085E2C031EC74E3200E6BC8B /* ToolBar */ = {
+		08178A731ECDCEAB00BE9810 /* CollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				085E2C071EC74E8F00E6BC8B /* ToolBar.h */,
-				085E2C081EC74E8F00E6BC8B /* ToolBar.m */,
-				085E2C091EC74E8F00E6BC8B /* ToolBar.xib */,
+				08178A7D1ECDE77700BE9810 /* CellView.h */,
+				08178A7E1ECDE77700BE9810 /* CellView.m */,
+				08178A7F1ECDE77700BE9810 /* CellView.xib */,
 			);
-			name = ToolBar;
+			name = CollectionViewCell;
+			sourceTree = "<group>";
+		};
+		08178A791ECDD82F00BE9810 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				08178A7A1ECDD85100BE9810 /* Data.h */,
+				08178A7B1ECDD85100BE9810 /* Data.m */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 		08C2C8551E7084F800609F97 /* AddProjectScreen */ = {
@@ -107,6 +119,7 @@
 		08C2C85B1E70852A00609F97 /* UserHomeScreen */ = {
 			isa = PBXGroup;
 			children = (
+				08178A731ECDCEAB00BE9810 /* CollectionViewCell */,
 				08C2C85C1E70875F00609F97 /* UserHomeScreenViewController.h */,
 				08C2C85D1E70875F00609F97 /* UserHomeScreenViewController.m */,
 				08C2C85E1E70875F00609F97 /* UserHomeScreenViewController.xib */,
@@ -173,7 +186,6 @@
 		08E23AA71E708338007534E0 /* ScrumYou */ = {
 			isa = PBXGroup;
 			children = (
-				085E2C031EC74E3200E6BC8B /* ToolBar */,
 				08E23AAB1E708338007534E0 /* AppDelegate.h */,
 				08E23AAC1E708338007534E0 /* AppDelegate.m */,
 				08E23ABF1E708359007534E0 /* HomeScreen */,
@@ -185,10 +197,11 @@
 				08C2C8671E70879A00609F97 /* ScrumBoardScreen */,
 				08C2C86D1E7087B900609F97 /* ProjectSettingsScreen */,
 				08C2C8731E7087E800609F97 /* AccountSettingsScreen */,
-				08E23AB41E708338007534E0 /* Assets.xcassets */,
+				08178A791ECDD82F00BE9810 /* Data */,
 				08E23AB61E708338007534E0 /* LaunchScreen.storyboard */,
 				08E23AB91E708338007534E0 /* Info.plist */,
 				08E23AA81E708338007534E0 /* Supporting Files */,
+				08E7A5351EC7699400A87DA0 /* Assets.xcassets */,
 			);
 			path = ScrumYou;
 			sourceTree = "<group>";
@@ -292,12 +305,12 @@
 			files = (
 				08C2C8601E70875F00609F97 /* UserHomeScreenViewController.xib in Resources */,
 				08E23AB81E708338007534E0 /* LaunchScreen.storyboard in Resources */,
+				08E7A5361EC7699400A87DA0 /* Assets.xcassets in Resources */,
 				08E23ACA1E708435007534E0 /* HomeScreenViewController.xib in Resources */,
-				08E23AB51E708338007534E0 /* Assets.xcassets in Resources */,
+				08178A811ECDE77700BE9810 /* CellView.xib in Resources */,
 				08C2C86C1E7087B500609F97 /* ScrumBoardScreenViewController.xib in Resources */,
 				08C2C8781E70880900609F97 /* AccountSettingsScreenViewController.xib in Resources */,
 				08C2C8721E7087E200609F97 /* ProjectSettingsScreenViewController.xib in Resources */,
-				085E2C0B1EC74E8F00E6BC8B /* ToolBar.xib in Resources */,
 				08C2C85A1E70852500609F97 /* AddProjectScreenViewController.xib in Resources */,
 				08C2C8661E70879000609F97 /* AddTaskScreenViewController.xib in Resources */,
 				08E23AD51E708483007534E0 /* SignUpScreenViewController.xib in Resources */,
@@ -312,12 +325,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08178A7C1ECDD85100BE9810 /* Data.m in Sources */,
 				08C2C8771E70880900609F97 /* AccountSettingsScreenViewController.m in Sources */,
 				08E23AC91E708435007534E0 /* HomeScreenViewController.m in Sources */,
 				08E23AAD1E708338007534E0 /* AppDelegate.m in Sources */,
-				085E2C0A1EC74E8F00E6BC8B /* ToolBar.m in Sources */,
 				08C2C86B1E7087B500609F97 /* ScrumBoardScreenViewController.m in Sources */,
 				08C2C8591E70852500609F97 /* AddProjectScreenViewController.m in Sources */,
+				08178A801ECDE77700BE9810 /* CellView.m in Sources */,
 				08C2C8651E70879000609F97 /* AddTaskScreenViewController.m in Sources */,
 				08E23ACE1E708454007534E0 /* LoginScreenViewController.m in Sources */,
 				08E23AAA1E708338007534E0 /* main.m in Sources */,
@@ -434,7 +448,8 @@
 		08E23ABD1E708338007534E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-3";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 9GDJ425SV6;
 				INFOPLIST_FILE = ScrumYou/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -446,7 +461,8 @@
 		08E23ABE1E708338007534E0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-3";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 9GDJ425SV6;
 				INFOPLIST_FILE = ScrumYou/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

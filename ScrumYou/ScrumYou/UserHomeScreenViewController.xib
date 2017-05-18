@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserHomeScreenViewController">
             <connections>
-                <outlet property="toolBar" destination="Y4X-UP-sSS" id="Qh7-DN-FGr"/>
+                <outlet property="_collectionView" destination="PRm-it-XKO" id="qFq-Z6-JUI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,22 +20,64 @@
             <rect key="frame" x="0.0" y="64" width="375" height="603"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <toolbar clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y4X-UP-sSS">
-                    <rect key="frame" x="0.0" y="559" width="375" height="44"/>
-                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMb-it-AII">
+                    <rect key="frame" x="-0.5" y="559" width="375" height="44"/>
+                    <color key="backgroundColor" red="0.88225668670000001" green="0.88240832089999999" blue="0.88224714989999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <items>
-                        <barButtonItem title="Item" id="oXS-Nr-YfJ"/>
+                        <barButtonItem enabled="NO" width="10" id="HCL-o2-iiy"/>
+                        <barButtonItem image="mini-logo-toolbar3" width="70" id="ST2-0O-u18"/>
+                        <barButtonItem image="search-toolbar" width="65" id="DBp-B2-LAr"/>
+                        <barButtonItem image="chat-toolbar" width="65" id="FVe-qm-IzX"/>
+                        <barButtonItem image="settings-toolbar" width="65" id="Edy-7E-20n"/>
+                        <barButtonItem enabled="NO" width="10" id="eMn-Sz-VLU"/>
                     </items>
+                    <color key="tintColor" red="0.14117647059999999" green="0.2156862745" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
                 </toolbar>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="PRm-it-XKO">
+                    <rect key="frame" x="0.0" y="47" width="375" height="234"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="234" id="9AQ-CK-xHv"/>
+                        <constraint firstAttribute="width" constant="375" id="VeA-jt-oJA"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kbH-lQ-p7r">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Projet récent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6To-hF-xOM">
+                    <rect key="frame" x="16" y="18" width="99" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="99" id="ODb-2B-wXs"/>
+                        <constraint firstAttribute="height" constant="21" id="zOI-ea-vMu"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="Y4X-UP-sSS" secondAttribute="trailing" id="5FQ-vC-3bi"/>
-                <constraint firstItem="Y4X-UP-sSS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7rF-7l-Qf9"/>
-                <constraint firstAttribute="bottom" secondItem="Y4X-UP-sSS" secondAttribute="bottom" id="j7y-NM-rU6"/>
+                <constraint firstAttribute="bottom" secondItem="AMb-it-AII" secondAttribute="bottom" id="D0M-zr-Ppf"/>
+                <constraint firstItem="PRm-it-XKO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Gfu-2D-N80"/>
+                <constraint firstItem="6To-hF-xOM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="18" id="Pm5-MK-JSh"/>
+                <constraint firstItem="PRm-it-XKO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="47" id="SzC-rw-c6W"/>
+                <constraint firstItem="AMb-it-AII" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZgO-Yf-nqh"/>
+                <constraint firstAttribute="trailing" secondItem="AMb-it-AII" secondAttribute="trailing" id="dG9-fD-BdQ"/>
+                <constraint firstAttribute="trailing" secondItem="PRm-it-XKO" secondAttribute="trailing" id="fqI-Rz-yVC"/>
+                <constraint firstItem="6To-hF-xOM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="qTo-K1-LtK"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
             <nil key="simulatedBottomBarMetrics"/>
+            <point key="canvasLocation" x="34.5" y="77.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="chat-toolbar" width="25" height="25"/>
+        <image name="mini-logo-toolbar3" width="27" height="27"/>
+        <image name="search-toolbar" width="25" height="25"/>
+        <image name="settings-toolbar" width="25" height="25"/>
+    </resources>
 </document>
