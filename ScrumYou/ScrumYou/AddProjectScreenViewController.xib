@@ -1,20 +1,76 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddProjectScreenViewController">
             <connections>
+                <outlet property="addMemberTextField" destination="CYD-sC-0a0" id="aCY-ia-U2n"/>
+                <outlet property="projectNameTextField" destination="Hsw-TQ-KRR" id="etn-Qk-V7X"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="64" width="375" height="603"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nom du projet" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hsw-TQ-KRR" userLabel="Project Name Text Field">
+                    <rect key="frame" x="16" y="27" width="343" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="343" id="aiw-xz-VBF"/>
+                        <constraint firstAttribute="height" constant="64" id="ate-Bh-4rt"/>
+                    </constraints>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Ajouter des membres" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CYD-sC-0a0" userLabel="Add Member Text Field">
+                    <rect key="frame" x="16" y="121" width="343" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="65" id="A3a-4f-eL2"/>
+                        <constraint firstAttribute="width" constant="343" id="hRp-oJ-CfX"/>
+                    </constraints>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b0y-18-Sp2">
+                    <rect key="frame" x="16" y="236" width="343" height="40"/>
+                    <color key="backgroundColor" red="0.69019607843137254" green="0.61960784313725492" blue="0.77254901960784317" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="343" id="IQT-FH-S6z"/>
+                        <constraint firstAttribute="height" constant="40" id="mX2-u6-nRz"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Ajouter">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="AddMemberButton:" destination="-1" eventType="touchUpInside" id="7OB-7y-wsi"/>
+                    </connections>
+                </button>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="CYD-sC-0a0" firstAttribute="top" secondItem="Hsw-TQ-KRR" secondAttribute="bottom" constant="30" id="4iK-qt-5AB"/>
+                <constraint firstAttribute="trailing" secondItem="CYD-sC-0a0" secondAttribute="trailing" constant="16" id="ASj-JU-wHQ"/>
+                <constraint firstItem="CYD-sC-0a0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="BGo-jZ-E0x"/>
+                <constraint firstItem="Hsw-TQ-KRR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="O7r-fZ-U5T"/>
+                <constraint firstItem="b0y-18-Sp2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="YyZ-v6-V5z"/>
+                <constraint firstAttribute="trailing" secondItem="b0y-18-Sp2" secondAttribute="trailing" constant="16" id="cOe-2n-wTL"/>
+                <constraint firstAttribute="bottom" secondItem="Hsw-TQ-KRR" secondAttribute="bottom" constant="512" id="d4K-Oe-bhw"/>
+                <constraint firstAttribute="trailing" secondItem="Hsw-TQ-KRR" secondAttribute="trailing" constant="16" id="gCf-wA-xwJ"/>
+                <constraint firstItem="b0y-18-Sp2" firstAttribute="top" secondItem="CYD-sC-0a0" secondAttribute="bottom" constant="50" id="yIL-8V-S2K"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <point key="canvasLocation" x="-34" y="43"/>
         </view>
     </objects>
 </document>

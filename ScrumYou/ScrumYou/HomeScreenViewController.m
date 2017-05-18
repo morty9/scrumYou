@@ -9,6 +9,7 @@
 #import "HomeScreenViewController.h"
 #import "LoginScreenViewController.h"
 #import "SignUpScreenViewController.h"
+#import "AddProjectScreenViewController.h"
 
 @interface HomeScreenViewController ()
 
@@ -43,6 +44,10 @@
     [self.navigationController pushViewController:signUpVc animated:YES];
 }
 
+- (IBAction)testProjectPage:(id)sender {
+    AddProjectScreenViewController* addProjectVc = [[AddProjectScreenViewController alloc] init];
+    [self.navigationController pushViewController:addProjectVc animated:YES];
+}
 
 /*
 #pragma mark - Navigation
