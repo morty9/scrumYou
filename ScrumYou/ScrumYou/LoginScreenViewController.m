@@ -20,14 +20,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self designPage];
     
 }
 
 - (void) designPage {
     
-    //navigation bar customisation
+    //navigation bar customization
     self.navigationItem.title = [NSString stringWithFormat:@"Connexion"];
     
     UINavigationBar* bar = [self.navigationController navigationBar];
@@ -54,6 +53,8 @@
     borderPwd.borderWidth = borderWidthPwd;
     [pwdTextField.layer addSublayer:borderPwd];
     pwdTextField.layer.masksToBounds = YES;
+    
+    
     
 }
 

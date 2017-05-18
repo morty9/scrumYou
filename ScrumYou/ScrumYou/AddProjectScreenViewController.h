@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface AddProjectScreenViewController : UIViewController
+{
+    __weak IBOutlet UITextField *projectNameTextField;
+    __weak IBOutlet UITextField *addMemberTextField;
+    __weak IBOutlet UIButton *addMemberButton;
+}
 
 @end
