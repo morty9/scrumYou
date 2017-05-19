@@ -10,7 +10,8 @@
 #import "HomeScreenViewController.h"
 #import "LoginScreenViewController.h"
 #import "AccountSettingsScreenViewController.h"
-#import "AddTaskScreenViewController.h"
+#import "ProjectSettingsScreenViewController.h"
+#import "UserHomeScreenViewController.h"
 
 @interface AppDelegate ()
 
@@ -21,7 +22,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    AccountSettingsScreenViewController* tvb = [[AccountSettingsScreenViewController alloc] init];
+    UserHomeScreenViewController* tvb = [[UserHomeScreenViewController alloc] init];
     UIWindow* w = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     w.rootViewController = [[UINavigationController alloc] initWithRootViewController:tvb];
     [w makeKeyAndVisible];

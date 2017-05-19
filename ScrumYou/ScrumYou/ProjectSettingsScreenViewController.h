@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProjectSettingsScreenViewController : UIViewController
+@interface ProjectSettingsScreenViewController : UIViewController {
+    
+    __weak IBOutlet UITextField *nameTextField;
+    __weak IBOutlet UITableView *membersTableView;
+    __weak IBOutlet UIStepper *stepperView;
+    __weak IBOutlet UIPickerView *pickerView;
+    
+}
 
 @end

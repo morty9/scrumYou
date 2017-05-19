@@ -16,12 +16,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [self designPage];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) designPage {
+    
+    self.navigationItem.title = [NSString stringWithFormat:@"Projet NAME"];
+    
+    UIImage *cancel = [[UIImage imageNamed:@"error.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:cancel style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton:)];
+    self.navigationItem.leftBarButtonItem = cancelButton;
+    
+    //border name project text field
+    CALayer *borderName = [CALayer layer];
+    CGFloat borderWidthName = 1.5;
+    borderName.borderColor = [UIColor darkGrayColor].CGColor;
+    borderName.frame = CGRectMake(0, nameTextField.frame.size.height - borderWidthName, nameTextField.frame.size.width, nameTextField.frame.size.height);
+    borderName.borderWidth = borderWidthName;
+    [nameTextField.layer addSublayer:borderName];
+    nameTextField.layer.masksToBounds = YES;
+    
+}
+
+- (void) cancelButton {
+    
 }
 
 /*

@@ -11,6 +11,7 @@
 
 @interface UserHomeScreenViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UICollectionView *otherCollectionView;
 @property (strong, nonatomic) NSArray *tracks;
 @end
 
@@ -26,49 +27,30 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
-    self.tracks = @[@"foo", @"bar", @"baz"];
+    self.otherCollectionView.delegate = self;
+    self.otherCollectionView.dataSource = self;
+    
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CellView" bundle:nil]forCellWithReuseIdentifier:@"Cell"];
+    
+    [self.otherCollectionView registerNib:[UINib nibWithNibName:@"CellView" bundle:nil]forCellWithReuseIdentifier:@"Cell"];
+    
     [self.collectionView reloadData];
+    [self.otherCollectionView reloadData];
 }
 
 - (void) designPage {
     
     self.navigationItem.title = [NSString stringWithFormat:@"Scrummary"];
-    
-    //[self addCustomToolBar];
-}
-
-- (void) addCustomToolBar {
-//    UIToolbar* toolBar = [[UIToolbar alloc] init];
-//    toolBar.barTintColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
-//    [toolBar setFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, [[UIScreen mainScreen] bounds].size.width, 55)];
-//    
-//    UIImage *backHome = [[UIImage imageNamed:@"mini-logo-toolbar.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    UIBarButtonItem *backHomeButton = [[UIBarButtonItem alloc] initWithImage:backHome style:UIBarButtonItemStylePlain target:self action:@selector(backHome:)];
-//    
-//    UIImage *search = [[UIImage imageNamed:@"search-toolbar.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithImage:search style:UIBarButtonItemStylePlain target:self action:@selector(search:)];
-//    
-//    UIImage *chat = [[UIImage imageNamed:@"chat-toolbar.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    
-//    UIBarButtonItem *chatButton = [[UIBarButtonItem alloc] initWithImage:chat style:UIBarButtonItemStylePlain target:self action:@selector(chat:)];
-//    
-//    UIImage *settings = [[UIImage imageNamed:@"settings-toolbar.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:settings style:UIBarButtonItemStylePlain target:self action:@selector(settings:)];
-//    
-//    NSArray* items = [NSArray arrayWithObjects:backHomeButton, searchButton, chatButton, settingsButton, nil];
-//    
-//    toolBar.items = items;
-//    
-//    [self.view addSubview:toolBar];
 }
 
 - (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSLog(@"%lu", (unsigned long)self.tracks.count);
-    return self.tracks.count;
+    //NSLog(@"%lu", (unsigned long)self.tracks.count);
+    //return self.tracks.count;
+    return 40;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

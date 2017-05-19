@@ -11,6 +11,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProjectSettingsScreenViewController">
             <connections>
+                <outlet property="membersTableView" destination="Bu7-C9-TEJ" id="OlS-fP-mg6"/>
+                <outlet property="nameTextField" destination="utE-R5-fuR" id="bc6-Wj-KyK"/>
+                <outlet property="pickerView" destination="56R-py-CpS" id="HI0-5I-G57"/>
+                <outlet property="stepperView" destination="7zH-Jp-CGw" id="8Bt-GE-RzL"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,8 +22,99 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="64" width="375" height="603"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nom du projet" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="utE-R5-fuR">
+                    <rect key="frame" x="16" y="20" width="343" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="343" id="8pU-8B-9EX"/>
+                        <constraint firstAttribute="height" constant="65" id="edI-dJ-fEh"/>
+                    </constraints>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Exg-ya-4rV">
+                    <rect key="frame" x="16" y="98" width="343" height="285"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bu7-C9-TEJ">
+                            <rect key="frame" x="0.0" y="0.0" width="343" height="243"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="343" id="OdA-3I-KFS"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="343" id="PQa-h7-asD"/>
+                                <constraint firstAttribute="height" constant="243" id="fMh-Cp-ntq"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="241" id="wD4-Zj-vZe"/>
+                            </constraints>
+                            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </tableView>
+                        <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="7zH-Jp-CGw">
+                            <rect key="frame" x="124" y="249" width="94" height="29"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="94" id="KSo-2w-Xf3"/>
+                                <constraint firstAttribute="height" constant="29" id="gzB-ky-dHh"/>
+                            </constraints>
+                            <color key="tintColor" red="0.14117647059999999" green="0.2156862745" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                        </stepper>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Bu7-C9-TEJ" secondAttribute="trailing" id="2qq-ir-EBS"/>
+                        <constraint firstItem="7zH-Jp-CGw" firstAttribute="centerX" secondItem="Exg-ya-4rV" secondAttribute="centerX" id="3Xh-C3-vzD"/>
+                        <constraint firstItem="Bu7-C9-TEJ" firstAttribute="top" secondItem="Exg-ya-4rV" secondAttribute="top" id="GBC-QD-klY"/>
+                        <constraint firstAttribute="bottom" secondItem="7zH-Jp-CGw" secondAttribute="bottom" constant="7" id="S7Y-yE-yIp"/>
+                        <constraint firstAttribute="height" constant="285" id="Spc-du-gvI"/>
+                        <constraint firstAttribute="width" constant="343" id="bKh-Ck-nDr"/>
+                        <constraint firstItem="Bu7-C9-TEJ" firstAttribute="leading" secondItem="Exg-ya-4rV" secondAttribute="leading" id="uaw-nf-LI8"/>
+                    </constraints>
+                </view>
+                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="56R-py-CpS">
+                    <rect key="frame" x="16" y="436" width="343" height="76"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="343" id="SVC-iQ-ePb"/>
+                        <constraint firstAttribute="height" constant="76" id="b7F-7R-VJ7"/>
+                    </constraints>
+                </pickerView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9QP-zJ-FeG">
+                    <rect key="frame" x="16" y="545" width="343" height="38"/>
+                    <color key="backgroundColor" red="0.82745098039999998" green="0.18039215689999999" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="343" id="4lz-R8-UrB"/>
+                        <constraint firstAttribute="height" constant="38" id="XvM-Zw-apK"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                    <state key="normal" title="Supprimer le projet">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type de points" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Kw-Ds-txH">
+                    <rect key="frame" x="16" y="406" width="127" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="26" id="2wS-XG-aDq"/>
+                        <constraint firstAttribute="width" constant="127" id="4eJ-cF-cNf"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="56R-py-CpS" firstAttribute="top" secondItem="7Kw-Ds-txH" secondAttribute="bottom" constant="4" id="2WS-mu-uF5"/>
+                <constraint firstItem="56R-py-CpS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="42r-Dl-85O"/>
+                <constraint firstAttribute="trailing" secondItem="utE-R5-fuR" secondAttribute="trailing" constant="16" id="HTF-AB-fbv"/>
+                <constraint firstItem="9QP-zJ-FeG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="S4Q-c8-5PO"/>
+                <constraint firstItem="7Kw-Ds-txH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="WVy-GH-evL"/>
+                <constraint firstItem="9QP-zJ-FeG" firstAttribute="top" secondItem="56R-py-CpS" secondAttribute="bottom" constant="33" id="auQ-tm-AA4"/>
+                <constraint firstAttribute="trailing" secondItem="9QP-zJ-FeG" secondAttribute="trailing" constant="16" id="csh-QH-mYW"/>
+                <constraint firstItem="utE-R5-fuR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="dQ1-EB-Y6h"/>
+                <constraint firstItem="Exg-ya-4rV" firstAttribute="top" secondItem="utE-R5-fuR" secondAttribute="bottom" constant="13" id="hnH-56-Dk5"/>
+                <constraint firstAttribute="trailing" secondItem="56R-py-CpS" secondAttribute="trailing" constant="16" id="k2l-sF-qER"/>
+                <constraint firstAttribute="trailing" secondItem="Exg-ya-4rV" secondAttribute="trailing" constant="16" id="rS5-Z6-M7r"/>
+                <constraint firstAttribute="bottom" secondItem="Exg-ya-4rV" secondAttribute="bottom" constant="220" id="tbK-wv-Xvc"/>
+                <constraint firstItem="Exg-ya-4rV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="xZR-Td-47D"/>
+                <constraint firstAttribute="bottom" secondItem="9QP-zJ-FeG" secondAttribute="bottom" constant="20" id="zcL-Dv-XtJ"/>
+            </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <point key="canvasLocation" x="34.5" y="53.5"/>
         </view>
     </objects>
 </document>

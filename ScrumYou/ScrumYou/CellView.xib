@@ -11,11 +11,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="gTV-IL-0wX" customClass="CellView">
-            <rect key="frame" x="0.0" y="0.0" width="95" height="95"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="" id="gTV-IL-0wX" customClass="CellView">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="95" height="95"/>
+                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gP7-yo-ZnP">
@@ -27,12 +27,12 @@
                     </label>
                 </subviews>
             </view>
-            <color key="backgroundColor" red="0.51050279470000004" green="0.7554575899" blue="0.79514576830000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <size key="customSize" width="95" height="95"/>
+            <color key="backgroundColor" red="0.88225668670000001" green="0.88240832089999999" blue="0.88224714989999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <size key="customSize" width="200" height="200"/>
             <connections>
                 <outlet property="label" destination="gP7-yo-ZnP" id="eUq-qf-2w0"/>
             </connections>
-            <point key="canvasLocation" x="56.5" y="179.5"/>
+            <point key="canvasLocation" x="109" y="232"/>
         </collectionViewCell>
     </objects>
 </document>
