@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddProjectScreenViewController">
             <connections>
-                <outlet property="addMemberTextField" destination="CYD-sC-0a0" id="aCY-ia-U2n"/>
+                <outlet property="addMembersTextField" destination="CYD-sC-0a0" id="2ZQ-ti-tAJ"/>
                 <outlet property="projectNameTextField" destination="Hsw-TQ-KRR" id="etn-Qk-V7X"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -53,7 +53,7 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="AddMemberButton:" destination="-1" eventType="touchUpInside" id="7OB-7y-wsi"/>
+                        <action selector="addMembersButton:" destination="-1" eventType="touchUpInside" id="tln-i4-Uwu"/>
                     </connections>
                 </button>
             </subviews>
@@ -70,7 +70,7 @@
                 <constraint firstItem="b0y-18-Sp2" firstAttribute="top" secondItem="CYD-sC-0a0" secondAttribute="bottom" constant="50" id="yIL-8V-S2K"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-            <point key="canvasLocation" x="-34" y="43"/>
+            <point key="canvasLocation" x="-57" y="91"/>
         </view>
     </objects>
 </document>

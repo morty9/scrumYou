@@ -22,6 +22,11 @@
 
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 - (void) designPage {
     
     //navigation bar customization
@@ -47,10 +52,10 @@
     CALayer *borderAddMember = [CALayer layer];
     CGFloat borderWidthAddMember = 1.5;
     borderAddMember.borderColor = [UIColor darkGrayColor].CGColor;
-    borderAddMember.frame = CGRectMake(0, addMemberTextField.frame.size.height - borderWidthAddMember, addMemberTextField.frame.size.width, addMemberTextField.frame.size.height);
+    borderAddMember.frame = CGRectMake(0, addMembersTextField.frame.size.height - borderWidthAddMember, addMembersTextField.frame.size.width, addMembersTextField.frame.size.height);
     borderAddMember.borderWidth = borderWidthAddMember;
-    [addMemberTextField.layer addSublayer:borderAddMember];
-    addMemberTextField.layer.masksToBounds = YES;
+    [addMembersTextField.layer addSublayer:borderAddMember];
+    addMembersTextField.layer.masksToBounds = YES;
 }
 
 
@@ -60,7 +65,7 @@
 }
 
 
-- (IBAction)AddMemberButton:(id)sender {
+- (IBAction)addMembersButton:(id)sender {
     ScrumBoardScreenViewController* scrumBoardVc = [[ScrumBoardScreenViewController alloc] init];
     [self.navigationController pushViewController:scrumBoardVc animated:YES];
 }

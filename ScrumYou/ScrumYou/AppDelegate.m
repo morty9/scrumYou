@@ -10,6 +10,7 @@
 #import "HomeScreenViewController.h"
 #import "LoginScreenViewController.h"
 #import "AccountSettingsScreenViewController.h"
+#import "AddTaskScreenViewController.h"
 
 @interface AppDelegate ()
 

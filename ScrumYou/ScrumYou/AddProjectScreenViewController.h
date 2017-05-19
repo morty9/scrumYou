@@ -11,8 +11,8 @@
 @interface AddProjectScreenViewController : UIViewController
 {
     __weak IBOutlet UITextField *projectNameTextField;
-    __weak IBOutlet UITextField *addMemberTextField;
-    __weak IBOutlet UIButton *addMemberButton;
+    __weak IBOutlet UITextField *addMembersTextField;
+    __weak IBOutlet UIButton *addMembersButton;
 }
 
 @end
