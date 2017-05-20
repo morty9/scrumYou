@@ -12,6 +12,9 @@
 #import "AccountSettingsScreenViewController.h"
 #import "ProjectSettingsScreenViewController.h"
 #import "UserHomeScreenViewController.h"
+#import "AddProjectScreenViewController.h"
+#import "SignUpScreenViewController.h"
+#import "AddTaskScreenViewController.h"
 
 @interface AppDelegate ()
 

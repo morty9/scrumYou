@@ -12,7 +12,6 @@
     
     __weak IBOutlet UIButton *inscriptionButton;
     __weak IBOutlet UIButton *connectionButton;
-    __weak IBOutlet UIButton *testProjectButton;
     
 }
 

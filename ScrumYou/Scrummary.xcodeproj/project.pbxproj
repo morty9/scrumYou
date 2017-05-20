@@ -32,6 +32,15 @@
 		08E23AD41E708483007534E0 /* SignUpScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E23AD21E708483007534E0 /* SignUpScreenViewController.m */; };
 		08E23AD51E708483007534E0 /* SignUpScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08E23AD31E708483007534E0 /* SignUpScreenViewController.xib */; };
 		08E7A5361EC7699400A87DA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08E7A5351EC7699400A87DA0 /* Assets.xcassets */; };
+		BB19FB221ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB211ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib */; };
+		BB19FB241ECF452B00B5085B /* LoginScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB231ECF452B00B5085B /* LoginScreenViewController~ipad.xib */; };
+		BB19FB261ECF479E00B5085B /* HomeScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB251ECF479E00B5085B /* HomeScreenViewController~ipad.xib */; };
+		BB19FB281ECFA33200B5085B /* SignUpScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB271ECFA33200B5085B /* SignUpScreenViewController~ipad.xib */; };
+		BB19FB2A1ECFA69E00B5085B /* AddTaskScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB291ECFA69E00B5085B /* AddTaskScreenViewController~ipad.xib */; };
+		BB19FB2C1ECFB13700B5085B /* AccountSettingsScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB2B1ECFB13700B5085B /* AccountSettingsScreenViewController~ipad.xib */; };
+		BB19FB2E1ECFBC5700B5085B /* ProjectSettingsScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB2D1ECFBC5700B5085B /* ProjectSettingsScreenViewController~ipad.xib */; };
+		BB19FB301ECFC30E00B5085B /* UserHomeScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB2F1ECFC30E00B5085B /* UserHomeScreenViewController~ipad.xib */; };
+		BB19FB321ECFC7A900B5085B /* CellView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB311ECFC7A900B5085B /* CellView~ipad.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +83,15 @@
 		08E23AD21E708483007534E0 /* SignUpScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpScreenViewController.m; sourceTree = "<group>"; };
 		08E23AD31E708483007534E0 /* SignUpScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignUpScreenViewController.xib; sourceTree = "<group>"; };
 		08E7A5351EC7699400A87DA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BB19FB211ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AddProjectScreenViewController~ipad.xib"; sourceTree = "<group>"; };
+		BB19FB231ECF452B00B5085B /* LoginScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "LoginScreenViewController~ipad.xib"; sourceTree = "<group>"; };
+		BB19FB251ECF479E00B5085B /* HomeScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "HomeScreenViewController~ipad.xib"; sourceTree = "<group>"; };
+		BB19FB271ECFA33200B5085B /* SignUpScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SignUpScreenViewController~ipad.xib"; sourceTree = "<group>"; };
+		BB19FB291ECFA69E00B5085B /* AddTaskScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AddTaskScreenViewController~ipad.xib"; sourceTree = "<group>"; };
+		BB19FB2B1ECFB13700B5085B /* AccountSettingsScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AccountSettingsScreenViewController~ipad.xib"; sourceTree = "<group>"; };
+		BB19FB2D1ECFBC5700B5085B /* ProjectSettingsScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ProjectSettingsScreenViewController~ipad.xib"; sourceTree = "<group>"; };
+		BB19FB2F1ECFC30E00B5085B /* UserHomeScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "UserHomeScreenViewController~ipad.xib"; sourceTree = "<group>"; };
+		BB19FB311ECFC7A900B5085B /* CellView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "CellView~ipad.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +111,7 @@
 				08178A7D1ECDE77700BE9810 /* CellView.h */,
 				08178A7E1ECDE77700BE9810 /* CellView.m */,
 				08178A7F1ECDE77700BE9810 /* CellView.xib */,
+				BB19FB311ECFC7A900B5085B /* CellView~ipad.xib */,
 			);
 			name = CollectionViewCell;
 			sourceTree = "<group>";
@@ -112,6 +131,7 @@
 				08C2C8561E70852500609F97 /* AddProjectScreenViewController.h */,
 				08C2C8571E70852500609F97 /* AddProjectScreenViewController.m */,
 				08C2C8581E70852500609F97 /* AddProjectScreenViewController.xib */,
+				BB19FB211ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib */,
 			);
 			name = AddProjectScreen;
 			sourceTree = "<group>";
@@ -123,6 +143,7 @@
 				08C2C85C1E70875F00609F97 /* UserHomeScreenViewController.h */,
 				08C2C85D1E70875F00609F97 /* UserHomeScreenViewController.m */,
 				08C2C85E1E70875F00609F97 /* UserHomeScreenViewController.xib */,
+				BB19FB2F1ECFC30E00B5085B /* UserHomeScreenViewController~ipad.xib */,
 			);
 			name = UserHomeScreen;
 			sourceTree = "<group>";
@@ -133,6 +154,7 @@
 				08C2C8621E70879000609F97 /* AddTaskScreenViewController.h */,
 				08C2C8631E70879000609F97 /* AddTaskScreenViewController.m */,
 				08C2C8641E70879000609F97 /* AddTaskScreenViewController.xib */,
+				BB19FB291ECFA69E00B5085B /* AddTaskScreenViewController~ipad.xib */,
 			);
 			name = AddTaskScreen;
 			sourceTree = "<group>";
@@ -153,6 +175,7 @@
 				08C2C86E1E7087E200609F97 /* ProjectSettingsScreenViewController.h */,
 				08C2C86F1E7087E200609F97 /* ProjectSettingsScreenViewController.m */,
 				08C2C8701E7087E200609F97 /* ProjectSettingsScreenViewController.xib */,
+				BB19FB2D1ECFBC5700B5085B /* ProjectSettingsScreenViewController~ipad.xib */,
 			);
 			name = ProjectSettingsScreen;
 			sourceTree = "<group>";
@@ -163,6 +186,7 @@
 				08C2C8741E70880900609F97 /* AccountSettingsScreenViewController.h */,
 				08C2C8751E70880900609F97 /* AccountSettingsScreenViewController.m */,
 				08C2C8761E70880900609F97 /* AccountSettingsScreenViewController.xib */,
+				BB19FB2B1ECFB13700B5085B /* AccountSettingsScreenViewController~ipad.xib */,
 			);
 			name = AccountSettingsScreen;
 			sourceTree = "<group>";
@@ -220,6 +244,7 @@
 				08E23AC61E708435007534E0 /* HomeScreenViewController.h */,
 				08E23AC71E708435007534E0 /* HomeScreenViewController.m */,
 				08E23AC81E708435007534E0 /* HomeScreenViewController.xib */,
+				BB19FB251ECF479E00B5085B /* HomeScreenViewController~ipad.xib */,
 			);
 			name = HomeScreen;
 			sourceTree = "<group>";
@@ -230,6 +255,7 @@
 				08E23ACB1E708454007534E0 /* LoginScreenViewController.h */,
 				08E23ACC1E708454007534E0 /* LoginScreenViewController.m */,
 				08E23ACD1E708454007534E0 /* LoginScreenViewController.xib */,
+				BB19FB231ECF452B00B5085B /* LoginScreenViewController~ipad.xib */,
 			);
 			name = LoginScreen;
 			sourceTree = "<group>";
@@ -240,6 +266,7 @@
 				08E23AD11E708483007534E0 /* SignUpScreenViewController.h */,
 				08E23AD21E708483007534E0 /* SignUpScreenViewController.m */,
 				08E23AD31E708483007534E0 /* SignUpScreenViewController.xib */,
+				BB19FB271ECFA33200B5085B /* SignUpScreenViewController~ipad.xib */,
 			);
 			name = SignUpScreen;
 			sourceTree = "<group>";
@@ -302,16 +329,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB19FB2C1ECFB13700B5085B /* AccountSettingsScreenViewController~ipad.xib in Resources */,
+				BB19FB261ECF479E00B5085B /* HomeScreenViewController~ipad.xib in Resources */,
+				BB19FB321ECFC7A900B5085B /* CellView~ipad.xib in Resources */,
 				08C2C8601E70875F00609F97 /* UserHomeScreenViewController.xib in Resources */,
 				08E23AB81E708338007534E0 /* LaunchScreen.storyboard in Resources */,
 				08E7A5361EC7699400A87DA0 /* Assets.xcassets in Resources */,
+				BB19FB221ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib in Resources */,
 				08E23ACA1E708435007534E0 /* HomeScreenViewController.xib in Resources */,
 				08178A811ECDE77700BE9810 /* CellView.xib in Resources */,
+				BB19FB2E1ECFBC5700B5085B /* ProjectSettingsScreenViewController~ipad.xib in Resources */,
+				BB19FB301ECFC30E00B5085B /* UserHomeScreenViewController~ipad.xib in Resources */,
 				08C2C86C1E7087B500609F97 /* ScrumBoardScreenViewController.xib in Resources */,
+				BB19FB241ECF452B00B5085B /* LoginScreenViewController~ipad.xib in Resources */,
 				08C2C8781E70880900609F97 /* AccountSettingsScreenViewController.xib in Resources */,
 				08C2C8721E7087E200609F97 /* ProjectSettingsScreenViewController.xib in Resources */,
 				08C2C85A1E70852500609F97 /* AddProjectScreenViewController.xib in Resources */,
 				08C2C8661E70879000609F97 /* AddTaskScreenViewController.xib in Resources */,
+				BB19FB281ECFA33200B5085B /* SignUpScreenViewController~ipad.xib in Resources */,
+				BB19FB2A1ECFA69E00B5085B /* AddTaskScreenViewController~ipad.xib in Resources */,
 				08E23AD51E708483007534E0 /* SignUpScreenViewController.xib in Resources */,
 				08E23ACF1E708454007534E0 /* LoginScreenViewController.xib in Resources */,
 			);
