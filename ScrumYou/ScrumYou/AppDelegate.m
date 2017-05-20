@@ -15,6 +15,7 @@
 #import "AddProjectScreenViewController.h"
 #import "SignUpScreenViewController.h"
 #import "AddTaskScreenViewController.h"
+#import "ScrumBoardScreenViewController.h"
 
 @interface AppDelegate ()
 
@@ -25,7 +26,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    UserHomeScreenViewController* tvb = [[UserHomeScreenViewController alloc] init];
+    ScrumBoardScreenViewController* tvb = [[ScrumBoardScreenViewController alloc] init];
     UIWindow* w = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     w.rootViewController = [[UINavigationController alloc] initWithRootViewController:tvb];
     [w makeKeyAndVisible];
