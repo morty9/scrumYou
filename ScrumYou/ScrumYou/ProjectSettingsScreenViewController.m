@@ -7,21 +7,71 @@
 //
 
 #import "ProjectSettingsScreenViewController.h"
+#import "APIKeys.h"
 
 @interface ProjectSettingsScreenViewController ()
 
 @end
 
-@implementation ProjectSettingsScreenViewController
+@implementation ProjectSettingsScreenViewController {
+    NSMutableArray* projects;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self designPage];
+    projects = [[NSMutableArray alloc] init];
+    [self getProject];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) getProject {
+    
+    NSURL *url = [NSURL URLWithString:[kProject_api stringByAppendingString:@"/1"]];
+    
+    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+        
+        if (error != nil) {
+            NSLog(@"Error: %@", error.localizedDescription);
+            return;
+        }
+        
+        if (data == nil) {
+            return;
+        }
+        
+        if (response == nil) {
+            return;
+        }
+        
+        NSLog(@"project %@", jsonDict);
+        NSLog(@"%@", [jsonDict objectForKey:@"title"]);
+        nameTextField.text = [jsonDict objectForKey:@"title"];
+        
+        
+        
+    }] resume];
+    
+}
+
+- (void) editProject {
+    
+}
+
+- (void) cancelButton {
+    
 }
 
 - (void) designPage {
@@ -32,6 +82,9 @@
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:cancel style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton:)];
     self.navigationItem.leftBarButtonItem = cancelButton;
     
+    UIBarButtonItem *editProject = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editProject:)];
+    self.navigationItem.rightBarButtonItem = editProject;
+    
     //border name project text field
     CALayer *borderName = [CALayer layer];
     CGFloat borderWidthName = 1.5;
@@ -40,10 +93,6 @@
     borderName.borderWidth = borderWidthName;
     [nameTextField.layer addSublayer:borderName];
     nameTextField.layer.masksToBounds = YES;
-    
-}
-
-- (void) cancelButton {
     
 }
 
