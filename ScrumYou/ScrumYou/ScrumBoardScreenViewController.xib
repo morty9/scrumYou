@@ -36,6 +36,11 @@
                     </items>
                     <color key="tintColor" red="0.14117647059999999" green="0.2156862745" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
                 </toolbar>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XEf-ds-3kt">
+                    <rect key="frame" x="115" y="500" width="144" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Start again"/>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -46,6 +51,38 @@
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
             <point key="canvasLocation" x="34.5" y="53.5"/>
         </view>
+        <pageViewController restorationIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Bmr-Ys-ZBL">
+            <point key="canvasLocation" x="593" y="-571"/>
+        </pageViewController>
+        <viewController id="M8K-Lh-lP5" customClass="PageContentViewController">
+            <layoutGuides>
+                <viewControllerLayoutGuide type="top" id="9h0-ap-ZTB"/>
+                <viewControllerLayoutGuide type="bottom" id="IKa-vU-4k6"/>
+            </layoutGuides>
+            <view key="view" contentMode="scaleToFill" restorationIdentifier="PageContentController" id="YdE-Hn-PsQ">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rs2-8S-Pxc">
+                        <rect key="frame" x="16" y="28" width="343" height="619"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWs-0h-POj">
+                        <rect key="frame" x="166" y="63" width="60" height="38"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            </view>
+            <connections>
+                <outlet property="image" destination="Rs2-8S-Pxc" id="YZE-vL-dm6"/>
+                <outlet property="label" destination="nWs-0h-POj" id="XaD-Uz-BjJ"/>
+            </connections>
+            <point key="canvasLocation" x="594.5" y="225.5"/>
+        </viewController>
     </objects>
     <resources>
         <image name="chat-toolbar" width="25" height="25"/>

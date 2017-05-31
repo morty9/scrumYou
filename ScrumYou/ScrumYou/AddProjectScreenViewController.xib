@@ -11,8 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddProjectScreenViewController">
             <connections>
+                <outlet property="addButton" destination="b0y-18-Sp2" id="wMu-A2-Lze"/>
                 <outlet property="addMembersTextField" destination="CYD-sC-0a0" id="2ZQ-ti-tAJ"/>
-                <outlet property="projectNameTextField" destination="Hsw-TQ-KRR" id="etn-Qk-V7X"/>
+                <outlet property="projectNameTextField" destination="Hsw-TQ-KRR" id="jKK-2G-yUg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -54,7 +55,16 @@
                     </state>
                     <connections>
                         <action selector="addMembersButton:" destination="-1" eventType="touchUpInside" id="tln-i4-Uwu"/>
+                        <action selector="didTouchAddProject:" destination="-1" eventType="touchUpInside" id="Ndx-Ba-9N6"/>
                     </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qLg-dt-cHw" userLabel="Add Member(s) Button">
+                    <rect key="frame" x="334" y="141" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="Wn6-Dx-Ofo"/>
+                        <constraint firstAttribute="width" constant="25" id="g0D-B5-wXw"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="add"/>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -62,15 +72,20 @@
                 <constraint firstItem="CYD-sC-0a0" firstAttribute="top" secondItem="Hsw-TQ-KRR" secondAttribute="bottom" constant="30" id="4iK-qt-5AB"/>
                 <constraint firstAttribute="trailing" secondItem="CYD-sC-0a0" secondAttribute="trailing" constant="16" id="ASj-JU-wHQ"/>
                 <constraint firstItem="CYD-sC-0a0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="BGo-jZ-E0x"/>
+                <constraint firstItem="qLg-dt-cHw" firstAttribute="leading" secondItem="CYD-sC-0a0" secondAttribute="trailing" constant="-25" id="KQD-oM-adY"/>
                 <constraint firstItem="Hsw-TQ-KRR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="O7r-fZ-U5T"/>
                 <constraint firstItem="b0y-18-Sp2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="YyZ-v6-V5z"/>
                 <constraint firstAttribute="trailing" secondItem="b0y-18-Sp2" secondAttribute="trailing" constant="16" id="cOe-2n-wTL"/>
                 <constraint firstAttribute="bottom" secondItem="Hsw-TQ-KRR" secondAttribute="bottom" constant="512" id="d4K-Oe-bhw"/>
                 <constraint firstAttribute="trailing" secondItem="Hsw-TQ-KRR" secondAttribute="trailing" constant="16" id="gCf-wA-xwJ"/>
+                <constraint firstItem="qLg-dt-cHw" firstAttribute="top" secondItem="CYD-sC-0a0" secondAttribute="bottom" constant="-45" id="r2h-E8-DYt"/>
                 <constraint firstItem="b0y-18-Sp2" firstAttribute="top" secondItem="CYD-sC-0a0" secondAttribute="bottom" constant="50" id="yIL-8V-S2K"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
             <point key="canvasLocation" x="-57" y="91"/>
         </view>
     </objects>
+    <resources>
+        <image name="add" width="32" height="32"/>
+    </resources>
 </document>

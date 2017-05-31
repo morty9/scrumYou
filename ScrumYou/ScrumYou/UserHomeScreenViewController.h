@@ -7,14 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Data.h"
 
 @interface UserHomeScreenViewController : UIViewController
 {
-    NSMutableArray<Data*>* _dataArray;
+    
 }
-
-@property (nonatomic, strong) NSMutableArray<Data*>* dataArray;
 
 - (void) backHome;
 

@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		08178A7C1ECDD85100BE9810 /* Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 08178A7B1ECDD85100BE9810 /* Data.m */; };
 		08178A801ECDE77700BE9810 /* CellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08178A7E1ECDE77700BE9810 /* CellView.m */; };
 		08178A811ECDE77700BE9810 /* CellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08178A7F1ECDE77700BE9810 /* CellView.xib */; };
+		08BF7ECD1ED06F470066E3B7 /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BF7ECC1ED06F470066E3B7 /* PageContentViewController.m */; };
+		08BF7ED31ED06FE20066E3B7 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BF7ED21ED06FE20066E3B7 /* PageViewController.m */; };
 		08C2C8591E70852500609F97 /* AddProjectScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C2C8571E70852500609F97 /* AddProjectScreenViewController.m */; };
 		08C2C85A1E70852500609F97 /* AddProjectScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C2C8581E70852500609F97 /* AddProjectScreenViewController.xib */; };
 		08C2C85F1E70875F00609F97 /* UserHomeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C2C85D1E70875F00609F97 /* UserHomeScreenViewController.m */; };
@@ -32,6 +33,7 @@
 		08E23AD41E708483007534E0 /* SignUpScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E23AD21E708483007534E0 /* SignUpScreenViewController.m */; };
 		08E23AD51E708483007534E0 /* SignUpScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08E23AD31E708483007534E0 /* SignUpScreenViewController.xib */; };
 		08E7A5361EC7699400A87DA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08E7A5351EC7699400A87DA0 /* Assets.xcassets */; };
+		08FB03CE1ED9AC6F00D30A19 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB03CD1ED9AC6F00D30A19 /* User.m */; };
 		BB19FB221ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB211ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib */; };
 		BB19FB241ECF452B00B5085B /* LoginScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB231ECF452B00B5085B /* LoginScreenViewController~ipad.xib */; };
 		BB19FB261ECF479E00B5085B /* HomeScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB251ECF479E00B5085B /* HomeScreenViewController~ipad.xib */; };
@@ -44,11 +46,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		08178A7A1ECDD85100BE9810 /* Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Data.h; sourceTree = "<group>"; };
-		08178A7B1ECDD85100BE9810 /* Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Data.m; sourceTree = "<group>"; };
 		08178A7D1ECDE77700BE9810 /* CellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellView.h; sourceTree = "<group>"; };
 		08178A7E1ECDE77700BE9810 /* CellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellView.m; sourceTree = "<group>"; };
 		08178A7F1ECDE77700BE9810 /* CellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellView.xib; sourceTree = "<group>"; };
+		086A02B21ED314DD00BC675D /* APIKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIKeys.h; sourceTree = "<group>"; };
+		08BF7ECB1ED06F470066E3B7 /* PageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageContentViewController.h; sourceTree = "<group>"; };
+		08BF7ECC1ED06F470066E3B7 /* PageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageContentViewController.m; sourceTree = "<group>"; };
+		08BF7ED11ED06FE20066E3B7 /* PageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
+		08BF7ED21ED06FE20066E3B7 /* PageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageViewController.m; sourceTree = "<group>"; };
 		08C2C8561E70852500609F97 /* AddProjectScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProjectScreenViewController.h; sourceTree = "<group>"; };
 		08C2C8571E70852500609F97 /* AddProjectScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProjectScreenViewController.m; sourceTree = "<group>"; };
 		08C2C8581E70852500609F97 /* AddProjectScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddProjectScreenViewController.xib; sourceTree = "<group>"; };
@@ -83,6 +88,8 @@
 		08E23AD21E708483007534E0 /* SignUpScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpScreenViewController.m; sourceTree = "<group>"; };
 		08E23AD31E708483007534E0 /* SignUpScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignUpScreenViewController.xib; sourceTree = "<group>"; };
 		08E7A5351EC7699400A87DA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		08FB03CC1ED9AC6F00D30A19 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		08FB03CD1ED9AC6F00D30A19 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		BB19FB211ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AddProjectScreenViewController~ipad.xib"; sourceTree = "<group>"; };
 		BB19FB231ECF452B00B5085B /* LoginScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "LoginScreenViewController~ipad.xib"; sourceTree = "<group>"; };
 		BB19FB251ECF479E00B5085B /* HomeScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "HomeScreenViewController~ipad.xib"; sourceTree = "<group>"; };
@@ -119,10 +126,17 @@
 		08178A791ECDD82F00BE9810 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				08178A7A1ECDD85100BE9810 /* Data.h */,
-				08178A7B1ECDD85100BE9810 /* Data.m */,
+				08FB03CB1ED9AC4200D30A19 /* Users */,
 			);
 			name = Data;
+			sourceTree = "<group>";
+		};
+		086A02B11ED314AE00BC675D /* APIKey */ = {
+			isa = PBXGroup;
+			children = (
+				086A02B21ED314DD00BC675D /* APIKeys.h */,
+			);
+			name = APIKey;
 			sourceTree = "<group>";
 		};
 		08C2C8551E7084F800609F97 /* AddProjectScreen */ = {
@@ -165,6 +179,10 @@
 				08C2C8681E7087B500609F97 /* ScrumBoardScreenViewController.h */,
 				08C2C8691E7087B500609F97 /* ScrumBoardScreenViewController.m */,
 				08C2C86A1E7087B500609F97 /* ScrumBoardScreenViewController.xib */,
+				08BF7ECB1ED06F470066E3B7 /* PageContentViewController.h */,
+				08BF7ECC1ED06F470066E3B7 /* PageContentViewController.m */,
+				08BF7ED11ED06FE20066E3B7 /* PageViewController.h */,
+				08BF7ED21ED06FE20066E3B7 /* PageViewController.m */,
 			);
 			name = ScrumBoardScreen;
 			sourceTree = "<group>";
@@ -210,6 +228,7 @@
 		08E23AA71E708338007534E0 /* ScrumYou */ = {
 			isa = PBXGroup;
 			children = (
+				086A02B11ED314AE00BC675D /* APIKey */,
 				08E23AAB1E708338007534E0 /* AppDelegate.h */,
 				08E23AAC1E708338007534E0 /* AppDelegate.m */,
 				08E23ABF1E708359007534E0 /* HomeScreen */,
@@ -271,6 +290,15 @@
 			name = SignUpScreen;
 			sourceTree = "<group>";
 		};
+		08FB03CB1ED9AC4200D30A19 /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				08FB03CC1ED9AC6F00D30A19 /* User.h */,
+				08FB03CD1ED9AC6F00D30A19 /* User.m */,
+			);
+			name = Users;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -302,6 +330,7 @@
 				TargetAttributes = {
 					08E23AA41E708337007534E0 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 9GDJ425SV6;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -360,7 +389,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08178A7C1ECDD85100BE9810 /* Data.m in Sources */,
+				08FB03CE1ED9AC6F00D30A19 /* User.m in Sources */,
 				08C2C8771E70880900609F97 /* AccountSettingsScreenViewController.m in Sources */,
 				08E23AC91E708435007534E0 /* HomeScreenViewController.m in Sources */,
 				08E23AAD1E708338007534E0 /* AppDelegate.m in Sources */,
@@ -368,7 +397,9 @@
 				08C2C8591E70852500609F97 /* AddProjectScreenViewController.m in Sources */,
 				08178A801ECDE77700BE9810 /* CellView.m in Sources */,
 				08C2C8651E70879000609F97 /* AddTaskScreenViewController.m in Sources */,
+				08BF7ED31ED06FE20066E3B7 /* PageViewController.m in Sources */,
 				08E23ACE1E708454007534E0 /* LoginScreenViewController.m in Sources */,
+				08BF7ECD1ED06F470066E3B7 /* PageContentViewController.m in Sources */,
 				08E23AAA1E708338007534E0 /* main.m in Sources */,
 				08C2C8711E7087E200609F97 /* ProjectSettingsScreenViewController.m in Sources */,
 				08C2C85F1E70875F00609F97 /* UserHomeScreenViewController.m in Sources */,
@@ -483,9 +514,9 @@
 		08E23ABD1E708338007534E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-3";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9GDJ425SV6;
 				INFOPLIST_FILE = ScrumYou/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = esgi.Scrummary;
@@ -496,9 +527,9 @@
 		08E23ABE1E708338007534E0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-3";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9GDJ425SV6;
 				INFOPLIST_FILE = ScrumYou/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = esgi.Scrummary;

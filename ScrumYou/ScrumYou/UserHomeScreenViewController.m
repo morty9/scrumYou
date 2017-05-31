@@ -18,7 +18,6 @@
 @implementation UserHomeScreenViewController
 
 @synthesize collectionView = _collectionView;
-@synthesize dataArray = _dataArray;
 
 - (void)viewDidLoad {
     [super viewDidLoad];

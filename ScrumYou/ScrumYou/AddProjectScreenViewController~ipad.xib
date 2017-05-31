@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddProjectScreenViewController">
             <connections>
+                <outlet property="addButton" destination="b0y-18-Sp2" id="hNx-Bx-muP"/>
                 <outlet property="addMembersTextField" destination="CYD-sC-0a0" id="2ZQ-ti-tAJ"/>
                 <outlet property="projectNameTextField" destination="Hsw-TQ-KRR" id="etn-Qk-V7X"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -54,6 +55,7 @@
                     </state>
                     <connections>
                         <action selector="addMembersButton:" destination="-1" eventType="touchUpInside" id="tln-i4-Uwu"/>
+                        <action selector="didTouchAddProject:" destination="-1" eventType="touchUpInside" id="dcP-ia-t9N"/>
                     </connections>
                 </button>
             </subviews>

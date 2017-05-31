@@ -9,23 +9,100 @@
 #import "AddProjectScreenViewController.h"
 #import "UserHomeScreenViewController.h"
 #import "ScrumBoardScreenViewController.h"
+#import "APIKeys.h"
+#import "User.h"
 
 @interface AddProjectScreenViewController ()
 
+
 @end
 
-@implementation AddProjectScreenViewController
+@implementation AddProjectScreenViewController {
+    NSMutableArray* user_id;
+}
+
+@synthesize users = _users;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self designPage];
-
+    
+    user_id = [[NSMutableArray alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (IBAction)didTouchAddButton:(id)sender {
+    
+    NSURL *url = [NSURL URLWithString:[kUserName_api stringByAppendingString:[addMembersTextField.text stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]]];
+    
+    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+        
+        if (error != nil) {
+            NSLog(@"Error: %@", error.localizedDescription);
+            return;
+        }
+        
+        if (data == nil) {
+            return;
+        }
+        
+        if (response == nil) {
+            return;
+        }
+        
+        [user_id addObject:[jsonDict valueForKey:@"id"]];
+        [self addProject];
+        
+    }] resume];
+    
+}
+
+- (void) addProject {
+    
+    NSURL *url = [NSURL URLWithString:kProject_api];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+        [request setHTTPMethod:@"POST"];
+    
+    NSDictionary<NSString*, NSString*> *jsonData = @{@"title" : projectNameTextField.text, @"id_members" : user_id};
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
+    [request setHTTPBody:postData];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Error: %@", error.localizedDescription);
+            return;
+        }
+    
+        if (data == nil) {
+            return;
+        }
+    
+        if (response == nil) {
+            return;
+        }
+    
+        dispatch_async(dispatch_get_main_queue(), ^{
+            projectNameTextField.text = @"";
+            addMembersTextField.text = @"";
+        });
+    }] resume];
+}
+
 
 - (void) designPage {
     
