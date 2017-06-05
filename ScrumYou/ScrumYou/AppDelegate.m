@@ -26,7 +26,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    ProjectSettingsScreenViewController * tvb = [[ProjectSettingsScreenViewController alloc] init];
+    AddTaskScreenViewController* tvb = [[AddTaskScreenViewController alloc] init];
     UIWindow* w = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     w.rootViewController = [[UINavigationController alloc] initWithRootViewController:tvb];
     [w makeKeyAndVisible];

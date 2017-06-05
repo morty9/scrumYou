@@ -8,23 +8,164 @@
 
 #import "AddTaskScreenViewController.h"
 #import "ScrumBoardScreenViewController.h"
+#import "APIKeys.h"
 
 @interface AddTaskScreenViewController ()
 
 @end
 
-@implementation AddTaskScreenViewController
+@implementation AddTaskScreenViewController {
+    NSMutableArray* user_id;
+    UIVisualEffectView *blurEffectView;
+    NSInteger priority;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self designPage];
     
+    user_id = [[NSMutableArray alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (IBAction)didTouchAddButton:(id)sender {
+    NSURL* url = [NSURL URLWithString:kTask_api];
+    
+    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    
+    NSDictionary<NSString*, NSString*> *jsonData = @{@"title" : taskTitleTextField.text, @"description" : taskDescriptionTextField.text, @"difficulty" : taskDifficultyTextField.text, @"priority" : priority, @"id_category" : taskCategoryTextField.text, @"color" : buttonColorView.restorationIdentifier, @"businessValue" : taskCostTextField.text, @"duration" : taskDurationTextField.text, @"id_members" : user_id};
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
+    [request setHTTPBody:postData];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (error != nil) {
+            NSLog(@"Error: %@", error.localizedDescription);
+            return;
+        }
+        
+        if (data == nil) {
+            return;
+        }
+        
+        if (response == nil) {
+            
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            taskTitleTextField.text = @"";
+            taskDescriptionTextField.text = @"";
+            taskDifficultyTextField.text = @"";
+            taskPriorityTextField.text = @"";
+            taskCategoryTextField.text = @"";
+            taskColorTextField.text = @"";
+            taskCostTextField.text = @"";
+            taskDurationTextField.text = @"";
+        });
+        
+        
+    }] resume];
+    
+}
+
+- (IBAction)priorityChanged:(UISegmentedControl *)sender {
+    priority = sender.selectedSegmentIndex + 1;
+}
+
+
+- (IBAction)stepperAction:(UIStepper*)sender {
+    
+    NSUInteger value = sender.value;
+    taskDurationTextField.text = [NSString stringWithFormat:@"%02lu", (unsigned long)value];
+    
+}
+
+- (IBAction)showWindowColor:(id)sender {
+    [colorView setHidden:false];
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = self.view.bounds;
+    
+    [self.view insertSubview:blurEffectView belowSubview:colorView];
+}
+
+- (IBAction)redButtonChoosen:(id)sender {
+    [colorView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    buttonColorView.backgroundColor = redColor.backgroundColor;
+    buttonColorView.restorationIdentifier = redColor.restorationIdentifier;
+}
+
+- (IBAction)blueButtonChoosen:(id)sender {
+    [colorView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    buttonColorView.backgroundColor = blueColor.backgroundColor;
+    buttonColorView.restorationIdentifier = blueColor.restorationIdentifier;
+}
+
+- (IBAction)orangeButtonChoosen:(id)sender {
+    [colorView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    buttonColorView.backgroundColor = orangeColor.backgroundColor;
+    buttonColorView.restorationIdentifier = orangeColor.restorationIdentifier;
+}
+
+- (IBAction)greenButtonChoosen:(id)sender {
+    [colorView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    buttonColorView.backgroundColor = greenColor.backgroundColor;
+    buttonColorView.restorationIdentifier = greenColor.restorationIdentifier;
+}
+
+- (IBAction)purpleButtonChoosen:(id)sender {
+    [colorView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    buttonColorView.backgroundColor = purpleColor.backgroundColor;
+    buttonColorView.restorationIdentifier = purpleColor.restorationIdentifier;
+}
+
+- (IBAction)yellowButtonChoosen:(id)sender {
+    [colorView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    buttonColorView.backgroundColor = yellowColor.backgroundColor;
+    buttonColorView.restorationIdentifier = yellowColor.restorationIdentifier;
+}
+
+- (IBAction)darkBlueButtonChoosen:(id)sender {
+    [colorView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    buttonColorView.backgroundColor = darkBlueColor.backgroundColor;
+    buttonColorView.restorationIdentifier = darkBlueColor.restorationIdentifier;
+}
+
+- (IBAction)pinkButtonChoosen:(id)sender {
+    [colorView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    buttonColorView.backgroundColor = pinkColor.backgroundColor;
+    buttonColorView.restorationIdentifier = pinkColor.restorationIdentifier;
+}
+
+- (IBAction)grayBlueButtonChoosen:(id)sender {
+    [colorView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    buttonColorView.backgroundColor = grayBlueColor.backgroundColor;
+    buttonColorView.restorationIdentifier = grayBlueColor.restorationIdentifier;
+}
+
+- (IBAction)closeWindowColor:(id)sender {
+    [colorView setHidden:true];
+    [blurEffectView removeFromSuperview];
+}
+
+
 
 - (void) designPage {
     
@@ -75,22 +216,22 @@
     taskDifficultyTextField.layer.masksToBounds = YES;
     
     //border taskDuration text field
-    CALayer *borderTaskDuration = [CALayer layer];
+    /*CALayer *borderTaskDuration = [CALayer layer];
     CGFloat borderWidthTaskDuration = 1;
     borderTaskDuration.borderColor = [UIColor darkGrayColor].CGColor;
     borderTaskDuration.frame = CGRectMake(0, taskDurationTextField.frame.size.height - borderWidthTaskDuration, taskDurationTextField.frame.size.width, taskDurationTextField.frame.size.height);
     borderTaskDuration.borderWidth = borderWidthTaskDuration;
     [taskDurationTextField.layer addSublayer:borderTaskDuration];
-    taskDurationTextField.layer.masksToBounds = YES;
+    taskDurationTextField.layer.masksToBounds = YES;*/
     
     //border taskMembers text field
-    /*CALayer *borderTaskMembers = [CALayer layer];
+    CALayer *borderTaskMembers = [CALayer layer];
     CGFloat borderWidthTaskMembers = 1;
     borderTaskMembers.borderColor = [UIColor darkGrayColor].CGColor;
     borderTaskMembers.frame = CGRectMake(0, taskMembersTextField.frame.size.height - borderWidthTaskMembers, taskMembersTextField.frame.size.width, taskMembersTextField.frame.size.height);
     borderTaskMembers.borderWidth = borderWidthTaskMembers;
     [taskMembersTextField.layer addSublayer:borderTaskMembers];
-    taskMembersTextField.layer.masksToBounds = YES;*/
+    taskMembersTextField.layer.masksToBounds = YES;
     
     //border taskCost text field
     CALayer *borderTaskCost = [CALayer layer];
@@ -110,7 +251,8 @@
     [taskPriorityTextField.layer addSublayer:borderTaskPriority];
     taskPriorityTextField.layer.masksToBounds = YES;*/
     
-    
+    //border radius color view
+    colorView.layer.cornerRadius = 2.0;
     
 }
 

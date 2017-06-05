@@ -63,8 +63,10 @@
             return;
         }
         
-        [user_id addObject:[jsonDict valueForKey:@"id"]];
-        [self addProject];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [user_id addObject:[jsonDict valueForKey:@"id"]];
+            [self addProject];
+        });
         
     }] resume];
     

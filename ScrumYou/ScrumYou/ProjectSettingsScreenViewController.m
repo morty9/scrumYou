@@ -56,11 +56,9 @@
             return;
         }
         
-        NSLog(@"project %@", jsonDict);
-        NSLog(@"%@", [jsonDict objectForKey:@"title"]);
-        nameTextField.text = [jsonDict objectForKey:@"title"];
-        
-        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            nameTextField.text = [jsonDict objectForKey:@"title"];
+        });
         
     }] resume];
     
