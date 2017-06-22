@@ -13,12 +13,15 @@
 {
     __weak IBOutlet UITextField *projectNameTextField;
     __weak IBOutlet UITextField *addMembersTextField;
-    __weak IBOutlet UIButton *addButton;
+    //__weak IBOutlet UIButton *addButton;
+    __weak IBOutlet UIView *membersView;
     
-    NSMutableArray<User*>* _users;
-    NSArray *arryList;
+    __weak IBOutlet UITableView *membersTableView;
+    
+    __weak IBOutlet UILabel *labelMembers;
+    
 }
 
-@property (nonatomic, strong) NSMutableArray<User*>* users;
+@property (strong, nonatomic) UISearchController *searchController;
 
 @end

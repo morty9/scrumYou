@@ -12,9 +12,15 @@
     
     __weak IBOutlet UITextField *nameTextField;
     __weak IBOutlet UITableView *membersTableView;
-    __weak IBOutlet UIStepper *stepperView;
     __weak IBOutlet UIPickerView *pickerView;
     
+    __weak IBOutlet UIButton *editButtonMembers;
 }
+
+- (void) editProject;
+
+- (void) editMembers;
+
+- (void) cancelButton;
 
 @end

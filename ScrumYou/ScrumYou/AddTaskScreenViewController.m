@@ -9,85 +9,240 @@
 #import "AddTaskScreenViewController.h"
 #import "ScrumBoardScreenViewController.h"
 #import "APIKeys.h"
+#import "GetUsers.h"
+#import "AddTask.h"
 
-@interface AddTaskScreenViewController ()
+@interface AddTaskScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
 @end
 
 @implementation AddTaskScreenViewController {
-    NSMutableArray* user_id;
+    NSMutableArray<User*>* get_users;
+    
+    NSMutableArray* members;
+    NSMutableArray* ids;
+    
+    NSArray* searchResults;
+    
     UIVisualEffectView *blurEffectView;
+    
     NSInteger priority;
+    NSInteger nMember;
+    NSInteger category;
+    
+    GetUsers* Users;
+    AddTask* Tasks;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    membersTableView.delegate = self;
+    membersTableView.dataSource = self;
     
     [self designPage];
     
-    user_id = [[NSMutableArray alloc] init];
+    Users = [[GetUsers alloc] init];
+    [Users getUsers];
+    
+    Tasks = [[AddTask alloc] init];
+    
+    get_users = [[NSMutableArray<User*> alloc] init];
+    members = [[NSMutableArray alloc] init];
+    ids = [[NSMutableArray alloc] init];
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    membersTableView.tableHeaderView = self.searchController.searchBar;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
+    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    
+    [membersTableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+/**
+ * Get users form database
+**/
+- (void) getUsername {
+    get_users = Users.users_list;
+    [membersTableView reloadData];
 }
 
+
+/**
+ * Add task to database
+**/
 - (IBAction)didTouchAddButton:(id)sender {
-    NSURL* url = [NSURL URLWithString:kTask_api];
     
-    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
-    [request setHTTPMethod:@"POST"];
+    [Tasks addTaskTitle:taskTitleTextField.text description:taskDescriptionTextField.text difficulty:taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] color:buttonColorView.restorationIdentifier businessValue:taskCostTextField.text duration:taskDurationTextField.text id_members:ids];
     
-    NSDictionary<NSString*, NSString*> *jsonData = @{@"title" : taskTitleTextField.text, @"description" : taskDescriptionTextField.text, @"difficulty" : taskDifficultyTextField.text, @"priority" : priority, @"id_category" : taskCategoryTextField.text, @"color" : buttonColorView.restorationIdentifier, @"businessValue" : taskCostTextField.text, @"duration" : taskDurationTextField.text, @"id_members" : user_id};
-    
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
-    [request setHTTPBody:postData];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    
-    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        if (error != nil) {
-            NSLog(@"Error: %@", error.localizedDescription);
-            return;
-        }
-        
-        if (data == nil) {
-            return;
-        }
-        
-        if (response == nil) {
-            
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            taskTitleTextField.text = @"";
-            taskDescriptionTextField.text = @"";
-            taskDifficultyTextField.text = @"";
-            taskPriorityTextField.text = @"";
-            taskCategoryTextField.text = @"";
-            taskColorTextField.text = @"";
-            taskCostTextField.text = @"";
-            taskDurationTextField.text = @"";
-        });
-        
-        
-    }] resume];
-    
+    taskTitleTextField.text = @"";
+    taskDescriptionTextField.text = @"";
+    taskDifficultyTextField.text = @"";
+    taskMembersTextField.text = @"";
+    taskCostTextField.text = @"";
+    taskDurationTextField.text = @"";
 }
 
+/**
+ * MEMBERS VIEW
+**/
+
+/**
+ * Show add members view
+**/
+- (IBAction)showAddMembersView:(id)sender {
+    [self getUsername];
+    [membersView setHidden:false];
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = self.view.bounds;
+    
+    [self.view insertSubview:blurEffectView belowSubview:membersView];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(self.searchController.isActive) {
+        return searchResults.count;
+    }else {
+        return [get_users count];
+    }
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString* const kCellId = @"cell";
+    
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:kCellId];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellId];
+    }
+    
+    User* username;
+    if(self.searchController.isActive) {
+        username = [searchResults objectAtIndex:indexPath.row];
+    }else {
+        username = [get_users objectAtIndex:indexPath.row];
+    }
+
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", username.fullname];
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [membersTableView cellForRowAtIndexPath:indexPath];
+    if (cell.accessoryType) {
+        cell.accessoryType = NO;
+        [members removeObject:cell.textLabel.text];
+        nMember-=1;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        [members addObject:cell.textLabel.text];
+        nMember+=1;
+    }
+}
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSString *searchString = searchController.searchBar.text;
+    [self searchForText:searchString];
+    [membersTableView reloadData];
+}
+
+- (void)searchForText:(NSString*)searchText {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fullname contains[c] %@ OR nickname contains[c] %@", searchText, searchText];
+    searchResults = [get_users filteredArrayUsingPredicate:predicate];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
+    [self updateSearchResultsForSearchController:self.searchController];
+}
+
+
+/**
+ * Get id User from get_users dictionary
+**/
+- (void) getIdUser {
+    [ids removeAllObjects];
+    for (NSString* name in members) {
+        for (User* user in get_users) {
+            if ([name isEqualToString:[user valueForKey:@"fullname"]]) {
+                NSString* uId = [user valueForKey:@"id_user"];
+                if ([self cleanOccurrences:uId] == false) {
+                    [ids addObject:uId];
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Clean occurrences - check if key exist in array
+**/
+- (BOOL) cleanOccurrences:(NSString*)key {
+    for (NSString* keys in ids) {
+        if (keys == key) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Validate members
+**/
+- (IBAction)validateMembers:(id)sender {
+    [membersView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    taskMembersTextField.text = [@(nMember)stringValue];
+    if(self.searchController.isActive) {
+        [self.searchController setActive:NO];
+    }
+    [self getIdUser];
+}
+
+/**
+ * Close members windows
+**/
+- (IBAction)closeWindowMembers:(id)sender {
+    [membersView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    if(self.searchController.isActive) {
+        [self.searchController setActive:NO];
+    }
+}
+
+
+/**
+ * Priority segmented control
+**/
 - (IBAction)priorityChanged:(UISegmentedControl *)sender {
-    priority = sender.selectedSegmentIndex + 1;
+    priority = [sender selectedSegmentIndex];
 }
 
 
+/**
+ * Category segmented control
+**/
+- (IBAction)categoryChanged:(UISegmentedControl *)sender {
+    category = [sender selectedSegmentIndex];
+}
+
+
+/**
+ * Stepper task duration
+**/
 - (IBAction)stepperAction:(UIStepper*)sender {
-    
     NSUInteger value = sender.value;
     taskDurationTextField.text = [NSString stringWithFormat:@"%02lu", (unsigned long)value];
-    
 }
 
+
+/**
+ * Diplaying window color
+**/
 - (IBAction)showWindowColor:(id)sender {
     [colorView setHidden:false];
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
@@ -97,6 +252,13 @@
     [self.view insertSubview:blurEffectView belowSubview:colorView];
 }
 
+/**
+ * BUTTON VIEW COLOR
+**/
+
+/**
+ * Choose red button
+**/
 - (IBAction)redButtonChoosen:(id)sender {
     [colorView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -104,6 +266,9 @@
     buttonColorView.restorationIdentifier = redColor.restorationIdentifier;
 }
 
+/**
+ * Choose blue button
+**/
 - (IBAction)blueButtonChoosen:(id)sender {
     [colorView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -111,6 +276,9 @@
     buttonColorView.restorationIdentifier = blueColor.restorationIdentifier;
 }
 
+/**
+ * Choose orange button
+ **/
 - (IBAction)orangeButtonChoosen:(id)sender {
     [colorView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -118,6 +286,9 @@
     buttonColorView.restorationIdentifier = orangeColor.restorationIdentifier;
 }
 
+/**
+ * Choose green button
+ **/
 - (IBAction)greenButtonChoosen:(id)sender {
     [colorView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -125,6 +296,9 @@
     buttonColorView.restorationIdentifier = greenColor.restorationIdentifier;
 }
 
+/**
+ * Choose purple button
+ **/
 - (IBAction)purpleButtonChoosen:(id)sender {
     [colorView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -132,6 +306,9 @@
     buttonColorView.restorationIdentifier = purpleColor.restorationIdentifier;
 }
 
+/**
+ * Choose yellow button
+ **/
 - (IBAction)yellowButtonChoosen:(id)sender {
     [colorView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -139,6 +316,9 @@
     buttonColorView.restorationIdentifier = yellowColor.restorationIdentifier;
 }
 
+/**
+ * Choose darkBlue button
+ **/
 - (IBAction)darkBlueButtonChoosen:(id)sender {
     [colorView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -146,6 +326,9 @@
     buttonColorView.restorationIdentifier = darkBlueColor.restorationIdentifier;
 }
 
+/**
+ * Choose pink button
+ **/
 - (IBAction)pinkButtonChoosen:(id)sender {
     [colorView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -153,6 +336,9 @@
     buttonColorView.restorationIdentifier = pinkColor.restorationIdentifier;
 }
 
+/**
+ * Choose gray button
+ **/
 - (IBAction)grayBlueButtonChoosen:(id)sender {
     [colorView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -160,13 +346,17 @@
     buttonColorView.restorationIdentifier = grayBlueColor.restorationIdentifier;
 }
 
+/**
+ * Close window Color
+ **/
 - (IBAction)closeWindowColor:(id)sender {
     [colorView setHidden:true];
     [blurEffectView removeFromSuperview];
 }
 
-
-
+/**
+ * Design the page
+**/
 - (void) designPage {
     
     //navigation bar customization
@@ -197,15 +387,6 @@
     [taskDescriptionTextField.layer addSublayer:borderTaskDescription];
     taskDescriptionTextField.layer.masksToBounds = YES;
     
-    //border taskCategory text field
-    CALayer *borderTaskCategory = [CALayer layer];
-    CGFloat borderWidthTaskCategory = 1;
-    borderTaskCategory.borderColor = [UIColor darkGrayColor].CGColor;
-    borderTaskCategory.frame = CGRectMake(0, taskCategoryTextField.frame.size.height - borderWidthTaskCategory, taskCategoryTextField.frame.size.width, taskCategoryTextField.frame.size.height);
-    borderTaskCategory.borderWidth = borderWidthTaskCategory;
-    [taskCategoryTextField.layer addSublayer:borderTaskCategory];
-    taskCategoryTextField.layer.masksToBounds = YES;
-    
     //border taskDifficulty text field
     CALayer *borderTaskDifficulty = [CALayer layer];
     CGFloat borderWidthTaskDifficulty = 1;
@@ -214,24 +395,6 @@
     borderTaskDifficulty.borderWidth = borderWidthTaskDifficulty;
     [taskDifficultyTextField.layer addSublayer:borderTaskDifficulty];
     taskDifficultyTextField.layer.masksToBounds = YES;
-    
-    //border taskDuration text field
-    /*CALayer *borderTaskDuration = [CALayer layer];
-    CGFloat borderWidthTaskDuration = 1;
-    borderTaskDuration.borderColor = [UIColor darkGrayColor].CGColor;
-    borderTaskDuration.frame = CGRectMake(0, taskDurationTextField.frame.size.height - borderWidthTaskDuration, taskDurationTextField.frame.size.width, taskDurationTextField.frame.size.height);
-    borderTaskDuration.borderWidth = borderWidthTaskDuration;
-    [taskDurationTextField.layer addSublayer:borderTaskDuration];
-    taskDurationTextField.layer.masksToBounds = YES;*/
-    
-    //border taskMembers text field
-    CALayer *borderTaskMembers = [CALayer layer];
-    CGFloat borderWidthTaskMembers = 1;
-    borderTaskMembers.borderColor = [UIColor darkGrayColor].CGColor;
-    borderTaskMembers.frame = CGRectMake(0, taskMembersTextField.frame.size.height - borderWidthTaskMembers, taskMembersTextField.frame.size.width, taskMembersTextField.frame.size.height);
-    borderTaskMembers.borderWidth = borderWidthTaskMembers;
-    [taskMembersTextField.layer addSublayer:borderTaskMembers];
-    taskMembersTextField.layer.masksToBounds = YES;
     
     //border taskCost text field
     CALayer *borderTaskCost = [CALayer layer];
@@ -242,38 +405,20 @@
     [taskCostTextField.layer addSublayer:borderTaskCost];
     taskCostTextField.layer.masksToBounds = YES;
     
-    //border taskPriority text field
-    /*CALayer *borderTaskPriority = [CALayer layer];
-    CGFloat borderWidthTaskPriority = 1;
-    borderTaskPriority.borderColor = [UIColor darkGrayColor].CGColor;
-    borderTaskPriority.frame = CGRectMake(0, taskPriorityTextField.frame.size.height - borderWidthTaskPriority, taskPriorityTextField.frame.size.width, taskPriorityTextField.frame.size.height);
-    borderTaskPriority.borderWidth = borderWidthTaskPriority;
-    [taskPriorityTextField.layer addSublayer:borderTaskPriority];
-    taskPriorityTextField.layer.masksToBounds = YES;*/
-    
     //border radius color view
     colorView.layer.cornerRadius = 2.0;
     
+    //border radius member view
+    membersView.layer.cornerRadius = 2.0;
+    
 }
 
+/**
+ * Back to the previous view controller
+**/
 - (void) cancelButton:(id)sender {
     ScrumBoardScreenViewController* UserVc = [[ScrumBoardScreenViewController alloc] init];
     [self.navigationController pushViewController:UserVc animated:YES];
 }
-- (IBAction)taskAddMembersButton:(id)sender {
-    
-}
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

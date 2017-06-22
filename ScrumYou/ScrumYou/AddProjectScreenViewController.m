@@ -11,98 +11,201 @@
 #import "ScrumBoardScreenViewController.h"
 #import "APIKeys.h"
 #import "User.h"
+#import "GetUsers.h"
+#import "AddProject.h"
 
-@interface AddProjectScreenViewController ()
+@interface AddProjectScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
 
 @end
 
 @implementation AddProjectScreenViewController {
-    NSMutableArray* user_id;
+    NSMutableArray<User*>* get_users;
+    NSMutableArray* members;
+    NSMutableArray* ids;
+    
+    NSInteger nMember;
+    
+    NSArray* searchResults;
+    
+    UIVisualEffectView *blurEffectView;
+    
+    GetUsers* Users;
+    AddProject* Projects;
 }
-
-@synthesize users = _users;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    membersTableView.delegate = self;
+    membersTableView.dataSource = self;
     
     [self designPage];
     
-    user_id = [[NSMutableArray alloc] init];
+    Users = [[GetUsers alloc] init];
+    [Users getUsers];
+    
+    Projects = [[AddProject alloc] init];
+    
+    get_users = [[NSMutableArray<User*> alloc] init];
+    members = [[NSMutableArray alloc] init];
+    ids = [[NSMutableArray alloc] init];
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    membersTableView.tableHeaderView = self.searchController.searchBar;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
+    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    
+    [membersTableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+/**
+ * Get users form database
+ **/
+- (void) getUsername {
+    get_users = Users.users_list;
+    [membersTableView reloadData];
 }
 
+/**
+ * Add project to database and clear textfield content
+**/
 - (IBAction)didTouchAddButton:(id)sender {
+    [Projects addProjecTitle:projectNameTextField.text members:ids];
     
-    NSURL *url = [NSURL URLWithString:[kUserName_api stringByAppendingString:[addMembersTextField.text stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]]];
-    
-    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
-    [request setHTTPMethod:@"GET"];
-    
-    
-    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
-        
-        if (error != nil) {
-            NSLog(@"Error: %@", error.localizedDescription);
-            return;
-        }
-        
-        if (data == nil) {
-            return;
-        }
-        
-        if (response == nil) {
-            return;
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [user_id addObject:[jsonDict valueForKey:@"id"]];
-            [self addProject];
-        });
-        
-    }] resume];
-    
+    projectNameTextField.text = @"";
+    addMembersTextField.text = @"";
 }
 
-- (void) addProject {
+/**
+ * MEMBERS VIEW
+ **/
+
+/**
+ * Show add members view
+ **/
+- (IBAction)showAddMembersView:(id)sender {
+    [self getUsername];
+    [membersView setHidden:false];
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = self.view.bounds;
     
-    NSURL *url = [NSURL URLWithString:kProject_api];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-        [request setHTTPMethod:@"POST"];
+    [self.view insertSubview:blurEffectView belowSubview:membersView];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(self.searchController.isActive) {
+        return searchResults.count;
+    }else {
+        return [get_users count];
+    }
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSDictionary<NSString*, NSString*> *jsonData = @{@"title" : projectNameTextField.text, @"id_members" : user_id};
+    static NSString* const kCellId = @"cell";
     
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
-    [request setHTTPBody:postData];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:kCellId];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellId];
+    }
     
-    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (error != nil) {
-            NSLog(@"Error: %@", error.localizedDescription);
-            return;
+    User* username;
+    if(self.searchController.isActive) {
+        username = [searchResults objectAtIndex:indexPath.row];
+    }else {
+        username = [get_users objectAtIndex:indexPath.row];
+    }
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", username.fullname];
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [membersTableView cellForRowAtIndexPath:indexPath];
+    if (cell.accessoryType) {
+        cell.accessoryType = NO;
+        [members removeObject:cell.textLabel.text];
+        nMember-=1;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        [members addObject:cell.textLabel.text];
+        nMember+=1;
+    }
+}
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSString *searchString = searchController.searchBar.text;
+    [self searchForText:searchString];
+    [membersTableView reloadData];
+}
+
+- (void)searchForText:(NSString*)searchText {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fullname contains[c] %@ OR nickname contains[c] %@", searchText, searchText];
+    searchResults = [get_users filteredArrayUsingPredicate:predicate];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
+    [self updateSearchResultsForSearchController:self.searchController];
+}
+
+
+/**
+ * Get id User from get_users dictionary
+ **/
+- (void) getIdUser {
+    [ids removeAllObjects];
+    for (NSString* name in members) {
+        for (User* user in get_users) {
+            if ([name isEqualToString:[user valueForKey:@"fullname"]]) {
+                NSString* uId = [user valueForKey:@"id_user"];
+                if ([self cleanOccurrences:uId] == false) {
+                    [ids addObject:uId];
+                }
+            }
         }
-    
-        if (data == nil) {
-            return;
+    }
+}
+
+/**
+ * Clean occurrences - check if key exist in array
+ **/
+- (BOOL) cleanOccurrences:(NSString*)key {
+    for (NSString* keys in ids) {
+        if (keys == key) {
+            return true;
         }
-    
-        if (response == nil) {
-            return;
-        }
-    
-        dispatch_async(dispatch_get_main_queue(), ^{
-            projectNameTextField.text = @"";
-            addMembersTextField.text = @"";
-        });
-    }] resume];
+    }
+    return false;
+}
+
+/**
+ * Validate members
+ **/
+- (IBAction)validateMembers:(id)sender {
+    [membersView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    addMembersTextField.text = [@(nMember)stringValue];
+    if(self.searchController.isActive) {
+        [self.searchController setActive:NO];
+    }
+    [self getIdUser];
+}
+
+/**
+ * Close members windows
+ **/
+- (IBAction)closeWindowMembers:(id)sender {
+    [membersView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    if(self.searchController.isActive) {
+        [self.searchController setActive:NO];
+    }
 }
 
 
@@ -135,6 +238,16 @@
     borderAddMember.borderWidth = borderWidthAddMember;
     [addMembersTextField.layer addSublayer:borderAddMember];
     addMembersTextField.layer.masksToBounds = YES;
+    
+    //border labelMember
+    CALayer *borderLabelMember = [CALayer layer];
+    CGFloat borderWidthLabelMember = 1.5;
+    borderLabelMember.borderColor = [UIColor darkGrayColor].CGColor;
+    borderLabelMember.frame = CGRectMake(0, labelMembers.frame.size.height - borderWidthLabelMember, labelMembers.frame.size.width, labelMembers.frame.size.height);
+    borderLabelMember.borderWidth = borderWidthLabelMember;
+    [labelMembers.layer addSublayer:borderLabelMember];
+    labelMembers.layer.masksToBounds = YES;
+    
 }
 
 

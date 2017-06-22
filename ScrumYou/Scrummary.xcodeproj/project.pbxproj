@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		08178A801ECDE77700BE9810 /* CellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08178A7E1ECDE77700BE9810 /* CellView.m */; };
 		08178A811ECDE77700BE9810 /* CellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08178A7F1ECDE77700BE9810 /* CellView.xib */; };
+		0861BAAE1EF0439F0077D43B /* GetUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAAD1EF0439F0077D43B /* GetUsers.m */; };
+		0861BAB11EF1E1460077D43B /* AddTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAB01EF1E1460077D43B /* AddTask.m */; };
+		0861BAB41EF1E8A40077D43B /* AddProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAB31EF1E8A40077D43B /* AddProject.m */; };
+		0861BABD1EF1EFFA0077D43B /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BABC1EF1EFFA0077D43B /* Project.m */; };
+		0861BAC01EF1F2380077D43B /* GetProjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BABF1EF1F2380077D43B /* GetProjects.m */; };
+		0861BAC31EF1F3870077D43B /* GetProjectsById.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAC21EF1F3870077D43B /* GetProjectsById.m */; };
+		0861BAC71EF2B0E00077D43B /* GetUserById.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAC61EF2B0E00077D43B /* GetUserById.m */; };
 		08BF7ECD1ED06F470066E3B7 /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BF7ECC1ED06F470066E3B7 /* PageContentViewController.m */; };
 		08BF7ED31ED06FE20066E3B7 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BF7ED21ED06FE20066E3B7 /* PageViewController.m */; };
 		08C2C8591E70852500609F97 /* AddProjectScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C2C8571E70852500609F97 /* AddProjectScreenViewController.m */; };
@@ -49,6 +56,20 @@
 		08178A7D1ECDE77700BE9810 /* CellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellView.h; sourceTree = "<group>"; };
 		08178A7E1ECDE77700BE9810 /* CellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellView.m; sourceTree = "<group>"; };
 		08178A7F1ECDE77700BE9810 /* CellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellView.xib; sourceTree = "<group>"; };
+		0861BAAC1EF0439F0077D43B /* GetUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetUsers.h; sourceTree = "<group>"; };
+		0861BAAD1EF0439F0077D43B /* GetUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetUsers.m; sourceTree = "<group>"; };
+		0861BAAF1EF1E1460077D43B /* AddTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTask.h; sourceTree = "<group>"; };
+		0861BAB01EF1E1460077D43B /* AddTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTask.m; sourceTree = "<group>"; };
+		0861BAB21EF1E8A40077D43B /* AddProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProject.h; sourceTree = "<group>"; };
+		0861BAB31EF1E8A40077D43B /* AddProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProject.m; sourceTree = "<group>"; };
+		0861BABB1EF1EFFA0077D43B /* Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Project.h; sourceTree = "<group>"; };
+		0861BABC1EF1EFFA0077D43B /* Project.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Project.m; sourceTree = "<group>"; };
+		0861BABE1EF1F2380077D43B /* GetProjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetProjects.h; sourceTree = "<group>"; };
+		0861BABF1EF1F2380077D43B /* GetProjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetProjects.m; sourceTree = "<group>"; };
+		0861BAC11EF1F3870077D43B /* GetProjectsById.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetProjectsById.h; sourceTree = "<group>"; };
+		0861BAC21EF1F3870077D43B /* GetProjectsById.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetProjectsById.m; sourceTree = "<group>"; };
+		0861BAC51EF2B0E00077D43B /* GetUserById.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetUserById.h; sourceTree = "<group>"; };
+		0861BAC61EF2B0E00077D43B /* GetUserById.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetUserById.m; sourceTree = "<group>"; };
 		086A02B21ED314DD00BC675D /* APIKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIKeys.h; sourceTree = "<group>"; };
 		08BF7ECB1ED06F470066E3B7 /* PageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageContentViewController.h; sourceTree = "<group>"; };
 		08BF7ECC1ED06F470066E3B7 /* PageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageContentViewController.m; sourceTree = "<group>"; };
@@ -126,9 +147,94 @@
 		08178A791ECDD82F00BE9810 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				0861BABA1EF1EFE00077D43B /* Projects */,
 				08FB03CB1ED9AC4200D30A19 /* Users */,
 			);
 			name = Data;
+			sourceTree = "<group>";
+		};
+		0861BAA71EF0433D0077D43B /* WebServicesMethods */ = {
+			isa = PBXGroup;
+			children = (
+				0861BAAB1EF043650077D43B /* Tasks */,
+				0861BAAA1EF043600077D43B /* Sprints */,
+				0861BAA91EF0435A0077D43B /* Projects */,
+				0861BAA81EF043530077D43B /* Users */,
+			);
+			name = WebServicesMethods;
+			sourceTree = "<group>";
+		};
+		0861BAA81EF043530077D43B /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				0861BAC41EF2B0C30077D43B /* GET */,
+			);
+			name = Users;
+			sourceTree = "<group>";
+		};
+		0861BAA91EF0435A0077D43B /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				0861BAB61EF1EF3C0077D43B /* GET */,
+				0861BAB51EF1EF250077D43B /* POST */,
+			);
+			name = Projects;
+			sourceTree = "<group>";
+		};
+		0861BAAA1EF043600077D43B /* Sprints */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Sprints;
+			sourceTree = "<group>";
+		};
+		0861BAAB1EF043650077D43B /* Tasks */ = {
+			isa = PBXGroup;
+			children = (
+				0861BAAF1EF1E1460077D43B /* AddTask.h */,
+				0861BAB01EF1E1460077D43B /* AddTask.m */,
+			);
+			name = Tasks;
+			sourceTree = "<group>";
+		};
+		0861BAB51EF1EF250077D43B /* POST */ = {
+			isa = PBXGroup;
+			children = (
+				0861BAB21EF1E8A40077D43B /* AddProject.h */,
+				0861BAB31EF1E8A40077D43B /* AddProject.m */,
+			);
+			name = POST;
+			sourceTree = "<group>";
+		};
+		0861BAB61EF1EF3C0077D43B /* GET */ = {
+			isa = PBXGroup;
+			children = (
+				0861BABE1EF1F2380077D43B /* GetProjects.h */,
+				0861BABF1EF1F2380077D43B /* GetProjects.m */,
+				0861BAC11EF1F3870077D43B /* GetProjectsById.h */,
+				0861BAC21EF1F3870077D43B /* GetProjectsById.m */,
+			);
+			name = GET;
+			sourceTree = "<group>";
+		};
+		0861BABA1EF1EFE00077D43B /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				0861BABB1EF1EFFA0077D43B /* Project.h */,
+				0861BABC1EF1EFFA0077D43B /* Project.m */,
+			);
+			name = Projects;
+			sourceTree = "<group>";
+		};
+		0861BAC41EF2B0C30077D43B /* GET */ = {
+			isa = PBXGroup;
+			children = (
+				0861BAAC1EF0439F0077D43B /* GetUsers.h */,
+				0861BAAD1EF0439F0077D43B /* GetUsers.m */,
+				0861BAC51EF2B0E00077D43B /* GetUserById.h */,
+				0861BAC61EF2B0E00077D43B /* GetUserById.m */,
+			);
+			name = GET;
 			sourceTree = "<group>";
 		};
 		086A02B11ED314AE00BC675D /* APIKey */ = {
@@ -228,9 +334,10 @@
 		08E23AA71E708338007534E0 /* ScrumYou */ = {
 			isa = PBXGroup;
 			children = (
-				086A02B11ED314AE00BC675D /* APIKey */,
 				08E23AAB1E708338007534E0 /* AppDelegate.h */,
 				08E23AAC1E708338007534E0 /* AppDelegate.m */,
+				0861BAA71EF0433D0077D43B /* WebServicesMethods */,
+				086A02B11ED314AE00BC675D /* APIKey */,
 				08E23ABF1E708359007534E0 /* HomeScreen */,
 				08E23AC51E7083F1007534E0 /* LoginScreen */,
 				08E23AD01E70846C007534E0 /* SignUpScreen */,
@@ -391,19 +498,26 @@
 			files = (
 				08FB03CE1ED9AC6F00D30A19 /* User.m in Sources */,
 				08C2C8771E70880900609F97 /* AccountSettingsScreenViewController.m in Sources */,
+				0861BAC01EF1F2380077D43B /* GetProjects.m in Sources */,
+				0861BAC31EF1F3870077D43B /* GetProjectsById.m in Sources */,
 				08E23AC91E708435007534E0 /* HomeScreenViewController.m in Sources */,
 				08E23AAD1E708338007534E0 /* AppDelegate.m in Sources */,
 				08C2C86B1E7087B500609F97 /* ScrumBoardScreenViewController.m in Sources */,
 				08C2C8591E70852500609F97 /* AddProjectScreenViewController.m in Sources */,
+				0861BAB11EF1E1460077D43B /* AddTask.m in Sources */,
 				08178A801ECDE77700BE9810 /* CellView.m in Sources */,
+				0861BAAE1EF0439F0077D43B /* GetUsers.m in Sources */,
 				08C2C8651E70879000609F97 /* AddTaskScreenViewController.m in Sources */,
 				08BF7ED31ED06FE20066E3B7 /* PageViewController.m in Sources */,
 				08E23ACE1E708454007534E0 /* LoginScreenViewController.m in Sources */,
 				08BF7ECD1ED06F470066E3B7 /* PageContentViewController.m in Sources */,
+				0861BAC71EF2B0E00077D43B /* GetUserById.m in Sources */,
 				08E23AAA1E708338007534E0 /* main.m in Sources */,
+				0861BABD1EF1EFFA0077D43B /* Project.m in Sources */,
 				08C2C8711E7087E200609F97 /* ProjectSettingsScreenViewController.m in Sources */,
 				08C2C85F1E70875F00609F97 /* UserHomeScreenViewController.m in Sources */,
 				08E23AD41E708483007534E0 /* SignUpScreenViewController.m in Sources */,
+				0861BAB41EF1E8A40077D43B /* AddProject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
