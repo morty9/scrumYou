@@ -8,59 +8,124 @@
 
 #import "ProjectSettingsScreenViewController.h"
 #import "APIKeys.h"
+#import "GetProjectsById.h"
+#import "Project.h"
+#import "GetUserById.h"
 
-@interface ProjectSettingsScreenViewController ()
+@interface ProjectSettingsScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating>
+
+- (void) editProject;
+
+- (void) editMembers;
+
+- (void) cancelButton;
 
 @end
 
 @implementation ProjectSettingsScreenViewController {
-    NSMutableArray* projects;
+    NSMutableArray<Project*>* projects;
+    NSMutableArray<User*>* users;
+    
+    NSMutableArray* members;
+    NSMutableArray* ids;
+    
+    NSArray* searchResults;
+    
+    UIVisualEffectView *blurEffectView;
+    
+    GetProjectsById* Projects;
+    GetUserById* Users;
+}
+
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self != nil) {
+        
+        projects = [[NSMutableArray<Project*> alloc] init];
+        users = [[NSMutableArray<User*> alloc] init];
+        Projects = [[GetProjectsById alloc] init];
+        Users = [[GetUserById alloc] init];
+        [Projects getProjectById:@"/1" callback:^(NSError *error, BOOL success) {
+            if (success) {
+                NSLog(@"SUCCESS");
+                projects = Projects.projects_list;
+                NSLog(@"p %@", projects);
+                [self getProject];
+                [self getUser];
+            }
+        }];
+    }
+    
+    return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    membersTableView.delegate = self;
+    membersTableView.dataSource = self;
+    
     [self designPage];
-    projects = [[NSMutableArray alloc] init];
-    [self getProject];
+    
+    [membersTableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 - (void) getProject {
     
-    NSURL *url = [NSURL URLWithString:[kProject_api stringByAppendingString:@"/1"]];
+    //projects = Projects.projects_list;
+    NSLog(@"%@", projects);
+    //nameTextField.text = [projects valueForKey:@"title"];
+    for (NSString* p in projects) {
+        nameTextField.text = [p valueForKey:@"_title"];
+    }
+}
+
+- (void) getUser {
     
-    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
-    [request setHTTPMethod:@"GET"];
+    NSLog(@"project %@", projects);
     
+    for (NSMutableArray* membersArray in [projects valueForKey:@"_id_members"]) {
+        for (NSString* m in membersArray) {
+            NSString* result = [@"/" stringByAppendingString:[NSString stringWithFormat:@"%@",m]];
+            [Users getUserById:result callback:^(NSError *error, BOOL success) {
+                if (success) {
+                    NSLog(@"SUCCESS");
+                    users = Users.usersList;
+                }
+                [membersTableView reloadData];
+            }];
+        }
+    }
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return users.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
-        
-        if (error != nil) {
-            NSLog(@"Error: %@", error.localizedDescription);
-            return;
-        }
-        
-        if (data == nil) {
-            return;
-        }
-        
-        if (response == nil) {
-            return;
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            nameTextField.text = [jsonDict objectForKey:@"title"];
-        });
-        
-    }] resume];
+    static NSString* const kCellId = @"AZERTYUIOP";
+    
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:kCellId];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellId];
+    }
+    
+    User* username;
+    username = [users objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", username.fullname];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+}
+
+- (void) editMembers {
     
 }
 
@@ -82,6 +147,8 @@
     
     UIBarButtonItem *editProject = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editProject:)];
     self.navigationItem.rightBarButtonItem = editProject;
+    
+    
     
     //border name project text field
     CALayer *borderName = [CALayer layer];

@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddProjectScreenViewController">
             <connections>
-                <outlet property="addButton" destination="b0y-18-Sp2" id="wMu-A2-Lze"/>
                 <outlet property="addMembersTextField" destination="CYD-sC-0a0" id="2ZQ-ti-tAJ"/>
+                <outlet property="labelMembers" destination="Ify-Tf-Tlv" id="9id-JQ-dNe"/>
+                <outlet property="membersTableView" destination="EGG-ht-sxk" id="KJ8-GY-i6v"/>
+                <outlet property="membersView" destination="Mpq-bE-cO6" id="tC5-v0-TAv"/>
                 <outlet property="projectNameTextField" destination="Hsw-TQ-KRR" id="jKK-2G-yUg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -22,6 +24,16 @@
             <rect key="frame" x="0.0" y="64" width="375" height="603"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Membre(s)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ify-Tf-Tlv">
+                    <rect key="frame" x="16" y="121" width="177" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="177" id="Byb-4H-7ku"/>
+                        <constraint firstAttribute="height" constant="65" id="KCP-Zz-aFr"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nom du projet" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hsw-TQ-KRR" userLabel="Project Name Text Field">
                     <rect key="frame" x="16" y="27" width="343" height="64"/>
                     <constraints>
@@ -32,11 +44,11 @@
                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Ajouter des membres" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CYD-sC-0a0" userLabel="Add Member Text Field">
-                    <rect key="frame" x="16" y="121" width="343" height="65"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CYD-sC-0a0" userLabel="Add Member Text Field">
+                    <rect key="frame" x="179" y="121" width="180" height="65"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="65" id="A3a-4f-eL2"/>
-                        <constraint firstAttribute="width" constant="343" id="hRp-oJ-CfX"/>
+                        <constraint firstAttribute="width" constant="180" id="hRp-oJ-CfX"/>
                     </constraints>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -54,8 +66,7 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="addMembersButton:" destination="-1" eventType="touchUpInside" id="tln-i4-Uwu"/>
-                        <action selector="didTouchAddProject:" destination="-1" eventType="touchUpInside" id="Ndx-Ba-9N6"/>
+                        <action selector="didTouchAddButton:" destination="-1" eventType="touchUpInside" id="qGU-xH-dhY"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qLg-dt-cHw" userLabel="Add Member(s) Button">
@@ -65,27 +76,83 @@
                         <constraint firstAttribute="width" constant="25" id="g0D-B5-wXw"/>
                     </constraints>
                     <state key="normal" backgroundImage="add"/>
+                    <connections>
+                        <action selector="showAddMembersView:" destination="-1" eventType="touchUpInside" id="ah5-V8-FwK"/>
+                    </connections>
                 </button>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mpq-bE-cO6">
+                    <rect key="frame" x="51.5" y="129" width="272" height="300"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsVerticalScrollIndicator="NO" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="EGG-ht-sxk">
+                            <rect key="frame" x="8" y="22" width="256" height="232"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="232" id="vWZ-1M-QEm"/>
+                                <constraint firstAttribute="width" constant="256" id="wr8-Eg-wuh"/>
+                            </constraints>
+                            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </tableView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VgV-Vz-Cet">
+                            <rect key="frame" x="5" y="5" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="l0F-aH-j9e"/>
+                                <constraint firstAttribute="width" constant="20" id="wqd-GC-zCo"/>
+                            </constraints>
+                            <state key="normal" image="error"/>
+                            <connections>
+                                <action selector="closeWindowMembers:" destination="-1" eventType="touchUpInside" id="xOv-oR-HlS"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IjJ-qv-pZa">
+                            <rect key="frame" x="8" y="262" width="256" height="30"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <state key="normal" title="Valider">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="validateMembers:" destination="-1" eventType="touchUpInside" id="e0l-se-e7B"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="IjJ-qv-pZa" firstAttribute="leading" secondItem="Mpq-bE-cO6" secondAttribute="leading" constant="8" id="01U-PY-dg9"/>
+                        <constraint firstItem="VgV-Vz-Cet" firstAttribute="leading" secondItem="Mpq-bE-cO6" secondAttribute="leading" constant="5" id="7Yw-It-TEY"/>
+                        <constraint firstAttribute="trailing" secondItem="EGG-ht-sxk" secondAttribute="trailing" constant="8" id="J9r-ST-v9g"/>
+                        <constraint firstItem="VgV-Vz-Cet" firstAttribute="top" secondItem="Mpq-bE-cO6" secondAttribute="top" constant="5" id="UxG-8W-jRo"/>
+                        <constraint firstItem="VgV-Vz-Cet" firstAttribute="leading" secondItem="Mpq-bE-cO6" secondAttribute="leading" constant="5" id="bw6-YU-JK8"/>
+                        <constraint firstItem="IjJ-qv-pZa" firstAttribute="top" secondItem="EGG-ht-sxk" secondAttribute="bottom" constant="8" id="ffD-rP-uEl"/>
+                        <constraint firstAttribute="width" constant="272" id="gUl-Wb-74s"/>
+                        <constraint firstAttribute="height" constant="300" id="hLg-3B-sK8"/>
+                        <constraint firstAttribute="trailing" secondItem="IjJ-qv-pZa" secondAttribute="trailing" constant="8" id="hWT-JK-Zam"/>
+                        <constraint firstAttribute="bottom" secondItem="IjJ-qv-pZa" secondAttribute="bottom" constant="8" id="kaS-Fa-r6N"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="Ify-Tf-Tlv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="2m7-Ib-mZa"/>
                 <constraint firstItem="CYD-sC-0a0" firstAttribute="top" secondItem="Hsw-TQ-KRR" secondAttribute="bottom" constant="30" id="4iK-qt-5AB"/>
+                <constraint firstItem="Ify-Tf-Tlv" firstAttribute="top" secondItem="Hsw-TQ-KRR" secondAttribute="bottom" constant="30" id="8f2-pT-pzC"/>
                 <constraint firstAttribute="trailing" secondItem="CYD-sC-0a0" secondAttribute="trailing" constant="16" id="ASj-JU-wHQ"/>
-                <constraint firstItem="CYD-sC-0a0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="BGo-jZ-E0x"/>
+                <constraint firstItem="Mpq-bE-cO6" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Ami-rh-a2a"/>
+                <constraint firstItem="CYD-sC-0a0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="179" id="BGo-jZ-E0x"/>
                 <constraint firstItem="qLg-dt-cHw" firstAttribute="leading" secondItem="CYD-sC-0a0" secondAttribute="trailing" constant="-25" id="KQD-oM-adY"/>
                 <constraint firstItem="Hsw-TQ-KRR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="O7r-fZ-U5T"/>
                 <constraint firstItem="b0y-18-Sp2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="YyZ-v6-V5z"/>
                 <constraint firstAttribute="trailing" secondItem="b0y-18-Sp2" secondAttribute="trailing" constant="16" id="cOe-2n-wTL"/>
                 <constraint firstAttribute="bottom" secondItem="Hsw-TQ-KRR" secondAttribute="bottom" constant="512" id="d4K-Oe-bhw"/>
                 <constraint firstAttribute="trailing" secondItem="Hsw-TQ-KRR" secondAttribute="trailing" constant="16" id="gCf-wA-xwJ"/>
+                <constraint firstItem="Mpq-bE-cO6" firstAttribute="top" secondItem="Hsw-TQ-KRR" secondAttribute="bottom" constant="38" id="jLF-jc-NBI"/>
                 <constraint firstItem="qLg-dt-cHw" firstAttribute="top" secondItem="CYD-sC-0a0" secondAttribute="bottom" constant="-45" id="r2h-E8-DYt"/>
                 <constraint firstItem="b0y-18-Sp2" firstAttribute="top" secondItem="CYD-sC-0a0" secondAttribute="bottom" constant="50" id="yIL-8V-S2K"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-            <point key="canvasLocation" x="-57" y="91"/>
+            <point key="canvasLocation" x="-57.5" y="90.5"/>
         </view>
     </objects>
     <resources>
         <image name="add" width="32" height="32"/>
+        <image name="error" width="32" height="32"/>
     </resources>
 </document>

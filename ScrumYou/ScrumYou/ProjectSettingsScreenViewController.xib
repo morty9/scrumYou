@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProjectSettingsScreenViewController">
             <connections>
+                <outlet property="editButtonMembers" destination="gCk-Pz-7Ms" id="4CX-lq-2f5"/>
                 <outlet property="membersTableView" destination="Bu7-C9-TEJ" id="OlS-fP-mg6"/>
                 <outlet property="nameTextField" destination="utE-R5-fuR" id="bc6-Wj-KyK"/>
                 <outlet property="pickerView" destination="56R-py-CpS" id="HI0-5I-G57"/>
-                <outlet property="stepperView" destination="7zH-Jp-CGw" id="8Bt-GE-RzL"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -36,31 +36,23 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Exg-ya-4rV">
                     <rect key="frame" x="16" y="98" width="343" height="285"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bu7-C9-TEJ">
-                            <rect key="frame" x="0.0" y="0.0" width="343" height="243"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bu7-C9-TEJ">
+                            <rect key="frame" x="0.0" y="42" width="343" height="243"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="343" id="OdA-3I-KFS"/>
-                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="343" id="PQa-h7-asD"/>
                                 <constraint firstAttribute="height" constant="243" id="fMh-Cp-ntq"/>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="241" id="wD4-Zj-vZe"/>
                             </constraints>
                             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </tableView>
-                        <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="7zH-Jp-CGw">
-                            <rect key="frame" x="124" y="249" width="94" height="29"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="94" id="KSo-2w-Xf3"/>
-                                <constraint firstAttribute="height" constant="29" id="gzB-ky-dHh"/>
-                            </constraints>
-                            <color key="tintColor" red="0.14117647059999999" green="0.2156862745" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
-                        </stepper>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCk-Pz-7Ms">
+                            <rect key="frame" x="296" y="7" width="32" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </button>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="Bu7-C9-TEJ" secondAttribute="trailing" id="2qq-ir-EBS"/>
-                        <constraint firstItem="7zH-Jp-CGw" firstAttribute="centerX" secondItem="Exg-ya-4rV" secondAttribute="centerX" id="3Xh-C3-vzD"/>
-                        <constraint firstItem="Bu7-C9-TEJ" firstAttribute="top" secondItem="Exg-ya-4rV" secondAttribute="top" id="GBC-QD-klY"/>
-                        <constraint firstAttribute="bottom" secondItem="7zH-Jp-CGw" secondAttribute="bottom" constant="7" id="S7Y-yE-yIp"/>
+                        <constraint firstItem="Bu7-C9-TEJ" firstAttribute="top" secondItem="Exg-ya-4rV" secondAttribute="top" constant="42" id="GBC-QD-klY"/>
                         <constraint firstAttribute="height" constant="285" id="Spc-du-gvI"/>
                         <constraint firstAttribute="width" constant="343" id="bKh-Ck-nDr"/>
                         <constraint firstItem="Bu7-C9-TEJ" firstAttribute="leading" secondItem="Exg-ya-4rV" secondAttribute="leading" id="uaw-nf-LI8"/>

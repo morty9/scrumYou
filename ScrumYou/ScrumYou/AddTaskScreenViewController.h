@@ -12,21 +12,15 @@
 {
     __weak IBOutlet UITextField *taskTitleTextField;
     __weak IBOutlet UITextField *taskDescriptionTextField;
-    __weak IBOutlet UITextField *taskCategoryTextField;
     __weak IBOutlet UITextField *taskDifficultyTextField;
     __weak IBOutlet UITextField *taskDurationTextField;
     __weak IBOutlet UITextField *taskMembersTextField;
     __weak IBOutlet UITextField *taskCostTextField;
-    __weak IBOutlet UITextField *taskPriorityTextField;
-    __weak IBOutlet UITextField *taskColorTextField;
-    __weak IBOutlet UIButton *addTaskMembersButton;
-    __weak IBOutlet UIButton *addTaskButton;
-    __weak IBOutlet UIStepper *stepper;
-    __weak IBOutlet UISegmentedControl *prioritySegmentation;
     
+    __weak IBOutlet UISegmentedControl *prioritySegmentation;
+    __weak IBOutlet UISegmentedControl *categorySegmentation;
     
     __weak IBOutlet UIButton *buttonColorView;
-    __weak IBOutlet UIView *colorView;
     __weak IBOutlet UIButton *redColor;
     __weak IBOutlet UIButton *blueColor;
     __weak IBOutlet UIButton *orangeColor;
@@ -36,6 +30,15 @@
     __weak IBOutlet UIButton *darkBlueColor;
     __weak IBOutlet UIButton *pinkColor;
     __weak IBOutlet UIButton *grayBlueColor;
+    __weak IBOutlet UIButton *buttonMembersView;
+    
+    __weak IBOutlet UIView *colorView;
+    __weak IBOutlet UIView *membersView;
+    
+    __weak IBOutlet UITableView *membersTableView;
+    
 }
+
+@property (strong, nonatomic) UISearchController *searchController;
 
 @end
