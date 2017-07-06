@@ -13,12 +13,10 @@
 #import "GetUserById.h"
 #import "GetUsers.h"
 #import "UpdateProjects.h"
+#import "DeleteProjects.h"
+#import "CrudProjects.h"
 
 @interface ProjectSettingsScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating>
-
-- (void) editProject;
-
-- (void) editMembers;
 
 - (void) cancelButton;
 
@@ -40,11 +38,14 @@
     
     NSInteger nMember;
     NSInteger nMemberProject;
+    NSString* idProject;
     
-    GetProjectsById* Projects;
+    //GetProjectsById* Projects;
     GetUserById* UsersIn;
     GetUsers* Users;
     UpdateProjects* Update;
+    DeleteProjects* Delete;
+    CrudProjects* Projects;
     
 }
 
@@ -58,14 +59,16 @@
         members = [[NSMutableArray<User*> alloc] init];
         ids = [[NSMutableArray alloc] init];
         
-        Projects = [[GetProjectsById alloc] init];
+        //Projects = [[GetProjectsById alloc] init];
         UsersIn = [[GetUserById alloc] init];
         Users = [[GetUsers alloc] init];
         Update = [[UpdateProjects alloc] init];
+        Delete = [[DeleteProjects alloc] init];
+        Projects = [[CrudProjects alloc] init];
         
         [Users getUsers];
-        
-        [Projects getProjectById:@"/1" callback:^(NSError *error, BOOL success) {
+        idProject = @"1";
+        [Projects getProjectById:idProject callback:^(NSError *error, BOOL success) {
             if (success) {
                 NSLog(@"SUCCESS PROJECT");
                 projects = Projects.projects_list;
@@ -277,10 +280,11 @@
         }
     }
     NSLog(@"ids %@", ids);
-    [Update updateProjectTitle:nameTextField.text members:ids];
+    [Update updateProjectId:idProject title:nameTextField.text members:ids];
 }
 
 - (IBAction)deleteProject:(id)sender {
+    
 }
 
 

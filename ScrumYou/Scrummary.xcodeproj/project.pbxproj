@@ -11,6 +11,7 @@
 		08178A811ECDE77700BE9810 /* CellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08178A7F1ECDE77700BE9810 /* CellView.xib */; };
 		0832F6B21F0C3A1C00AC284E /* UpdateProjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0832F6B11F0C3A1C00AC284E /* UpdateProjects.m */; };
 		0832F6B61F0E278700AC284E /* DeleteProjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0832F6B51F0E278700AC284E /* DeleteProjects.m */; };
+		0832F6B91F0E45EC00AC284E /* CrudProjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0832F6B81F0E45EC00AC284E /* CrudProjects.m */; };
 		0861BAAE1EF0439F0077D43B /* GetUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAAD1EF0439F0077D43B /* GetUsers.m */; };
 		0861BAB11EF1E1460077D43B /* AddTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAB01EF1E1460077D43B /* AddTask.m */; };
 		0861BAB41EF1E8A40077D43B /* AddProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAB31EF1E8A40077D43B /* AddProject.m */; };
@@ -62,6 +63,8 @@
 		0832F6B11F0C3A1C00AC284E /* UpdateProjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateProjects.m; sourceTree = "<group>"; };
 		0832F6B41F0E278700AC284E /* DeleteProjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteProjects.h; sourceTree = "<group>"; };
 		0832F6B51F0E278700AC284E /* DeleteProjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteProjects.m; sourceTree = "<group>"; };
+		0832F6B71F0E45EC00AC284E /* CrudProjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrudProjects.h; sourceTree = "<group>"; };
+		0832F6B81F0E45EC00AC284E /* CrudProjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrudProjects.m; sourceTree = "<group>"; };
 		0861BAAC1EF0439F0077D43B /* GetUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetUsers.h; sourceTree = "<group>"; };
 		0861BAAD1EF0439F0077D43B /* GetUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetUsers.m; sourceTree = "<group>"; };
 		0861BAAF1EF1E1460077D43B /* AddTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTask.h; sourceTree = "<group>"; };
@@ -203,6 +206,8 @@
 				0832F6AF1F0C39FD00AC284E /* UPDATE */,
 				0861BAB61EF1EF3C0077D43B /* GET */,
 				0861BAB51EF1EF250077D43B /* POST */,
+				0832F6B71F0E45EC00AC284E /* CrudProjects.h */,
+				0832F6B81F0E45EC00AC284E /* CrudProjects.m */,
 			);
 			name = Projects;
 			sourceTree = "<group>";
@@ -526,6 +531,7 @@
 				0832F6B21F0C3A1C00AC284E /* UpdateProjects.m in Sources */,
 				08C2C8771E70880900609F97 /* AccountSettingsScreenViewController.m in Sources */,
 				0861BAC01EF1F2380077D43B /* GetProjects.m in Sources */,
+				0832F6B91F0E45EC00AC284E /* CrudProjects.m in Sources */,
 				0861BAC31EF1F3870077D43B /* GetProjectsById.m in Sources */,
 				08E23AC91E708435007534E0 /* HomeScreenViewController.m in Sources */,
 				08E23AAD1E708338007534E0 /* AppDelegate.m in Sources */,
