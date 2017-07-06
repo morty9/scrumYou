@@ -7,13 +7,11 @@
 //
 
 #import "ProjectSettingsScreenViewController.h"
+#import "HomeScreenViewController.h"
 #import "APIKeys.h"
-#import "GetProjectsById.h"
 #import "Project.h"
 #import "GetUserById.h"
 #import "GetUsers.h"
-#import "UpdateProjects.h"
-#import "DeleteProjects.h"
 #import "CrudProjects.h"
 
 @interface ProjectSettingsScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating>
@@ -24,7 +22,7 @@
 
 @implementation ProjectSettingsScreenViewController {
     
-    NSMutableArray<Project*>* projects;
+    Project* projects;
     
     NSMutableArray<User*>* get_users;
     NSMutableArray<User*>* users_in;
@@ -40,12 +38,9 @@
     NSInteger nMemberProject;
     NSString* idProject;
     
-    //GetProjectsById* Projects;
     GetUserById* UsersIn;
     GetUsers* Users;
-    UpdateProjects* Update;
-    DeleteProjects* Delete;
-    CrudProjects* Projects;
+    CrudProjects* ProjectsCrud;
     
 }
 
@@ -53,32 +48,15 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self != nil) {
         
-        projects = [[NSMutableArray<Project*> alloc] init];
         get_users = [[NSMutableArray<User*> alloc] init];
         users_in = [[NSMutableArray<User*> alloc] init];
         members = [[NSMutableArray<User*> alloc] init];
         ids = [[NSMutableArray alloc] init];
         
-        //Projects = [[GetProjectsById alloc] init];
         UsersIn = [[GetUserById alloc] init];
         Users = [[GetUsers alloc] init];
-        Update = [[UpdateProjects alloc] init];
-        Delete = [[DeleteProjects alloc] init];
-        Projects = [[CrudProjects alloc] init];
+        ProjectsCrud = [[CrudProjects alloc] init];
         
-        [Users getUsers];
-        idProject = @"1";
-        [Projects getProjectById:idProject callback:^(NSError *error, BOOL success) {
-            if (success) {
-                NSLog(@"SUCCESS PROJECT");
-                projects = Projects.projects_list;
-                NSLog(@"p %@", projects);
-                [self displayTitleProject];
-                [self getUserByProject];
-            }
-        }];
-        
-        [membersTableView reloadData];
     }
     
     return self;
@@ -92,40 +70,63 @@
     
     [self designPage];
     
+    get_users = [[NSMutableArray<User*> alloc] init];
+    users_in = [[NSMutableArray<User*> alloc] init];
+    members = [[NSMutableArray<User*> alloc] init];
+    ids = [[NSMutableArray alloc] init];
+    
+    [Users getUsers];
+    idProject = @"53";
+    [ProjectsCrud getProjectById:idProject callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"SUCCESS PROJECT");
+            projects = ProjectsCrud.project;
+            NSLog(@"p %@", projects);
+            [self displayTitleProject];
+            [self getUserByProject];
+        }
+    }];
+    
     [membersTableView reloadData];
 }
 
-
+/*
+ *  VOID -> dipslay the title of the current project in the name text field
+ */
 - (void) displayTitleProject {
     
     NSLog(@"%@", projects);
 
-    for (NSString* p in projects) {
-        nameTextField.text = [p valueForKey:@"_title"];
-        self.navigationItem.title = [p valueForKey:@"_title"];
-    }
+    nameTextField.text = projects.title;
+    self.navigationItem.title = projects.title;
 }
 
+/*
+ *  VOID -> get all users link to the current project
+ *  Call getUserById web service
+ */
 - (void) getUserByProject {
     
-    NSLog(@"project %@", projects);
+    NSLog(@"project %@", [projects valueForKey:@"_id_members"]);
     
-    for (NSMutableArray* membersArray in [projects valueForKey:@"_id_members"]) {
-        for (NSString* m in membersArray) {
-            NSString* result = [@"/" stringByAppendingString:[NSString stringWithFormat:@"%@",m]];
-            [UsersIn getUserById:result callback:^(NSError *error, BOOL success) {
-                if (success) {
-                    NSLog(@"SUCCESS USERS IN");
-                    users_in = UsersIn.usersList;
-                    nMemberProject = users_in.count;
-                    membersCount.text = [@(nMemberProject)stringValue];
-                }
-                [membersTableView reloadData];
-            }];
-        }
+    for (NSNumber* membersArray in projects.id_members) {
+        NSString* result = [@"/" stringByAppendingString:[NSString stringWithFormat:@"%@",[membersArray stringValue]]];
+        [UsersIn getUserById:result callback:^(NSError *error, BOOL success) {
+            if (success) {
+                NSLog(@"SUCCESS USERS IN");
+                users_in = UsersIn.usersList;
+                nMemberProject = users_in.count;
+                membersCount.text = [@(nMemberProject)stringValue];
+            }
+            [membersTableView reloadData];
+        }];
     }
 }
 
+
+/*
+ *  IBAction -> button "+" show members windows
+ */
 - (IBAction)showAddMembersView:(id)sender {
     [self getUsername];
     [membersView setHidden:false];
@@ -137,7 +138,8 @@
 }
 
 /**
- * Get users form database
+ *  VOID ->
+ *  Get users form database
  **/
 - (void) getUsername {
     get_users = Users.users_list;
@@ -245,7 +247,8 @@
 }
 
 /**
- * Validate members
+ *  IBAction -> button "Validate"
+ *  Update members label
  **/
 - (IBAction)validateMembers:(id)sender {
     NSLog(@"members %@", members);
@@ -260,7 +263,7 @@
 }
 
 /**
- * Close members windows
+ *  IBAction -> Close members windows
  **/
 - (IBAction)closeWindowMembers:(id)sender {
     [membersView setHidden:true];
@@ -271,7 +274,8 @@
 }
 
 /**
- * Update project to database
+ *  IBAction -> Update project in database
+ *  Call updateProject web service
  **/
 - (IBAction)validationModification:(id)sender {
     if (ids.count == 0) {
@@ -280,22 +284,48 @@
         }
     }
     NSLog(@"ids %@", ids);
-    [Update updateProjectId:idProject title:nameTextField.text members:ids];
+    [ProjectsCrud updateProjectId:idProject title:nameTextField.text members:ids callback:^(NSError *error, BOOL success) {
+        NSLog(@"SUCCESS UPDATE");
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Modification terminée"
+                                                                           message:@"Les modifications de votre projet ont été prises en compte."
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                [self viewDidLoad];
+            }];
+            
+            [alert addAction:defaultAction];
+            [self presentViewController:alert animated:YES completion:nil];
+
+        });
+    }];
 }
 
+
+/*
+ *  IBAction -> button "delete" 
+ *  Call deleteProject web service
+ */
 - (IBAction)deleteProject:(id)sender {
-    
+    [ProjectsCrud deleteProjectWithId:idProject callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"SUCCESS DELETE");
+        }
+    }];
 }
 
 
 - (void) cancelButton {
+    
     
 }
 
 - (void) designPage {
     
     UIImage *cancel = [[UIImage imageNamed:@"error.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:cancel style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton:)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:cancel style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton)];
     self.navigationItem.leftBarButtonItem = cancelButton;
 
     //border name project text field
