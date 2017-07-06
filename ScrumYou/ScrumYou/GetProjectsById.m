@@ -51,19 +51,20 @@
             return;
         }
         
-        
-        NSString* tmp_id = [jsonDict valueForKey:@"id"];
-        NSString* tmp_title = [jsonDict valueForKey:@"title"];
-        NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
-        NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
-        NSMutableArray* tmp_id_sprints = [jsonDict valueForKey:@"id_sprint"];
-                
-        Project* p = [[Project alloc] initWithId:tmp_id title:tmp_title id_creator:tmp_id_creator id_members:tmp_id_members id_sprints:tmp_id_sprints];
-                
-        NSLog(@"Project %@", p);
-                
-        [self.projects_list addObject:p];
-        callback(error, true);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString* tmp_id = [jsonDict valueForKey:@"id"];
+            NSString* tmp_title = [jsonDict valueForKey:@"title"];
+            NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
+            NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
+            NSMutableArray* tmp_id_sprints = [jsonDict valueForKey:@"id_sprint"];
+            
+            Project* p = [[Project alloc] initWithId:tmp_id title:tmp_title id_creator:tmp_id_creator id_members:tmp_id_members id_sprints:tmp_id_sprints];
+            
+            NSLog(@"Project WS %@", p);
+            
+            [self.projects_list addObject:p];
+            callback(error, true);
+        });
         
     }] resume];
     

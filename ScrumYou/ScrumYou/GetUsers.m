@@ -14,8 +14,17 @@
 
 @synthesize users_list = _users_list;
 
+- (instancetype) init {
+    self = [super init];
+    
+    if (self != nil) {
+        self.users_list = [[NSMutableArray<User*> alloc] init];
+    }
+    return self;
+}
+
 - (void) getUsers {
-    self.users_list = [[NSMutableArray<User*> alloc] init];
+    
     NSURL* url = [[NSURL alloc] initWithString:kUser_api];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"GET"];
@@ -38,20 +47,19 @@
         if (response == nil) {
             return;
         }
-        //dispatch_async(dispatch_get_main_queue(), ^{
-            for (NSDictionary* user in jsonDict) {
-                NSString* tmp_id = [user valueForKey:@"id"];
-                NSString* tmp_nickname = [user valueForKey:@"nickname"];
-                NSString* tmp_fullname = [user valueForKey:@"fullname"];
-                NSString* tmp_email = [user valueForKey:@"email"];
-                NSString* tmp_password = [user valueForKey:@"password"];
-                NSMutableArray<NSString*>* tmp_tasks = [user valueForKey:@"id_tasks"];
+        
+        for (NSDictionary* user in jsonDict) {
+            NSString* tmp_id = [user valueForKey:@"id"];
+            NSString* tmp_nickname = [user valueForKey:@"nickname"];
+            NSString* tmp_fullname = [user valueForKey:@"fullname"];
+            NSString* tmp_email = [user valueForKey:@"email"];
+            NSString* tmp_password = [user valueForKey:@"password"];
+            NSMutableArray<NSString*>* tmp_tasks = [user valueForKey:@"id_tasks"];
             
-                User* u = [[User alloc] initWithId:tmp_id nickname:tmp_nickname fullname:tmp_fullname email:tmp_email password:tmp_password id_tasks:tmp_tasks];
+            User* u = [[User alloc] initWithId:tmp_id nickname:tmp_nickname fullname:tmp_fullname email:tmp_email password:tmp_password id_tasks:tmp_tasks];
             
-                [self.users_list addObject:u];
-            }
-        //});
+            [self.users_list addObject:u];
+        }
         
     }] resume];
 }

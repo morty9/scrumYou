@@ -13,9 +13,14 @@
     __weak IBOutlet UITextField *nameTextField;
     __weak IBOutlet UITableView *membersTableView;
     __weak IBOutlet UIPickerView *pickerView;
+    __weak IBOutlet UILabel *membersCount;
+    __weak IBOutlet UIView *membersView;
+    __weak IBOutlet UILabel *membersTextField;
     
     __weak IBOutlet UIButton *editButtonMembers;
 }
+
+@property (strong, nonatomic) UISearchController *searchController;
 
 - (void) editProject;
 
