@@ -11,7 +11,7 @@
 
 @implementation DeleteProjects
 
-- (void) deleteProjectWithId:(NSString*)id_user callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) deleteProjectWithId:(NSString*)id_project callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSURL* url = [[NSURL alloc] initWithString:kProject_api];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];

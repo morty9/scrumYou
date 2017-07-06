@@ -11,6 +11,6 @@
 
 @interface UpdateProjects : NSObject
 
-- (void) updateProjectTitle:(NSString*)title members:(NSMutableArray*)members;
+- (void) updateProjectId:(NSString*)id_project title:(NSString*)title members:(NSMutableArray*)members;
 
 @end

@@ -12,15 +12,18 @@
 
 @implementation UpdateProjects
 
-- (void) updateProjectTitle:(NSString*)title members:(NSMutableArray*)members {
+- (void) updateProjectId:(NSString*)id_project title:(NSString*)title members:(NSMutableArray*)members {
     
     NSURL *url = [NSURL URLWithString:kProject_api];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"PUT"];
     
-    NSDictionary<NSString*, NSString*> *jsonData = @{@"title" : title, @"id_members" : members};
+    //NSDictionary<NSString*, NSString*> *jsonData = @{@"title" : title};
+    NSString* jsonString = @"{\"id\":\"1\",\"title\":\"helloa\",\"id_members\":921}";
+    NSData* data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:data options:0 error:nil];
     [request setHTTPBody:postData];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
