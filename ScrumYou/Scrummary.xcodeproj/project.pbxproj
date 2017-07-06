@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		08178A801ECDE77700BE9810 /* CellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08178A7E1ECDE77700BE9810 /* CellView.m */; };
 		08178A811ECDE77700BE9810 /* CellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08178A7F1ECDE77700BE9810 /* CellView.xib */; };
+		0832F6B21F0C3A1C00AC284E /* UpdateProjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0832F6B11F0C3A1C00AC284E /* UpdateProjects.m */; };
+		0832F6B61F0E278700AC284E /* DeleteProjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0832F6B51F0E278700AC284E /* DeleteProjects.m */; };
 		0861BAAE1EF0439F0077D43B /* GetUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAAD1EF0439F0077D43B /* GetUsers.m */; };
 		0861BAB11EF1E1460077D43B /* AddTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAB01EF1E1460077D43B /* AddTask.m */; };
 		0861BAB41EF1E8A40077D43B /* AddProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAB31EF1E8A40077D43B /* AddProject.m */; };
@@ -56,6 +58,10 @@
 		08178A7D1ECDE77700BE9810 /* CellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellView.h; sourceTree = "<group>"; };
 		08178A7E1ECDE77700BE9810 /* CellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellView.m; sourceTree = "<group>"; };
 		08178A7F1ECDE77700BE9810 /* CellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellView.xib; sourceTree = "<group>"; };
+		0832F6B01F0C3A1C00AC284E /* UpdateProjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateProjects.h; sourceTree = "<group>"; };
+		0832F6B11F0C3A1C00AC284E /* UpdateProjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateProjects.m; sourceTree = "<group>"; };
+		0832F6B41F0E278700AC284E /* DeleteProjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteProjects.h; sourceTree = "<group>"; };
+		0832F6B51F0E278700AC284E /* DeleteProjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteProjects.m; sourceTree = "<group>"; };
 		0861BAAC1EF0439F0077D43B /* GetUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetUsers.h; sourceTree = "<group>"; };
 		0861BAAD1EF0439F0077D43B /* GetUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetUsers.m; sourceTree = "<group>"; };
 		0861BAAF1EF1E1460077D43B /* AddTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTask.h; sourceTree = "<group>"; };
@@ -153,6 +159,24 @@
 			name = Data;
 			sourceTree = "<group>";
 		};
+		0832F6AF1F0C39FD00AC284E /* UPDATE */ = {
+			isa = PBXGroup;
+			children = (
+				0832F6B01F0C3A1C00AC284E /* UpdateProjects.h */,
+				0832F6B11F0C3A1C00AC284E /* UpdateProjects.m */,
+			);
+			name = UPDATE;
+			sourceTree = "<group>";
+		};
+		0832F6B31F0D8A5800AC284E /* DELETE */ = {
+			isa = PBXGroup;
+			children = (
+				0832F6B41F0E278700AC284E /* DeleteProjects.h */,
+				0832F6B51F0E278700AC284E /* DeleteProjects.m */,
+			);
+			name = DELETE;
+			sourceTree = "<group>";
+		};
 		0861BAA71EF0433D0077D43B /* WebServicesMethods */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +199,8 @@
 		0861BAA91EF0435A0077D43B /* Projects */ = {
 			isa = PBXGroup;
 			children = (
+				0832F6B31F0D8A5800AC284E /* DELETE */,
+				0832F6AF1F0C39FD00AC284E /* UPDATE */,
 				0861BAB61EF1EF3C0077D43B /* GET */,
 				0861BAB51EF1EF250077D43B /* POST */,
 			);
@@ -497,6 +523,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				08FB03CE1ED9AC6F00D30A19 /* User.m in Sources */,
+				0832F6B21F0C3A1C00AC284E /* UpdateProjects.m in Sources */,
 				08C2C8771E70880900609F97 /* AccountSettingsScreenViewController.m in Sources */,
 				0861BAC01EF1F2380077D43B /* GetProjects.m in Sources */,
 				0861BAC31EF1F3870077D43B /* GetProjectsById.m in Sources */,
@@ -511,6 +538,7 @@
 				08BF7ED31ED06FE20066E3B7 /* PageViewController.m in Sources */,
 				08E23ACE1E708454007534E0 /* LoginScreenViewController.m in Sources */,
 				08BF7ECD1ED06F470066E3B7 /* PageContentViewController.m in Sources */,
+				0832F6B61F0E278700AC284E /* DeleteProjects.m in Sources */,
 				0861BAC71EF2B0E00077D43B /* GetUserById.m in Sources */,
 				08E23AAA1E708338007534E0 /* main.m in Sources */,
 				0861BABD1EF1EFFA0077D43B /* Project.m in Sources */,

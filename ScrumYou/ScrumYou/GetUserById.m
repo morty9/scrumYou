@@ -47,21 +47,24 @@
             return;
         }
         
-        NSString* tmp_id = [jsonDict valueForKey:@"id"];
-        NSString* tmp_nickname = [jsonDict valueForKey:@"nickname"];
-        NSString* tmp_fullname = [jsonDict valueForKey:@"fullname"];
-        NSString* tmp_email = [jsonDict valueForKey:@"email"];
-        NSString* tmp_password = [jsonDict valueForKey:@"password"];
-        NSMutableArray* tmp_id_tasks = [jsonDict valueForKey:@"id_tasks"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString* tmp_id = [jsonDict valueForKey:@"id"];
+            NSString* tmp_nickname = [jsonDict valueForKey:@"nickname"];
+            NSString* tmp_fullname = [jsonDict valueForKey:@"fullname"];
+            NSString* tmp_email = [jsonDict valueForKey:@"email"];
+            NSString* tmp_password = [jsonDict valueForKey:@"password"];
+            NSMutableArray* tmp_id_tasks = [jsonDict valueForKey:@"id_tasks"];
             
-        User* u = [[User alloc] initWithId:tmp_id nickname:tmp_nickname fullname:tmp_fullname email:tmp_email password:tmp_password id_tasks:tmp_id_tasks];
+            User* u = [[User alloc] initWithId:tmp_id nickname:tmp_nickname fullname:tmp_fullname email:tmp_email password:tmp_password id_tasks:tmp_id_tasks];
             
-        
-        NSLog(@"User %@", u);
-        
-        [usersList addObject:u];
-        
-        callback(error, true);
+            
+            NSLog(@"User %@", u);
+            
+            [usersList addObject:u];
+            
+            callback(error, true);
+
+        });
         
     }]resume];
     
