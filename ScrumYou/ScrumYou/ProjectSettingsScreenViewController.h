@@ -22,10 +22,6 @@
 
 @property (strong, nonatomic) UISearchController *searchController;
 
-- (void) editProject;
-
-- (void) editMembers;
-
 - (void) cancelButton;
 
 @end
