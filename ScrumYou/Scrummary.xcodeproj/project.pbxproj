@@ -40,6 +40,8 @@
 		08FB03CE1ED9AC6F00D30A19 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB03CD1ED9AC6F00D30A19 /* User.m */; };
 		BB09D45D1F0E8C6A009D4CC2 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D45C1F0E8C6A009D4CC2 /* Task.m */; };
 		BB09D4611F0F8ED1009D4CC2 /* Sprint.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D4601F0F8ED1009D4CC2 /* Sprint.m */; };
+		BB09D4651F0F9246009D4CC2 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D4641F0F9246009D4CC2 /* Category.m */; };
+		BB09D4691F0F934E009D4CC2 /* Stat.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D4681F0F934E009D4CC2 /* Stat.m */; };
 		BB19FB221ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB211ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib */; };
 		BB19FB241ECF452B00B5085B /* LoginScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB231ECF452B00B5085B /* LoginScreenViewController~ipad.xib */; };
 		BB19FB261ECF479E00B5085B /* HomeScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB251ECF479E00B5085B /* HomeScreenViewController~ipad.xib */; };
@@ -108,6 +110,10 @@
 		BB09D45C1F0E8C6A009D4CC2 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 		BB09D45F1F0F8ED1009D4CC2 /* Sprint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprint.h; sourceTree = "<group>"; };
 		BB09D4601F0F8ED1009D4CC2 /* Sprint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sprint.m; sourceTree = "<group>"; };
+		BB09D4631F0F9246009D4CC2 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
+		BB09D4641F0F9246009D4CC2 /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
+		BB09D4671F0F934E009D4CC2 /* Stat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stat.h; sourceTree = "<group>"; };
+		BB09D4681F0F934E009D4CC2 /* Stat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stat.m; sourceTree = "<group>"; };
 		BB19FB211ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AddProjectScreenViewController~ipad.xib"; sourceTree = "<group>"; };
 		BB19FB231ECF452B00B5085B /* LoginScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "LoginScreenViewController~ipad.xib"; sourceTree = "<group>"; };
 		BB19FB251ECF479E00B5085B /* HomeScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "HomeScreenViewController~ipad.xib"; sourceTree = "<group>"; };
@@ -146,6 +152,8 @@
 		08178A791ECDD82F00BE9810 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				BB09D4661F0F933F009D4CC2 /* Stats */,
+				BB09D4621F0F922C009D4CC2 /* Categories */,
 				BB09D45E1F0F8EA9009D4CC2 /* Sprints */,
 				BB09D45A1F0E8C38009D4CC2 /* Tasks */,
 				0861BABA1EF1EFE00077D43B /* Projects */,
@@ -395,6 +403,24 @@
 			name = Sprints;
 			sourceTree = "<group>";
 		};
+		BB09D4621F0F922C009D4CC2 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				BB09D4631F0F9246009D4CC2 /* Category.h */,
+				BB09D4641F0F9246009D4CC2 /* Category.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		BB09D4661F0F933F009D4CC2 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				BB09D4671F0F934E009D4CC2 /* Stat.h */,
+				BB09D4681F0F934E009D4CC2 /* Stat.m */,
+			);
+			name = Stats;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -490,9 +516,11 @@
 				08C2C8771E70880900609F97 /* AccountSettingsScreenViewController.m in Sources */,
 				0832F6B91F0E45EC00AC284E /* CrudProjects.m in Sources */,
 				08E23AC91E708435007534E0 /* HomeScreenViewController.m in Sources */,
+				BB09D4691F0F934E009D4CC2 /* Stat.m in Sources */,
 				08E23AAD1E708338007534E0 /* AppDelegate.m in Sources */,
 				08C2C86B1E7087B500609F97 /* ScrumBoardScreenViewController.m in Sources */,
 				BB09D4611F0F8ED1009D4CC2 /* Sprint.m in Sources */,
+				BB09D4651F0F9246009D4CC2 /* Category.m in Sources */,
 				BB09D45D1F0E8C6A009D4CC2 /* Task.m in Sources */,
 				08C2C8591E70852500609F97 /* AddProjectScreenViewController.m in Sources */,
 				0861BAB11EF1E1460077D43B /* AddTask.m in Sources */,
