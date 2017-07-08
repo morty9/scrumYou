@@ -28,7 +28,7 @@
 /*
  *  POST -> add project to database
  */
-- (void) addProjecTitle:(NSString*)title members:(NSMutableArray*)members {
+- (void) addProjecTitle:(NSString*)title members:(NSMutableArray*)members callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSURL* url = [NSURL URLWithString:kProject_api];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -61,7 +61,7 @@
 
 
 /*
- *  VOID -> Get all projects from database
+ *  GET -> Get all projects from database
  */
 - (void) getProjects:(void (^)(NSError *error, BOOL success))callback {
     
@@ -156,6 +156,7 @@
     }] resume];
     
 }
+
 
 /*
  * UPDATE -> update project with id

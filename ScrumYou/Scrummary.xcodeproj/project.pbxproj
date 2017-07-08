@@ -10,7 +10,6 @@
 		08178A801ECDE77700BE9810 /* CellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08178A7E1ECDE77700BE9810 /* CellView.m */; };
 		08178A811ECDE77700BE9810 /* CellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08178A7F1ECDE77700BE9810 /* CellView.xib */; };
 		0832F6B91F0E45EC00AC284E /* CrudProjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0832F6B81F0E45EC00AC284E /* CrudProjects.m */; };
-		0861BAB11EF1E1460077D43B /* AddTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAB01EF1E1460077D43B /* AddTask.m */; };
 		0861BABD1EF1EFFA0077D43B /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BABC1EF1EFFA0077D43B /* Project.m */; };
 		08BF7ECD1ED06F470066E3B7 /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BF7ECC1ED06F470066E3B7 /* PageContentViewController.m */; };
 		08BF7ED31ED06FE20066E3B7 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BF7ED21ED06FE20066E3B7 /* PageViewController.m */; };
@@ -42,6 +41,7 @@
 		BB09D4651F0F9246009D4CC2 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D4641F0F9246009D4CC2 /* Category.m */; };
 		BB09D4691F0F934E009D4CC2 /* Stat.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D4681F0F934E009D4CC2 /* Stat.m */; };
 		BB09D46C1F0FBFFE009D4CC2 /* CrudSprints.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D46B1F0FBFFE009D4CC2 /* CrudSprints.m */; };
+		BB09D46F1F10F171009D4CC2 /* CrudTasks.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D46E1F10F171009D4CC2 /* CrudTasks.m */; };
 		BB19FB221ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB211ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib */; };
 		BB19FB241ECF452B00B5085B /* LoginScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB231ECF452B00B5085B /* LoginScreenViewController~ipad.xib */; };
 		BB19FB261ECF479E00B5085B /* HomeScreenViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB19FB251ECF479E00B5085B /* HomeScreenViewController~ipad.xib */; };
@@ -60,8 +60,6 @@
 		08178A7F1ECDE77700BE9810 /* CellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellView.xib; sourceTree = "<group>"; };
 		0832F6B71F0E45EC00AC284E /* CrudProjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrudProjects.h; sourceTree = "<group>"; };
 		0832F6B81F0E45EC00AC284E /* CrudProjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrudProjects.m; sourceTree = "<group>"; };
-		0861BAAF1EF1E1460077D43B /* AddTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTask.h; sourceTree = "<group>"; };
-		0861BAB01EF1E1460077D43B /* AddTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTask.m; sourceTree = "<group>"; };
 		0861BABB1EF1EFFA0077D43B /* Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Project.h; sourceTree = "<group>"; };
 		0861BABC1EF1EFFA0077D43B /* Project.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Project.m; sourceTree = "<group>"; };
 		086A02B21ED314DD00BC675D /* APIKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIKeys.h; sourceTree = "<group>"; };
@@ -115,6 +113,8 @@
 		BB09D4681F0F934E009D4CC2 /* Stat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stat.m; sourceTree = "<group>"; };
 		BB09D46A1F0FBFFE009D4CC2 /* CrudSprints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrudSprints.h; sourceTree = "<group>"; };
 		BB09D46B1F0FBFFE009D4CC2 /* CrudSprints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrudSprints.m; sourceTree = "<group>"; };
+		BB09D46D1F10F171009D4CC2 /* CrudTasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrudTasks.h; sourceTree = "<group>"; };
+		BB09D46E1F10F171009D4CC2 /* CrudTasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrudTasks.m; sourceTree = "<group>"; };
 		BB19FB211ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AddProjectScreenViewController~ipad.xib"; sourceTree = "<group>"; };
 		BB19FB231ECF452B00B5085B /* LoginScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "LoginScreenViewController~ipad.xib"; sourceTree = "<group>"; };
 		BB19FB251ECF479E00B5085B /* HomeScreenViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "HomeScreenViewController~ipad.xib"; sourceTree = "<group>"; };
@@ -204,8 +204,8 @@
 		0861BAAB1EF043650077D43B /* Tasks */ = {
 			isa = PBXGroup;
 			children = (
-				0861BAAF1EF1E1460077D43B /* AddTask.h */,
-				0861BAB01EF1E1460077D43B /* AddTask.m */,
+				BB09D46D1F10F171009D4CC2 /* CrudTasks.h */,
+				BB09D46E1F10F171009D4CC2 /* CrudTasks.m */,
 			);
 			name = Tasks;
 			sourceTree = "<group>";
@@ -526,7 +526,6 @@
 				BB09D4651F0F9246009D4CC2 /* Category.m in Sources */,
 				BB09D45D1F0E8C6A009D4CC2 /* Task.m in Sources */,
 				08C2C8591E70852500609F97 /* AddProjectScreenViewController.m in Sources */,
-				0861BAB11EF1E1460077D43B /* AddTask.m in Sources */,
 				BB09D46C1F0FBFFE009D4CC2 /* CrudSprints.m in Sources */,
 				08178A801ECDE77700BE9810 /* CellView.m in Sources */,
 				08C2C8651E70879000609F97 /* AddTaskScreenViewController.m in Sources */,
@@ -534,6 +533,7 @@
 				08E23ACE1E708454007534E0 /* LoginScreenViewController.m in Sources */,
 				08BF7ECD1ED06F470066E3B7 /* PageContentViewController.m in Sources */,
 				08E23AAA1E708338007534E0 /* main.m in Sources */,
+				BB09D46F1F10F171009D4CC2 /* CrudTasks.m in Sources */,
 				0861BABD1EF1EFFA0077D43B /* Project.m in Sources */,
 				08C2C8711E7087E200609F97 /* ProjectSettingsScreenViewController.m in Sources */,
 				08C2C85F1E70875F00609F97 /* UserHomeScreenViewController.m in Sources */,
