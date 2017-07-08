@@ -20,7 +20,6 @@
     if (self != nil) {
         self.userList = [[NSMutableArray<User*> alloc] init];
         self.user = [[User alloc] init];
-        self.dict_error = [[NSDictionary alloc] init];
     }
     return self;
 }
