@@ -8,6 +8,9 @@
 
 #import "UserHomeScreenViewController.h"
 #import "CellView.h"
+#import "Project.h"
+#import "CrudUsers.h"
+#import "CrudProjects.h"
 
 @interface UserHomeScreenViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -15,14 +18,38 @@
 @property (strong, nonatomic) NSArray *tracks;
 @end
 
-@implementation UserHomeScreenViewController
+@implementation UserHomeScreenViewController {
+    
+    NSMutableArray<Project*>* get_projects;
+    
+    CrudProjects* ProjectsCrud;
+    
+}
 
 @synthesize collectionView = _collectionView;
+
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self != nil) {
+        
+        get_projects = [[NSMutableArray<Project*> alloc] init];
+        
+        ProjectsCrud = [[CrudProjects alloc] init];
+        
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self designPage];
     
+    ProjectsCrud getProjects:^(NSError *error, BOOL success) {
+        if (success) {
+            
+        }
+    }
     
     
     self.collectionView.delegate = self;
@@ -38,6 +65,7 @@
     [self.collectionView reloadData];
     [self.otherCollectionView reloadData];
 }
+
 
 - (void) designPage {
     
