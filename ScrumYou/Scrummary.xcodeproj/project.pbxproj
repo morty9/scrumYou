@@ -12,9 +12,6 @@
 		0832F6B91F0E45EC00AC284E /* CrudProjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0832F6B81F0E45EC00AC284E /* CrudProjects.m */; };
 		0861BAB11EF1E1460077D43B /* AddTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAB01EF1E1460077D43B /* AddTask.m */; };
 		0861BABD1EF1EFFA0077D43B /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BABC1EF1EFFA0077D43B /* Project.m */; };
-		0861BAC71EF2B0E00077D43B /* GetUserById.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAC61EF2B0E00077D43B /* GetUserById.m */; };
-		0861BAC01EF1F2380077D43B /* GetProjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BABF1EF1F2380077D43B /* GetProjects.m */; };
-		0861BAC31EF1F3870077D43B /* GetProjectsById.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAC21EF1F3870077D43B /* GetProjectsById.m */; };
 		08BF7ECD1ED06F470066E3B7 /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BF7ECC1ED06F470066E3B7 /* PageContentViewController.m */; };
 		08BF7ED31ED06FE20066E3B7 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BF7ED21ED06FE20066E3B7 /* PageViewController.m */; };
 		08C2C8591E70852500609F97 /* AddProjectScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C2C8571E70852500609F97 /* AddProjectScreenViewController.m */; };
@@ -62,12 +59,6 @@
 		0861BAB01EF1E1460077D43B /* AddTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTask.m; sourceTree = "<group>"; };
 		0861BABB1EF1EFFA0077D43B /* Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Project.h; sourceTree = "<group>"; };
 		0861BABC1EF1EFFA0077D43B /* Project.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Project.m; sourceTree = "<group>"; };
-		0861BAC51EF2B0E00077D43B /* GetUserById.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetUserById.h; sourceTree = "<group>"; };
-		0861BAC61EF2B0E00077D43B /* GetUserById.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetUserById.m; sourceTree = "<group>"; };
-		0861BABE1EF1F2380077D43B /* GetProjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetProjects.h; sourceTree = "<group>"; };
-		0861BABF1EF1F2380077D43B /* GetProjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetProjects.m; sourceTree = "<group>"; };
-		0861BAC11EF1F3870077D43B /* GetProjectsById.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetProjectsById.h; sourceTree = "<group>"; };
-		0861BAC21EF1F3870077D43B /* GetProjectsById.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetProjectsById.m; sourceTree = "<group>"; };
 		086A02B21ED314DD00BC675D /* APIKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIKeys.h; sourceTree = "<group>"; };
 		08BF7ECB1ED06F470066E3B7 /* PageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageContentViewController.h; sourceTree = "<group>"; };
 		08BF7ECC1ED06F470066E3B7 /* PageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageContentViewController.m; sourceTree = "<group>"; };
@@ -480,8 +471,6 @@
 				08BF7ED31ED06FE20066E3B7 /* PageViewController.m in Sources */,
 				08E23ACE1E708454007534E0 /* LoginScreenViewController.m in Sources */,
 				08BF7ECD1ED06F470066E3B7 /* PageContentViewController.m in Sources */,
-				0861BAC71EF2B0E00077D43B /* GetUserById.m in Sources */,
-				0832F6B61F0E278700AC284E /* DeleteProjects.m in Sources */,
 				08E23AAA1E708338007534E0 /* main.m in Sources */,
 				0861BABD1EF1EFFA0077D43B /* Project.m in Sources */,
 				08C2C8711E7087E200609F97 /* ProjectSettingsScreenViewController.m in Sources */,

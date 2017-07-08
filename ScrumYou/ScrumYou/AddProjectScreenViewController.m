@@ -11,8 +11,8 @@
 #import "ScrumBoardScreenViewController.h"
 #import "APIKeys.h"
 #import "User.h"
-#import "GetUsers.h"
-#import "AddProject.h"
+#import "CrudUsers.h"
+#import "CrudProjects.h"
 
 @interface AddProjectScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
@@ -30,8 +30,8 @@
     
     UIVisualEffectView *blurEffectView;
     
-    GetUsers* Users;
-    AddProject* Projects;
+    CrudUsers* Users;
+    CrudProjects* Projects;
 }
 
 - (void)viewDidLoad {
@@ -41,10 +41,14 @@
     
     [self designPage];
     
-    Users = [[GetUsers alloc] init];
-    [Users getUsers];
+    Users = [[CrudUsers alloc] init];
+    [Users getUsers:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"SUCCESS GET USERS");
+        }
+    }];
     
-    Projects = [[AddProject alloc] init];
+    Projects = [[CrudProjects alloc] init];
     
     get_users = [[NSMutableArray<User*> alloc] init];
     members = [[NSMutableArray alloc] init];
@@ -66,7 +70,7 @@
  * Get users form database
  **/
 - (void) getUsername {
-    get_users = Users.users_list;
+    get_users = Users.userList;
     [membersTableView reloadData];
 }
 

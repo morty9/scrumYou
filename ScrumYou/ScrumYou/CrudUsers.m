@@ -28,7 +28,7 @@
  */
 - (void) addNickname:(NSString*)nickname fullname:(NSString*)fullname email:(NSString*)email password:(NSString*)password callback:(void (^)(NSError *error, BOOL success))callback {
     
-    NSURL *url = [NSURL URLWithString:kProject_api];
+    NSURL *url = [NSURL URLWithString:kUser_api];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"POST"];
     
@@ -54,6 +54,10 @@
         if (response == nil) {
             return;
         }
+        NSString* str;
+        [NSString stringEncodingForData:data encodingOptions:0 convertedString:&str usedLossyConversion:false];
+        NSLog(@"DATA %@", str);
+        callback(error, true);
         
     }] resume];
 }
@@ -110,7 +114,7 @@
  */
 - (void) getUserById:(NSString*)userId callback:(void (^)(NSError *error, BOOL success))callback {
     
-    NSURL *url = [NSURL URLWithString:[kUser_api stringByAppendingString:userId]];
+    NSURL *url = [NSURL URLWithString:[kUser_api stringByAppendingString:[@"/" stringByAppendingString:userId]]];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -160,7 +164,7 @@
  */
 - (void) updateUserId:(NSString*)id_user nickname:(NSString*)nickname fullname:(NSString*)fullname email:(NSString*)email password:(NSString*)password callback:(void (^)(NSError *error, BOOL success))callback {
     
-    NSURL *url = [NSURL URLWithString:kProject_api];
+    NSURL *url = [NSURL URLWithString:[kUser_api stringByAppendingString:[@"/" stringByAppendingString:id_user]]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"PUT"];
     
@@ -198,7 +202,7 @@
  */
 - (void) deleteUserWithId:(NSString*)id_user callback:(void (^)(NSError *error, BOOL success))callback {
  
-    NSURL* url = [[NSURL alloc] initWithString:kProject_api];
+    NSURL* url = [NSURL URLWithString:[kUser_api stringByAppendingString:[@"/" stringByAppendingString:id_user]]];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"DELETE"];
     
