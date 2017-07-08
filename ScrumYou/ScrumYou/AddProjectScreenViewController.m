@@ -89,9 +89,37 @@
 **/
 - (IBAction)didTouchAddButton:(id)sender {
     
-    [Projects addProjecTitle:projectNameTextField.text members:ids id_creator:[self.token_dic valueForKey:@"userId"] callback:^(NSError *error, BOOL success) {
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    [Projects addProjecTitle:projectNameTextField.text members:ids id_creator:[self.token_dic valueForKey:@"userId"] token:[self.token_dic valueForKey:@"token"] callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS ADD PROJECT");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([Projects.dict_error valueForKey:@"type"] != nil) {
+                    NSString* title = [weakSelf->Projects.dict_error valueForKey:@"title"];
+                    NSString* message = [weakSelf->Projects.dict_error valueForKey:@"message"];
+                    
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    
+                } else {
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre projet a été créé avec succès." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    
+                }
+            });
         }
     }];
     
