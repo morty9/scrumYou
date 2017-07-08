@@ -284,22 +284,23 @@
             [ids addObject:[usr valueForKey:@"id_user"]];
         }
     }
-    [ProjectsCrud updateProjectId:idProject title:nameTextField.text members:ids callback:^(NSError *error, BOOL success) {
-        NSLog(@"SUCCESS UPDATE");
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Modification terminée"message:@"Les modifications de votre projet ont été prises en compte." preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                [self viewDidLoad];
-            }];
-            
-            [alert addAction:defaultAction];
-            [self presentViewController:alert animated:YES completion:nil];
+//    [ProjectsCrud updateProjectId:idProject title:nameTextField.text members:ids callback:^(NSError *error, BOOL success) {
+//        NSLog(@"SUCCESS UPDATE");
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Modification terminée"message:@"Les modifications de votre projet ont été prises en compte." preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+//                [self viewDidLoad];
+//            }];
+//            
+//            [alert addAction:defaultAction];
+//            [self presentViewController:alert animated:YES completion:nil];
+//
+//        });
+//    }];
+}
 
-        });
-    }];
-}*/
 
 
 /*
@@ -312,13 +313,13 @@
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation supression" message:@"Êtes-vous sûr de vouloir supprimer ce projet ?" preferredStyle: UIAlertControllerStyleAlert];
         
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [ProjectsCrud deleteProjectWithId:idProject callback:^(NSError *error, BOOL success) {
-            if (success) {
-                NSLog(@"SUCCESS DELETE");
-                //TODO!!!!!!!!!!!!!!!!!!!!!
-                NSLog(@"RETURN TO HOME USER SCREEN");
-            }
-        }];
+//        [ProjectsCrud deleteProjectWithId:idProject callback:^(NSError *error, BOOL success) {
+//            if (success) {
+//                NSLog(@"SUCCESS DELETE");
+//                //TODO!!!!!!!!!!!!!!!!!!!!!
+//                NSLog(@"RETURN TO HOME USER SCREEN");
+//            }
+//        }];
     }];
         
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
