@@ -278,7 +278,7 @@
  *  IBAction -> Update project in database
  *  Call updateProject web service
  **/
-- (IBAction)validationModification:(id)sender {
+/*- (IBAction)validationModification:(id)sender {
     if (ids.count == 0) {
         for (NSString* usr in users_in) {
             [ids addObject:[usr valueForKey:@"id_user"]];
@@ -302,11 +302,12 @@
 }
 
 
+
 /*
  *  IBAction -> button "delete" 
  *  Call deleteProject web service
  */
-- (IBAction)deleteProject:(id)sender {
+/*- (IBAction)deleteProject:(id)sender {
     
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation supression" message:@"Êtes-vous sûr de vouloir supprimer ce projet ?" preferredStyle: UIAlertControllerStyleAlert];
@@ -328,7 +329,7 @@
     [alert addAction:defaultAction];
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
-}
+}*/
 
 
 - (void) cancelButton {
