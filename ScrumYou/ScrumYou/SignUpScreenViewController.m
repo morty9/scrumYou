@@ -8,6 +8,7 @@
 
 #import "SignUpScreenViewController.h"
 #import "HomeScreenViewController.h"
+#import "LoginScreenViewController.h"
 #import "APIKeys.h"
 #import "CrudUsers.h"
 
@@ -34,16 +35,53 @@
     [self designPage];
 }
 
+/*
+ *  IBAction -> add user to database
+ *  Call addUser web service
+ */
 - (IBAction)didTouchAddUser:(id)sender {
-
+    
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
     [Users addNickname:self.nicknameTextField.text fullname:self.completeNameTextField.text email:self.emailTextField.text password:self.pwdTextField.text callback:^(NSError *error, BOOL success) {
         if (success) {
-            NSLog(@"USER ADDED");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([Users.dict_error valueForKey:@"type"] != nil) {
+                    NSString* title = [weakSelf->Users.dict_error valueForKey:@"title"];
+                    NSString* message = [weakSelf->Users.dict_error valueForKey:@"message"];
+                    
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    
+                } else {
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Inscription réussie" message:@"Votre inscription est réussie, veuillez vous connecter." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    
+                }
+            });
         }
     }];
+    
+    LoginScreenViewController* loginVC = [[LoginScreenViewController alloc] init];
+    [self.navigationController pushViewController:loginVC animated:true];
+    
 }
 
-
+/*
+ *  VOID -> design the page
+ */
 - (void) designPage {
     
     //navigation bar customisation

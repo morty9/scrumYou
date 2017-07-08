@@ -23,6 +23,8 @@
     [super viewDidLoad];
     [self designPage];
     
+    
+    
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     

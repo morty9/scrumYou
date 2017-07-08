@@ -160,7 +160,7 @@
 /*
  * UPDATE -> update project with id
  */
-- (void) updateProjectId:(NSString*)id_project title:(NSString*)title members:(NSMutableArray*)members callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) updateProjectId:(NSString*)id_project title:(NSString*)title members:(NSMutableArray*)members token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSLog(@"ID_PROJECT %@", id_project);
     NSLog(@"TITLE %@", title);
@@ -169,6 +169,7 @@
     NSURL *url = [NSURL URLWithString:[kProject_api stringByAppendingString:[@"/" stringByAppendingString:id_project]]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"PUT"];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
     
     NSDictionary<NSString*, NSString*> *jsonData = @{@"title" : title, @"id_members" : members};
     
@@ -201,11 +202,12 @@
 /*
  *  DELETE -> delete project by id
  */
-- (void) deleteProjectWithId:(NSString*)id_project callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) deleteProjectWithId:(NSString*)id_project token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSURL* url = [NSURL URLWithString:[kProject_api stringByAppendingString:[@"/" stringByAppendingString:id_project]]];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"DELETE"];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
     
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         

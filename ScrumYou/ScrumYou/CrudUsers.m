@@ -12,12 +12,15 @@
 
 @implementation CrudUsers
 
+@synthesize dict_error = _dict_error;
+
 - (instancetype) init {
     self = [super init];
     
     if (self != nil) {
         self.userList = [[NSMutableArray<User*> alloc] init];
         self.user = [[User alloc] init];
+        self.dict_error = [[NSDictionary alloc] init];
     }
     return self;
 }
@@ -27,6 +30,8 @@
  *  POST -> add user to database
  */
 - (void) addNickname:(NSString*)nickname fullname:(NSString*)fullname email:(NSString*)email password:(NSString*)password callback:(void (^)(NSError *error, BOOL success))callback {
+    
+    self.dict_error = [[NSDictionary alloc] init];
     
     NSURL *url = [NSURL URLWithString:kUser_api];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -42,6 +47,11 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+        
         if (error != nil) {
             NSLog(@"Error: %@", error.localizedDescription);
             return;
@@ -54,9 +64,11 @@
         if (response == nil) {
             return;
         }
-        NSString* str;
-        [NSString stringEncodingForData:data encodingOptions:0 convertedString:&str usedLossyConversion:false];
-        NSLog(@"DATA %@", str);
+        
+        if ([jsonDict valueForKey:@"type"] != nil) {
+            _dict_error = jsonDict;
+        }
+        
         callback(error, true);
         
     }] resume];
@@ -162,11 +174,12 @@
 /*
  *  UPDATE -> update user with id
  */
-- (void) updateUserId:(NSString*)id_user nickname:(NSString*)nickname fullname:(NSString*)fullname email:(NSString*)email password:(NSString*)password callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) updateUserId:(NSString*)id_user nickname:(NSString*)nickname fullname:(NSString*)fullname email:(NSString*)email password:(NSString*)password token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSURL *url = [NSURL URLWithString:[kUser_api stringByAppendingString:[@"/" stringByAppendingString:id_user]]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"PUT"];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
     
     NSDictionary<NSString*, NSString*> *jsonData = @{@"nickname" : nickname,
                                                      @"fullname" : fullname,
@@ -200,11 +213,13 @@
 /*
  *  DELETE -> delete user by id
  */
-- (void) deleteUserWithId:(NSString*)id_user callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) deleteUserWithId:(NSString*)id_user token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
  
     NSURL* url = [NSURL URLWithString:[kUser_api stringByAppendingString:[@"/" stringByAppendingString:id_user]]];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
+    
     [request setHTTPMethod:@"DELETE"];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
     
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
