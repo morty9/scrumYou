@@ -10,7 +10,7 @@
 #import "ScrumBoardScreenViewController.h"
 #import "APIKeys.h"
 #import "CrudUsers.h"
-#import "AddTask.h"
+#import "CrudTasks.h"
 
 @interface AddTaskScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
@@ -31,7 +31,7 @@
     NSInteger category;
     
     CrudUsers* Users;
-    AddTask* Tasks;
+    CrudTasks* Tasks;
 }
 
 - (void)viewDidLoad {
@@ -48,7 +48,7 @@
         }
     }];
     
-    Tasks = [[AddTask alloc] init];
+    Tasks = [[CrudTasks alloc] init];
     
     get_users = [[NSMutableArray<User*> alloc] init];
     members = [[NSMutableArray alloc] init];
@@ -80,7 +80,11 @@
 **/
 - (IBAction)didTouchAddButton:(id)sender {
     
-    [Tasks addTaskTitle:taskTitleTextField.text description:taskDescriptionTextField.text difficulty:taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] color:buttonColorView.restorationIdentifier businessValue:taskCostTextField.text duration:taskDurationTextField.text id_members:ids];
+    [Tasks addTaskTitle:taskTitleTextField.text description:taskDescriptionTextField.text difficulty:taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] color:buttonColorView.restorationIdentifier businessValue:taskCostTextField.text duration:taskDurationTextField.text status:@"TODO" id_members:ids callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"SUCCESS ADD TASK");
+        }
+    }];
     
     taskTitleTextField.text = @"";
     taskDescriptionTextField.text = @"";

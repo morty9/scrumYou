@@ -10,9 +10,13 @@
 
 @interface LoginScreenViewController : UIViewController
 {
+    NSDictionary* _token;
+    
     __weak IBOutlet UITextField *emailTextField;
     __weak IBOutlet UITextField *pwdTextField;
     __weak IBOutlet UIButton *connectButton;
 }
+
+@property (nonatomic, strong) NSDictionary* token;
 
 @end

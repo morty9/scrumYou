@@ -9,13 +9,14 @@
 #import "AddProjectScreenViewController.h"
 #import "UserHomeScreenViewController.h"
 #import "ScrumBoardScreenViewController.h"
+#import "LoginScreenViewController.h"
 #import "APIKeys.h"
 #import "User.h"
 #import "CrudUsers.h"
 #import "CrudProjects.h"
+#import "CrudAuth.h"
 
 @interface AddProjectScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
-
 
 @end
 
@@ -30,9 +31,14 @@
     
     UIVisualEffectView *blurEffectView;
     
+    NSDictionary* auth;
+
     CrudUsers* Users;
     CrudProjects* Projects;
+    LoginScreenViewController* loginVC;
 }
+
+@synthesize token_dic = _token_dic;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -49,10 +55,14 @@
     }];
     
     Projects = [[CrudProjects alloc] init];
+    loginVC = [[LoginScreenViewController alloc] init];
     
     get_users = [[NSMutableArray<User*> alloc] init];
     members = [[NSMutableArray alloc] init];
     ids = [[NSMutableArray alloc] init];
+    auth = [[NSDictionary alloc] init];
+    
+    NSLog(@"TOKEN %@", self.token_dic);
     
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
@@ -78,7 +88,12 @@
  * Add project to database and clear textfield content
 **/
 - (IBAction)didTouchAddButton:(id)sender {
-    [Projects addProjecTitle:projectNameTextField.text members:ids];
+    
+    [Projects addProjecTitle:projectNameTextField.text members:ids id_creator:[self.token_dic valueForKey:@"userId"] callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"SUCCESS ADD PROJECT");
+        }
+    }];
     
     projectNameTextField.text = @"";
     addMembersTextField.text = @"";

@@ -11,6 +11,8 @@
 #import "UserHomeScreenViewController.h"
 #import "CrudAuth.h"
 
+#import "AddProjectScreenViewController.h"
+
 @interface LoginScreenViewController ()
 
 @end
@@ -18,13 +20,19 @@
 @implementation LoginScreenViewController {
  
     CrudAuth* Auth;
+    NSDictionary* token;
     
+    AddProjectScreenViewController* addProjectVC;
+
 }
+
+@synthesize token = _token;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self designPage];
     Auth = [[CrudAuth alloc] init];
+    addProjectVC = [[AddProjectScreenViewController alloc] init];
 }
 
 - (IBAction)connectionButton:(id)sender {
@@ -32,8 +40,14 @@
     [Auth login:emailTextField.text password:pwdTextField.text callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"CONNECTED");
-            UserHomeScreenViewController* userHomeVc = [[UserHomeScreenViewController alloc] init];
-            [self.navigationController pushViewController:userHomeVc animated:YES];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"AUTH TOKEN %@", Auth.token);
+                addProjectVC.token_dic = Auth.token;
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.navigationController pushViewController:addProjectVC animated:YES];
+                });
+            });
         }
     }];
 }

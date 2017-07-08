@@ -11,6 +11,8 @@
 
 @interface AddProjectScreenViewController : UIViewController
 {
+    NSDictionary* _token_dic;
+    
     __weak IBOutlet UITextField *projectNameTextField;
     __weak IBOutlet UITextField *addMembersTextField;
     //__weak IBOutlet UIButton *addButton;
@@ -23,5 +25,6 @@
 }
 
 @property (strong, nonatomic) UISearchController *searchController;
+@property (nonatomic, strong) NSDictionary* token_dic;
 
 @end

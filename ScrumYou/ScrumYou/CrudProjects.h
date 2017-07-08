@@ -12,15 +12,17 @@
 @interface CrudProjects : NSObject {
     NSMutableArray<Project*>* _projects_list;
     Project* _project;
+    NSDictionary* _dict_error;
 }
 
 @property (nonatomic, strong) NSMutableArray<Project*>* projects_list;
 @property (nonatomic, strong) Project* project;
+@property (nonatomic, strong) NSDictionary* dict_error;
 
 /*
  *  POST -> add project to database
  */
-- (void) addProjecTitle:(NSString*)title members:(NSMutableArray*)members callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) addProjecTitle:(NSString*)title members:(NSMutableArray*)members id_creator:(NSNumber*)id_creator callback:(void (^)(NSError *error, BOOL success))callback;
 /*
  *  GET -> Get all projects from database
  */
@@ -32,10 +34,10 @@
 /*
  * UPDATE -> update project with id
  */
-- (void) updateProjectId:(NSString*)id_project title:(NSString*)title members:(NSMutableArray*)members callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) updateProjectId:(NSString*)id_project title:(NSString*)title members:(NSMutableArray*)members token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
 /*
  *  DELETE -> delete project by id
  */
-- (void) deleteProjectWithId:(NSString*)id_project callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) deleteProjectWithId:(NSString*)id_project token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
 
 @end
