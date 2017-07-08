@@ -25,10 +25,11 @@
     return self;
 }
 
+
 /*
  *  POST -> add sprint to database
  */
-- (void) addSprintBeginningDate:(NSString*)beginningDate endDate:(NSString*)endDate {
+- (void) addSprintBeginningDate:(NSString*)beginningDate endDate:(NSString*)endDate callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSURL* url = [NSURL URLWithString:kSprint_api];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -60,8 +61,9 @@
     
 }
 
+
 /*
- *  VOID -> Get all sprints from database
+ *  GET -> Get all sprints from database
  */
 - (void) getSprints:(void (^)(NSError *error, BOOL success))callback {
     
@@ -108,6 +110,7 @@
     }] resume];
     
 }
+
 
 /*
  *  GET -> get sprint by id
@@ -159,6 +162,7 @@
     
 }
 
+
 /*
  * UPDATE -> update sprint with id
  */
@@ -202,6 +206,7 @@
     }] resume];
     
 }
+
 
 /*
  *  DELETE -> delete sprint by id
