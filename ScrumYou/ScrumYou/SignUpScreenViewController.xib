@@ -29,7 +29,6 @@
                         <constraint firstAttribute="height" constant="64" id="0Yc-GJ-poA"/>
                         <constraint firstAttribute="width" constant="343" id="46E-wc-AYu"/>
                     </constraints>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
@@ -39,7 +38,6 @@
                         <constraint firstAttribute="height" constant="64" id="cEx-5G-Aac"/>
                         <constraint firstAttribute="width" constant="343" id="k9G-4t-zT2"/>
                     </constraints>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
@@ -49,7 +47,6 @@
                         <constraint firstAttribute="width" constant="343" id="PGb-Jc-nbo"/>
                         <constraint firstAttribute="height" constant="64" id="sad-j2-reo"/>
                     </constraints>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
@@ -59,7 +56,6 @@
                         <constraint firstAttribute="width" constant="343" id="6R5-GJ-J37"/>
                         <constraint firstAttribute="height" constant="64" id="E3A-3p-LO5"/>
                     </constraints>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>

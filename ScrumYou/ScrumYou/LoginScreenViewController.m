@@ -9,19 +9,33 @@
 #import "LoginScreenViewController.h"
 #import "HomeScreenViewController.h"
 #import "UserHomeScreenViewController.h"
+#import "CrudAuth.h"
 
 @interface LoginScreenViewController ()
 
 @end
 
-@implementation LoginScreenViewController
-
-
+@implementation LoginScreenViewController {
+ 
+    CrudAuth* Auth;
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self designPage];
+    Auth = [[CrudAuth alloc] init];
+}
+
+- (IBAction)connectionButton:(id)sender {
     
+    [Auth login:emailTextField.text password:pwdTextField.text callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"CONNECTED");
+            UserHomeScreenViewController* userHomeVc = [[UserHomeScreenViewController alloc] init];
+            [self.navigationController pushViewController:userHomeVc animated:YES];
+        }
+    }];
 }
 
 - (void) designPage {
@@ -61,11 +75,6 @@
 - (void) cancelButton:(id)sender {
     HomeScreenViewController* homeVc = [[HomeScreenViewController alloc] init];
     [self.navigationController pushViewController:homeVc animated:YES];
-}
-
-- (IBAction)connectionButton:(id)sender {
-    UserHomeScreenViewController* userHomeVc = [[UserHomeScreenViewController alloc] init];
-    [self.navigationController pushViewController:userHomeVc animated:YES];
 }
 
 /*

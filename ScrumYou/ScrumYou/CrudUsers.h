@@ -11,11 +11,13 @@
 
 @interface CrudUsers : NSObject {
     NSMutableArray<User*>* _userList;
+    NSDictionary* _dict_error;
     User* _user;
 }
 
 @property (nonatomic, strong) NSMutableArray<User*>* userList;
 @property (nonatomic, strong) User* user;
+@property (nonatomic, strong) NSDictionary* dict_error;
 
 
 /*

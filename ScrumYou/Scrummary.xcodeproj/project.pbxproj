@@ -10,6 +10,8 @@
 		08178A801ECDE77700BE9810 /* CellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08178A7E1ECDE77700BE9810 /* CellView.m */; };
 		08178A811ECDE77700BE9810 /* CellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08178A7F1ECDE77700BE9810 /* CellView.xib */; };
 		0832F6B91F0E45EC00AC284E /* CrudProjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0832F6B81F0E45EC00AC284E /* CrudProjects.m */; };
+		0832F6C01F11088500AC284E /* CrudAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 0832F6BF1F11088500AC284E /* CrudAuth.m */; };
+		0861BAB11EF1E1460077D43B /* AddTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BAB01EF1E1460077D43B /* AddTask.m */; };
 		0861BABD1EF1EFFA0077D43B /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BABC1EF1EFFA0077D43B /* Project.m */; };
 		08BF7ECD1ED06F470066E3B7 /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BF7ECC1ED06F470066E3B7 /* PageContentViewController.m */; };
 		08BF7ED31ED06FE20066E3B7 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BF7ED21ED06FE20066E3B7 /* PageViewController.m */; };
@@ -60,6 +62,10 @@
 		08178A7F1ECDE77700BE9810 /* CellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellView.xib; sourceTree = "<group>"; };
 		0832F6B71F0E45EC00AC284E /* CrudProjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrudProjects.h; sourceTree = "<group>"; };
 		0832F6B81F0E45EC00AC284E /* CrudProjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrudProjects.m; sourceTree = "<group>"; };
+		0832F6BE1F11088500AC284E /* CrudAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrudAuth.h; sourceTree = "<group>"; };
+		0832F6BF1F11088500AC284E /* CrudAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrudAuth.m; sourceTree = "<group>"; };
+		0861BAAF1EF1E1460077D43B /* AddTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTask.h; sourceTree = "<group>"; };
+		0861BAB01EF1E1460077D43B /* AddTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTask.m; sourceTree = "<group>"; };
 		0861BABB1EF1EFFA0077D43B /* Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Project.h; sourceTree = "<group>"; };
 		0861BABC1EF1EFFA0077D43B /* Project.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Project.m; sourceTree = "<group>"; };
 		086A02B21ED314DD00BC675D /* APIKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIKeys.h; sourceTree = "<group>"; };
@@ -163,9 +169,19 @@
 			name = Data;
 			sourceTree = "<group>";
 		};
+		0832F6BD1F11087200AC284E /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				0832F6BE1F11088500AC284E /* CrudAuth.h */,
+				0832F6BF1F11088500AC284E /* CrudAuth.m */,
+			);
+			name = Auth;
+			sourceTree = "<group>";
+		};
 		0861BAA71EF0433D0077D43B /* WebServicesMethods */ = {
 			isa = PBXGroup;
 			children = (
+				0832F6BD1F11087200AC284E /* Auth */,
 				0861BAAB1EF043650077D43B /* Tasks */,
 				0861BAAA1EF043600077D43B /* Sprints */,
 				0861BAA91EF0435A0077D43B /* Projects */,
@@ -531,6 +547,7 @@
 				08C2C8651E70879000609F97 /* AddTaskScreenViewController.m in Sources */,
 				08BF7ED31ED06FE20066E3B7 /* PageViewController.m in Sources */,
 				08E23ACE1E708454007534E0 /* LoginScreenViewController.m in Sources */,
+				0832F6C01F11088500AC284E /* CrudAuth.m in Sources */,
 				08BF7ECD1ED06F470066E3B7 /* PageContentViewController.m in Sources */,
 				08E23AAA1E708338007534E0 /* main.m in Sources */,
 				BB09D46F1F10F171009D4CC2 /* CrudTasks.m in Sources */,
