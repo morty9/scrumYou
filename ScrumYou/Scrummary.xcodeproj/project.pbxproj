@@ -39,7 +39,6 @@
 		08FB03CE1ED9AC6F00D30A19 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB03CD1ED9AC6F00D30A19 /* User.m */; };
 		BB09D45D1F0E8C6A009D4CC2 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D45C1F0E8C6A009D4CC2 /* Task.m */; };
 		BB09D4611F0F8ED1009D4CC2 /* Sprint.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D4601F0F8ED1009D4CC2 /* Sprint.m */; };
-		BB09D4651F0F9246009D4CC2 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D4641F0F9246009D4CC2 /* Category.m */; };
 		BB09D4691F0F934E009D4CC2 /* Stat.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D4681F0F934E009D4CC2 /* Stat.m */; };
 		BB09D46C1F0FBFFE009D4CC2 /* CrudSprints.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D46B1F0FBFFE009D4CC2 /* CrudSprints.m */; };
 		BB09D46F1F10F171009D4CC2 /* CrudTasks.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D46E1F10F171009D4CC2 /* CrudTasks.m */; };
@@ -110,8 +109,6 @@
 		BB09D45C1F0E8C6A009D4CC2 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 		BB09D45F1F0F8ED1009D4CC2 /* Sprint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprint.h; sourceTree = "<group>"; };
 		BB09D4601F0F8ED1009D4CC2 /* Sprint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sprint.m; sourceTree = "<group>"; };
-		BB09D4631F0F9246009D4CC2 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
-		BB09D4641F0F9246009D4CC2 /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 		BB09D4671F0F934E009D4CC2 /* Stat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stat.h; sourceTree = "<group>"; };
 		BB09D4681F0F934E009D4CC2 /* Stat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stat.m; sourceTree = "<group>"; };
 		BB09D46A1F0FBFFE009D4CC2 /* CrudSprints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrudSprints.h; sourceTree = "<group>"; };
@@ -157,7 +154,6 @@
 			isa = PBXGroup;
 			children = (
 				BB09D4661F0F933F009D4CC2 /* Stats */,
-				BB09D4621F0F922C009D4CC2 /* Categories */,
 				BB09D45E1F0F8EA9009D4CC2 /* Sprints */,
 				BB09D45A1F0E8C38009D4CC2 /* Tasks */,
 				0861BABA1EF1EFE00077D43B /* Projects */,
@@ -419,15 +415,6 @@
 			name = Sprints;
 			sourceTree = "<group>";
 		};
-		BB09D4621F0F922C009D4CC2 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				BB09D4631F0F9246009D4CC2 /* Category.h */,
-				BB09D4641F0F9246009D4CC2 /* Category.m */,
-			);
-			name = Categories;
-			sourceTree = "<group>";
-		};
 		BB09D4661F0F933F009D4CC2 /* Stats */ = {
 			isa = PBXGroup;
 			children = (
@@ -536,7 +523,6 @@
 				08E23AAD1E708338007534E0 /* AppDelegate.m in Sources */,
 				08C2C86B1E7087B500609F97 /* ScrumBoardScreenViewController.m in Sources */,
 				BB09D4611F0F8ED1009D4CC2 /* Sprint.m in Sources */,
-				BB09D4651F0F9246009D4CC2 /* Category.m in Sources */,
 				BB09D45D1F0E8C6A009D4CC2 /* Task.m in Sources */,
 				08C2C8591E70852500609F97 /* AddProjectScreenViewController.m in Sources */,
 				BB09D46C1F0FBFFE009D4CC2 /* CrudSprints.m in Sources */,
