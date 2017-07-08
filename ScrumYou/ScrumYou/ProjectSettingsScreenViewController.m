@@ -10,8 +10,7 @@
 #import "HomeScreenViewController.h"
 #import "APIKeys.h"
 #import "Project.h"
-#import "GetUserById.h"
-#import "GetUsers.h"
+#import "CrudUsers.h"
 #import "CrudProjects.h"
 
 @interface ProjectSettingsScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating>
@@ -38,8 +37,7 @@
     NSInteger nMemberProject;
     NSString* idProject;
     
-    GetUserById* UsersIn;
-    GetUsers* Users;
+    CrudUsers* UsersCrud;
     CrudProjects* ProjectsCrud;
     
 }
@@ -53,8 +51,7 @@
         members = [[NSMutableArray<User*> alloc] init];
         ids = [[NSMutableArray alloc] init];
         
-        UsersIn = [[GetUserById alloc] init];
-        Users = [[GetUsers alloc] init];
+        UsersCrud = [[CrudUsers alloc] init];
         ProjectsCrud = [[CrudProjects alloc] init];
         
     }
@@ -70,18 +67,28 @@
     
     [self designPage];
     
+    UsersCrud = [[CrudUsers alloc] init];
+    ProjectsCrud = [[CrudProjects alloc] init];
+    
     get_users = [[NSMutableArray<User*> alloc] init];
     users_in = [[NSMutableArray<User*> alloc] init];
     members = [[NSMutableArray<User*> alloc] init];
     ids = [[NSMutableArray alloc] init];
     
-    [Users getUsers];
+    nMember = 0;
+    
+    [UsersCrud getUsers:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"SUCCESS GET USERS");
+        }
+    }];
+    
     idProject = @"53";
+    
     [ProjectsCrud getProjectById:idProject callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS PROJECT");
             projects = ProjectsCrud.project;
-            NSLog(@"p %@", projects);
             [self displayTitleProject];
             [self getUserByProject];
         }
@@ -94,8 +101,6 @@
  *  VOID -> dipslay the title of the current project in the name text field
  */
 - (void) displayTitleProject {
-    
-    NSLog(@"%@", projects);
 
     nameTextField.text = projects.title;
     self.navigationItem.title = projects.title;
@@ -107,14 +112,12 @@
  */
 - (void) getUserByProject {
     
-    NSLog(@"project %@", [projects valueForKey:@"_id_members"]);
-    
     for (NSNumber* membersArray in projects.id_members) {
         NSString* result = [@"/" stringByAppendingString:[NSString stringWithFormat:@"%@",[membersArray stringValue]]];
-        [UsersIn getUserById:result callback:^(NSError *error, BOOL success) {
+        [UsersCrud getUserById:result callback:^(NSError *error, BOOL success) {
             if (success) {
                 NSLog(@"SUCCESS USERS IN");
-                users_in = UsersIn.usersList;
+                [users_in addObject:UsersCrud.user];
                 nMemberProject = users_in.count;
                 membersCount.text = [@(nMemberProject)stringValue];
             }
@@ -142,7 +145,7 @@
  *  Get users form database
  **/
 - (void) getUsername {
-    get_users = Users.users_list;
+    get_users = UsersCrud.userList;
     [membersTableView reloadData];
 }
 
@@ -177,7 +180,6 @@
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
             nMember+=1;
             [members addObject:user.fullname];
-            NSLog(@"M %@", members);
         }else {
             cell.textLabel.text = [NSString stringWithFormat:@"%@", username.fullname];
         }
@@ -251,7 +253,6 @@
  *  Update members label
  **/
 - (IBAction)validateMembers:(id)sender {
-    NSLog(@"members %@", members);
     [membersView setHidden:true];
     [blurEffectView removeFromSuperview];
     membersCount.text = [@(nMember)stringValue];
@@ -283,14 +284,11 @@
             [ids addObject:[usr valueForKey:@"id_user"]];
         }
     }
-    NSLog(@"ids %@", ids);
     [ProjectsCrud updateProjectId:idProject title:nameTextField.text members:ids callback:^(NSError *error, BOOL success) {
         NSLog(@"SUCCESS UPDATE");
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Modification terminée"
-                                                                           message:@"Les modifications de votre projet ont été prises en compte."
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Modification terminée"message:@"Les modifications de votre projet ont été prises en compte." preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                 [self viewDidLoad];
@@ -309,11 +307,27 @@
  *  Call deleteProject web service
  */
 - (IBAction)deleteProject:(id)sender {
-    [ProjectsCrud deleteProjectWithId:idProject callback:^(NSError *error, BOOL success) {
-        if (success) {
-            NSLog(@"SUCCESS DELETE");
-        }
+    
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation supression" message:@"Êtes-vous sûr de vouloir supprimer ce projet ?" preferredStyle: UIAlertControllerStyleAlert];
+        
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [ProjectsCrud deleteProjectWithId:idProject callback:^(NSError *error, BOOL success) {
+            if (success) {
+                NSLog(@"SUCCESS DELETE");
+                //TODO!!!!!!!!!!!!!!!!!!!!!
+                NSLog(@"RETURN TO HOME USER SCREEN");
+            }
+        }];
     }];
+        
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+        
+    [alert addAction:defaultAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 

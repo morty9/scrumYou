@@ -9,8 +9,13 @@
 #import "SignUpScreenViewController.h"
 #import "HomeScreenViewController.h"
 #import "APIKeys.h"
+#import "CrudUsers.h"
 
-@interface SignUpScreenViewController ()
+@interface SignUpScreenViewController () {
+    
+    CrudUsers* Users;
+    
+}
 
 @end
 
@@ -24,49 +29,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    Users = [[CrudUsers alloc] init];
+    
     [self designPage];
 }
 
 - (IBAction)didTouchAddUser:(id)sender {
-    [self.emailTextField resignFirstResponder];
-    [self.pwdTextField resignFirstResponder];
-    [self.nicknameTextField resignFirstResponder];
-    [self.completeNameTextField resignFirstResponder];
-    
-    NSURL *url = [NSURL URLWithString:kUser_api];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-    [request setHTTPMethod:@"POST"];
-    
-    NSDictionary<NSString*, NSString*> *jsonData = @{@"email" : self.emailTextField.text, @"password" : self.pwdTextField.text, @"nickname" : self.nicknameTextField.text, @"fullname" : self.completeNameTextField.text};
-    
-    NSLog(@"data %@", jsonData);
 
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
-    [request setHTTPBody:postData];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    
-    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (error != nil) {
-            NSLog(@"Error: %@", error.localizedDescription);
-            return;
+    [Users addNickname:self.nicknameTextField.text fullname:self.completeNameTextField.text email:self.emailTextField.text password:self.pwdTextField.text callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"USER ADDED");
         }
-        
-        if (data == nil) {
-            return;
-        }
-        
-        if (response == nil) {
-            return;
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.emailTextField.text = @"";
-            self.pwdTextField.text = @"";
-            self.nicknameTextField.text = @"";
-            self.completeNameTextField.text = @"";
-        });
-    }] resume];
-    
+    }];
 }
 
 

@@ -9,7 +9,7 @@
 #import "AddTaskScreenViewController.h"
 #import "ScrumBoardScreenViewController.h"
 #import "APIKeys.h"
-#import "GetUsers.h"
+#import "CrudUsers.h"
 #import "AddTask.h"
 
 @interface AddTaskScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
@@ -30,7 +30,7 @@
     NSInteger nMember;
     NSInteger category;
     
-    GetUsers* Users;
+    CrudUsers* Users;
     AddTask* Tasks;
 }
 
@@ -41,8 +41,12 @@
     
     [self designPage];
     
-    Users = [[GetUsers alloc] init];
-    [Users getUsers];
+    Users = [[CrudUsers alloc] init];
+    [Users getUsers:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"SUCCESS GET USERS");
+        }
+    }];
     
     Tasks = [[AddTask alloc] init];
     
@@ -66,7 +70,7 @@
  * Get users form database
 **/
 - (void) getUsername {
-    get_users = Users.users_list;
+    get_users = Users.userList;
     [membersTableView reloadData];
 }
 
