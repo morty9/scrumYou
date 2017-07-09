@@ -12,6 +12,7 @@
 @interface CrudTasks : NSObject {
     NSMutableArray<Task*>* _tasksList;
     Task* _task;
+    NSDictionary* _dict_error;
 }
 
 @property (nonatomic, strong) NSMutableArray<Task*>* tasksList;

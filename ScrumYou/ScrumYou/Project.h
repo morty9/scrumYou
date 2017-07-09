@@ -14,6 +14,7 @@
     NSString* _id_creator;
     NSMutableArray* _id_members;
     NSMutableArray* _id_sprints;
+    NSString* _status;
 }
 
 @property (nonatomic, strong) NSString* id_project;
@@ -21,7 +22,8 @@
 @property (nonatomic, strong) NSString* id_creator;
 @property (nonatomic, strong) NSMutableArray* id_members;
 @property (nonatomic, strong) NSMutableArray* id_sprints;
+@property (nonatomic, strong) NSString* status;
 
-- (instancetype) initWithId:(NSString*)id_project title:(NSString*)title id_creator:(NSString*)id_creator id_members:(NSMutableArray*)id_members id_sprints:(NSMutableArray*)id_sprints;
+- (instancetype) initWithId:(NSString*)id_project title:(NSString*)title id_creator:(NSString*)id_creator id_members:(NSMutableArray*)id_members id_sprints:(NSMutableArray*)id_sprints status:(NSString*)status;
 
 @end

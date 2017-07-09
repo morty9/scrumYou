@@ -15,8 +15,9 @@
 @synthesize id_creator = _id_creator;
 @synthesize id_members = _id_members;
 @synthesize id_sprints = _id_sprints;
+@synthesize status = _status;
 
-- (instancetype) initWithId:(NSString*)id_project title:(NSString*)title id_creator:(NSString*)id_creator id_members:(NSMutableArray*)id_members id_sprints:(NSMutableArray*)id_sprints {
+- (instancetype) initWithId:(NSString*)id_project title:(NSString*)title id_creator:(NSString*)id_creator id_members:(NSMutableArray*)id_members id_sprints:(NSMutableArray*)id_sprints status:(NSString*)status {
     
     self = [super init];
     
@@ -26,6 +27,7 @@
         self.id_creator = id_creator;
         self.id_members = id_members;
         self.id_sprints = id_sprints;
+        self.status = status;
     }
     
     return self;

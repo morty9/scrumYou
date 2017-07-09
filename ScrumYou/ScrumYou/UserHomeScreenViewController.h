@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface UserHomeScreenViewController : UIViewController
-{
-    
-}
+
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UICollectionView *otherCollectionView;
+@property (strong, nonatomic) NSArray *tracks;
+
 
 - (void) backHome;
 
