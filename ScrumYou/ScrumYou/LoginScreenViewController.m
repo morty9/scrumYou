@@ -10,7 +10,7 @@
 #import "HomeScreenViewController.h"
 #import "UserHomeScreenViewController.h"
 #import "CrudAuth.h"
-
+#import "AccountSettingsScreenViewController.h"
 #import "AddProjectScreenViewController.h"
 
 @interface LoginScreenViewController ()
@@ -23,6 +23,8 @@
     NSDictionary* token;
     
     AddProjectScreenViewController* addProjectVC;
+    
+    AccountSettingsScreenViewController* accountSettings;
 
 }
 
@@ -33,6 +35,7 @@
     [self designPage];
     Auth = [[CrudAuth alloc] init];
     addProjectVC = [[AddProjectScreenViewController alloc] init];
+    accountSettings = [[AccountSettingsScreenViewController alloc] init];
 }
 
 - (IBAction)connectionButton:(id)sender {
@@ -43,9 +46,10 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSLog(@"AUTH TOKEN %@", Auth.token);
                 addProjectVC.token_dic = Auth.token;
+                accountSettings.token = Auth.token;
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.navigationController pushViewController:addProjectVC animated:YES];
+                    [self.navigationController pushViewController:accountSettings animated:YES];
                 });
             });
         }

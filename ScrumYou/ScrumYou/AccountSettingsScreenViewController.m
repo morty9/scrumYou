@@ -7,16 +7,62 @@
 //
 
 #import "AccountSettingsScreenViewController.h"
+#import "LoginScreenViewController.h"
+#import "CrudAuth.h"
+#import "CrudUsers.h"
 
 @interface AccountSettingsScreenViewController ()
 
+
+
 @end
 
-@implementation AccountSettingsScreenViewController
+
+@implementation AccountSettingsScreenViewController {
+    
+    NSDictionary* token;
+    User* currentUser;
+
+    
+    CrudAuth* Auth;
+    CrudUsers* UsersCrud;
+    
+    //TO FIX Redirection vers une page apres modification
+}
+
+@synthesize token = _token;
+
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self != nil) {
+        
+        Auth = [[CrudAuth alloc] init];
+        UsersCrud = [[CrudUsers alloc] init];
+        currentUser = [[User alloc] init];
+
+        
+    }
+    return self;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self designPage];
+    Auth = [[CrudAuth alloc] init];
+
+    NSString* userId = [[self.token valueForKey:@"userId"] stringValue];
+    NSLog(@"USER ID %@", userId);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+    [UsersCrud getUserById:userId callback:^(NSError *error, BOOL success) {
+        if (success) {
+            
+                currentUser = UsersCrud.user;
+                [self displayUser:currentUser];
+        }
+    }];
+        });
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +70,46 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) displayUser:(User*)curUser {
+    NSLog(@"Username: %@", [curUser valueForKey:@"_fullname"]);
+    labelUserField.text = curUser.fullname;
+    nameTextField.text = curUser.fullname;
+    nicknameTextField.text = curUser.nickname;
+    emailTextField.text = curUser.email;
+    pwdTextField.text = curUser.password;
+}
+
+
+//TO FIX
+- (IBAction)saveModification:(id)sender {
+    
+    [Auth login:emailTextField.text password:pwdTextField.text callback:^(NSError *error, BOOL sucess) {
+        if (sucess) {
+            
+        }
+    }];
+}
+
+//- (void)getCurrentUser:(NSNumber*)id_user {
+//    [UsersCrud getUserById:[NSString stringWithFormat:@"%ld", (long)id_user] callback:^(NSError *error, BOOL success) {
+//        if (success) {
+//            NSLog(@"USER CRUD: %@", UsersCrud.user);
+//            currentUser = UsersCrud.user;
+//            //NSLog(@"CURRENT USER: %@", currentUser);
+//        }
+//    }];
+//}
+
+
+
 - (void) designPage {
     
     self.navigationItem.title = [NSString stringWithFormat:@"Profil"];
     
     //edit button navbar
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editProfil:)];
-    editButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
-    self.navigationItem.rightBarButtonItem = editButton;
+//    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editProfil:)];
+//    editButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
+//    self.navigationItem.rightBarButtonItem = editButton;
     
     //image profil
     profilImage.layer.cornerRadius = profilImage.frame.size.width / 2;
@@ -47,13 +125,13 @@
     nameTextField.layer.masksToBounds = YES;
     
     //border firstname text field
-    CALayer *borderFirstname = [CALayer layer];
-    CGFloat borderWidthFirstname = 1;
-    borderFirstname.borderColor = [UIColor darkGrayColor].CGColor;
-    borderFirstname.frame = CGRectMake(0, firstnameTextField.frame.size.height - borderWidthFirstname, firstnameTextField.frame.size.width, firstnameTextField.frame.size.height);
-    borderFirstname.borderWidth = borderWidthFirstname;
-    [firstnameTextField.layer addSublayer:borderFirstname];
-    firstnameTextField.layer.masksToBounds = YES;
+//    CALayer *borderFirstname = [CALayer layer];
+//    CGFloat borderWidthFirstname = 1;
+//    borderFirstname.borderColor = [UIColor darkGrayColor].CGColor;
+//    borderFirstname.frame = CGRectMake(0, firstnameTextField.frame.size.height - borderWidthFirstname, firstnameTextField.frame.size.width, firstnameTextField.frame.size.height);
+//    borderFirstname.borderWidth = borderWidthFirstname;
+//    [firstnameTextField.layer addSublayer:borderFirstname];
+//    firstnameTextField.layer.masksToBounds = YES;
     
     //border nickname text field
     CALayer *borderNickname = [CALayer layer];
