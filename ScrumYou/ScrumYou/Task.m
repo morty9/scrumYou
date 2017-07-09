@@ -38,7 +38,7 @@
         self.businessValue = businessValue;
         self.duration = duration;
         self.status = status;
-        self. id_creator = id_creator;
+        self.id_creator = id_creator;
         self.id_members = id_members;
     }
     

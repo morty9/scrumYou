@@ -91,18 +91,21 @@
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSString* tmp_id = [jsonDict valueForKey:@"id"];
-            NSString* tmp_beginningDate = [jsonDict valueForKey:@"beginningDate"];
-            NSString* tmp_endDate = [jsonDict valueForKey:@"endDate"];
-            NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
-            NSMutableArray* tmp_id_listTasks = [jsonDict valueForKey:@"id_listTasks"];
-            NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
-            
-            Sprint* s = [[Sprint alloc] initWithId:tmp_id beginningDate:tmp_beginningDate endDate:tmp_endDate id_creator:tmp_id_creator id_listTasks:tmp_id_listTasks id_members:tmp_id_members];
-            
-            NSLog(@"Sprint WS %@", s);
-            
-            [self.sprints_list addObject:s];
+            for (NSDictionary* sprint in jsonDict) {
+                NSString* tmp_id = [sprint valueForKey:@"id"];
+                NSString* tmp_beginningDate = [sprint valueForKey:@"beginningDate"];
+                NSString* tmp_endDate = [sprint valueForKey:@"endDate"];
+                NSString* tmp_id_creator = [sprint valueForKey:@"id_creator"];
+                NSMutableArray* tmp_id_listTasks = [sprint valueForKey:@"id_listTasks"];
+                NSMutableArray* tmp_id_members = [sprint valueForKey:@"id_members"];
+                
+                Sprint* s = [[Sprint alloc] initWithId:tmp_id beginningDate:tmp_beginningDate endDate:tmp_endDate id_creator:tmp_id_creator id_listTasks:tmp_id_listTasks id_members:tmp_id_members];
+                
+                NSLog(@"Sprint WS %@", s);
+                
+                [self.sprints_list addObject:s];
+
+            }
             
             callback(error, true);
         });
