@@ -34,6 +34,8 @@
     CrudTasks* Tasks;
 }
 
+@synthesize token_dic = _token_dic;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     membersTableView.delegate = self;
@@ -80,9 +82,41 @@
 **/
 - (IBAction)didTouchAddButton:(id)sender {
     
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
     [Tasks addTaskTitle:taskTitleTextField.text description:taskDescriptionTextField.text difficulty:taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] color:buttonColorView.restorationIdentifier businessValue:taskCostTextField.text duration:taskDurationTextField.text status:@"TODO" id_members:ids callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS ADD TASK");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([Tasks.dict_error valueForKey:@"type"] != nil) {
+                    NSString* title = [weakSelf->Tasks.dict_error valueForKey:@"title"];
+                    NSString* message = [weakSelf->Tasks.dict_error valueForKey:@"message"];
+                    
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    
+                } else {
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre tâche a été créé." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        // GO TO SCRUM BOARD
+                        ///////////////////////:
+                        ///////////////////////
+                        ///////////////////////
+                        /////////////////////
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    
+                }
+            });
         }
     }];
     

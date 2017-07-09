@@ -37,8 +37,11 @@
     
     __weak IBOutlet UITableView *membersTableView;
     
+    NSDictionary* _token_dic;
+    
 }
 
 @property (strong, nonatomic) UISearchController *searchController;
+@property (nonatomic, strong) NSDictionary* token_dic;
 
 @end
