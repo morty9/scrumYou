@@ -10,7 +10,9 @@
 #import "HomeScreenViewController.h"
 #import "UserHomeScreenViewController.h"
 #import "CrudAuth.h"
-
+#import "CrudProjects.h"
+#import "Project.h"
+#import "AccountSettingsScreenViewController.h"
 #import "AddProjectScreenViewController.h"
 
 @interface LoginScreenViewController ()
@@ -19,20 +21,50 @@
 
 @implementation LoginScreenViewController {
  
+    CrudProjects* ProjectsCrud;
     CrudAuth* Auth;
+    
     NSDictionary* token;
+    NSArray<Project*>* get_project;
+    
+    bool userHaveProject;
     
     AddProjectScreenViewController* addProjectVC;
+    AccountSettingsScreenViewController* accountSettings;
+    HomeScreenViewController* homeVC;
 
 }
 
 @synthesize token = _token;
+
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self != nil) {
+        
+        ProjectsCrud = [[CrudProjects alloc] init];
+        get_project = [[NSArray alloc] init];
+        userHaveProject = false;
+        
+        [ProjectsCrud getProjects:^(NSError *error, BOOL success) {
+            if (success) {
+                NSLog(@"SUCCESS PROJECT");
+                get_project = ProjectsCrud.projects_list;
+            }
+        }];
+        
+        
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self designPage];
     Auth = [[CrudAuth alloc] init];
     addProjectVC = [[AddProjectScreenViewController alloc] init];
+    accountSettings = [[AccountSettingsScreenViewController alloc] init];
+    homeVC = [[HomeScreenViewController alloc] init];
 }
 
 - (IBAction)connectionButton:(id)sender {
@@ -43,13 +75,35 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSLog(@"AUTH TOKEN %@", Auth.token);
                 addProjectVC.token_dic = Auth.token;
+                accountSettings.token = Auth.token;
                 
-                dispatch_async(dispatch_get_main_queue(), ^{
+                [self checkIfMemberHaveProject:get_project tokenActive:Auth.token];
+                
+                if (userHaveProject == true) {
+                    [self.navigationController pushViewController:homeVC animated:YES];
+                } else {
                     [self.navigationController pushViewController:addProjectVC animated:YES];
-                });
+                }
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [self.navigationController pushViewController:accountSettings animated:YES];
+//                });
             });
         }
     }];
+}
+
+- (void) checkIfMemberHaveProject:(NSArray*)array_projects tokenActive:(NSDictionary*)tokenActive {
+    
+    NSNumber* tokenUserId = [tokenActive valueForKey:@"userId"];
+    
+    for (Project* project in get_project) {
+        for (NSNumber* id_members in [get_project valueForKey:@"id_members"]) {
+            if (tokenUserId == id_members || tokenUserId == [project valueForKey:@"id_creator"]) {
+                userHaveProject = true;
+            }
+        }
+    }
+    
 }
 
 - (void) designPage {

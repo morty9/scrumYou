@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong) NSMutableArray<Task*>* tasksList;
 @property (nonatomic, strong) Task* task;
+@property (nonatomic, strong) NSDictionary* dict_error;
 
 
 /*

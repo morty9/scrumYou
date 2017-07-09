@@ -13,6 +13,7 @@
 @implementation CrudTasks
 
 @synthesize task = _task;
+@synthesize dict_error = _dict_error;
 
 - (instancetype) init {
     self = [super init];
@@ -29,6 +30,8 @@
  *  POST -> add task to database
  */
 - (void) addTaskTitle:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category color:(NSString*)color businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members callback:(void (^)(NSError *error, BOOL success))callback {
+    
+    self.dict_error = [[NSDictionary alloc] init];
     
     NSURL* url = [NSURL URLWithString:kTask_api];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -67,10 +70,12 @@
         if (response == nil) {
             return;
         }
-        
+       
         if ([jsonDict valueForKey:@"type"] != nil) {
             _dict_error = jsonDict;
         }
+        
+        callback(error, true);
         
     }] resume];
 
@@ -118,6 +123,7 @@
                 NSString* tmp_duration = [tasks valueForKey:@"duration"];
                 NSString* tmp_status = [tasks valueForKey:@"status"];
                 NSString* tmp_id_creator = [tasks valueForKey:@"id_creator"];
+
                 NSMutableArray* tmp_id_members = [tasks valueForKey:@"id_members"];
                 
                 Task* t = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category color:tmp_color businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
@@ -126,9 +132,6 @@
                 [self.tasksList addObject:t];
 
             }
-            
-            NSLog(@"TASKLIST %@", self.tasksList);
-            
             
             callback(error, true);
         });

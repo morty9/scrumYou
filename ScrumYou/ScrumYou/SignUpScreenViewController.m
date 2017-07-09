@@ -63,20 +63,16 @@
                     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Inscription réussie" message:@"Votre inscription est réussie, veuillez vous connecter." preferredStyle:UIAlertControllerStyleAlert];
                     
                     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                        
+                        LoginScreenViewController* loginVC = [[LoginScreenViewController alloc] init];
+                        [weakSelf.navigationController pushViewController:loginVC animated:true];
                     }];
                     
                     [alert addAction:defaultAction];
                     [weakSelf presentViewController:alert animated:YES completion:nil];
-                    
                 }
             });
         }
     }];
-    
-    LoginScreenViewController* loginVC = [[LoginScreenViewController alloc] init];
-    [self.navigationController pushViewController:loginVC animated:true];
-    
 }
 
 /*
