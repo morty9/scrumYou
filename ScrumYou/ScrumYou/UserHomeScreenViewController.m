@@ -45,11 +45,11 @@
     [super viewDidLoad];
     [self designPage];
     
-    ProjectsCrud getProjects:^(NSError *error, BOOL success) {
+    [ProjectsCrud getProjects:^(NSError *error, BOOL success) {
         if (success) {
             
         }
-    }
+    }];
     
     
     self.collectionView.delegate = self;

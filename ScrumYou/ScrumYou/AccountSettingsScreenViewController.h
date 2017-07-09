@@ -10,12 +10,19 @@
 
 @interface AccountSettingsScreenViewController : UIViewController
 {
+    NSDictionary* _token;
+    
     __weak IBOutlet UITextField *nameTextField;
-    __weak IBOutlet UITextField *firstnameTextField;
     __weak IBOutlet UITextField *nicknameTextField;
     __weak IBOutlet UITextField *emailTextField;
     __weak IBOutlet UITextField *pwdTextField;
     __weak IBOutlet UIImageView *profilImage;
+    
+    __weak IBOutlet UIButton *deleteButton;
+    __weak IBOutlet UIButton *saveButton;
+    __weak IBOutlet UILabel *labelUserField;
 }
+
+@property (nonatomic, strong) NSDictionary* token;
 
 @end
