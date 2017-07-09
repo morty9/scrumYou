@@ -7,21 +7,66 @@
 //
 
 #import "PageContentViewController.h"
+#import "ScrumBoardCell.h"
 
-@interface PageContentViewController ()
+@interface PageContentViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
 @end
 
 @implementation PageContentViewController
 
+@synthesize scrumBoardCollectionView = _scrumBoardCollectionView;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [super viewDidLoad];
+    self.label.text = self.txtTitle;
+    
+    self.scrumBoardCollectionView.delegate = self;
+    self.scrumBoardCollectionView.dataSource = self;
+    
+    [self.scrumBoardCollectionView registerNib:[UINib nibWithNibName:@"ScrumBoardCell" bundle:nil]forCellWithReuseIdentifier:@"SBCell"];
+    
+    [self.scrumBoardCollectionView reloadData];
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    //NSLog(@"%lu", (unsigned long)self.tracks.count);
+    //return self.tracks.count;
+    return 10;
+}
+
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString* cellId = @"SBCell";
+    
+    ScrumBoardCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
+    
+    if(cell == nil) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ScrumBoardCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
+    }
+    
+    cell.layer.cornerRadius = 6;
+    //cell.label.text = @"test";
+    
+    return cell;
+    
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    //NSString *selected = [self.tracks objectAtIndex:indexPath.row];
+    //NSLog(@"selected=%@", selected);
 }
 
 /*

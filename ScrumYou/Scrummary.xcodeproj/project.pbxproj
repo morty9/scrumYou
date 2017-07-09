@@ -12,6 +12,10 @@
 		0832F6B91F0E45EC00AC284E /* CrudProjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0832F6B81F0E45EC00AC284E /* CrudProjects.m */; };
 		0832F6C01F11088500AC284E /* CrudAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 0832F6BF1F11088500AC284E /* CrudAuth.m */; };
 		0861BABD1EF1EFFA0077D43B /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = 0861BABC1EF1EFFA0077D43B /* Project.m */; };
+		0885DFC81F12D3D900AEF8B6 /* PageContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0885DFC71F12D3D900AEF8B6 /* PageContentViewController.xib */; };
+		0885DFCA1F12D3FE00AEF8B6 /* PageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0885DFC91F12D3FE00AEF8B6 /* PageViewController.xib */; };
+		0885DFD51F12DED800AEF8B6 /* ScrumBoardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0885DFD31F12DED800AEF8B6 /* ScrumBoardCell.m */; };
+		0885DFD61F12DED800AEF8B6 /* ScrumBoardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0885DFD41F12DED800AEF8B6 /* ScrumBoardCell.xib */; };
 		08BF7ECD1ED06F470066E3B7 /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BF7ECC1ED06F470066E3B7 /* PageContentViewController.m */; };
 		08BF7ED31ED06FE20066E3B7 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BF7ED21ED06FE20066E3B7 /* PageViewController.m */; };
 		08C2C8591E70852500609F97 /* AddProjectScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C2C8571E70852500609F97 /* AddProjectScreenViewController.m */; };
@@ -65,6 +69,11 @@
 		0861BABB1EF1EFFA0077D43B /* Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Project.h; sourceTree = "<group>"; };
 		0861BABC1EF1EFFA0077D43B /* Project.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Project.m; sourceTree = "<group>"; };
 		086A02B21ED314DD00BC675D /* APIKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIKeys.h; sourceTree = "<group>"; };
+		0885DFC71F12D3D900AEF8B6 /* PageContentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageContentViewController.xib; sourceTree = "<group>"; };
+		0885DFC91F12D3FE00AEF8B6 /* PageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageViewController.xib; sourceTree = "<group>"; };
+		0885DFD21F12DED800AEF8B6 /* ScrumBoardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrumBoardCell.h; sourceTree = "<group>"; };
+		0885DFD31F12DED800AEF8B6 /* ScrumBoardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrumBoardCell.m; sourceTree = "<group>"; };
+		0885DFD41F12DED800AEF8B6 /* ScrumBoardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScrumBoardCell.xib; sourceTree = "<group>"; };
 		08BF7ECB1ED06F470066E3B7 /* PageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageContentViewController.h; sourceTree = "<group>"; };
 		08BF7ECC1ED06F470066E3B7 /* PageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageContentViewController.m; sourceTree = "<group>"; };
 		08BF7ED11ED06FE20066E3B7 /* PageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
@@ -236,6 +245,16 @@
 			name = APIKey;
 			sourceTree = "<group>";
 		};
+		0885DFD11F12DEB200AEF8B6 /* SBCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				0885DFD21F12DED800AEF8B6 /* ScrumBoardCell.h */,
+				0885DFD31F12DED800AEF8B6 /* ScrumBoardCell.m */,
+				0885DFD41F12DED800AEF8B6 /* ScrumBoardCell.xib */,
+			);
+			name = SBCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		08C2C8551E7084F800609F97 /* AddProjectScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -273,6 +292,7 @@
 		08C2C8671E70879A00609F97 /* ScrumBoardScreen */ = {
 			isa = PBXGroup;
 			children = (
+				0885DFD11F12DEB200AEF8B6 /* SBCollectionViewCell */,
 				08C2C8681E7087B500609F97 /* ScrumBoardScreenViewController.h */,
 				08C2C8691E7087B500609F97 /* ScrumBoardScreenViewController.m */,
 				08C2C86A1E7087B500609F97 /* ScrumBoardScreenViewController.xib */,
@@ -280,6 +300,8 @@
 				08BF7ECC1ED06F470066E3B7 /* PageContentViewController.m */,
 				08BF7ED11ED06FE20066E3B7 /* PageViewController.h */,
 				08BF7ED21ED06FE20066E3B7 /* PageViewController.m */,
+				0885DFC71F12D3D900AEF8B6 /* PageContentViewController.xib */,
+				0885DFC91F12D3FE00AEF8B6 /* PageViewController.xib */,
 			);
 			name = ScrumBoardScreen;
 			sourceTree = "<group>";
@@ -489,12 +511,14 @@
 				08C2C8601E70875F00609F97 /* UserHomeScreenViewController.xib in Resources */,
 				08E23AB81E708338007534E0 /* LaunchScreen.storyboard in Resources */,
 				08E7A5361EC7699400A87DA0 /* Assets.xcassets in Resources */,
+				0885DFC81F12D3D900AEF8B6 /* PageContentViewController.xib in Resources */,
 				BB19FB221ECF3F2500B5085B /* AddProjectScreenViewController~ipad.xib in Resources */,
 				08E23ACA1E708435007534E0 /* HomeScreenViewController.xib in Resources */,
 				08178A811ECDE77700BE9810 /* CellView.xib in Resources */,
 				BB19FB2E1ECFBC5700B5085B /* ProjectSettingsScreenViewController~ipad.xib in Resources */,
 				BB19FB301ECFC30E00B5085B /* UserHomeScreenViewController~ipad.xib in Resources */,
 				08C2C86C1E7087B500609F97 /* ScrumBoardScreenViewController.xib in Resources */,
+				0885DFCA1F12D3FE00AEF8B6 /* PageViewController.xib in Resources */,
 				BB19FB241ECF452B00B5085B /* LoginScreenViewController~ipad.xib in Resources */,
 				08C2C8781E70880900609F97 /* AccountSettingsScreenViewController.xib in Resources */,
 				08C2C8721E7087E200609F97 /* ProjectSettingsScreenViewController.xib in Resources */,
@@ -502,6 +526,7 @@
 				08C2C8661E70879000609F97 /* AddTaskScreenViewController.xib in Resources */,
 				BB19FB281ECFA33200B5085B /* SignUpScreenViewController~ipad.xib in Resources */,
 				BB19FB2A1ECFA69E00B5085B /* AddTaskScreenViewController~ipad.xib in Resources */,
+				0885DFD61F12DED800AEF8B6 /* ScrumBoardCell.xib in Resources */,
 				08E23AD51E708483007534E0 /* SignUpScreenViewController.xib in Resources */,
 				08E23ACF1E708454007534E0 /* LoginScreenViewController.xib in Resources */,
 			);
@@ -535,6 +560,7 @@
 				08E23AAA1E708338007534E0 /* main.m in Sources */,
 				BB09D46F1F10F171009D4CC2 /* CrudTasks.m in Sources */,
 				0861BABD1EF1EFFA0077D43B /* Project.m in Sources */,
+				0885DFD51F12DED800AEF8B6 /* ScrumBoardCell.m in Sources */,
 				08C2C8711E7087E200609F97 /* ProjectSettingsScreenViewController.m in Sources */,
 				08C2C85F1E70875F00609F97 /* UserHomeScreenViewController.m in Sources */,
 				08E23AD41E708483007534E0 /* SignUpScreenViewController.m in Sources */,

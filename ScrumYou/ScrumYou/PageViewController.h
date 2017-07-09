@@ -10,8 +10,4 @@
 
 @interface PageViewController : UIPageViewController
 
-@property NSUInteger pageIndex;
-@property NSString *imgFile;
-@property NSString *txtTitle;
-
 @end

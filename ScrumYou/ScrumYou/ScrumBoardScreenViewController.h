@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ScrumBoardScreenViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIButton *startAgain;
 
 @end

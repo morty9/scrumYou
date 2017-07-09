@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface PageContentViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UILabel *label;
+@property (weak, nonatomic) IBOutlet UICollectionView *scrumBoardCollectionView;
+
+
+@property NSUInteger pageIndex;
+@property NSString *txtTitle;
 
 @end
