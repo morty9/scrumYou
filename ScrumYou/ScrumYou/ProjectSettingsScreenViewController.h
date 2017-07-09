@@ -18,9 +18,12 @@
     __weak IBOutlet UILabel *membersTextField;
     
     __weak IBOutlet UIButton *editButtonMembers;
+    
+    NSDictionary* _token_dic;
 }
 
 @property (strong, nonatomic) UISearchController *searchController;
+@property (nonatomic, strong) NSDictionary* token_dic;
 
 - (void) cancelButton;
 
