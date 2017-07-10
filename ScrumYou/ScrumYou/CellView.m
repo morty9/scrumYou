@@ -11,6 +11,10 @@
 @implementation CellView
 
 @synthesize label = label_;
+@synthesize nSprint = _nSprint;
+@synthesize nTaskTodo = _nTaskTodo;
+@synthesize nTaskProgress = _nTaskProgress;
+@synthesize nTaskDone = _nTaskDone;
 
 - (void)awakeFromNib {
     [super awakeFromNib];

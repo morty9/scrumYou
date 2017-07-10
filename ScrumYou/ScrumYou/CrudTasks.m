@@ -34,7 +34,6 @@
     self.dict_error = [[NSDictionary alloc] init];
     
     NSURL* url = [NSURL URLWithString:kTask_api];
-    
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"POST"];
     
@@ -71,7 +70,7 @@
         if (response == nil) {
             return;
         }
-        
+       
         if ([jsonDict valueForKey:@"type"] != nil) {
             _dict_error = jsonDict;
         }
@@ -124,13 +123,14 @@
                 NSString* tmp_duration = [tasks valueForKey:@"duration"];
                 NSString* tmp_status = [tasks valueForKey:@"status"];
                 NSString* tmp_id_creator = [tasks valueForKey:@"id_creator"];
-                NSMutableArray<NSString*>* tmp_id_members = [tasks valueForKey:@"id_members"];
+
+                NSMutableArray* tmp_id_members = [tasks valueForKey:@"id_members"];
                 
                 Task* t = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category color:tmp_color businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
-                
-                NSLog(@"Task WS %@", t);
+   
                 
                 [self.tasksList addObject:t];
+
             }
             
             callback(error, true);
@@ -186,8 +186,6 @@
             NSMutableArray<NSString*>* tmp_id_members = [jsonDict valueForKey:@"id_members"];
             
             self.task = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category color:tmp_color businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
-            
-            NSLog(@"Sprint WS %@", self.task);
             
             callback(error, true);
         });

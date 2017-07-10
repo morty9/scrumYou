@@ -102,17 +102,19 @@
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSString* tmp_id = [jsonDict valueForKey:@"id"];
-            NSString* tmp_title = [jsonDict valueForKey:@"title"];
-            NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
-            NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
-            NSMutableArray* tmp_id_sprints = [jsonDict valueForKey:@"id_sprint"];
+            for (NSDictionary* projects in jsonDict) {
+                NSString* tmp_id = [projects valueForKey:@"id"];
+                NSString* tmp_title = [projects valueForKey:@"title"];
+                NSString* tmp_id_creator = [projects valueForKey:@"id_creator"];
+                NSMutableArray* tmp_id_members = [projects valueForKey:@"id_members"];
+                NSMutableArray* tmp_id_sprints = [projects valueForKey:@"id_sprint"];
+                NSString* tmp_status = [projects valueForKey:@"status"];
             
-            Project* p = [[Project alloc] initWithId:tmp_id title:tmp_title id_creator:tmp_id_creator id_members:tmp_id_members id_sprints:tmp_id_sprints];
+                Project* p = [[Project alloc] initWithId:tmp_id title:tmp_title id_creator:tmp_id_creator id_members:tmp_id_members id_sprints:tmp_id_sprints status:tmp_status];
             
-            NSLog(@"Project WS %@", p);
+                [self.projects_list addObject:p];
             
-            [self.projects_list addObject:p];
+            }
             
             callback(error, true);
         });
@@ -158,8 +160,9 @@
             NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
             NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
             NSMutableArray* tmp_id_sprints = [jsonDict valueForKey:@"id_sprint"];
+            NSString* tmp_status = [jsonDict valueForKey:@"status"];
             
-            self.project = [[Project alloc] initWithId:tmp_id title:tmp_title id_creator:tmp_id_creator id_members:tmp_id_members id_sprints:tmp_id_sprints];
+            self.project = [[Project alloc] initWithId:tmp_id title:tmp_title id_creator:tmp_id_creator id_members:tmp_id_members id_sprints:tmp_id_sprints status:tmp_status];
             
             NSLog(@"Project WS %@", self.project);
             

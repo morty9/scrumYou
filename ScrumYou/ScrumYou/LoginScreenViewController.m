@@ -25,13 +25,13 @@
     CrudAuth* Auth;
     
     NSDictionary* token;
-    NSArray<Project*>* get_project;
+    NSMutableArray<Project*>* get_project;
     
     bool userHaveProject;
     
     AddProjectScreenViewController* addProjectVC;
     AccountSettingsScreenViewController* accountSettings;
-    HomeScreenViewController* homeVC;
+    UserHomeScreenViewController* userHomeVC;
 
 }
 
@@ -42,7 +42,7 @@
     if (self != nil) {
         
         ProjectsCrud = [[CrudProjects alloc] init];
-        get_project = [[NSArray alloc] init];
+        get_project = [[NSMutableArray<Project*> alloc] init];
         userHaveProject = false;
         
         [ProjectsCrud getProjects:^(NSError *error, BOOL success) {
@@ -64,7 +64,7 @@
     Auth = [[CrudAuth alloc] init];
     addProjectVC = [[AddProjectScreenViewController alloc] init];
     accountSettings = [[AccountSettingsScreenViewController alloc] init];
-    homeVC = [[HomeScreenViewController alloc] init];
+    userHomeVC = [[UserHomeScreenViewController alloc] init];
 }
 
 - (IBAction)connectionButton:(id)sender {
@@ -80,10 +80,15 @@
                 [self checkIfMemberHaveProject:get_project tokenActive:Auth.token];
                 
                 if (userHaveProject == true) {
-                    [self.navigationController pushViewController:homeVC animated:YES];
-                } else {
-                    [self.navigationController pushViewController:addProjectVC animated:YES];
-                }
+                    dispatch_async(dispatch_get_main_queue(), ^ {
+                        [self.navigationController pushViewController:userHomeVC animated:YES];
+                    }
+                );} else {
+                    dispatch_async(dispatch_get_main_queue(), ^ {
+                        [self.navigationController pushViewController:addProjectVC animated:YES];
+                    }
+                );}
+                
 //                dispatch_async(dispatch_get_main_queue(), ^{
 //                    [self.navigationController pushViewController:accountSettings animated:YES];
 //                });
@@ -96,9 +101,9 @@
     
     NSNumber* tokenUserId = [tokenActive valueForKey:@"userId"];
     
-    for (Project* project in get_project) {
-        for (NSNumber* id_members in [get_project valueForKey:@"id_members"]) {
-            if (tokenUserId == id_members || tokenUserId == [project valueForKey:@"id_creator"]) {
+    for (Project* project in array_projects) {
+        for (NSNumber* id_members in [project valueForKey:@"id_members"]) {
+            if (tokenUserId == id_members || [tokenUserId stringValue] == [project valueForKey:@"id_creator"]) {
                 userHaveProject = true;
             }
         }
