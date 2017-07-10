@@ -8,6 +8,7 @@
 
 #import "PageContentViewController.h"
 #import "ScrumBoardCell.h"
+#import "Task.h"
 
 @interface PageContentViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -16,6 +17,8 @@
 @implementation PageContentViewController
 
 @synthesize scrumBoardCollectionView = _scrumBoardCollectionView;
+@synthesize dictionary_section = _dictionary_section;
+@synthesize array_section = _array_section;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,7 +45,7 @@
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     //NSLog(@"%lu", (unsigned long)self.tracks.count);
     //return self.tracks.count;
-    return 10;
+    return self.array_section.count;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -56,8 +59,11 @@
         cell = [nib objectAtIndex:0];
     }
     
+    Task* task;
+    task = [self.array_section objectAtIndex:indexPath.row];
+    
     cell.layer.cornerRadius = 6;
-    //cell.label.text = @"test";
+    cell.titleCell.text = task.title;
     
     return cell;
     

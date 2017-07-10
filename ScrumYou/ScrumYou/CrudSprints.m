@@ -120,6 +120,8 @@
  */
 - (void) getSprintById:(NSString*)id_sprint callback:(void (^)(NSError *error, BOOL success))callback {
     
+    NSLog(@"GET SPRINT BY ID");
+    
     NSURL *url = [NSURL URLWithString:[kSprint_api stringByAppendingString:[@"/" stringByAppendingString:id_sprint]]];
     
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];

@@ -7,11 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Task.h"
 
-@interface PageContentViewController : UIViewController
+@interface PageContentViewController : UIViewController {
+    NSDictionary* _dictionary_section;
+    NSArray<Task*>* _array_section;
+}
+
+@property (nonatomic, strong) NSDictionary* dictionary_section;
+@property (nonatomic, strong) NSArray* array_section;
+
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UICollectionView *scrumBoardCollectionView;
-
 
 @property NSUInteger pageIndex;
 @property NSString *txtTitle;
