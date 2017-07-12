@@ -9,8 +9,11 @@
 #import "CrudSprints.h"
 #import "APIKeys.h"
 #import "Sprint.h"
+#import "SynchronousMethod.h"
 
-@implementation CrudSprints
+@implementation CrudSprints {
+    SynchronousMethod* synchronousMethod;
+}
 
 @synthesize  sprint = _sprint;
 
@@ -20,6 +23,7 @@
     if (self != nil) {
         self.sprints_list = [[NSMutableArray<Sprint*> alloc] init];
         self.sprint = [[Sprint alloc] init];
+        synchronousMethod = [[SynchronousMethod alloc] init];
     }
     
     return self;
@@ -93,13 +97,14 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             for (NSDictionary* sprint in jsonDict) {
                 NSString* tmp_id = [sprint valueForKey:@"id"];
+                NSString* tmp_title = [sprint valueForKey:@"title"];
                 NSString* tmp_beginningDate = [sprint valueForKey:@"beginningDate"];
                 NSString* tmp_endDate = [sprint valueForKey:@"endDate"];
                 NSString* tmp_id_creator = [sprint valueForKey:@"id_creator"];
                 NSMutableArray* tmp_id_listTasks = [sprint valueForKey:@"id_listTasks"];
                 NSMutableArray* tmp_id_members = [sprint valueForKey:@"id_members"];
                 
-                Sprint* s = [[Sprint alloc] initWithId:tmp_id beginningDate:tmp_beginningDate endDate:tmp_endDate id_creator:tmp_id_creator id_listTasks:tmp_id_listTasks id_members:tmp_id_members];
+                Sprint* s = [[Sprint alloc] initWithId:tmp_id title:tmp_title beginningDate:tmp_beginningDate endDate:tmp_endDate id_creator:tmp_id_creator id_listTasks:tmp_id_listTasks id_members:tmp_id_members];
                 
                 NSLog(@"Sprint WS %@", s);
                 
@@ -120,51 +125,80 @@
  */
 - (void) getSprintById:(NSString*)id_sprint callback:(void (^)(NSError *error, BOOL success))callback {
     
+    NSLog(@"GET SPRINT BY ID");
+    
     NSURL *url = [NSURL URLWithString:[kSprint_api stringByAppendingString:[@"/" stringByAppendingString:id_sprint]]];
     
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"GET"];
     
+    NSError *error;
+    NSURLResponse *response;
+    NSData *data = [synchronousMethod sendSynchronousRequest:request returningResponse:&response error:&error];
     
-    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
+    if(data){
+        NSLog(@"data");
         NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
         
-        if (error != nil) {
-            NSLog(@"Error: %@", error.localizedDescription);
-            return;
-        }
+        NSString* tmp_id = [jsonDict valueForKey:@"id"];
+        NSString* tmp_title = [jsonDict valueForKey:@"title"];
+        NSString* tmp_beginningDate = [jsonDict valueForKey:@"beginningDate"];
+        NSString* tmp_endDate = [jsonDict valueForKey:@"endDate"];
+        NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
+        NSMutableArray* tmp_id_listTasks = [jsonDict valueForKey:@"id_listTasks"];
+        NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
         
-        if (data == nil) {
-            return;
-        }
+        self.sprint = [[Sprint alloc] initWithId:tmp_id title:tmp_title beginningDate:tmp_beginningDate endDate:tmp_endDate id_creator:tmp_id_creator id_listTasks:tmp_id_listTasks id_members:tmp_id_members];
         
-        if (response == nil) {
-            return;
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSString* tmp_id = [jsonDict valueForKey:@"id"];
-            NSString* tmp_beginningDate = [jsonDict valueForKey:@"beginningDate"];
-            NSString* tmp_endDate = [jsonDict valueForKey:@"endDate"];
-            NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
-            NSMutableArray* tmp_id_listTasks = [jsonDict valueForKey:@"id_listTasks"];
-            NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
-            
-            self.sprint = [[Sprint alloc] initWithId:tmp_id beginningDate:tmp_beginningDate endDate:tmp_endDate id_creator:tmp_id_creator id_listTasks:tmp_id_listTasks id_members:tmp_id_members];
-            
-            NSLog(@"Sprint WS %@", self.sprint);
-            
-            callback(error, true);
-        });
-        
-    }] resume];
+        NSLog(@"Sprint WS %@", self.sprint);
+                    
+        callback(error, true);
+    }
+    else{
+        NSLog(@"Error: %@", error.localizedDescription);
+        return;
+    }
+    
+//    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//        
+//        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+//        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+//        
+//        if (error != nil) {
+//            NSLog(@"Error: %@", error.localizedDescription);
+//            return;
+//        }
+//        
+//        if (data == nil) {
+//            return;
+//        }
+//        
+//        if (response == nil) {
+//            return;
+//        }
+//        
+//        //dispatch_async(dispatch_get_main_queue(), ^{
+//            NSString* tmp_id = [jsonDict valueForKey:@"id"];
+//            NSString* tmp_beginningDate = [jsonDict valueForKey:@"beginningDate"];
+//            NSString* tmp_endDate = [jsonDict valueForKey:@"endDate"];
+//            NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
+//            NSMutableArray* tmp_id_listTasks = [jsonDict valueForKey:@"id_listTasks"];
+//            NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
+//            
+//            self.sprint = [[Sprint alloc] initWithId:tmp_id beginningDate:tmp_beginningDate endDate:tmp_endDate id_creator:tmp_id_creator id_listTasks:tmp_id_listTasks id_members:tmp_id_members];
+//            
+//            NSLog(@"Sprint WS %@", self.sprint);
+//            
+//            callback(error, true);
+//        //});
+//        
+//    }] resume];
 
     
 }
-
 
 /*
  * UPDATE -> update sprint with id

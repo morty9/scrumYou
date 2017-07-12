@@ -33,6 +33,38 @@
             endingLineNumber = "97"
             landmarkName = "-checkIfMemberHaveProject:tokenActive:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__46-[LoginScreenViewController connectionButton:]_block_invoke"
+                  moduleName = "Scrummary"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/berangerelatouche/Desktop/PROJET_ANNUEL/scrummary/ScrumYou/ScrumYou/LoginScreenViewController.m"
+                  timestampString = "521590518.076386"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97"
+                  offsetFromSymbolStart = "241">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.49"
+                  moduleName = "Scrummary"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/berangerelatouche/Desktop/PROJET_ANNUEL/scrummary/ScrumYou/ScrumYou/LoginScreenViewController.m"
+                  timestampString = "521590518.079928"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97"
+                  offsetFromSymbolStart = "29">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
