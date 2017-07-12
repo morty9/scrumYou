@@ -11,6 +11,7 @@
 @implementation ScrumBoardCell
 
 @synthesize titleCell = _titleCell;
+@synthesize descriptionCell = _descriptionCell;
 
 - (void)awakeFromNib {
     [super awakeFromNib];

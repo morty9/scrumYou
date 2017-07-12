@@ -9,8 +9,11 @@
 #import "CrudTasks.h"
 #import "APIKeys.h"
 #import "Task.h"
+#import "SynchronousMethod.h"
 
-@implementation CrudTasks
+@implementation CrudTasks {
+    SynchronousMethod* synchronousMethod;
+}
 
 @synthesize task = _task;
 @synthesize dict_error = _dict_error;
@@ -21,6 +24,7 @@
     if (self != nil) {
         self.tasksList = [[NSMutableArray<Task*> alloc] init];
         self.task = [[Task alloc] init];
+        synchronousMethod = [[SynchronousMethod alloc] init];
     }
     
     return self;
@@ -151,46 +155,77 @@
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"GET"];
     
+    NSError *error;
+    NSURLResponse *response;
+    NSData *data = [synchronousMethod sendSynchronousRequest:request returningResponse:&response error:&error];
     
-    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
+    if(data){
+        NSLog(@"data");
         NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
         
-        if (error != nil) {
-            NSLog(@"Error: %@", error.localizedDescription);
-            return;
-        }
+        NSString* tmp_id = [jsonDict valueForKey:@"id"];
+        NSString* tmp_title = [jsonDict valueForKey:@"title"];
+        NSString* tmp_description = [jsonDict valueForKey:@"description"];
+        NSString* tmp_difficulty = [jsonDict valueForKey:@"difficuty"];
+        NSString* tmp_priority = [jsonDict valueForKey:@"priority"];
+        NSString* tmp_id_category = [jsonDict valueForKey:@"id_category"];
+        NSString* tmp_color = [jsonDict valueForKey:@"color"];
+        NSString* tmp_businessValue = [jsonDict valueForKey:@"businessValue"];
+        NSString* tmp_duration = [jsonDict valueForKey:@"duration"];
+        NSString* tmp_status = [jsonDict valueForKey:@"status"];
+        NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
+        NSMutableArray<NSString*>* tmp_id_members = [jsonDict valueForKey:@"id_members"];
         
-        if (data == nil) {
-            return;
-        }
+        self.task = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category color:tmp_color businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
         
-        if (response == nil) {
-            return;
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSString* tmp_id = [jsonDict valueForKey:@"id"];
-            NSString* tmp_title = [jsonDict valueForKey:@"title"];
-            NSString* tmp_description = [jsonDict valueForKey:@"description"];
-            NSString* tmp_difficulty = [jsonDict valueForKey:@"difficuty"];
-            NSString* tmp_priority = [jsonDict valueForKey:@"priority"];
-            NSString* tmp_id_category = [jsonDict valueForKey:@"id_category"];
-            NSString* tmp_color = [jsonDict valueForKey:@"color"];
-            NSString* tmp_businessValue = [jsonDict valueForKey:@"businessValue"];
-            NSString* tmp_duration = [jsonDict valueForKey:@"duration"];
-            NSString* tmp_status = [jsonDict valueForKey:@"status"];
-            NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
-            NSMutableArray<NSString*>* tmp_id_members = [jsonDict valueForKey:@"id_members"];
-            
-            self.task = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category color:tmp_color businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
-            
-            callback(error, true);
-        });
-        
-    }] resume];
+        callback(error, true);
+    }
+    else{
+        NSLog(@"Error: %@", error.localizedDescription);
+        return;
+    }
+    
+//    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//        
+//        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+//        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+//        
+//        if (error != nil) {
+//            NSLog(@"Error: %@", error.localizedDescription);
+//            return;
+//        }
+//        
+//        if (data == nil) {
+//            return;
+//        }
+//        
+//        if (response == nil) {
+//            return;
+//        }
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            NSString* tmp_id = [jsonDict valueForKey:@"id"];
+//            NSString* tmp_title = [jsonDict valueForKey:@"title"];
+//            NSString* tmp_description = [jsonDict valueForKey:@"description"];
+//            NSString* tmp_difficulty = [jsonDict valueForKey:@"difficuty"];
+//            NSString* tmp_priority = [jsonDict valueForKey:@"priority"];
+//            NSString* tmp_id_category = [jsonDict valueForKey:@"id_category"];
+//            NSString* tmp_color = [jsonDict valueForKey:@"color"];
+//            NSString* tmp_businessValue = [jsonDict valueForKey:@"businessValue"];
+//            NSString* tmp_duration = [jsonDict valueForKey:@"duration"];
+//            NSString* tmp_status = [jsonDict valueForKey:@"status"];
+//            NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
+//            NSMutableArray<NSString*>* tmp_id_members = [jsonDict valueForKey:@"id_members"];
+//            
+//            self.task = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category color:tmp_color businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
+//            
+//            callback(error, true);
+//        });
+//        
+//    }] resume];
 
     
 }

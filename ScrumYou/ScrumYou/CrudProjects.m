@@ -9,8 +9,11 @@
 #import "CrudProjects.h"
 #import "APIKeys.h"
 #import "Project.h"
+#import "SynchronousMethod.h"
 
-@implementation CrudProjects
+@implementation CrudProjects {
+    SynchronousMethod* synchronousMethod;
+}
 
 @synthesize project = _project;
 
@@ -20,6 +23,7 @@
     if (self != nil) {
         self.projects_list = [[NSMutableArray<Project*> alloc] init];
         self.project = [[Project alloc] init];
+        synchronousMethod = [[SynchronousMethod alloc] init];
     }
     return self;
 }
@@ -134,42 +138,70 @@
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"GET"];
     
+    NSError *error;
+    NSURLResponse *response;
+    NSData *data = [synchronousMethod sendSynchronousRequest:request returningResponse:&response error:&error];
     
-    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
+    if(data){
+        NSLog(@"data");
         NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
         
-        if (error != nil) {
-            NSLog(@"Error: %@", error.localizedDescription);
-            return;
-        }
+        NSString* tmp_id = [jsonDict valueForKey:@"id"];
+        NSString* tmp_title = [jsonDict valueForKey:@"title"];
+        NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
+        NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
+        NSMutableArray* tmp_id_sprints = [jsonDict valueForKey:@"id_sprint"];
+        NSString* tmp_status = [jsonDict valueForKey:@"status"];
         
-        if (data == nil) {
-            return;
-        }
+        self.project = [[Project alloc] initWithId:tmp_id title:tmp_title id_creator:tmp_id_creator id_members:tmp_id_members id_sprints:tmp_id_sprints status:tmp_status];
         
-        if (response == nil) {
-            return;
-        }
+        NSLog(@"Project WS %@", self.project);
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSString* tmp_id = [jsonDict valueForKey:@"id"];
-            NSString* tmp_title = [jsonDict valueForKey:@"title"];
-            NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
-            NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
-            NSMutableArray* tmp_id_sprints = [jsonDict valueForKey:@"id_sprint"];
-            NSString* tmp_status = [jsonDict valueForKey:@"status"];
-            
-            self.project = [[Project alloc] initWithId:tmp_id title:tmp_title id_creator:tmp_id_creator id_members:tmp_id_members id_sprints:tmp_id_sprints status:tmp_status];
-            
-            NSLog(@"Project WS %@", self.project);
-            
-            callback(error, true);
-        });
-        
-    }] resume];
+        callback(error, true);
+    }
+    else{
+        NSLog(@"Error: %@", error.localizedDescription);
+        return;
+    }
+
+    
+//    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//        
+//        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+//        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+//        
+//        if (error != nil) {
+//            NSLog(@"Error: %@", error.localizedDescription);
+//            return;
+//        }
+//        
+//        if (data == nil) {
+//            return;
+//        }
+//        
+//        if (response == nil) {
+//            return;
+//        }
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            NSString* tmp_id = [jsonDict valueForKey:@"id"];
+//            NSString* tmp_title = [jsonDict valueForKey:@"title"];
+//            NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
+//            NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
+//            NSMutableArray* tmp_id_sprints = [jsonDict valueForKey:@"id_sprint"];
+//            NSString* tmp_status = [jsonDict valueForKey:@"status"];
+//            
+//            self.project = [[Project alloc] initWithId:tmp_id title:tmp_title id_creator:tmp_id_creator id_members:tmp_id_members id_sprints:tmp_id_sprints status:tmp_status];
+//            
+//            NSLog(@"Project WS %@", self.project);
+//            
+//            callback(error, true);
+//        });
+//        
+//    }] resume];
     
 }
 
