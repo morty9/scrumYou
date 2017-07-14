@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -27,10 +27,22 @@
                     <color key="backgroundColor" red="0.88225668670000001" green="0.88240832089999999" blue="0.88224714989999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <items>
                         <barButtonItem enabled="NO" width="10" id="HCL-o2-iiy"/>
-                        <barButtonItem image="mini-logo-toolbar3" width="70" id="ST2-0O-u18"/>
-                        <barButtonItem image="search-toolbar" width="65" id="DBp-B2-LAr"/>
-                        <barButtonItem image="chat-toolbar" width="65" id="FVe-qm-IzX"/>
-                        <barButtonItem image="profil-1" width="65" id="Edy-7E-20n"/>
+                        <barButtonItem image="mini-logo-toolbar3" width="70" style="plain" id="ST2-0O-u18">
+                            <connections>
+                                <action selector="refreshUHView:" destination="-1" id="8lg-hs-AdV"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem image="search-toolbar" width="65" style="plain" id="DBp-B2-LAr">
+                            <connections>
+                                <action selector="searchProjects:" destination="-1" id="uBs-fS-676"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem image="chat-toolbar" width="65" style="plain" id="FVe-qm-IzX"/>
+                        <barButtonItem image="profil-1" width="65" style="plain" id="Edy-7E-20n">
+                            <connections>
+                                <action selector="userSettings:" destination="-1" id="Upc-VM-UVr"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem enabled="NO" width="10" id="eMn-Sz-VLU"/>
                     </items>
                     <color key="tintColor" red="0.14117647059999999" green="0.2156862745" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>

@@ -51,8 +51,6 @@
                 get_project = ProjectsCrud.projects_list;
             }
         }];
-        
-        
     }
     
     return self;
@@ -75,7 +73,8 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSLog(@"AUTH TOKEN %@", Auth.token);
                 addProjectVC.token_dic = Auth.token;
-                accountSettings.token = Auth.token;
+                userHomeVC.token = Auth.token;
+                
                 
                 [self checkIfMemberHaveProject:get_project tokenActive:Auth.token];
                 
@@ -88,10 +87,6 @@
                         [self.navigationController pushViewController:addProjectVC animated:YES];
                     }
                 );}
-                
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    [self.navigationController pushViewController:accountSettings animated:YES];
-//                });
             });
         }
     }];
