@@ -7,41 +7,53 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Task.h"
 
 @interface AddTaskScreenViewController : UIViewController
 {
-    __weak IBOutlet UITextField *taskTitleTextField;
-    __weak IBOutlet UITextField *taskDescriptionTextField;
-    __weak IBOutlet UITextField *taskDifficultyTextField;
-    __weak IBOutlet UITextField *taskDurationTextField;
-    __weak IBOutlet UITextField *taskMembersTextField;
-    __weak IBOutlet UITextField *taskCostTextField;
+    __weak IBOutlet UITextField *_taskTitleTextField;
+    __weak IBOutlet UITextField *_taskDescriptionTextField;
+    __weak IBOutlet UITextField *_taskDifficultyTextField;
+    __weak IBOutlet UITextField *_taskDurationTextField;
+    __weak IBOutlet UITextField *_taskMembersTextField;
+    __weak IBOutlet UITextField *_taskCostTextField;
     
-    __weak IBOutlet UISegmentedControl *prioritySegmentation;
-    __weak IBOutlet UISegmentedControl *categorySegmentation;
+    __weak IBOutlet UISegmentedControl *_prioritySegmentation;
+    __weak IBOutlet UISegmentedControl *_categorySegmentation;
     
-    __weak IBOutlet UIButton *buttonColorView;
-    __weak IBOutlet UIButton *redColor;
-    __weak IBOutlet UIButton *blueColor;
-    __weak IBOutlet UIButton *orangeColor;
-    __weak IBOutlet UIButton *greenColor;
-    __weak IBOutlet UIButton *purpleColor;
-    __weak IBOutlet UIButton *yellowColor;
-    __weak IBOutlet UIButton *darkBlueColor;
-    __weak IBOutlet UIButton *pinkColor;
-    __weak IBOutlet UIButton *grayBlueColor;
     __weak IBOutlet UIButton *buttonMembersView;
+    __weak IBOutlet UIButton *buttonValidate;
+    __weak IBOutlet UIButton *buttonModify;
     
-    __weak IBOutlet UIView *colorView;
+    __weak IBOutlet UIPickerView *pickerStatus;
+    
     __weak IBOutlet UIView *membersView;
     
     __weak IBOutlet UITableView *membersTableView;
     
     NSDictionary* _token_dic;
     
+    NSString* _id_task;
+    
+    Task* _mTask;
+    
+    BOOL _status;
+    
 }
 
 @property (strong, nonatomic) UISearchController *searchController;
 @property (nonatomic, strong) NSDictionary* token_dic;
+@property (nonatomic, strong) NSString* id_task;
+@property (weak, nonatomic) UITextField* taskTitleTextField;
+@property (weak, nonatomic) UITextField* taskDescriptionTextField;
+@property (weak, nonatomic) UITextField* taskDifficultyTextField;
+@property (weak, nonatomic) UITextField* taskDurationTextField;
+@property (weak, nonatomic) UITextField* taskMembersTextField;
+@property (weak, nonatomic) UITextField* taskCostTextField;
+@property (weak, nonatomic) UISegmentedControl* prioritySegmentation;
+@property (weak, nonatomic) UISegmentedControl* categorySegmentation;
+@property (nonatomic) BOOL status;
+@property (nonatomic, strong) Task* mTask;
+
 
 @end

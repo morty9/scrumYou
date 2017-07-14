@@ -42,7 +42,7 @@
                   moduleName = "Scrummary"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/berangerelatouche/Desktop/PROJET_ANNUEL/scrummary/ScrumYou/ScrumYou/LoginScreenViewController.m"
-                  timestampString = "521590518.076386"
+                  timestampString = "521723033.727037"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "97"
@@ -57,7 +57,7 @@
                   moduleName = "Scrummary"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/berangerelatouche/Desktop/PROJET_ANNUEL/scrummary/ScrumYou/ScrumYou/LoginScreenViewController.m"
-                  timestampString = "521590518.079928"
+                  timestampString = "521723033.731365"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "97"
@@ -65,6 +65,22 @@
                   offsetFromSymbolStart = "29">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScrumYou/CrudTasks.m"
+            timestampString = "521720194.629369"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "235"
+            endingLineNumber = "235"
+            landmarkName = "-updateTaskId:title:description:difficulty:priority:id_category:businessValue:duration:status:id_members:callback:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

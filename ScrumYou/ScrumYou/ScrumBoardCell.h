@@ -11,5 +11,6 @@
 @interface ScrumBoardCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleCell;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionCell;
+@property (weak, nonatomic) IBOutlet UIButton *pencil;
 
 @end
