@@ -107,7 +107,7 @@
     [self designPage];
     
     accountSettingsVC = [[AccountSettingsScreenViewController alloc] init];
-    //scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
+    scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -140,6 +140,7 @@
 - (void) designPage {
     
     self.navigationItem.title = [NSString stringWithFormat:@"Scrummary"];
+    self.navigationItem.hidesBackButton = YES;
     
 }
 
@@ -286,14 +287,14 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.navigationController pushViewController:accountSettingsVC animated:YES];
+    [self.navigationController pushViewController:scrumBoardVC animated:YES];
 }
 
 
-//- (IBAction)userSettings:(id)sender {
-//    accountSettingsVC.token = self.token;
-//    [self.navigationController pushViewController:accountSettingsVC animated:YES];
-//}
+- (IBAction)userSettings:(id)sender {
+    accountSettingsVC.token = self.token;
+    [self.navigationController pushViewController:accountSettingsVC animated:YES];
+}
 
 - (IBAction)searchProjects:(id)sender {
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
