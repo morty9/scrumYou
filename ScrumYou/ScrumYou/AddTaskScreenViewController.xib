@@ -33,7 +33,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Titre" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xka-Qu-3cm" userLabel="Task Title Text Field">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Titre" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xka-Qu-3cm" userLabel="Task Title Text Field">
                     <rect key="frame" x="16" y="92" width="343" height="36"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="343" id="FIz-gT-n67"/>
@@ -292,6 +292,11 @@
                 <constraint firstItem="4rb-P0-T1Z" firstAttribute="top" secondItem="Qfc-KV-LK5" secondAttribute="bottom" constant="12" id="xTj-5d-XEZ"/>
                 <constraint firstItem="OUD-9V-owF" firstAttribute="top" secondItem="vvF-8s-CYL" secondAttribute="bottom" constant="20" id="z6p-Qg-YwA"/>
             </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="q52-lo-8Gr"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="-190.5" y="-207.5"/>
         </view>
     </objects>
