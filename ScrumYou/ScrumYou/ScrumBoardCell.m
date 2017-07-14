@@ -12,6 +12,7 @@
 
 @synthesize titleCell = _titleCell;
 @synthesize descriptionCell = _descriptionCell;
+@synthesize pencil = _pencil;
 
 - (void)awakeFromNib {
     [super awakeFromNib];

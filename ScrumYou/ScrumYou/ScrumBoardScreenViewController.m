@@ -68,12 +68,9 @@
         [ProjectsCrud getProjectById:@"54" callback:^(NSError *error, BOOL success) {
             if (success) {
                 project = ProjectsCrud.project;
-                NSLog(@"Project %@", project);
                 self.navigationItem.title = project.title;
                 [self getSprintsByProject:project.id_sprints];
-                NSLog(@"SPRINTS %@", get_sprints);
                 [self getTasksBySprint:get_sprints];
-                NSLog(@"TASKS %@", get_tasks);
                 [self initializeDictionarys:get_tasks andSprint:get_sprints];
             }
         }];
@@ -85,8 +82,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self designPage];
-    
-    NSLog(@"VIEWDIDLOAD");
     
     _pageTitles = @[@"Todo", @"In Progress", @"Done"];
 
@@ -107,8 +102,7 @@
 }
 
 - (void) getSprintsByProject:(NSArray*)array_sprints {
-    
-    NSLog(@"GET SPRINTS BY PROJECT");
+
     for (NSNumber* id_sprints in array_sprints) {
         NSString* idS = [id_sprints stringValue];
         [SprintsCrud getSprintById:idS callback:^(NSError *error, BOOL success) {
@@ -122,14 +116,11 @@
 
 - (void) getTasksBySprint:(NSMutableArray*)get_sprint {
     
-    NSLog(@"GET TASKS BY SPRINT");
     for (Sprint* sprint in get_sprint) {
         for (NSNumber* id_tasks in [sprint valueForKey:@"id_listTasks"]) {
-            NSLog(@"id_tasks %@", id_tasks);
             NSString* idT = [NSString stringWithFormat:@"%@", id_tasks];
             [TasksCrud getTaskById:idT callback:^(NSError *error, BOOL success) {
                 if (success) {
-                    NSLog(@"GET TASKS SUCCESS");
                     [get_tasks addObject:TasksCrud.task];
                 }
             }];
@@ -140,10 +131,6 @@
 
 - (void) initializeDictionarys:(NSArray*)tasks andSprint:(NSArray*)sprints {
     
-    NSLog(@"INITIALIZE DICTIONARYS");
-    NSLog(@"Srint %@", sprints);
-    NSLog(@"Task %@", tasks);
-    
     for (Sprint* sprint in sprints) {
     
         arrayTodo = [[NSMutableArray alloc] init];
@@ -153,10 +140,10 @@
         for (NSNumber* idT in [sprint valueForKey:@"id_listTasks"]) {
             for (Task* t in tasks) {
                 if ([t.id_task isEqual:idT]) {
-                    if ([[t valueForKey:@"status"]  isEqual: @"todo"]) {
+                    if ([[t valueForKey:@"status"]  isEqual: @"A faire"]) {
                         [arrayTodo addObject:t];
                         [tasks_array_todo setObject:arrayTodo forKey:sprint.title];
-                    } else if ([[t valueForKey:@"status"] isEqual:@"progress"]) {
+                    } else if ([[t valueForKey:@"status"] isEqual:@"En cours"]) {
                         [arrayProgress addObject:t];
                         [tasks_array_progress setObject:arrayProgress forKey:sprint.title];
                     } else {
@@ -175,14 +162,12 @@
 
 - (void) designPage {
     
-    NSLog(@"DESIGN PAGE");
 }
 
 #pragma mark - Page View Controller Data Source
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    NSLog(@"PAGEVIEWCONTROLLER1");
     NSUInteger index = ((PageContentViewController*) viewController).pageIndex;
     
     if ((index == 0) || (index == NSNotFound)) {
@@ -195,7 +180,6 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    NSLog(@"PAGEVIEWCONTROLLER 2");
     NSUInteger index = ((PageContentViewController*) viewController).pageIndex;
     
     if (index == NSNotFound) {
@@ -236,13 +220,11 @@
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
 {
-    NSLog(@"PRESENTATION 1");
     return [self.pageTitles count];
 }
 
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
 {
-    NSLog(@"PRESENTATION 2");
     return 0;
 }
 

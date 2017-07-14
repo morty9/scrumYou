@@ -12,10 +12,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="" id="gTV-IL-0wX" customClass="ScrumBoardCell">
-            <rect key="frame" x="0.0" y="0.0" width="343" height="100"/>
+            <rect key="frame" x="0.0" y="0.0" width="343" height="120"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="343" height="100"/>
+                <rect key="frame" x="0.0" y="0.0" width="343" height="120"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7YW-Va-fn7">
@@ -28,11 +28,19 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3s-sD-r2e">
+                        <rect key="frame" x="310" y="8" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="YlQ-xr-MdF"/>
+                            <constraint firstAttribute="height" constant="25" id="hVp-Io-tFp"/>
+                        </constraints>
+                        <state key="normal" image="pencil"/>
+                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2bn-dN-P11">
-                        <rect key="frame" x="8" y="48" width="327" height="44"/>
+                        <rect key="frame" x="8" y="43" width="327" height="69"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="327" id="gpT-iW-2v0"/>
-                            <constraint firstAttribute="height" constant="44" id="utr-hY-lLY"/>
+                            <constraint firstAttribute="height" constant="69" id="utr-hY-lLY"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -41,18 +49,25 @@
                 </subviews>
             </view>
             <color key="backgroundColor" red="0.60784322020000003" green="0.73333328959999999" blue="0.72941178080000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <gestureRecognizers/>
             <constraints>
+                <constraint firstItem="r3s-sD-r2e" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="1Qy-bb-xsq"/>
                 <constraint firstItem="2bn-dN-P11" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="4Rr-fZ-kbb"/>
                 <constraint firstItem="7YW-Va-fn7" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="8lO-4E-1j0"/>
                 <constraint firstAttribute="bottom" secondItem="2bn-dN-P11" secondAttribute="bottom" constant="8" id="JcT-KW-df3"/>
                 <constraint firstItem="7YW-Va-fn7" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="MlT-Bm-qif"/>
+                <constraint firstAttribute="trailing" secondItem="r3s-sD-r2e" secondAttribute="trailing" constant="8" id="baU-Wh-Xrh"/>
                 <constraint firstAttribute="trailing" secondItem="2bn-dN-P11" secondAttribute="trailing" constant="8" id="vL6-J9-61N"/>
             </constraints>
             <connections>
                 <outlet property="descriptionCell" destination="2bn-dN-P11" id="POh-22-oTD"/>
+                <outlet property="pencil" destination="r3s-sD-r2e" id="sjI-Ot-XNp"/>
                 <outlet property="titleCell" destination="7YW-Va-fn7" id="XHx-hX-oCd"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="54"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="pencil" width="64" height="64"/>
+    </resources>
 </document>
