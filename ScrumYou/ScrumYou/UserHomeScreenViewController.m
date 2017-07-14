@@ -73,8 +73,6 @@
         
         task = [[Task alloc] init];
         
-        
-        
         [ProjectsCrud getProjects:^(NSError *error, BOOL success) {
             if (success) {
                 get_projects = ProjectsCrud.projects_list;
@@ -107,7 +105,6 @@
     [self designPage];
     
     accountSettingsVC = [[AccountSettingsScreenViewController alloc] init];
-    scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -128,14 +125,6 @@
     [self.otherCollectionView reloadData];
     
 }
-
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    [self.collectionView reloadData];
-//    [self.otherCollectionView reloadData];
-//    [super viewWillAppear:animated];
-//}
-
 
 - (void) designPage {
     
@@ -218,12 +207,6 @@
     }
     
     [self getSprintsById:project.id_sprints];
-    NSLog(@"BALBLA %@", [project valueForKey:@"id_sprints"]);
-    NSLog(@"COUNT TODO %ld", countTodo);
-    NSLog(@"COUNT PROGRESS %ld", countProgress);
-    NSLog(@"COUNT DONE %ld", countDone);
-    
-    //[self getSprintsById:project.id_sprints];
     
     cell.nSprint.text = [NSString stringWithFormat:@"%@",  @(countSprint)];
     cell.nTaskTodo.text = [NSString stringWithFormat:@"%@", @(countTodo)];
@@ -258,9 +241,9 @@
         for (NSNumber* id_tasks in array_tasks) {
             if ([tasks valueForKey:@"_id_task"] == id_tasks) {
                 [array_t addObject:tasks];
-                if ([[tasks valueForKey:@"_status"] isEqualToString:@"todo"]) {
+                if ([[tasks valueForKey:@"_status"] isEqualToString:@"A faire"]) {
                     countTodo += 1;
-                } else if ([[tasks valueForKey:@"_status"] isEqualToString:@"progress"]) {
+                } else if ([[tasks valueForKey:@"_status"] isEqualToString:@"En cours"]) {
                     countProgress += 1;
                 } else {
                     countDone += 1;
@@ -269,15 +252,13 @@
         }
     }
     
-    //NSLog(@"ARRAY T %@", array_t);
-    
 }
 
 - (void) getStatusTasks:(Task*)currentTask {
     
-    if ([currentTask.status isEqualToString:@"todo"]) {
+    if ([currentTask.status isEqualToString:@"A faire"]) {
         countTodo += 1;
-    } else if ([currentTask.status isEqualToString:@"progress"]) {
+    } else if ([currentTask.status isEqualToString:@"En cours"]) {
         countProgress += 1;
     } else {
         countDone += 1;
@@ -287,7 +268,18 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
+    
+    if (collectionView == self.collectionView) {
+        NSLog(@"OBJECT %@", [[progressProject objectAtIndex:indexPath.row] valueForKey:@"id_project"]);
+        scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", [[progressProject objectAtIndex:indexPath.row] valueForKey:@"id_project"]];
+    }else {
+        NSLog(@"OBJECT %@", [[finishedProject objectAtIndex:indexPath.row] valueForKey:@"id_project"]);
+        scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", [[finishedProject objectAtIndex:indexPath.row] valueForKey:@"id_project"]];
+    }
+    
     [self.navigationController pushViewController:scrumBoardVC animated:YES];
+    
 }
 
 

@@ -49,6 +49,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self != nil) {
         
+        NSLog(@"INIT SB");
+        
         TasksCrud = [[CrudTasks alloc] init];
         ProjectsCrud = [[CrudProjects alloc] init];
         SprintsCrud = [[CrudSprints alloc] init];
@@ -73,6 +75,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"VIEWDIDLOAD");
+    
+    NSLog(@"ID PROJECT : %@", _id_project);
     
     [ProjectsCrud getProjectById:self.id_project callback:^(NSError *error, BOOL success) {
         if (success) {
@@ -102,7 +108,24 @@
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
+    
 }
+
+//- (void) viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:animated];
+//    
+//    NSLog(@"ID PROJECT : %@", _id_project);
+//    
+//    [ProjectsCrud getProjectById:self.id_project callback:^(NSError *error, BOOL success) {
+//        if (success) {
+//            project = ProjectsCrud.project;
+//            self.navigationItem.title = project.title;
+//            [self getSprintsByProject:project.id_sprints];
+//            [self getTasksBySprint:get_sprints];
+//            [self initializeDictionarys:get_tasks andSprint:get_sprints];
+//        }
+//    }];
+//}
 
 - (void) getSprintsByProject:(NSArray*)array_sprints {
 
