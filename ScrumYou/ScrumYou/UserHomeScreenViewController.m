@@ -7,6 +7,8 @@
 //
 
 #import "UserHomeScreenViewController.h"
+#import "AccountSettingsScreenViewController.h"
+#import "ScrumBoardScreenViewController.h"
 #import "CellView.h"
 #import "Project.h"
 #import "Sprint.h"
@@ -14,23 +16,24 @@
 #import "CrudProjects.h"
 #import "CrudSprints.h"
 #import "CrudTasks.h"
+#import "CrudAuth.h"
 #import "Task.h"
 
-@interface UserHomeScreenViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface UserHomeScreenViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
 @end
 
 @implementation UserHomeScreenViewController {
     
-    NSMutableArray<Project*>* get_projects;
-    NSMutableArray<Sprint*>* get_sprints;
-    NSMutableArray<Task*>* get_tasks;
-    
     CrudProjects* ProjectsCrud;
     CrudSprints* SprintsCrud;
-    CrudTasks * TasksCrud;
+    CrudTasks* TasksCrud;
+    CrudAuth* Auth;
     
-    Task* task;
+    NSMutableArray<Project*>* get_projects;
+    NSMutableArray<Project*>* get_projects_by_user;
+    NSMutableArray<Sprint*>* get_sprints;
+    NSMutableArray<Task*>* get_tasks;
     
     NSMutableArray* finishedProject;
     NSMutableArray* progressProject;
@@ -38,21 +41,32 @@
     NSInteger countTodo;
     NSInteger countProgress;
     NSInteger countDone;
+    
+    Task* task;
+    
+    AccountSettingsScreenViewController* accountSettingsVC;
+    ScrumBoardScreenViewController* scrumBoardVC;
+    
+    NSArray* searchResults;
+
 }
 
 @synthesize collectionView = _collectionView;
+@synthesize searchBar = _searchBar;
+@synthesize token = _token;
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self != nil) {
         
-        get_projects = [[NSMutableArray<Project*> alloc] init];
-        get_sprints = [[NSMutableArray<Sprint*> alloc] init];
-        get_tasks = [[NSMutableArray<Task*> alloc] init];
-        
         ProjectsCrud = [[CrudProjects alloc] init];
         SprintsCrud = [[CrudSprints alloc] init];
         TasksCrud = [[CrudTasks alloc] init];
+        
+        get_projects = [[NSMutableArray<Project*> alloc] init];
+        get_projects_by_user = [[NSMutableArray<Project*> alloc] init];
+        get_sprints = [[NSMutableArray<Sprint*> alloc] init];
+        get_tasks = [[NSMutableArray<Task*> alloc] init];
         
         finishedProject = [[NSMutableArray alloc] init];
         progressProject = [[NSMutableArray alloc] init];
@@ -61,49 +75,40 @@
         
         
         
-        
         [ProjectsCrud getProjects:^(NSError *error, BOOL success) {
             if (success) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    get_projects = ProjectsCrud.projects_list;
-                    NSLog(@"GET PROJECTS %@", get_projects);
-                    [self countProject];
-                    
-                    [self.collectionView reloadData];
-                    [self.otherCollectionView reloadData];
-                });
+                get_projects = ProjectsCrud.projects_list;
+                
+                NSLog(@"GET PROJECTS : %@", get_projects);
                 
             }
         }];
         
         [SprintsCrud getSprints:^(NSError *error, BOOL success) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (success) {
-                    get_sprints = SprintsCrud.sprints_list;
-                    NSLog(@"GET SPRINTS %@", get_sprints);
-                }
-            });
-            
+            if (success) {
+                get_sprints = SprintsCrud.sprints_list;
+            }
         }];
         
         [TasksCrud getTasks:^(NSError *error, BOOL success) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (success) {
-                    get_tasks = TasksCrud.tasksList;
-                    NSLog(@"GET TASKS %@", get_tasks);
-                }
-            });
-            
+            if (success) {
+                get_tasks = TasksCrud.tasksList;
+            }
         }];
+        
     }
     
     return self;
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     [self designPage];
-  
+    
+    accountSettingsVC = [[AccountSettingsScreenViewController alloc] init];
+    //scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
+    
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
@@ -114,12 +119,28 @@
     
     [self.otherCollectionView registerNib:[UINib nibWithNibName:@"CellView" bundle:nil]forCellWithReuseIdentifier:@"Cell"];
     
+    [self checkUsersProjects:get_projects tokenActive:_token];
+    
+    NSLog(@"GET USERS PROJECTS %@", get_projects_by_user);
+    [self countProject];
+    
+    [self.collectionView reloadData];
+    [self.otherCollectionView reloadData];
+    
 }
+
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [self.collectionView reloadData];
+//    [self.otherCollectionView reloadData];
+//    [super viewWillAppear:animated];
+//}
 
 
 - (void) designPage {
     
     self.navigationItem.title = [NSString stringWithFormat:@"Scrummary"];
+    
 }
 
 - (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -127,16 +148,36 @@
 }
 
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-
-    if (collectionView == self.collectionView) {
-        return progressProject.count;
+    
+    if (self.searchController.isActive) {
+        return searchResults.count;
+    } else {
+        if (collectionView == self.collectionView) {
+            return progressProject.count;
+        }
+        return finishedProject.count;
     }
     
-    return finishedProject.count;
+}
+
+- (void) checkUsersProjects:(NSArray*)user_projects tokenActive:(NSDictionary*)tokenActive {
+    
+    NSNumber* tokenUserId = [tokenActive valueForKey:@"userId"];
+    
+    NSLog(@"TOKEN USER ID %@", tokenUserId);
+    
+    for (Project* project in user_projects) {
+        for (NSNumber* id_members in [project valueForKey:@"id_members"]) {
+            if (tokenUserId == id_members || [tokenUserId stringValue] == [project valueForKey:@"id_creator"]) {
+                [get_projects_by_user addObject:project];
+            }
+        }
+    }
+    
 }
 
 - (void) countProject {
-    for (Project* p in get_projects) {
+    for (Project* p in get_projects_by_user) {
         if ([[p valueForKey:@"status"] boolValue] == NO) {
             [progressProject addObject:p];
             
@@ -188,7 +229,6 @@
     cell.nTaskProgress.text = [NSString stringWithFormat:@"%@", @(countProgress)];
     cell.nTaskDone.text = [NSString stringWithFormat:@"%@", @(countDone)];
     
-    
     return cell;
     
 }
@@ -228,49 +268,9 @@
         }
     }
     
-    NSLog(@"ARRAY T %@", array_t);
+    //NSLog(@"ARRAY T %@", array_t);
     
 }
-
-/*- (void) getSprintsById:(NSArray*)id_sprints {
-    
-    get_sprints = [[NSMutableArray alloc] init];
-    
-    for (NSNumber* idS in id_sprints) {
-        NSLog(@"IDS %@", idS);
-        [SprintsCrud getSprintById:[idS stringValue] callback:^(NSError *error, BOOL success) {
-            if (success) {
-                NSLog(@"SUCCESS SPRINTS");
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    //[get_sprints addObject:SprintsCrud.sprint];
-                    NSLog(@"GO TO GETTASKBYID");
-                    [self getTaskById:SprintsCrud.sprint];
-                });
-                
-                //NSLog(@"GET_SPRINTS %@", [get_sprints valueForKey:@"id_sprint"]);
-            }
-        }];
-    }
-    
-}
-
-- (void) getTaskById:(Sprint*)sprint {
-    
-    for (NSNumber* taskId in sprint.id_listTasks) {
-        [TasksCrud getTaskById:[NSString stringWithFormat:@"%@", taskId] callback:^(NSError *error, BOOL success) {
-            if (success) {
-                NSLog(@"SUCCESS TASKS ID");
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    task = TasksCrud.task;
-                    [self getStatusTasks:task];
-                    //NSLog(@"COUNT TODO %ld", (long)countTodo);
-                });
-                
-            }
-        }];
-
-    }
-}*/
 
 - (void) getStatusTasks:(Task*)currentTask {
     
@@ -286,23 +286,52 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *selected = [self.tracks objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:accountSettingsVC animated:YES];
 }
 
-- (void) backHome {
-    
+
+//- (IBAction)userSettings:(id)sender {
+//    accountSettingsVC.token = self.token;
+//    [self.navigationController pushViewController:accountSettingsVC animated:YES];
+//}
+
+- (IBAction)searchProjects:(id)sender {
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = YES;
+    self.searchController.searchBar.delegate = self;
+    self.navigationItem.titleView = self.searchController.searchBar;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
+    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
 }
 
-- (void) search {
-    
+- (IBAction)refreshUHView:(id)sender {
+    [self viewWillAppear:YES];
 }
 
-- (void) chat {
+
+// SEARCHBAR
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSString *searchString = self.searchController.searchBar.text;
+    [self searchForText:searchString];
     
+    [self.collectionView reloadData];
+    [self.otherCollectionView reloadData];
 }
 
-- (void) settings {
-    
+- (void)searchForText:(NSString*)searchText {
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"title contains[c] %@", searchText];
+    searchResults = [get_projects_by_user filteredArrayUsingPredicate:predicate];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
+    [self updateSearchResultsForSearchController:self.searchController];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
 }
 
 /*
