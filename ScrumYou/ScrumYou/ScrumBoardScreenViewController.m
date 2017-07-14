@@ -43,6 +43,8 @@
     NSMutableArray<Task*>* arrayDone;
 }
 
+@synthesize id_project = _id_project;
+
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self != nil) {
@@ -65,7 +67,7 @@
         arrayProgress = [[NSMutableArray<Task*> alloc] init];
         arrayDone = [[NSMutableArray<Task*> alloc] init];
         
-        [ProjectsCrud getProjectById:@"54" callback:^(NSError *error, BOOL success) {
+        [ProjectsCrud getProjectById:self.id_project callback:^(NSError *error, BOOL success) {
             if (success) {
                 project = ProjectsCrud.project;
                 self.navigationItem.title = project.title;

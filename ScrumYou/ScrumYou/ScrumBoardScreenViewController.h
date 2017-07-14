@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ScrumBoardScreenViewController : UIViewController
+@interface ScrumBoardScreenViewController : UIViewController {
+    
+    NSString* _id_project;
+    
+}
+
 @property (weak, nonatomic) IBOutlet UIButton *startAgain;
+@property (nonatomic, strong) NSString* id_project;
 
 @end
