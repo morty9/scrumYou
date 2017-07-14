@@ -16,14 +16,13 @@
 @synthesize difficulty = _difficulty;
 @synthesize priority = _priority;
 @synthesize id_category = _id_category;
-@synthesize color = _color;
 @synthesize businessValue = _businessValue;
 @synthesize duration = _duration;
 @synthesize status = _status;
 @synthesize id_creator = _id_creator;
 @synthesize id_members = _id_members;
 
-- (instancetype) initWithId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSString*)priority id_category:(NSString*)id_category color:(NSString*)color businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_creator:(NSString*)id_creator id_members:(NSMutableArray*)id_members {
+- (instancetype) initWithId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSString*)priority id_category:(NSString*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_creator:(NSString*)id_creator id_members:(NSMutableArray*)id_members {
     
     self = [super init];
     
@@ -34,7 +33,6 @@
         self.difficulty = difficulty;
         self.priority = priority;
         self.id_category = id_category;
-        self.color = color;
         self.businessValue = businessValue;
         self.duration = duration;
         self.status = status;

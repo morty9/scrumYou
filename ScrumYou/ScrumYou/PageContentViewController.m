@@ -9,8 +9,11 @@
 #import "PageContentViewController.h"
 #import "ScrumBoardCell.h"
 #import "Task.h"
+#import "AddTaskScreenViewController.h"
 
-@interface PageContentViewController () <UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
+@interface PageContentViewController () <UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate>
+
+- (void) modifyTask;
 
 @end
 
@@ -19,6 +22,10 @@
     NSMutableArray<Task*>* tasks;
     
     NSArray* keys;
+    
+    Task* current_task;
+    
+    AddTaskScreenViewController* addTaskVC;
 }
 
 @synthesize scrumBoardCollectionView = _scrumBoardCollectionView;
@@ -36,6 +43,9 @@
     
     self.label.text = self.txtTitle;
     
+    addTaskVC = [[AddTaskScreenViewController alloc] init];
+    
+    current_task = [[Task alloc] init];
     array = [[NSMutableArray<NSMutableArray*> alloc] init];
     tasks = [[NSMutableArray<Task*> alloc] init];
     
@@ -71,11 +81,6 @@
 
 - (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     
-    NSLog(@"component %ld", component);
-    NSLog(@"row %ld", row);
-    
-    NSLog(@"dico at index %@", [self.dictionary_section objectForKey:[keys objectAtIndex:row]]);
-    
     tasks = [self.dictionary_section objectForKey:[keys objectAtIndex:row]];
     
     [self.scrumBoardCollectionView reloadData];
@@ -103,20 +108,43 @@
     
     Task* task;
     task = [tasks objectAtIndex:indexPath.row];
+    current_task = task;
     
     cell.layer.cornerRadius = 6;
     cell.titleCell.text = task.title;
     cell.descriptionCell.text = task.description;
     
+    
+    [cell.pencil addTarget:self action:@selector(modifyTask) forControlEvents:UIControlEventTouchUpInside];
+    //[cell.pencil performSelector:@selector(modifyTask:) withObject:task];
+    
     return cell;
     
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    //NSString *selected = [self.tracks objectAtIndex:indexPath.row];
-    //NSLog(@"selected=%@", selected);
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+
 }
+
+- (void) modifyTask {
+    
+    NSLog(@"CURRENT TASK %@", current_task.title);
+    
+    addTaskVC.status = true;
+    addTaskVC.mTask = current_task;
+//    addTaskVC.taskTitleTextField.text = current_task.title;
+//    addTaskVC.taskDurationTextField.text = current_task.duration;
+//    addTaskVC.taskMembersTextField.text = [NSString stringWithFormat:@"%ld", current_task.id_members.count];
+//    addTaskVC.taskCostTextField.text = current_task.businessValue;
+//    addTaskVC.taskDifficultyTextField.text = current_task.difficulty;
+//    addTaskVC.taskDescriptionTextField.text = current_task.description;
+//    [addTaskVC.prioritySegmentation setSelectedSegmentIndex:[current_task.priority integerValue]];
+//    [addTaskVC.categorySegmentation setSelectedSegmentIndex:[current_task.id_category integerValue]];
+    
+    [self.navigationController pushViewController:addTaskVC animated:YES];
+}
+
+
 
 - (void) designPage {
     

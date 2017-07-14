@@ -33,7 +33,7 @@
 /*
  *  POST -> add task to database
  */
-- (void) addTaskTitle:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category color:(NSString*)color businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) addTaskTitle:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members callback:(void (^)(NSError *error, BOOL success))callback {
     
     self.dict_error = [[NSDictionary alloc] init];
     
@@ -46,7 +46,6 @@
                                                      @"difficulty" : difficulty,
                                                      @"priority" : priority,
                                                      @"id_category" : id_category,
-                                                     @"color" : color,
                                                      @"businessValue" : businessValue,
                                                      @"duration" : duration,
                                                      @"status" : status,
@@ -119,10 +118,9 @@
                 NSString* tmp_id = [tasks valueForKey:@"id"];
                 NSString* tmp_title = [tasks valueForKey:@"title"];
                 NSString* tmp_description = [tasks valueForKey:@"description"];
-                NSString* tmp_difficulty = [tasks valueForKey:@"difficuty"];
+                NSString* tmp_difficulty = [tasks valueForKey:@"difficulty"];
                 NSString* tmp_priority = [tasks valueForKey:@"priority"];
                 NSString* tmp_id_category = [tasks valueForKey:@"id_category"];
-                NSString* tmp_color = [tasks valueForKey:@"color"];
                 NSString* tmp_businessValue = [tasks valueForKey:@"businessValue"];
                 NSString* tmp_duration = [tasks valueForKey:@"duration"];
                 NSString* tmp_status = [tasks valueForKey:@"status"];
@@ -130,8 +128,7 @@
 
                 NSMutableArray* tmp_id_members = [tasks valueForKey:@"id_members"];
                 
-                Task* t = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category color:tmp_color businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
-   
+                Task* t = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
                 
                 [self.tasksList addObject:t];
 
@@ -168,17 +165,16 @@
         NSString* tmp_id = [jsonDict valueForKey:@"id"];
         NSString* tmp_title = [jsonDict valueForKey:@"title"];
         NSString* tmp_description = [jsonDict valueForKey:@"description"];
-        NSString* tmp_difficulty = [jsonDict valueForKey:@"difficuty"];
+        NSString* tmp_difficulty = [jsonDict valueForKey:@"difficulty"];
         NSString* tmp_priority = [jsonDict valueForKey:@"priority"];
         NSString* tmp_id_category = [jsonDict valueForKey:@"id_category"];
-        NSString* tmp_color = [jsonDict valueForKey:@"color"];
         NSString* tmp_businessValue = [jsonDict valueForKey:@"businessValue"];
         NSString* tmp_duration = [jsonDict valueForKey:@"duration"];
         NSString* tmp_status = [jsonDict valueForKey:@"status"];
         NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
         NSMutableArray<NSString*>* tmp_id_members = [jsonDict valueForKey:@"id_members"];
         
-        self.task = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category color:tmp_color businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
+        self.task = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
         
         callback(error, true);
     }
@@ -234,7 +230,7 @@
 /*
  *  UPDATE -> update task with id
  */
-- (void) updateTaskId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category color:(NSString*)color businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) updateTaskId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSLog(@"ID_TASK %@", id_task);
     NSLog(@"TITLE %@", title);
@@ -242,7 +238,6 @@
     NSLog(@"DIFFICULTY %@", difficulty);
     NSLog(@"PRIORITY %@", priority);
     NSLog(@"ID_CATEGORY %@", id_category);
-    NSLog(@"COLOR %@", color);
     NSLog(@"BUSINESS VALUE %@", businessValue);
     NSLog(@"DURATION %@", duration);
     NSLog(@"STATUS %@", status);
@@ -258,11 +253,11 @@
                                                      @"difficulty" : difficulty,
                                                      @"priority" : priority,
                                                      @"id_category" : id_category,
-                                                     @"color" : color,
                                                      @"businessValue" : businessValue,
                                                      @"duration" : duration,
                                                      @"status" : status,
                                                      @"id_members" : id_members};
+    
     
     NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
     [request setHTTPBody:postData];
