@@ -49,8 +49,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self != nil) {
         
-        NSLog(@"INIT");
-        
         TasksCrud = [[CrudTasks alloc] init];
         ProjectsCrud = [[CrudProjects alloc] init];
         SprintsCrud = [[CrudSprints alloc] init];
@@ -67,15 +65,7 @@
         arrayProgress = [[NSMutableArray<Task*> alloc] init];
         arrayDone = [[NSMutableArray<Task*> alloc] init];
         
-        [ProjectsCrud getProjectById:self.id_project callback:^(NSError *error, BOOL success) {
-            if (success) {
-                project = ProjectsCrud.project;
-                self.navigationItem.title = project.title;
-                [self getSprintsByProject:project.id_sprints];
-                [self getTasksBySprint:get_sprints];
-                [self initializeDictionarys:get_tasks andSprint:get_sprints];
-            }
-        }];
+        //self.id_project = @"54";
     }
     
     return self;
@@ -83,6 +73,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [ProjectsCrud getProjectById:self.id_project callback:^(NSError *error, BOOL success) {
+        if (success) {
+            project = ProjectsCrud.project;
+            self.navigationItem.title = project.title;
+            [self getSprintsByProject:project.id_sprints];
+            [self getTasksBySprint:get_sprints];
+            [self initializeDictionarys:get_tasks andSprint:get_sprints];
+        }
+    }];
+    
     [self designPage];
     
     _pageTitles = @[@"Todo", @"In Progress", @"Done"];
