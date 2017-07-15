@@ -18,6 +18,7 @@
 #import "CrudTasks.h"
 #import "CrudAuth.h"
 #import "Task.h"
+#import "SynchronousMethod.h"
 
 @interface UserHomeScreenViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
@@ -59,7 +60,7 @@
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self != nil) {
-        
+        NSLog(@"INIT");
         ProjectsCrud = [[CrudProjects alloc] init];
         SprintsCrud = [[CrudSprints alloc] init];
         TasksCrud = [[CrudTasks alloc] init];
@@ -77,6 +78,7 @@
         [ProjectsCrud getProjects:^(NSError *error, BOOL success) {
             if (success) {
                 get_projects = ProjectsCrud.projects_list;
+                NSLog(@"GET PROJECTS ARRAY : %@", get_projects);
             }
         }];
         

@@ -8,6 +8,7 @@
 
 #import "AccountSettingsScreenViewController.h"
 #import "LoginScreenViewController.h"
+#import "UserHomeScreenViewController.h"
 #import "CrudAuth.h"
 #import "CrudUsers.h"
 #import "HomeScreenViewController.h"
@@ -63,16 +64,16 @@
     
     
     dispatch_async(dispatch_get_main_queue(), ^{
-    [UsersCrud getUserById:userId callback:^(NSError *error, BOOL success) {
-        if (success) {
+        [UsersCrud getUserById:userId callback:^(NSError *error, BOOL success) {
+            if (success) {
             
-            currentUser = UsersCrud.user;
+                currentUser = UsersCrud.user;
             
-            [self displayUser:currentUser];
+                [self displayUser:currentUser];
             
-        }
-    }];
-        });
+            }
+        }];
+    });
 }
 
 - (void)didReceiveMemoryWarning {
@@ -101,7 +102,6 @@
         pwdTextField.textColor = [UIColor lightGrayColor];
         
         isToUpdate = YES;
-        
         self.navigationItem.rightBarButtonItem = updateButtonCancel;
 
     } else {
@@ -122,16 +122,13 @@
         isToUpdate = NO;
         self.navigationItem.rightBarButtonItem = updateButtonEdit;
 
-
     }
-    
-    
 
 }
 
 - (IBAction)saveModification:(id)sender {
     
-    if (isToUpdate != false) {
+    if (isToUpdate == YES) {
         NSString* tok = [_token valueForKey:@"token"];
         NSString* userId = [_token valueForKey:@"userId"];
         NSString* newNickName = nicknameTextField.text;
@@ -141,21 +138,22 @@
         
         [UsersCrud updateUserId:[NSString stringWithFormat:@"%@", userId] nickname:newNickName fullname:newUserName email:newEmail password:newPass token:tok callback:^(NSError *error, BOOL success) {
             if (success) {
-//                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Modification fait" message:@"Les modifications ont bien été changées." preferredStyle:UIAlertControllerStyleAlert];
-//                
-//                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-//                    NSLog(@"SAVE MODIFICATION");
-            // AccountSettingsScreenViewController* accountSetVC = [[AccountSettingsScreenViewController alloc] init];
-            // [self.navigationController pushViewController:accountSetVC animated:YES];
-//
-//                }];
-//                
-//                [alert addAction:defaultAction];
-//                [self presentViewController:alert animated:YES completion:nil];
-                NSLog(@"POPUP: Update Done, todo -> pop up");
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Modifications" message:@"Les modifications ont bien été prises en compte." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        UserHomeScreenViewController* userHomeVC = [[UserHomeScreenViewController alloc] init];
+                        userHomeVC.token = self.token;
+                        [self.navigationController pushViewController:userHomeVC animated:YES];
+                        
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [self presentViewController:alert animated:YES completion:nil];
+                });
             }
         }];
-      }
+    }
 }
 
 - (IBAction)deleteAccountUser:(id)sender {
@@ -164,7 +162,7 @@
 
     [UsersCrud deleteUserWithId:[NSString stringWithFormat:@"%@", userId] token:tok callback:^(NSError *error, BOOL success) {
         if (success) {
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Suppression de l'utilisateur" message:@"La suppression de l'utilisateur à bien été pris en compte." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Suppression de l'utilisateur" message:@"La suppression de l'utilisateur a bien été prise en compte." preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                 HomeScreenViewController* homeVc = [[HomeScreenViewController alloc] init];
