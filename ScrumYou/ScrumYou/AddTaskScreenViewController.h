@@ -25,6 +25,7 @@
     __weak IBOutlet UIButton *buttonMembersView;
     __weak IBOutlet UIButton *buttonValidate;
     __weak IBOutlet UIButton *buttonModify;
+    __weak IBOutlet UIButton *buttonDelete;
     
     __weak IBOutlet UIPickerView *pickerStatus;
     
@@ -37,7 +38,6 @@
     __weak IBOutlet UILabel *_labelDescription;
     __weak IBOutlet UILabel *_labelDifficulty;
     __weak IBOutlet UILabel *_labelCost;
-    
     
     NSDictionary* _token_dic;
     
