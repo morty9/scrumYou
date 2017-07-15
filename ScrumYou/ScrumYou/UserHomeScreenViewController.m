@@ -47,7 +47,8 @@
     AccountSettingsScreenViewController* accountSettingsVC;
     ScrumBoardScreenViewController* scrumBoardVC;
     
-    NSArray* searchResults;
+    NSArray* searchResultsFinished;
+    NSArray* searchResultsProgress;
 
 }
 
@@ -137,7 +138,10 @@
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
     if (self.searchController.isActive) {
-        return searchResults.count;
+        if (collectionView == self.collectionView) {
+            return searchResultsProgress.count;
+        }
+        return searchResultsFinished.count;
     } else {
         if (collectionView == self.collectionView) {
             return progressProject.count;
@@ -188,12 +192,21 @@
     
     Project* project;
     
-    if (collectionView == self.collectionView) {
-        project = [progressProject objectAtIndex:indexPath.row];
+    if (self.searchController.isActive) {
+        if (collectionView == self.collectionView) {
+            project = [searchResultsProgress objectAtIndex:indexPath.row];
+        } else {
+            project = [searchResultsFinished objectAtIndex:indexPath.row];
+        }
     } else {
-        project = [finishedProject objectAtIndex:indexPath.row];
+        if (collectionView == self.collectionView) {
+            project = [progressProject objectAtIndex:indexPath.row];
+        } else {
+            project = [finishedProject objectAtIndex:indexPath.row];
+        }
+
     }
-    
+
     cell.label.text = project.title;
     NSInteger countSprint = 0;
     
@@ -224,7 +237,7 @@
             }
         }
     }
-    
+
 }
 
 - (void) getTaskById:(NSArray*)array_tasks {
@@ -270,7 +283,7 @@
     if (collectionView == self.collectionView) {
         NSLog(@"OBJECT %@", [[progressProject objectAtIndex:indexPath.row] valueForKey:@"id_project"]);
         scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", [[progressProject objectAtIndex:indexPath.row] valueForKey:@"id_project"]];
-    }else {
+    } else {
         NSLog(@"OBJECT %@", [[finishedProject objectAtIndex:indexPath.row] valueForKey:@"id_project"]);
         scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", [[finishedProject objectAtIndex:indexPath.row] valueForKey:@"id_project"]];
     }
@@ -288,12 +301,13 @@
 - (IBAction)searchProjects:(id)sender {
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = YES;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
     self.searchController.searchBar.delegate = self;
     self.navigationItem.titleView = self.searchController.searchBar;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    
 }
 
 - (IBAction)refreshUHView:(id)sender {
@@ -313,7 +327,8 @@
 
 - (void)searchForText:(NSString*)searchText {
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"title contains[c] %@", searchText];
-    searchResults = [get_projects_by_user filteredArrayUsingPredicate:predicate];
+    searchResultsProgress = [progressProject filteredArrayUsingPredicate:predicate];
+    searchResultsFinished = [finishedProject filteredArrayUsingPredicate:predicate];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
@@ -321,7 +336,7 @@
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    [searchBar resignFirstResponder];
+    self.navigationItem.titleView = nil;
 }
 
 /*

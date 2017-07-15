@@ -27,18 +27,18 @@
                     <color key="backgroundColor" red="0.88225668670000001" green="0.88240832089999999" blue="0.88224714989999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <items>
                         <barButtonItem enabled="NO" width="10" id="HCL-o2-iiy"/>
-                        <barButtonItem image="mini-logo-toolbar3" width="70" style="plain" id="ST2-0O-u18">
+                        <barButtonItem image="mini-logo-toolbar3" width="70" style="plain" id="ST2-0O-u18" userLabel="Home">
                             <connections>
                                 <action selector="refreshUHView:" destination="-1" id="8lg-hs-AdV"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem image="search-toolbar" width="65" style="plain" id="DBp-B2-LAr">
+                        <barButtonItem image="search-toolbar" width="65" style="plain" id="DBp-B2-LAr" userLabel="Search">
                             <connections>
                                 <action selector="searchProjects:" destination="-1" id="uBs-fS-676"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem image="chat-toolbar" width="65" style="plain" id="FVe-qm-IzX"/>
-                        <barButtonItem image="profil-1" width="65" style="plain" id="Edy-7E-20n">
+                        <barButtonItem image="chat-toolbar" width="65" style="plain" id="FVe-qm-IzX" userLabel="Chat"/>
+                        <barButtonItem image="profil-1" width="65" style="plain" id="Edy-7E-20n" userLabel="Account">
                             <connections>
                                 <action selector="userSettings:" destination="-1" id="Upc-VM-UVr"/>
                             </connections>
