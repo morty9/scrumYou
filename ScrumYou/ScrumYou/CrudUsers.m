@@ -175,6 +175,7 @@
  *  UPDATE -> update user with id
  */
 - (void) updateUserId:(NSString*)id_user nickname:(NSString*)nickname fullname:(NSString*)fullname email:(NSString*)email password:(NSString*)password token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
+
     
     NSURL *url = [NSURL URLWithString:[kUser_api stringByAppendingString:[@"/" stringByAppendingString:id_user]]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -204,6 +205,8 @@
         if (response == nil) {
             return;
         }
+        
+        callback(error, true);
         
     }] resume];
     
