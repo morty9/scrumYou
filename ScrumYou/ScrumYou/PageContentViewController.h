@@ -19,15 +19,17 @@
 @property (nonatomic, strong) NSDictionary* dictionary_section;
 @property (nonatomic, strong) NSArray<Task*>* array_section;
 @property (nonatomic, strong) NSArray<Sprint*>* array_sprint;
-
 @property (weak, nonatomic) IBOutlet UILabel *label;
+@property (weak, nonatomic) IBOutlet UIView *taskView;
 @property (weak, nonatomic) IBOutlet UICollectionView *scrumBoardCollectionView;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchController;
-
+@property (strong, nonatomic) UISearchController *searchController;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIPickerView *menuSprints;
-
-
 @property NSUInteger pageIndex;
 @property NSString *txtTitle;
 
+
+- (void) initializeSearchController;
+
 @end
+

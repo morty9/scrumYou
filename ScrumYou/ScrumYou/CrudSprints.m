@@ -106,8 +106,6 @@
                 
                 Sprint* s = [[Sprint alloc] initWithId:tmp_id title:tmp_title beginningDate:tmp_beginningDate endDate:tmp_endDate id_creator:tmp_id_creator id_listTasks:tmp_id_listTasks id_members:tmp_id_members];
                 
-                NSLog(@"Sprint WS %@", s);
-                
                 [self.sprints_list addObject:s];
 
             }
@@ -125,8 +123,6 @@
  */
 - (void) getSprintById:(NSString*)id_sprint callback:(void (^)(NSError *error, BOOL success))callback {
     
-    NSLog(@"GET SPRINT BY ID");
-    
     NSURL *url = [NSURL URLWithString:[kSprint_api stringByAppendingString:[@"/" stringByAppendingString:id_sprint]]];
     
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -137,7 +133,6 @@
     NSData *data = [synchronousMethod sendSynchronousRequest:request returningResponse:&response error:&error];
     
     if(data){
-        NSLog(@"data");
         NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
@@ -151,8 +146,6 @@
         NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
         
         self.sprint = [[Sprint alloc] initWithId:tmp_id title:tmp_title beginningDate:tmp_beginningDate endDate:tmp_endDate id_creator:tmp_id_creator id_listTasks:tmp_id_listTasks id_members:tmp_id_members];
-        
-        NSLog(@"Sprint WS %@", self.sprint);
                     
         callback(error, true);
     }

@@ -157,8 +157,6 @@
         
         self.project = [[Project alloc] initWithId:tmp_id title:tmp_title id_creator:tmp_id_creator id_members:tmp_id_members id_sprints:tmp_id_sprints status:tmp_status];
         
-        NSLog(@"Project WS %@", self.project);
-        
         callback(error, true);
     }
     else{

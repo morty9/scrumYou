@@ -157,7 +157,6 @@
     NSData *data = [synchronousMethod sendSynchronousRequest:request returningResponse:&response error:&error];
     
     if(data){
-        NSLog(@"data");
         NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
@@ -231,17 +230,6 @@
  *  UPDATE -> update task with id
  */
 - (void) updateTaskId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members callback:(void (^)(NSError *error, BOOL success))callback {
-    
-    NSLog(@"ID_TASK %@", id_task);
-    NSLog(@"TITLE %@", title);
-    NSLog(@"DESCRIPTION %@", description);
-    NSLog(@"DIFFICULTY %@", difficulty);
-    NSLog(@"PRIORITY %@", priority);
-    NSLog(@"ID_CATEGORY %@", id_category);
-    NSLog(@"BUSINESS VALUE %@", businessValue);
-    NSLog(@"DURATION %@", duration);
-    NSLog(@"STATUS %@", status);
-    NSLog(@"ID_MEMBERS %@", id_members);
     
     NSURL *url = [NSURL URLWithString:[kTask_api stringByAppendingString:[@"/" stringByAppendingString:id_task]]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];

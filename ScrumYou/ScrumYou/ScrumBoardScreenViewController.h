@@ -11,10 +11,12 @@
 @interface ScrumBoardScreenViewController : UIViewController {
     
     NSString* _id_project;
-    
+    NSDictionary* _token;
 }
 
 @property (weak, nonatomic) IBOutlet UIButton *startAgain;
 @property (nonatomic, strong) NSString* id_project;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *searchButtonItem;
+@property (nonatomic, strong) NSDictionary *token;
 
 @end

@@ -14,6 +14,8 @@
 
 @interface AddTaskScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIPickerViewDelegate, UIPickerViewDataSource>
 
+- (void) editTask;
+
 @end
 
 @implementation AddTaskScreenViewController {
@@ -45,10 +47,15 @@
 @synthesize taskCostTextField = _taskCostTextField;
 @synthesize taskDurationTextField = _taskDurationTextField;
 @synthesize taskMembersTextField = _taskMembersTextField;
+@synthesize taskPriorityTextField = _taskPriorityTextField;
 @synthesize prioritySegmentation = _prioritySegmentation;
 @synthesize categorySegmentation = _categorySegmentation;
 @synthesize status = _status;
 @synthesize mTask = _mTask;
+@synthesize labelTitle = _labelTitle;
+@synthesize labelDescription = _labelDescription;
+@synthesize labelCost = _labelCost;
+@synthesize labelDifficulty = _labelDifficulty;
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -66,6 +73,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     membersTableView.delegate = self;
     membersTableView.dataSource = self;
     
@@ -95,6 +103,9 @@
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    
+    buttonValidate.hidden = true;
+    buttonModify.hidden = true;
     
     [membersTableView reloadData];
 }
@@ -133,7 +144,7 @@
                     [weakSelf presentViewController:alert animated:YES completion:nil];
                     
                 } else {
-                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre tâche a été créé." preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre tâche a été créée." preferredStyle:UIAlertControllerStyleAlert];
                     
                     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                         // GO TO SCRUM BOARD
@@ -351,18 +362,36 @@
 - (void) designPage {
     
     //navigation bar customization
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editTask)];
+    editButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
+    self.navigationItem.rightBarButtonItem = editButton;
+    
     self.navigationItem.title = [NSString stringWithFormat:@"Ajouter une tâche"];
+    self.navigationController.navigationBar.topItem.title = @"";
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.21 blue:0.27 alpha:1.0];
+    
+    buttonModify.hidden = true;
+    buttonValidate.hidden = false;
     
     if (self.status == false) {
-        [buttonValidate setHidden:NO];
-        [buttonModify setHidden:YES];
+        buttonValidate.hidden = true;
+        buttonModify.hidden = true;
+        
     } else {
-        [buttonModify setHidden:NO];
-        [buttonValidate setHidden:YES];
+        self.navigationItem.title = self.mTask.title;
         
-        NSLog(@"TASK %@", self.mTask.difficulty);
+        self.taskTitleTextField.enabled = false;
+        self.taskCostTextField.enabled = false;
+        self.taskDurationTextField.enabled = false;
+        self.taskDifficultyTextField.enabled = false;
+        self.prioritySegmentation.enabled = false;
+        self.categorySegmentation.enabled = false;
+        self.taskDescriptionTextField.enabled = false;
+        self.taskMembersTextField.enabled = false;
+        buttonMembersView.enabled = false;
+        pickerStatus.multipleTouchEnabled = false;
+        stepperDuration.enabled = false;
         
-        self.navigationItem.title = [NSString stringWithFormat:@"Modifier une tâche"];
         
         self.id_task = self.mTask.id_task;
         self.taskTitleTextField.text = self.mTask.title;
@@ -375,53 +404,58 @@
         [self.prioritySegmentation setSelectedSegmentIndex:[self.mTask.priority integerValue]-1];
     }
     
-    UINavigationBar* bar = [self.navigationController navigationBar];
-    [bar setHidden:false];
-    
-    UIImage *cancel = [[UIImage imageNamed:@"error.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:cancel style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton:)];
-    self.navigationItem.leftBarButtonItem = cancelButton;
-    
     //border taskTitle text field
     CALayer *borderTaskTitle = [CALayer layer];
     CGFloat borderWidthTaskTitle = 1;
     borderTaskTitle.borderColor = [UIColor darkGrayColor].CGColor;
-    borderTaskTitle.frame = CGRectMake(0, self.taskTitleTextField.frame.size.height - borderWidthTaskTitle, self.taskTitleTextField.frame.size.width, self.taskTitleTextField.frame.size.height);
+    borderTaskTitle.frame = CGRectMake(0, self.labelTitle.frame.size.height - borderWidthTaskTitle, self.labelTitle.frame.size.width, self.labelTitle.frame.size.height);
     borderTaskTitle.borderWidth = borderWidthTaskTitle;
-    [self.taskTitleTextField.layer addSublayer:borderTaskTitle];
-    self.taskTitleTextField.layer.masksToBounds = YES;
+    [self.labelTitle.layer addSublayer:borderTaskTitle];
+    self.labelTitle.layer.masksToBounds = YES;
     
     //border taskDescription text field
     CALayer *borderTaskDescription = [CALayer layer];
     CGFloat borderWidthTaskDescription = 1;
     borderTaskDescription.borderColor = [UIColor darkGrayColor].CGColor;
-    borderTaskDescription.frame = CGRectMake(0, self.taskDescriptionTextField.frame.size.height - borderWidthTaskDescription, self.taskDescriptionTextField.frame.size.width, self.taskDescriptionTextField.frame.size.height);
+    borderTaskDescription.frame = CGRectMake(0, self.labelDescription.frame.size.height - borderWidthTaskDescription, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
     borderTaskDescription.borderWidth = borderWidthTaskDescription;
-    [self.taskDescriptionTextField.layer addSublayer:borderTaskDescription];
-    self.taskDescriptionTextField.layer.masksToBounds = YES;
+    [self.labelDescription.layer addSublayer:borderTaskDescription];
+    self.labelDescription.layer.masksToBounds = YES;
     
     //border taskDifficulty text field
     CALayer *borderTaskDifficulty = [CALayer layer];
     CGFloat borderWidthTaskDifficulty = 1;
     borderTaskDifficulty.borderColor = [UIColor darkGrayColor].CGColor;
-    borderTaskDifficulty.frame = CGRectMake(0, self.taskDifficultyTextField.frame.size.height - borderWidthTaskDifficulty, self.taskDifficultyTextField.frame.size.width, self.taskDifficultyTextField.frame.size.height);
+    borderTaskDifficulty.frame = CGRectMake(0, self.labelDifficulty.frame.size.height - borderWidthTaskDifficulty, self.labelDifficulty.frame.size.width, self.labelDifficulty.frame.size.height);
     borderTaskDifficulty.borderWidth = borderWidthTaskDifficulty;
-    [self.taskDifficultyTextField.layer addSublayer:borderTaskDifficulty];
-    self.taskDifficultyTextField.layer.masksToBounds = YES;
+    [self.labelDifficulty.layer addSublayer:borderTaskDifficulty];
+    self.labelDifficulty.layer.masksToBounds = YES;
     
     //border taskCost text field
     CALayer *borderTaskCost = [CALayer layer];
     CGFloat borderWidthTaskCost = 1;
     borderTaskCost.borderColor = [UIColor darkGrayColor].CGColor;
-    borderTaskCost.frame = CGRectMake(0, self.taskCostTextField.frame.size.height - borderWidthTaskCost, self.taskCostTextField.frame.size.width, self.taskCostTextField.frame.size.height);
+    borderTaskCost.frame = CGRectMake(0, self.labelCost.frame.size.height - borderWidthTaskCost, self.labelCost.frame.size.width, self.labelCost.frame.size.height);
     borderTaskCost.borderWidth = borderWidthTaskCost;
-    [self.taskCostTextField.layer addSublayer:borderTaskCost];
-    self.taskCostTextField.layer.masksToBounds = YES;
+    [self.labelCost.layer addSublayer:borderTaskCost];
+    self.labelCost.layer.masksToBounds = YES;
     
     //border radius member view
     membersView.layer.cornerRadius = 2.0;
     
 }
+
+- (void) editTask {
+    buttonModify.hidden = false;
+    
+    self.taskTitleTextField.enabled = true;
+    self.taskCostTextField.enabled = true;
+    self.taskDurationTextField.enabled = true;
+    self.taskDifficultyTextField.enabled = true;
+    self.prioritySegmentation.enabled = true;
+    self.categorySegmentation.enabled = true;
+}
+
 
 /**
  * Back to the previous view controller
