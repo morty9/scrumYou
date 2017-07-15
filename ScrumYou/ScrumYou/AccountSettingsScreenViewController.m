@@ -10,6 +10,7 @@
 #import "LoginScreenViewController.h"
 #import "CrudAuth.h"
 #import "CrudUsers.h"
+#import "HomeScreenViewController.h"
 
 @interface AccountSettingsScreenViewController ()
 
@@ -22,12 +23,13 @@
     
     NSDictionary* token;
     User* currentUser;
-
+    bool isToUpdate;
     
     CrudAuth* Auth;
     CrudUsers* UsersCrud;
     
-    //TO FIX Redirection vers une page apres modification
+    UIBarButtonItem* updateButtonEdit;
+    UIBarButtonItem* updateButtonCancel;
 }
 
 @synthesize token = _token;
@@ -50,16 +52,24 @@
     [super viewDidLoad];
     [self designPage];
     Auth = [[CrudAuth alloc] init];
+    isToUpdate = NO;
 
     NSString* userId = [[self.token valueForKey:@"userId"] stringValue];
-    NSLog(@"USER ID %@", userId);
+    
+    updateButtonEdit = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(enableTextField:)];
+    self.navigationItem.rightBarButtonItem = updateButtonEdit;
+    updateButtonCancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(enableTextField:)];
+    
+    
     
     dispatch_async(dispatch_get_main_queue(), ^{
     [UsersCrud getUserById:userId callback:^(NSError *error, BOOL success) {
         if (success) {
             
-                currentUser = UsersCrud.user;
-                [self displayUser:currentUser];
+            currentUser = UsersCrud.user;
+            
+            [self displayUser:currentUser];
+            
         }
     }];
         });
@@ -71,7 +81,6 @@
 }
 
 - (void) displayUser:(User*)curUser {
-    NSLog(@"Username: %@", [curUser valueForKey:@"_fullname"]);
     labelUserField.text = curUser.fullname;
     nameTextField.text = curUser.fullname;
     nicknameTextField.text = curUser.nickname;
@@ -79,26 +88,94 @@
     pwdTextField.text = curUser.password;
 }
 
+- (void) enableTextField:(id)sender {
+    if (isToUpdate == NO) {
+        saveButton.hidden = false;
+        nameTextField.enabled = true;
+        nameTextField.textColor = [UIColor lightGrayColor];
+        nicknameTextField.enabled = true;
+        nicknameTextField.textColor = [UIColor lightGrayColor];
+        emailTextField.enabled = true;
+        emailTextField.textColor = [UIColor lightGrayColor];
+        pwdTextField.enabled = true;
+        pwdTextField.textColor = [UIColor lightGrayColor];
+        
+        isToUpdate = YES;
+        
+        self.navigationItem.rightBarButtonItem = updateButtonCancel;
 
-//TO FIX
+    } else {
+        saveButton.hidden = true;
+        nameTextField.enabled = false;
+        nameTextField.textColor = [UIColor blackColor];
+        nameTextField.text = currentUser.fullname;
+        nicknameTextField.enabled = false;
+        nicknameTextField.textColor = [UIColor blackColor];
+        nicknameTextField.text = currentUser.nickname;
+        emailTextField.enabled = false;
+        emailTextField.textColor = [UIColor blackColor];
+        emailTextField.text = currentUser.email;
+        pwdTextField.enabled = false;
+        pwdTextField.textColor = [UIColor blackColor];
+        pwdTextField.text = currentUser.password;
+        
+        isToUpdate = NO;
+        self.navigationItem.rightBarButtonItem = updateButtonEdit;
+
+
+    }
+    
+    
+
+}
+
 - (IBAction)saveModification:(id)sender {
     
-    [Auth login:emailTextField.text password:pwdTextField.text callback:^(NSError *error, BOOL sucess) {
-        if (sucess) {
+    if (isToUpdate != false) {
+        NSString* tok = [_token valueForKey:@"token"];
+        NSString* userId = [_token valueForKey:@"userId"];
+        NSString* newNickName = nicknameTextField.text;
+        NSString* newUserName = nameTextField.text;
+        NSString* newEmail = emailTextField.text;
+        NSString* newPass = pwdTextField.text;
+        
+        [UsersCrud updateUserId:[NSString stringWithFormat:@"%@", userId] nickname:newNickName fullname:newUserName email:newEmail password:newPass token:tok callback:^(NSError *error, BOOL success) {
+            if (success) {
+//                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Modification fait" message:@"Les modifications ont bien été changées." preferredStyle:UIAlertControllerStyleAlert];
+//                
+//                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+//                    NSLog(@"SAVE MODIFICATION");
+            // AccountSettingsScreenViewController* accountSetVC = [[AccountSettingsScreenViewController alloc] init];
+            // [self.navigationController pushViewController:accountSetVC animated:YES];
+//
+//                }];
+//                
+//                [alert addAction:defaultAction];
+//                [self presentViewController:alert animated:YES completion:nil];
+                NSLog(@"POPUP: Update Done, todo -> pop up");
+            }
+        }];
+      }
+}
+
+- (IBAction)deleteAccountUser:(id)sender {
+    NSString* tok = [_token valueForKey:@"token"];
+    NSString* userId = [_token valueForKey:@"userId"];
+
+    [UsersCrud deleteUserWithId:[NSString stringWithFormat:@"%@", userId] token:tok callback:^(NSError *error, BOOL success) {
+        if (success) {
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Suppression de l'utilisateur" message:@"La suppression de l'utilisateur à bien été pris en compte." preferredStyle:UIAlertControllerStyleAlert];
             
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                HomeScreenViewController* homeVc = [[HomeScreenViewController alloc] init];
+                [self.navigationController pushViewController:homeVc animated:YES];
+            }];
+            
+            [alert addAction:defaultAction];
+            [self presentViewController:alert animated:YES completion:nil];
         }
     }];
 }
-
-//- (void)getCurrentUser:(NSNumber*)id_user {
-//    [UsersCrud getUserById:[NSString stringWithFormat:@"%ld", (long)id_user] callback:^(NSError *error, BOOL success) {
-//        if (success) {
-//            NSLog(@"USER CRUD: %@", UsersCrud.user);
-//            currentUser = UsersCrud.user;
-//            //NSLog(@"CURRENT USER: %@", currentUser);
-//        }
-//    }];
-//}
 
 
 
@@ -159,6 +236,7 @@
     borderPassword.borderWidth = borderWidthPassword;
     [pwdTextField.layer addSublayer:borderPassword];
     pwdTextField.layer.masksToBounds = YES;
+    
     
 }
 
