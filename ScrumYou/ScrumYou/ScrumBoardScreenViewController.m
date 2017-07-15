@@ -7,6 +7,8 @@
 //
 
 #import "ScrumBoardScreenViewController.h"
+#import "UserHomeScreenViewController.h"
+#import "AccountSettingsScreenViewController.h"
 #import "PageContentViewController.h"
 #import "PageViewController.h"
 #import "CrudTasks.h"
@@ -24,6 +26,10 @@
 @end
 
 @implementation ScrumBoardScreenViewController {
+    
+    UserHomeScreenViewController* userHomeVC;
+    PageContentViewController *pageContentVC;
+    AccountSettingsScreenViewController* accountSettingsVC;
     
     CrudTasks* TasksCrud;
     CrudProjects* ProjectsCrud;
@@ -44,12 +50,11 @@
 }
 
 @synthesize id_project = _id_project;
+@synthesize token = _token;
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self != nil) {
-        
-        NSLog(@"INIT SB");
         
         TasksCrud = [[CrudTasks alloc] init];
         ProjectsCrud = [[CrudProjects alloc] init];
@@ -67,7 +72,10 @@
         arrayProgress = [[NSMutableArray<Task*> alloc] init];
         arrayDone = [[NSMutableArray<Task*> alloc] init];
         
-        //self.id_project = @"54";
+        userHomeVC = [[UserHomeScreenViewController alloc] init];
+        accountSettingsVC = [[AccountSettingsScreenViewController alloc] init];
+        
+        self.id_project = @"54";
     }
     
     return self;
@@ -75,10 +83,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    NSLog(@"VIEWDIDLOAD");
-    
-    NSLog(@"ID PROJECT : %@", _id_project);
     
     [ProjectsCrud getProjectById:self.id_project callback:^(NSError *error, BOOL success) {
         if (success) {
@@ -92,7 +96,7 @@
     
     [self designPage];
     
-    _pageTitles = @[@"Todo", @"In Progress", @"Done"];
+    _pageTitles = @[@"A faire", @"En cours", @"Finies"];
 
     // Create page view controllerinstantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController = [[PageViewController alloc] initWithNibName:@"PageViewController" bundle:nil];
@@ -110,22 +114,6 @@
     [self.pageViewController didMoveToParentViewController:self];
     
 }
-
-//- (void) viewWillAppear:(BOOL)animated {
-//    [super viewWillAppear:animated];
-//    
-//    NSLog(@"ID PROJECT : %@", _id_project);
-//    
-//    [ProjectsCrud getProjectById:self.id_project callback:^(NSError *error, BOOL success) {
-//        if (success) {
-//            project = ProjectsCrud.project;
-//            self.navigationItem.title = project.title;
-//            [self getSprintsByProject:project.id_sprints];
-//            [self getTasksBySprint:get_sprints];
-//            [self initializeDictionarys:get_tasks andSprint:get_sprints];
-//        }
-//    }];
-//}
 
 - (void) getSprintsByProject:(NSArray*)array_sprints {
 
@@ -226,22 +214,22 @@
     }
     
     // Create a new view controller and pass suitable data.
-    PageContentViewController *pageContentViewController = [[PageContentViewController alloc] initWithNibName:@"PageContentViewController" bundle:nil];
+    pageContentVC = [[PageContentViewController alloc] initWithNibName:@"PageContentViewController" bundle:nil];
     
-    pageContentViewController.txtTitle = self.pageTitles[index];
+    pageContentVC.txtTitle = self.pageTitles[index];
     if (index == 0) {
-        pageContentViewController.dictionary_section = tasks_array_todo;
-        [pageContentViewController.scrumBoardCollectionView reloadData];
+        pageContentVC.dictionary_section = tasks_array_todo;
+        [pageContentVC.scrumBoardCollectionView reloadData];
     } else if (index == 1) {
-        pageContentViewController.dictionary_section = tasks_array_progress;
-        [pageContentViewController.scrumBoardCollectionView reloadData];
+        pageContentVC.dictionary_section = tasks_array_progress;
+        [pageContentVC.scrumBoardCollectionView reloadData];
     } else if (index == 2) {
-        pageContentViewController.dictionary_section = tasks_array_done;
-        [pageContentViewController.scrumBoardCollectionView reloadData];
+        pageContentVC.dictionary_section = tasks_array_done;
+        [pageContentVC.scrumBoardCollectionView reloadData];
     }
-    pageContentViewController.pageIndex = index;
+    pageContentVC.pageIndex = index;
     
-    return pageContentViewController;
+    return pageContentVC;
 }
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
@@ -254,6 +242,27 @@
     return 0;
 }
 
+//TOOLBAR
+
+/*
+ *  IBAction -> Back to user Home controller
+ */
+- (IBAction)backToUserHome:(id)sender {
+    [self.navigationController pushViewController:userHomeVC animated:YES];
+}
+
+- (IBAction)searchTask:(id)sender {
+    [pageContentVC initializeSearchController];
+}
+
+- (IBAction)chatView:(id)sender {
+    NSLog(@"CHAT");
+}
+
+- (IBAction)userSettings:(id)sender {
+    //accountSettingsVC.token = self.token;
+    [self.navigationController pushViewController:accountSettingsVC animated:YES];
+}
 
 /*
 #pragma mark - Navigation

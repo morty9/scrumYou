@@ -17,6 +17,7 @@
     __weak IBOutlet UITextField *_taskDurationTextField;
     __weak IBOutlet UITextField *_taskMembersTextField;
     __weak IBOutlet UITextField *_taskCostTextField;
+    __weak IBOutlet UITextField *_taskPriorityTextField;
     
     __weak IBOutlet UISegmentedControl *_prioritySegmentation;
     __weak IBOutlet UISegmentedControl *_categorySegmentation;
@@ -27,9 +28,16 @@
     
     __weak IBOutlet UIPickerView *pickerStatus;
     
+    __weak IBOutlet UIStepper *stepperDuration;
     __weak IBOutlet UIView *membersView;
     
     __weak IBOutlet UITableView *membersTableView;
+    
+    __weak IBOutlet UILabel *_labelTitle;
+    __weak IBOutlet UILabel *_labelDescription;
+    __weak IBOutlet UILabel *_labelDifficulty;
+    __weak IBOutlet UILabel *_labelCost;
+    
     
     NSDictionary* _token_dic;
     
@@ -49,11 +57,16 @@
 @property (weak, nonatomic) UITextField* taskDifficultyTextField;
 @property (weak, nonatomic) UITextField* taskDurationTextField;
 @property (weak, nonatomic) UITextField* taskMembersTextField;
+@property (weak, nonatomic) UITextField* taskPriorityTextField;
 @property (weak, nonatomic) UITextField* taskCostTextField;
 @property (weak, nonatomic) UISegmentedControl* prioritySegmentation;
 @property (weak, nonatomic) UISegmentedControl* categorySegmentation;
 @property (nonatomic) BOOL status;
 @property (nonatomic, strong) Task* mTask;
+@property (nonatomic, weak) UILabel* labelTitle;
+@property (nonatomic, weak) UILabel* labelDescription;
+@property (nonatomic, weak) UILabel* labelDifficulty;
+@property (nonatomic, weak) UILabel* labelCost;
 
 
 @end

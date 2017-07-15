@@ -76,9 +76,6 @@
         [ProjectsCrud getProjects:^(NSError *error, BOOL success) {
             if (success) {
                 get_projects = ProjectsCrud.projects_list;
-                
-                NSLog(@"GET PROJECTS : %@", get_projects);
-                
             }
         }];
         
