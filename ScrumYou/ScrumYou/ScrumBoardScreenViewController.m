@@ -9,6 +9,7 @@
 #import "ScrumBoardScreenViewController.h"
 #import "UserHomeScreenViewController.h"
 #import "AccountSettingsScreenViewController.h"
+#import "AddTaskScreenViewController.h"
 #import "PageContentViewController.h"
 #import "PageViewController.h"
 #import "CrudTasks.h"
@@ -23,6 +24,8 @@
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) NSArray *pageTitles;
 
+- (void) addTask;
+
 @end
 
 @implementation ScrumBoardScreenViewController {
@@ -30,6 +33,7 @@
     UserHomeScreenViewController* userHomeVC;
     PageContentViewController *pageContentVC;
     AccountSettingsScreenViewController* accountSettingsVC;
+    AddTaskScreenViewController* addTaskVC;
     
     CrudTasks* TasksCrud;
     CrudProjects* ProjectsCrud;
@@ -74,6 +78,7 @@
         
         userHomeVC = [[UserHomeScreenViewController alloc] init];
         accountSettingsVC = [[AccountSettingsScreenViewController alloc] init];
+        addTaskVC = [[AddTaskScreenViewController alloc] init];
         
         self.id_project = @"54";
     }
@@ -83,6 +88,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"VIEW DID LOAD");
     
     [ProjectsCrud getProjectById:self.id_project callback:^(NSError *error, BOOL success) {
         if (success) {
@@ -113,6 +120,11 @@
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
     
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.navigationItem.title = project.title;
 }
 
 - (void) getSprintsByProject:(NSArray*)array_sprints {
@@ -168,14 +180,10 @@
             }
         }
     }
-    
-    NSLog(@"task todo %@", tasks_array_todo);
-    NSLog(@"task progress %@", tasks_array_progress);
-    NSLog(@"task done %@", tasks_array_done);
-}
-
-- (void) designPage {
-    
+//    
+//    NSLog(@"task todo %@", tasks_array_todo);
+//    NSLog(@"task progress %@", tasks_array_progress);
+//    NSLog(@"task done %@", tasks_array_done);
 }
 
 #pragma mark - Page View Controller Data Source
@@ -262,6 +270,19 @@
 - (IBAction)userSettings:(id)sender {
     //accountSettingsVC.token = self.token;
     [self.navigationController pushViewController:accountSettingsVC animated:YES];
+}
+
+- (void) addTask {
+    addTaskVC.status = 0;
+    [self.navigationController pushViewController:addTaskVC animated:YES];
+}
+
+- (void) designPage {
+    self.navigationItem.title = project.title;
+    
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(addTask)];
+    addButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
+    self.navigationItem.rightBarButtonItem = addButton;
 }
 
 /*

@@ -65,7 +65,6 @@
         self.status = false;
         statusTask = @"A faire";
         statusArray = @[@"A faire", @"En cours", @"Finies"];
-        
     }
     
     return self;
@@ -73,6 +72,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"STATUS VDL %d", self.status);
     
     membersTableView.delegate = self;
     membersTableView.dataSource = self;
@@ -104,10 +105,16 @@
     [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     
-    buttonValidate.hidden = true;
-    buttonModify.hidden = true;
+    buttonValidate.hidden = YES;
+    buttonModify.hidden = YES;
+    buttonDelete.hidden = YES;
     
     [membersTableView reloadData];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    [self designPage];
 }
 
 /**
@@ -186,7 +193,7 @@
 
 - (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if (row == 0) {
-        statusTask = @"Todo";
+        statusTask = @"A faire";
     }
     statusTask = [statusArray objectAtIndex:row];
 }
@@ -365,17 +372,14 @@
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editTask)];
     editButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
     self.navigationItem.rightBarButtonItem = editButton;
-    
-    self.navigationItem.title = [NSString stringWithFormat:@"Ajouter une tâche"];
-    self.navigationController.navigationBar.topItem.title = @"";
+
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.21 blue:0.27 alpha:1.0];
-    
-    buttonModify.hidden = true;
-    buttonValidate.hidden = false;
-    
-    if (self.status == false) {
-        buttonValidate.hidden = true;
-        buttonModify.hidden = true;
+
+    if (self.status == 0) {
+        self.navigationItem.title = @"Ajouter une tâche";
+        buttonValidate.hidden = NO;
+        buttonModify.hidden = YES;
+        buttonDelete.hidden = YES;
         
     } else {
         self.navigationItem.title = self.mTask.title;
@@ -389,7 +393,7 @@
         self.taskDescriptionTextField.enabled = false;
         self.taskMembersTextField.enabled = false;
         buttonMembersView.enabled = false;
-        pickerStatus.multipleTouchEnabled = false;
+        pickerStatus.userInteractionEnabled = false;
         stepperDuration.enabled = false;
         
         
@@ -446,7 +450,8 @@
 }
 
 - (void) editTask {
-    buttonModify.hidden = false;
+    buttonModify.hidden = NO;
+    buttonDelete.hidden = NO;
     
     self.taskTitleTextField.enabled = true;
     self.taskCostTextField.enabled = true;
@@ -454,6 +459,11 @@
     self.taskDifficultyTextField.enabled = true;
     self.prioritySegmentation.enabled = true;
     self.categorySegmentation.enabled = true;
+    self.taskDescriptionTextField.enabled = true;
+    self.taskMembersTextField.enabled = true;
+    buttonMembersView.enabled = true;
+    pickerStatus.userInteractionEnabled = true;
+    stepperDuration.enabled = true;
 }
 
 

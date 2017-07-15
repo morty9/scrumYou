@@ -168,7 +168,7 @@ static NSString* cellId = @"SBCell";
 
 
 - (void) modifyTask {
-    addTaskVC.status = true;
+    addTaskVC.status = 1;
     addTaskVC.mTask = current_task;
     [self.navigationController pushViewController:addTaskVC animated:YES];
 }
