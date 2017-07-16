@@ -58,46 +58,36 @@
         
         NSLog(@"JSON DICT %@", jsonDict);
         self.token = jsonDict;
-//        if ([jsonDict valueForKey:@"type"] != nil) {
-//            //_dict_error = jsonDict;
-//        }
         
         callback(error, true);
         
     }] resume];
 }
 
-- (void) logout {
+- (void) logout:(NSString*)tokenId tokenToken:(NSString*)tokenToken callback:(void (^)(NSError *error, BOOL success))callback {
+    NSURL *url = [NSURL URLWithString:[kAuthLogout_api stringByAppendingString:[@"/" stringByAppendingString:[NSString stringWithFormat:@"%@", tokenId]]]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     
-//    NSURL* url = [NSURL URLWithString:[kUser_api stringByAppendingString:[@"/" stringByAppendingString:id_user]]];
-//    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
-//    
-//    [request setHTTPMethod:@"DELETE"];
-//    [request setValue:token forHTTPHeaderField:@"Authorization"];
-//    
-//    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        
-//        if (error != nil) {
-//            NSLog(@"Error: %@", error.localizedDescription);
-//            return;
-//        }
-//        
-//        if (data == nil) {
-//            return;
-//        }
-//        
-//        if (response == nil) {
-//            return;
-//        }
-//        
-//        callback(error, true);
-//        
-//    }] resume];
+    [request setHTTPMethod:@"DELETE"];
+    [request setValue:tokenToken forHTTPHeaderField:@"Authorization"];
     
-//    NSURL *url = [NSURL URLWithString:[kAuthLogin_api stringByAppendingString:[@"/" stringByAppendingString:[self.token valueForKey:@"id"]]]];
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-//    [request setHTTPMethod:@"DELETE"];
-    NSLog(@"TOKEN ID: %@", [self.token valueForKey:@"id"]);
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (error != nil) {
+            NSLog(@"Error: %@", error.localizedDescription);
+            return;
+        }
+        
+        if (data == nil) {
+            return;
+        }
+        
+        if (response == nil) {
+            return;
+        }
+                
+        callback(error, true);
+    }] resume];
 }
 
 @end

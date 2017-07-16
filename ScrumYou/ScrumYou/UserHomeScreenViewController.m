@@ -117,6 +117,7 @@
     [super viewDidLoad];
     [self designPage];
     
+    Auth = [[CrudAuth alloc] init];
     accountSettingsVC = [[AccountSettingsScreenViewController alloc] init];
     
     self.collectionView.delegate = self;
@@ -337,7 +338,19 @@
 
 - (void) logout:(id)sender {
     homeScreenVC = [[HomeScreenViewController alloc] init];
-    //    addProjectVC.token = self.token;
+    
+    NSString* tokenid = [self.token valueForKey:@"tokenId"];
+    NSString* tokenToken = [self.token valueForKey:@"token"];
+    
+    NSLog(@"TOKENID to delete: %@", tokenid);
+    NSLog(@"TOKEN: %@", self.token);
+    
+    [Auth logout:tokenid tokenToken:tokenToken callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"LOGOUT OK !!!!!!!!!");
+        }
+    }];
+    
     [self.navigationController pushViewController:homeScreenVC animated:YES];
 }
 
