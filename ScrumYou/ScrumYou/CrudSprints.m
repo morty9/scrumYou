@@ -61,6 +61,8 @@
             return;
         }
         
+        callback(error, true);
+        
     }] resume];
     
 }
@@ -146,7 +148,9 @@
         NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
         
         self.sprint = [[Sprint alloc] initWithId:tmp_id title:tmp_title beginningDate:tmp_beginningDate endDate:tmp_endDate id_creator:tmp_id_creator id_listTasks:tmp_id_listTasks id_members:tmp_id_members];
-                    
+        
+        NSLog(@"Sprint %@", self.sprint);
+        
         callback(error, true);
     }
     else{
@@ -196,9 +200,11 @@
 /*
  * UPDATE -> update sprint with id
  */
-- (void) updateSprintId:(NSString*)id_sprint endDate:(NSString*)endDate id_members:(NSMutableArray*)id_members id_listTasks:(NSMutableArray*)id_listTasks callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) updateSprintId:(NSString*)id_sprint title:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate id_members:(NSMutableArray*)id_members id_listTasks:(NSMutableArray*)id_listTasks callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSLog(@"ID_SPRINT %@", id_sprint);
+    NSLog(@"TITLE %@", title);
+    NSLog(@"BEGINNING DATE %@", beginningDate);
     NSLog(@"END DATE %@", endDate);
     NSLog(@"MEMBERS %@", id_members);
     NSLog(@"TASKS %@", id_listTasks);
@@ -207,14 +213,19 @@
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"PUT"];
     
-    NSDictionary<NSString*, NSString*> *jsonData = @{@"id_sprint" : id_sprint,
+    NSDictionary<NSString*, NSString*> *jsonData = @{@"id" : id_sprint,
+                                                     @"title" : title,
+                                                     @"beginningDate" : beginningDate,
                                                      @"endDate" : endDate,
                                                      @"id_members" : id_members,
                                                      @"id_listTasks" : id_listTasks};
     
+    NSLog(@"JSON DATA %@", jsonData);
+    
     NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
     [request setHTTPBody:postData];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
     
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         

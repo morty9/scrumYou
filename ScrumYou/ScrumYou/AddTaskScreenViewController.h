@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Task.h"
+#import "Project.h"
 
 @interface AddTaskScreenViewController : UIViewController
 {
@@ -28,9 +29,12 @@
     __weak IBOutlet UIButton *buttonDelete;
     
     __weak IBOutlet UIPickerView *pickerStatus;
+    __weak IBOutlet UIPickerView *pickerSprint;
     
     __weak IBOutlet UIStepper *stepperDuration;
+    
     __weak IBOutlet UIView *membersView;
+    __weak IBOutlet UIView *sprintView;
     
     __weak IBOutlet UITableView *membersTableView;
     
@@ -41,8 +45,11 @@
     
     NSDictionary* _token_dic;
     
+    NSArray* _sprintsByProject;
+    
     NSString* _id_task;
     
+    Project* _cProject;
     Task* _mTask;
     
     BOOL _status;
@@ -63,10 +70,12 @@
 @property (weak, nonatomic) UISegmentedControl* categorySegmentation;
 @property (nonatomic) BOOL status;
 @property (nonatomic, strong) Task* mTask;
+@property (nonatomic, strong) Project* cProject;
 @property (nonatomic, weak) UILabel* labelTitle;
 @property (nonatomic, weak) UILabel* labelDescription;
 @property (nonatomic, weak) UILabel* labelDifficulty;
 @property (nonatomic, weak) UILabel* labelCost;
+@property (nonatomic, strong) NSArray* sprintsByProject;
 
 
 @end

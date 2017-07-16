@@ -19,7 +19,7 @@
 #import "CrudProjects.h"
 #import "CrudSprints.h"
 
-@interface ScrumBoardScreenViewController () <UIPageViewControllerDataSource>
+@interface ScrumBoardScreenViewController () <UIPageViewControllerDataSource, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) NSArray *pageTitles;
@@ -88,6 +88,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    
+    //UIBarButtonItem *newBackButton =
+//    [[UIBarButtonItem alloc] initWithTitle:@"TEST"
+//                                     style:UIBarButtonItemStylePlain
+//                                    target:nil
+//                                    action:nil];
+//    [[self navigationItem] setBackBarButtonItem:newBackButton];
+//    //[newBackButton release];
+    //self.navigationController.navigationBar.backItem
+    //UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:nil];
+    //self.navigationController.navigationItem.backBarButtonItem = @" ";
     
     NSLog(@"VIEW DID LOAD");
     
@@ -225,6 +238,9 @@
     pageContentVC = [[PageContentViewController alloc] initWithNibName:@"PageContentViewController" bundle:nil];
     
     pageContentVC.txtTitle = self.pageTitles[index];
+    pageContentVC.array_sprint = get_sprints;
+    NSLog(@"CURRENT PROJECT %@", project);
+    pageContentVC.current_project = project;
     if (index == 0) {
         pageContentVC.dictionary_section = tasks_array_todo;
         [pageContentVC.scrumBoardCollectionView reloadData];
@@ -274,13 +290,15 @@
 
 - (void) addTask {
     addTaskVC.status = 0;
+    addTaskVC.cProject = project;
+    addTaskVC.sprintsByProject = get_sprints;
     [self.navigationController pushViewController:addTaskVC animated:YES];
 }
 
 - (void) designPage {
     self.navigationItem.title = project.title;
     
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(addTask)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTask)];
     addButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
     self.navigationItem.rightBarButtonItem = addButton;
 }

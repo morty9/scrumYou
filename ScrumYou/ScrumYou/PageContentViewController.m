@@ -10,6 +10,7 @@
 #import "ScrumBoardScreenViewController.h"
 #import "ScrumBoardCell.h"
 #import "Task.h"
+#import "Sprint.h"
 #import "AddTaskScreenViewController.h"
 
 @interface PageContentViewController () <UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
@@ -37,12 +38,14 @@
 @synthesize array_sprint = _array_sprint;
 @synthesize searchController = _searchController;
 @synthesize searchBar = _searchBar;
+@synthesize current_project = _current_project;
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     
     [self designPage];
+    
     
     NSLog(@"dico %@", self.dictionary_section);
     
@@ -170,6 +173,8 @@ static NSString* cellId = @"SBCell";
 - (void) modifyTask {
     addTaskVC.status = 1;
     addTaskVC.mTask = current_task;
+    addTaskVC.cProject = self.current_project;
+    addTaskVC.sprintsByProject = self.array_sprint;
     [self.navigationController pushViewController:addTaskVC animated:YES];
 }
 
