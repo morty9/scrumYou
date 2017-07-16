@@ -16,8 +16,11 @@
     __weak IBOutlet UILabel *membersCount;
     __weak IBOutlet UIView *membersView;
     __weak IBOutlet UILabel *membersTextField;
+    __weak IBOutlet UITextField *sprintNameTextField;
+    __weak IBOutlet UIDatePicker *sprintEndDate;
     
     __weak IBOutlet UIButton *editButtonMembers;
+    __weak IBOutlet UIButton *addSprint;
     
     NSDictionary* _token_dic;
 }

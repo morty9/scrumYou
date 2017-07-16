@@ -12,6 +12,7 @@
 #import "Project.h"
 #import "CrudUsers.h"
 #import "CrudProjects.h"
+#import "CrudSprints.h"
 
 @interface ProjectSettingsScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating>
 
@@ -31,6 +32,9 @@
     
     NSArray* searchResults;
     
+    NSDate* currentDate;
+    NSDate* endDate;
+    
     UIVisualEffectView *blurEffectView;
     
     NSInteger nMember;
@@ -39,6 +43,7 @@
     
     CrudUsers* UsersCrud;
     CrudProjects* ProjectsCrud;
+    CrudSprints* SprintsCrud;
     
 }
 
@@ -55,6 +60,7 @@
         
         UsersCrud = [[CrudUsers alloc] init];
         ProjectsCrud = [[CrudProjects alloc] init];
+        SprintsCrud = [[CrudSprints alloc] init];
         
     }
     
@@ -69,13 +75,12 @@
     
     [self designPage];
     
-    UsersCrud = [[CrudUsers alloc] init];
-    ProjectsCrud = [[CrudProjects alloc] init];
-    
     get_users = [[NSMutableArray<User*> alloc] init];
     users_in = [[NSMutableArray<User*> alloc] init];
     members = [[NSMutableArray<User*> alloc] init];
     ids = [[NSMutableArray alloc] init];
+    
+    currentDate = [NSDate date];
     
     nMember = 0;
     
@@ -276,6 +281,20 @@
     }
 }
 
+- (IBAction)addSprint:(id)sender {
+    
+    endDate = [sprintEndDate date];
+    
+    [SprintsCrud addSprintTitle:sprintNameTextField.text beginningDate:currentDate endDate:endDate callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"SUCCESS ADD SPRINT");
+        }
+    }];
+    
+    sprintNameTextField.text = @"";
+    endDate = currentDate;
+}
+
 /**
  *  IBAction -> Update project in database
  *  Call updateProject web service
@@ -371,6 +390,15 @@
     borderMembersNumber.borderWidth = borderWidthMembersNumber;
     [membersCount.layer addSublayer:borderMembersNumber];
     membersCount.layer.masksToBounds = YES;
+    
+    //border sprintName text field
+    CALayer *borderSprintName = [CALayer layer];
+    CGFloat borderWidthSprintName = 1.5;
+    borderSprintName.borderColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0].CGColor;
+    borderSprintName.frame = CGRectMake(0, sprintNameTextField.frame.size.height - borderWidthSprintName, sprintNameTextField.frame.size.width, sprintNameTextField.frame.size.height);
+    borderSprintName.borderWidth = borderWidthSprintName;
+    [sprintNameTextField.layer addSublayer:borderSprintName];
+    sprintNameTextField.layer.masksToBounds = YES;
     
 }
 

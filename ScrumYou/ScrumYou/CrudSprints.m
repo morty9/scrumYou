@@ -33,14 +33,15 @@
 /*
  *  POST -> add sprint to database
  */
-- (void) addSprintBeginningDate:(NSString*)beginningDate endDate:(NSString*)endDate callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) addSprintTitle:(NSString*)title beginningDate:(NSDate*)beginningDate endDate:(NSDate*)endDate callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSURL* url = [NSURL URLWithString:kSprint_api];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"POST"];
     
-    NSDictionary<NSString*, NSString*>* jsonData =
-    @{@"beginningDate" : beginningDate,
+    NSDictionary* jsonData =
+    @{@"title" : title,
+      @"beginningDate" : beginningDate,
       @"endDate" : endDate};
     
     NSData* postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
@@ -48,6 +49,11 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+        
         if (error != nil) {
             NSLog(@"Error: %@", error.localizedDescription);
             return;
@@ -61,6 +67,10 @@
             return;
         }
         
+        if ([jsonDict valueForKey:@"type"] != nil) {
+            _dict_error = jsonDict;
+        }
+      
         callback(error, true);
         
     }] resume];
