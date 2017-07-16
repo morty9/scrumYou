@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,11 +11,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProjectSettingsScreenViewController">
             <connections>
+                <outlet property="addSprint" destination="9NH-Ex-zzI" id="ko3-kN-lAY"/>
                 <outlet property="membersCount" destination="ENE-9L-PgS" id="KBM-Y9-y84"/>
                 <outlet property="membersTableView" destination="cPw-d6-1M2" id="8dP-lj-tB8"/>
                 <outlet property="membersTextField" destination="pxv-Xr-Eim" id="NCV-la-Qjg"/>
                 <outlet property="membersView" destination="nJN-FE-WGF" id="OnR-wM-0rd"/>
                 <outlet property="nameTextField" destination="utE-R5-fuR" id="bc6-Wj-KyK"/>
+                <outlet property="sprintEndDate" destination="G0J-Ca-cbd" id="w4Y-RB-cFy"/>
+                <outlet property="sprintNameTextField" destination="oDC-p7-JfW" id="PTq-8T-DKb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -25,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nom du projet" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="utE-R5-fuR">
-                    <rect key="frame" x="16" y="49.5" width="343" height="65"/>
+                    <rect key="frame" x="16" y="35.5" width="343" height="65"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="343" id="8pU-8B-9EX"/>
                         <constraint firstAttribute="height" constant="65" id="edI-dJ-fEh"/>
@@ -65,7 +68,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Membre(s)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxv-Xr-Eim">
-                    <rect key="frame" x="16" y="133.5" width="172" height="65"/>
+                    <rect key="frame" x="16" y="119.5" width="172" height="65"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="172" id="OVf-Ap-KLN"/>
                         <constraint firstAttribute="height" constant="65" id="b7s-h7-9Rq"/>
@@ -75,7 +78,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ENE-9L-PgS">
-                    <rect key="frame" x="185" y="133.5" width="174" height="65"/>
+                    <rect key="frame" x="185" y="119.5" width="174" height="65"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="65" id="Jgb-v8-B3u"/>
                         <constraint firstAttribute="width" constant="174" id="scu-jr-Kn7"/>
@@ -85,7 +88,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dDk-yR-bjZ">
-                    <rect key="frame" x="327" y="149.5" width="32" height="32"/>
+                    <rect key="frame" x="327" y="135.5" width="32" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="32" id="Btf-RO-leb"/>
                         <constraint firstAttribute="height" constant="32" id="nfx-pT-6p6"/>
@@ -93,6 +96,61 @@
                     <state key="normal" image="add"/>
                     <connections>
                         <action selector="showAddMembersView:" destination="-1" eventType="touchUpInside" id="2Cb-yP-YWy"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dans cette page, vous pouvez ajouter des sprints à votre projet :" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ptY-Ha-vRR">
+                    <rect key="frame" x="16" y="203.5" width="343" height="46"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="343" id="JfM-ny-s1W"/>
+                        <constraint firstAttribute="height" constant="46" id="PeT-lc-Ub5"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nom du sprint" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oDC-p7-JfW">
+                    <rect key="frame" x="16" y="252.5" width="343" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="343" id="eHR-El-wGz"/>
+                        <constraint firstAttribute="height" constant="65" id="tX9-zD-4Di"/>
+                    </constraints>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date de fin estimée" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6uY-y9-Uw9">
+                    <rect key="frame" x="16" y="342.5" width="343" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="AZ6-Wb-jce"/>
+                        <constraint firstAttribute="width" constant="343" id="Inj-LB-RiK"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="G0J-Ca-cbd">
+                    <rect key="frame" x="16" y="362" width="343" height="52"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="343" id="Cc7-0n-b3N"/>
+                        <constraint firstAttribute="height" constant="52" id="prf-gU-W5a"/>
+                    </constraints>
+                    <date key="date" timeIntervalSinceReferenceDate="521899866.56833601">
+                        <!--2017-07-16 12:11:06 +0000-->
+                    </date>
+                    <locale key="locale" localeIdentifier="fr_FR"/>
+                </datePicker>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9NH-Ex-zzI">
+                    <rect key="frame" x="112" y="432" width="151.5" height="38"/>
+                    <color key="backgroundColor" red="0.69131666421890259" green="0.62006199359893799" blue="0.77718210220336914" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="151.5" id="F1D-yL-NfF"/>
+                        <constraint firstAttribute="height" constant="38" id="UV6-bW-8qX"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                    <state key="normal" title="Ajouter le sprint">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="addSprint:" destination="-1" eventType="touchUpInside" id="qwg-VV-rgx"/>
                     </connections>
                 </button>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nJN-FE-WGF">
@@ -152,20 +210,40 @@
                 <constraint firstAttribute="trailing" secondItem="utE-R5-fuR" secondAttribute="trailing" constant="16" id="5Am-Ek-VQr"/>
                 <constraint firstItem="ENE-9L-PgS" firstAttribute="leading" secondItem="pxv-Xr-Eim" secondAttribute="trailing" constant="-3" id="8zc-yh-y6L"/>
                 <constraint firstItem="dDk-yR-bjZ" firstAttribute="leading" secondItem="ENE-9L-PgS" secondAttribute="trailing" constant="-32" id="99s-Oy-Dab"/>
-                <constraint firstItem="AY4-oD-6JJ" firstAttribute="top" secondItem="pxv-Xr-Eim" secondAttribute="bottom" constant="300.5" id="AW7-GR-p2v"/>
+                <constraint firstItem="9NH-Ex-zzI" firstAttribute="top" secondItem="G0J-Ca-cbd" secondAttribute="bottom" constant="18" id="9iv-ZH-Ouf"/>
+                <constraint firstItem="G0J-Ca-cbd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="CnC-po-OvF"/>
+                <constraint firstAttribute="trailing" secondItem="oDC-p7-JfW" secondAttribute="trailing" constant="16" id="Dcl-Rl-R5B"/>
                 <constraint firstItem="ENE-9L-PgS" firstAttribute="top" secondItem="dDk-yR-bjZ" secondAttribute="bottom" constant="-48" id="Dd3-Rq-Dv8"/>
+                <constraint firstItem="oDC-p7-JfW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="GUJ-oz-zIC"/>
                 <constraint firstItem="9QP-zJ-FeG" firstAttribute="top" secondItem="AY4-oD-6JJ" secondAttribute="bottom" constant="8" id="JEl-Hg-dcF"/>
+                <constraint firstItem="6uY-y9-Uw9" firstAttribute="top" secondItem="oDC-p7-JfW" secondAttribute="bottom" constant="25" id="L3L-LV-mf1"/>
                 <constraint firstItem="ENE-9L-PgS" firstAttribute="top" secondItem="utE-R5-fuR" secondAttribute="bottom" constant="19" id="MI6-Zd-7K7"/>
+                <constraint firstAttribute="trailing" secondItem="9NH-Ex-zzI" secondAttribute="trailing" constant="111.5" id="OM8-Ro-m59"/>
+                <constraint firstItem="oDC-p7-JfW" firstAttribute="top" secondItem="ptY-Ha-vRR" secondAttribute="bottom" constant="3" id="PMJ-GW-IaR"/>
                 <constraint firstItem="9QP-zJ-FeG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="S4Q-c8-5PO"/>
+                <constraint firstItem="ptY-Ha-vRR" firstAttribute="top" secondItem="pxv-Xr-Eim" secondAttribute="bottom" constant="19" id="WkY-G5-bCv"/>
                 <constraint firstItem="pxv-Xr-Eim" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="bKt-eS-yos"/>
                 <constraint firstItem="AY4-oD-6JJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="cCq-Rm-OBp"/>
                 <constraint firstAttribute="trailing" secondItem="9QP-zJ-FeG" secondAttribute="trailing" constant="16" id="csh-QH-mYW"/>
+                <constraint firstAttribute="trailing" secondItem="G0J-Ca-cbd" secondAttribute="trailing" constant="16" id="hhQ-Ds-mGD"/>
+                <constraint firstItem="6uY-y9-Uw9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="hsz-Ca-tkw"/>
+                <constraint firstAttribute="trailing" secondItem="6uY-y9-Uw9" secondAttribute="trailing" constant="16" id="j7P-zm-7v6"/>
+                <constraint firstAttribute="trailing" secondItem="ptY-Ha-vRR" secondAttribute="trailing" constant="16" id="n8A-4l-Lzv"/>
+                <constraint firstItem="9NH-Ex-zzI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="112" id="qkS-Af-Hln"/>
                 <constraint firstItem="nJN-FE-WGF" firstAttribute="top" secondItem="utE-R5-fuR" secondAttribute="bottom" constant="20" id="sgT-am-NNF"/>
                 <constraint firstItem="pxv-Xr-Eim" firstAttribute="top" secondItem="utE-R5-fuR" secondAttribute="bottom" constant="19" id="sqj-5x-RZ5"/>
+                <constraint firstItem="AY4-oD-6JJ" firstAttribute="top" secondItem="9NH-Ex-zzI" secondAttribute="bottom" constant="29" id="tdF-nB-luh"/>
+                <constraint firstItem="ptY-Ha-vRR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="ucU-la-jnZ"/>
+                <constraint firstItem="G0J-Ca-cbd" firstAttribute="top" secondItem="6uY-y9-Uw9" secondAttribute="bottom" constant="-1.5" id="y9D-Bz-PQ0"/>
                 <constraint firstItem="nJN-FE-WGF" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="zJe-Cj-QM0"/>
                 <constraint firstAttribute="bottom" secondItem="9QP-zJ-FeG" secondAttribute="bottom" constant="20" id="zcL-Dv-XtJ"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="nJN-FE-WGF"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="34.5" y="53.5"/>
         </view>
     </objects>

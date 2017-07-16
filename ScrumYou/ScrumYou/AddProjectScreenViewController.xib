@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,12 +16,14 @@
                 <outlet property="membersTableView" destination="EGG-ht-sxk" id="KJ8-GY-i6v"/>
                 <outlet property="membersView" destination="Mpq-bE-cO6" id="tC5-v0-TAv"/>
                 <outlet property="projectNameTextField" destination="Hsw-TQ-KRR" id="jKK-2G-yUg"/>
+                <outlet property="sprintEndDate" destination="kCh-Hi-het" id="OGZ-ku-LLc"/>
+                <outlet property="sprintNameTextField" destination="UBS-Au-l07" id="yMi-Ia-N0C"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+            <rect key="frame" x="0.0" y="64" width="375" height="603"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Membre(s)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ify-Tf-Tlv">
@@ -54,21 +56,6 @@
                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b0y-18-Sp2">
-                    <rect key="frame" x="16" y="236" width="343" height="40"/>
-                    <color key="backgroundColor" red="0.69019607843137254" green="0.61960784313725492" blue="0.77254901960784317" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="343" id="IQT-FH-S6z"/>
-                        <constraint firstAttribute="height" constant="40" id="mX2-u6-nRz"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="Ajouter">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="didTouchAddButton:" destination="-1" eventType="touchUpInside" id="qGU-xH-dhY"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qLg-dt-cHw" userLabel="Add Member(s) Button">
                     <rect key="frame" x="334" y="141" width="25" height="25"/>
                     <constraints>
@@ -80,6 +67,48 @@
                         <action selector="showAddMembersView:" destination="-1" eventType="touchUpInside" id="ah5-V8-FwK"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JBU-YO-alh" userLabel="Sprint Label">
+                    <rect key="frame" x="16" y="215" width="343" height="54"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="343" id="Tl4-AD-Gmv"/>
+                        <constraint firstAttribute="height" constant="54" id="V6g-aU-4CB"/>
+                    </constraints>
+                    <string key="text">Pour créer un projet, vous devez créer au moins un sprint. Veuillez saisir le nom de votre sprint et choisir sa date de fin estimée :</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nom du sprint" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UBS-Au-l07" userLabel="Sprint Name">
+                    <rect key="frame" x="16" y="284" width="343" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="343" id="Vwq-Ip-2Ih"/>
+                        <constraint firstAttribute="height" constant="64" id="zQt-br-Pd0"/>
+                    </constraints>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date de fin estimée" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lya-9F-9GL">
+                    <rect key="frame" x="16" y="378" width="343" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="U32-ji-nyX"/>
+                        <constraint firstAttribute="width" constant="343" id="ptD-8F-J09"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="kCh-Hi-het">
+                    <rect key="frame" x="16" y="412" width="343" height="55"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="343" id="5vf-qL-Xkl"/>
+                        <constraint firstAttribute="height" constant="55" id="SWN-cC-KZd"/>
+                    </constraints>
+                    <date key="date" timeIntervalSinceReferenceDate="521853139.25562102">
+                        <!--2017-07-15 23:12:19 +0000-->
+                    </date>
+                    <locale key="locale" localeIdentifier="fr_FR"/>
+                </datePicker>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mpq-bE-cO6">
                     <rect key="frame" x="52" y="129" width="272" height="300"/>
                     <subviews>
@@ -128,6 +157,21 @@
                         <constraint firstAttribute="bottom" secondItem="IjJ-qv-pZa" secondAttribute="bottom" constant="8" id="kaS-Fa-r6N"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b0y-18-Sp2">
+                    <rect key="frame" x="16" y="505" width="343" height="40"/>
+                    <color key="backgroundColor" red="0.69019607843137254" green="0.61960784313725492" blue="0.77254901960784317" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="skY-4A-zXO"/>
+                        <constraint firstAttribute="width" constant="343" id="uIc-lF-cze"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Ajouter">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="didTouchAddButton:" destination="-1" eventType="touchUpInside" id="qGU-xH-dhY"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -137,17 +181,34 @@
                 <constraint firstAttribute="trailing" secondItem="CYD-sC-0a0" secondAttribute="trailing" constant="16" id="ASj-JU-wHQ"/>
                 <constraint firstItem="Mpq-bE-cO6" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Ami-rh-a2a"/>
                 <constraint firstItem="CYD-sC-0a0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="179" id="BGo-jZ-E0x"/>
+                <constraint firstItem="b0y-18-Sp2" firstAttribute="top" secondItem="kCh-Hi-het" secondAttribute="bottom" constant="38" id="C3G-A0-K6Q"/>
+                <constraint firstAttribute="trailing" secondItem="JBU-YO-alh" secondAttribute="trailing" constant="16" id="ESh-Gb-aA3"/>
+                <constraint firstAttribute="trailing" secondItem="kCh-Hi-het" secondAttribute="trailing" constant="16" id="IkJ-KL-lNj"/>
                 <constraint firstItem="qLg-dt-cHw" firstAttribute="leading" secondItem="CYD-sC-0a0" secondAttribute="trailing" constant="-25" id="KQD-oM-adY"/>
+                <constraint firstAttribute="trailing" secondItem="b0y-18-Sp2" secondAttribute="trailing" constant="16" id="LXI-cG-ZLu"/>
                 <constraint firstItem="Hsw-TQ-KRR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="O7r-fZ-U5T"/>
-                <constraint firstItem="b0y-18-Sp2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="YyZ-v6-V5z"/>
-                <constraint firstAttribute="trailing" secondItem="b0y-18-Sp2" secondAttribute="trailing" constant="16" id="cOe-2n-wTL"/>
+                <constraint firstItem="JBU-YO-alh" firstAttribute="top" secondItem="Ify-Tf-Tlv" secondAttribute="bottom" constant="29" id="Puf-C0-zOj"/>
+                <constraint firstItem="kCh-Hi-het" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="Pvl-Pv-fmz"/>
+                <constraint firstAttribute="trailing" secondItem="lya-9F-9GL" secondAttribute="trailing" constant="16" id="Rjx-pu-tXd"/>
+                <constraint firstItem="lya-9F-9GL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="XyK-UZ-jGq"/>
+                <constraint firstItem="b0y-18-Sp2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="Z6s-Vn-tBX"/>
+                <constraint firstItem="UBS-Au-l07" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="bTS-4d-2l1"/>
                 <constraint firstAttribute="bottom" secondItem="Hsw-TQ-KRR" secondAttribute="bottom" constant="512" id="d4K-Oe-bhw"/>
+                <constraint firstItem="UBS-Au-l07" firstAttribute="top" secondItem="JBU-YO-alh" secondAttribute="bottom" constant="15" id="feN-Ic-ws9"/>
                 <constraint firstAttribute="trailing" secondItem="Hsw-TQ-KRR" secondAttribute="trailing" constant="16" id="gCf-wA-xwJ"/>
                 <constraint firstItem="Mpq-bE-cO6" firstAttribute="top" secondItem="Hsw-TQ-KRR" secondAttribute="bottom" constant="38" id="jLF-jc-NBI"/>
+                <constraint firstItem="kCh-Hi-het" firstAttribute="top" secondItem="lya-9F-9GL" secondAttribute="bottom" constant="4" id="kJv-7o-BEF"/>
+                <constraint firstItem="lya-9F-9GL" firstAttribute="top" secondItem="UBS-Au-l07" secondAttribute="bottom" constant="30" id="nsU-vh-7bW"/>
                 <constraint firstItem="qLg-dt-cHw" firstAttribute="top" secondItem="CYD-sC-0a0" secondAttribute="bottom" constant="-45" id="r2h-E8-DYt"/>
-                <constraint firstItem="b0y-18-Sp2" firstAttribute="top" secondItem="CYD-sC-0a0" secondAttribute="bottom" constant="50" id="yIL-8V-S2K"/>
+                <constraint firstAttribute="trailing" secondItem="UBS-Au-l07" secondAttribute="trailing" constant="16" id="xmZ-6c-iwr"/>
+                <constraint firstItem="JBU-YO-alh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="yBy-X7-EMr"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="Mpq-bE-cO6"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="-57.5" y="90.5"/>
         </view>
     </objects>

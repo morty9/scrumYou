@@ -9,6 +9,8 @@
 #import "UserHomeScreenViewController.h"
 #import "AccountSettingsScreenViewController.h"
 #import "ScrumBoardScreenViewController.h"
+#import "AddProjectScreenViewController.h"
+#import "HomeScreenViewController.h"
 #import "CellView.h"
 #import "Project.h"
 #import "Sprint.h"
@@ -43,10 +45,15 @@
     NSInteger countProgress;
     NSInteger countDone;
     
+    UIBarButtonItem* addProjectButton;
+    UIBarButtonItem* logoutButton;
+    
     Task* task;
     
     AccountSettingsScreenViewController* accountSettingsVC;
     ScrumBoardScreenViewController* scrumBoardVC;
+    AddProjectScreenViewController* addProjectVC;
+    HomeScreenViewController* homeScreenVC;
     
     NSArray* searchResultsFinished;
     NSArray* searchResultsProgress;
@@ -64,6 +71,12 @@
         ProjectsCrud = [[CrudProjects alloc] init];
         SprintsCrud = [[CrudSprints alloc] init];
         TasksCrud = [[CrudTasks alloc] init];
+        
+        addProjectButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addProject:)];
+        self.navigationItem.rightBarButtonItem = addProjectButton;
+        
+        logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
+        self.navigationItem.leftBarButtonItem = logoutButton;
         
         get_projects = [[NSMutableArray<Project*> alloc] init];
         get_projects_by_user = [[NSMutableArray<Project*> alloc] init];
@@ -316,6 +329,17 @@
     [self viewWillAppear:YES];
 }
 
+- (void) addProject:(id)sender {
+    addProjectVC = [[AddProjectScreenViewController alloc] init];
+//    addProjectVC.token = self.token;
+    [self.navigationController pushViewController:addProjectVC animated:YES];
+}
+
+- (void) logout:(id)sender {
+    homeScreenVC = [[HomeScreenViewController alloc] init];
+    //    addProjectVC.token = self.token;
+    [self.navigationController pushViewController:homeScreenVC animated:YES];
+}
 
 // SEARCHBAR
 

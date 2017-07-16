@@ -15,6 +15,8 @@
     
     __weak IBOutlet UITextField *projectNameTextField;
     __weak IBOutlet UITextField *addMembersTextField;
+    __weak IBOutlet UITextField *sprintNameTextField;
+    __weak IBOutlet UIDatePicker *sprintEndDate;
     //__weak IBOutlet UIButton *addButton;
     __weak IBOutlet UIView *membersView;
     
