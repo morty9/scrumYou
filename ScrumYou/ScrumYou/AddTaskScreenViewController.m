@@ -11,6 +11,7 @@
 #import "APIKeys.h"
 #import "CrudUsers.h"
 #import "CrudTasks.h"
+#import "CrudSprints.h"
 
 @interface AddTaskScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -19,24 +20,34 @@
 @end
 
 @implementation AddTaskScreenViewController {
+    ScrumBoardScreenViewController* scrumBoardVC;
+    
     NSMutableArray<User*>* get_users;
+    NSMutableArray<Sprint*>* get_sprints;
     
     NSMutableArray* members;
     NSMutableArray* ids;
     
-    NSArray* searchResults;
+    NSArray* searchResultsUser;
     NSArray* statusArray;
     
     UIVisualEffectView *blurEffectView;
     
     NSString* statusTask;
     
+    NSNumber* ids_sprint;
     NSInteger priority;
     NSInteger nMember;
     NSInteger category;
     
+    Task* newTask;
+    Sprint* spr;
+    
     CrudUsers* Users;
     CrudTasks* Tasks;
+    CrudSprints* Sprints;
+    
+    BOOL isModify;
 }
 
 @synthesize token_dic = _token_dic;
@@ -52,16 +63,32 @@
 @synthesize categorySegmentation = _categorySegmentation;
 @synthesize status = _status;
 @synthesize mTask = _mTask;
+@synthesize cProject = _cProject;
 @synthesize labelTitle = _labelTitle;
 @synthesize labelDescription = _labelDescription;
 @synthesize labelCost = _labelCost;
 @synthesize labelDifficulty = _labelDifficulty;
+@synthesize sprintsByProject = _sprintsByProject;
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
     if (self != nil) {
         
+        Users = [[CrudUsers alloc] init];
+        Tasks = [[CrudTasks alloc] init];
+        Sprints = [[CrudSprints alloc] init];
+        
+        newTask = [[Task alloc] init];
+        spr = [[Sprint alloc] init];
+        
+        get_users = [[NSMutableArray<User*> alloc] init];
+        get_sprints = [[NSMutableArray<Sprint*> alloc] init];
+        
+        members = [[NSMutableArray alloc] init];
+        ids = [[NSMutableArray alloc] init];
+        
+        isModify = NO;
         self.status = false;
         statusTask = @"A faire";
         statusArray = @[@"A faire", @"En cours", @"Finies"];
@@ -72,29 +99,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    NSLog(@"STATUS VDL %d", self.status);
+    [self designPage];
     
     membersTableView.delegate = self;
     membersTableView.dataSource = self;
     
-    [self designPage];
-    
-    Users = [[CrudUsers alloc] init];
-    [Users getUsers:^(NSError *error, BOOL success) {
-        if (success) {
-            NSLog(@"SUCCESS GET USERS");
-        }
-    }];
-    
-    Tasks = [[CrudTasks alloc] init];
-    
-    get_users = [[NSMutableArray<User*> alloc] init];
-    members = [[NSMutableArray alloc] init];
-    ids = [[NSMutableArray alloc] init];
+    [self getUsers];
     
     pickerStatus.delegate = self;
     pickerStatus.dataSource = self;
+    
+    pickerSprint.delegate = self;
+    pickerSprint.dataSource = self;
     
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
@@ -117,55 +133,43 @@
     [self designPage];
 }
 
-/**
- * Get users form database
-**/
-- (void) getUsername {
-    get_users = Users.userList;
-    [membersTableView reloadData];
-}
 
-
-/**
- * Add task to database
-**/
-- (IBAction)didTouchAddButton:(id)sender {
-    
+- (void) finalValidationTask {
     __unsafe_unretained typeof(self) weakSelf = self;
     
     [Tasks addTaskTitle:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS ADD TASK");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([Tasks.dict_error valueForKey:@"type"] != nil) {
-                    NSString* title = [weakSelf->Tasks.dict_error valueForKey:@"title"];
-                    NSString* message = [weakSelf->Tasks.dict_error valueForKey:@"message"];
+            if ([Tasks.dict_error valueForKey:@"type"] != nil) {
+                NSString* title = [weakSelf->Tasks.dict_error valueForKey:@"title"];
+                NSString* message = [weakSelf->Tasks.dict_error valueForKey:@"message"];
                     
-                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        
+                }];
+                    
+                [alert addAction:defaultAction];
+                [weakSelf presentViewController:alert animated:YES completion:nil];
+                    
+            } else {
+                newTask = Tasks.task;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre tâche a été créée." preferredStyle:UIAlertControllerStyleAlert];
                     
                     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
+                        weakSelf->scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", weakSelf.cProject.id_project];
+                        [weakSelf.navigationController pushViewController:weakSelf->scrumBoardVC animated:YES];
                         
                     }];
                     
                     [alert addAction:defaultAction];
                     [weakSelf presentViewController:alert animated:YES completion:nil];
-                    
-                } else {
-                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre tâche a été créée." preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                        // GO TO SCRUM BOARD
-                        ///////////////////////:
-                        ///////////////////////
-                        ///////////////////////
-                        /////////////////////
-                    }];
-                    
-                    [alert addAction:defaultAction];
-                    [weakSelf presentViewController:alert animated:YES completion:nil];
-                    
-                }
-            });
+
+                });
+            }
         }
     }];
     
@@ -184,27 +188,127 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)thePickerView numberOfRowsInComponent:(NSInteger)component {
-    return statusArray.count;
+    if (thePickerView == pickerStatus) {
+        return statusArray.count;
+    } else {
+        return self.sprintsByProject.count;
+    }
 }
 
 - (NSString *)pickerView:(UIPickerView *)thePickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [statusArray objectAtIndex:row];
+    if (thePickerView == pickerStatus) {
+        return [statusArray objectAtIndex:row];
+    } else {
+        spr = [self.sprintsByProject objectAtIndex:0];
+        return [[self.sprintsByProject objectAtIndex:row] valueForKey:@"title"];
+    }
 }
 
 - (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    if (row == 0) {
-        statusTask = @"A faire";
+    if (thePickerView == pickerStatus) {
+        statusTask = [statusArray objectAtIndex:row];
+    } else {
+        spr = [self.sprintsByProject objectAtIndex:row];
+        NSLog(@"SPR %@", spr.id_sprint);
     }
-    statusTask = [statusArray objectAtIndex:row];
+    
 }
 
-- (IBAction)didTouchModifyButton:(id)sender {
+- (void) ValidateSprintandModifyTask {
     
     NSLog(@"STATUS %@", statusTask);
+    
+    newTask.id_task = self.id_task;
     
     [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"UPDATE SUCCESS");
+            if ([Tasks.dict_error valueForKey:@"type"] != nil) {
+                NSString* title = [Tasks.dict_error valueForKey:@"title"];
+                NSString* message = [Tasks.dict_error valueForKey:@"message"];
+                
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    
+                }];
+                
+                [alert addAction:defaultAction];
+                [self presentViewController:alert animated:YES completion:nil];
+                
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Modification réussie" message:@"Votre tâche a été modifiée." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
+                        scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", self.cProject.id_project];
+                        [self.navigationController pushViewController:scrumBoardVC animated:YES];
+                        
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [self presentViewController:alert animated:YES completion:nil];
+                    
+                });
+            }
+        }
+    }];
+    
+}
+
+/*
+ *  SPRINTS VIEW
+ */
+
+/*
+ * Show sprint view
+ */
+- (IBAction)showSprintView:(id)sender {
+    if ([sender tag] == 1) {
+        isModify = true;
+    }
+    [sprintView setHidden:false];
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = self.view.bounds;
+    
+    [self.view insertSubview:blurEffectView belowSubview:sprintView];
+}
+
+/**
+ * Close sprint windows
+ **/
+- (IBAction)closeWindowSprint:(id)sender {
+    [sprintView setHidden:true];
+    [blurEffectView removeFromSuperview];
+}
+
+/*
+ *  Validate sprint
+ *  Call method who add task to database
+ *  Call update sprint web service
+ */
+- (IBAction)validateSprint:(id)sender {
+    if (isModify == true) {
+        [self ValidateSprintandModifyTask];
+        isModify = false;
+    } else {
+        [self finalValidationTask];
+    }
+    NSMutableArray* list_task = [[NSMutableArray alloc] initWithArray:spr.id_listTasks];
+    [list_task addObject:newTask.id_task];
+    spr.id_listTasks = list_task;
+    
+    NSString* id_sprint = [NSString stringWithFormat:@"%@", spr.id_sprint];
+    NSString* title = spr.title;
+    NSString* beginning_date = spr.beginningDate;
+    NSString* end_date = spr.endDate;
+    NSMutableArray* id_members = spr.id_members;
+    
+    [Sprints updateSprintId:id_sprint title:title beginningDate:beginning_date endDate:end_date id_members:id_members id_listTasks:list_task callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"UPDATE SPRINT SUCCESS");
         }
     }];
     
@@ -218,7 +322,7 @@
  * Show add members view
 **/
 - (IBAction)showAddMembersView:(id)sender {
-    [self getUsername];
+    //[self getUsername];
     [membersView setHidden:false];
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
@@ -227,9 +331,22 @@
     [self.view insertSubview:blurEffectView belowSubview:membersView];
 }
 
+/**
+ * Get users form database
+ **/
+- (void) getUsers {
+    [Users getUsers:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"SUCCESS GET USERS");
+            get_users = Users.userList;
+            [membersTableView reloadData];
+        }
+    }];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if(self.searchController.isActive) {
-        return searchResults.count;
+        return searchResultsUser.count;
     }else {
         return [get_users count];
     }
@@ -247,12 +364,13 @@
     
     User* username;
     if(self.searchController.isActive) {
-        username = [searchResults objectAtIndex:indexPath.row];
+        username = [searchResultsUser objectAtIndex:indexPath.row];
     }else {
         username = [get_users objectAtIndex:indexPath.row];
     }
-
+    
     cell.textLabel.text = [NSString stringWithFormat:@"%@", username.fullname];
+
     return cell;
 }
 
@@ -276,8 +394,8 @@
 }
 
 - (void)searchForText:(NSString*)searchText {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fullname contains[c] %@ OR nickname contains[c] %@", searchText, searchText];
-    searchResults = [get_users filteredArrayUsingPredicate:predicate];
+    NSPredicate *predicateUser = [NSPredicate predicateWithFormat:@"fullname contains[c] %@ OR nickname contains[c] %@", searchText, searchText];
+    searchResultsUser = [get_users filteredArrayUsingPredicate:predicateUser];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {

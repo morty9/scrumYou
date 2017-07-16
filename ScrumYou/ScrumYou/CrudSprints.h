@@ -37,7 +37,7 @@
 /*
  * UPDATE -> update sprint with id
  */
-- (void) updateSprintId:(NSString*)id_sprint endDate:(NSString*)endDate id_members:(NSMutableArray*)id_members id_listTasks:(NSMutableArray*)id_listTasks callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) updateSprintId:(NSString*)id_sprint title:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate id_members:(NSMutableArray*)id_members id_listTasks:(NSMutableArray*)id_listTasks callback:(void (^)(NSError *error, BOOL success))callback;
 
 /*
  *  DELETE -> delete sprint by id
