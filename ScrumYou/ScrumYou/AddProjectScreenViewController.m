@@ -14,6 +14,7 @@
 #import "User.h"
 #import "CrudUsers.h"
 #import "CrudProjects.h"
+#import "CrudSprints.h"
 #import "CrudAuth.h"
 
 @interface AddProjectScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
@@ -27,6 +28,9 @@
     
     NSInteger nMember;
     
+    NSDate *currentDate;
+    NSDate *endDate;
+    
     NSArray* searchResults;
     
     UIVisualEffectView *blurEffectView;
@@ -35,6 +39,8 @@
 
     CrudUsers* Users;
     CrudProjects* Projects;
+    CrudSprints* Sprints;
+    
     LoginScreenViewController* loginVC;
 }
 
@@ -65,12 +71,16 @@
     }];
     
     Projects = [[CrudProjects alloc] init];
+    Sprints = [[CrudSprints alloc] init];
+    
     loginVC = [[LoginScreenViewController alloc] init];
     
     get_users = [[NSMutableArray<User*> alloc] init];
     members = [[NSMutableArray alloc] init];
     ids = [[NSMutableArray alloc] init];
     auth = [[NSDictionary alloc] init];
+    
+    currentDate = [NSDate date];
     
     NSLog(@"TOKEN %@", self.token_dic);
     
@@ -133,8 +143,20 @@
         }
     }];
     
+    endDate = [sprintEndDate date];
+    
+    NSLog(@"CURRENT DATE : %@", currentDate);
+    NSLog(@"END DATE : %@", endDate);
+    
+    [Sprints addSprintTitle:sprintNameTextField.text beginningDate:currentDate endDate:endDate callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"SUCCESS ADD SPRINT");
+        }
+    }];
+    
     projectNameTextField.text = @"";
     addMembersTextField.text = @"";
+    sprintNameTextField.text = @"";
 }
 
 /**
@@ -274,9 +296,9 @@
     UINavigationBar* bar = [self.navigationController navigationBar];
     [bar setHidden:false];
     
-    UIImage *cancel = [[UIImage imageNamed:@"error.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:cancel style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton:)];
-    self.navigationItem.leftBarButtonItem = cancelButton;
+//    UIImage *cancel = [[UIImage imageNamed:@"error.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:cancel style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton:)];
+//    self.navigationItem.leftBarButtonItem = cancelButton;
     
     //border projectName text field
     CALayer *borderProjectName = [CALayer layer];
@@ -304,6 +326,15 @@
     borderLabelMember.borderWidth = borderWidthLabelMember;
     [labelMembers.layer addSublayer:borderLabelMember];
     labelMembers.layer.masksToBounds = YES;
+    
+    //border sprintName
+    CALayer *borderSprintName = [CALayer layer];
+    CGFloat borderWidthSprintName = 1.5;
+    borderSprintName.borderColor = [UIColor darkGrayColor].CGColor;
+    borderSprintName.frame = CGRectMake(0, sprintNameTextField.frame.size.height - borderWidthSprintName, sprintNameTextField.frame.size.width, sprintNameTextField.frame.size.height);
+    borderSprintName.borderWidth = borderWidthSprintName;
+    [sprintNameTextField.layer addSublayer:borderSprintName];
+    sprintNameTextField.layer.masksToBounds = YES;
     
 }
 

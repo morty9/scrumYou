@@ -12,15 +12,17 @@
 @interface CrudSprints : NSObject {
     NSMutableArray<Sprint*>* _sprints_list;
     Sprint* _sprint;
+    NSDictionary* _dict_error;
 }
 
 @property (nonatomic, strong) NSMutableArray<Sprint*>* sprints_list;
 @property (nonatomic, strong) Sprint* sprint;
+@property (nonatomic, strong) NSDictionary* dict_error;
 
 /*
  *  POST -> add sprint to database
  */
-- (void) addSprintBeginningDate:(NSString*)beginningDate endDate:(NSString*)endDate callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) addSprintTitle:(NSString*)title beginningDate:(NSDate*)beginningDate endDate:(NSDate*)endDate callback:(void (^)(NSError *error, BOOL success))callback;
 
 /*
  *  GET -> Get all sprints from database
