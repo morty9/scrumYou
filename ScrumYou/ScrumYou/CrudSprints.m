@@ -33,16 +33,15 @@
 /*
  *  POST -> add sprint to database
  */
-- (void) addSprintTitle:(NSString*)title beginningDate:(NSDate*)beginningDate endDate:(NSDate*)endDate callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) addSprintTitle:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSURL* url = [NSURL URLWithString:kSprint_api];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"POST"];
     
-    NSDictionary* jsonData =
-    @{@"title" : title,
-      @"beginningDate" : beginningDate,
-      @"endDate" : endDate};
+    NSDictionary* jsonData = @{@"title" : title,
+                               @"beginningDate" : beginningDate,
+                               @"endDate" : endDate};
     
     NSData* postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
     [request setHTTPBody:postData];
@@ -70,6 +69,18 @@
         if ([jsonDict valueForKey:@"type"] != nil) {
             _dict_error = jsonDict;
         }
+        
+        NSString* tmp_id = [jsonDict valueForKey:@"id"];
+        NSString* tmp_title = [jsonDict valueForKey:@"title"];
+        NSString* tmp_beginningDate = [jsonDict valueForKey:@"beginningDate"];
+        NSString* tmp_endDate = [jsonDict valueForKey:@"endDate"];
+        NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
+        NSMutableArray* tmp_id_listTasks = [jsonDict valueForKey:@"id_listTasks"];
+        NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
+        
+        self.sprint = [[Sprint alloc] initWithId:tmp_id title:tmp_title beginningDate:tmp_beginningDate endDate:tmp_endDate id_creator:tmp_id_creator id_listTasks:tmp_id_listTasks id_members:tmp_id_members];
+        
+        NSLog(@"Sprint %@", self.sprint);
       
         callback(error, true);
         

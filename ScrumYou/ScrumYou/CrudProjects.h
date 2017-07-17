@@ -22,7 +22,7 @@
 /*
  *  POST -> add project to database
  */
-- (void) addProjecTitle:(NSString*)title members:(NSMutableArray*)members id_creator:(NSNumber*)id_creator token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) addProjecTitle:(NSString*)title members:(NSMutableArray*)members sprints:(NSMutableArray*)sprints id_creator:(NSNumber*)id_creator token:(NSString*)token status:(BOOL)status callback:(void (^)(NSError *error, BOOL success))callback;
 /*
  *  GET -> Get all projects from database
  */

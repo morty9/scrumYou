@@ -22,7 +22,7 @@
 /*
  *  POST -> add sprint to database
  */
-- (void) addSprintTitle:(NSString*)title beginningDate:(NSDate*)beginningDate endDate:(NSDate*)endDate callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) addSprintTitle:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate callback:(void (^)(NSError *error, BOOL success))callback;
 
 /*
  *  GET -> Get all sprints from database

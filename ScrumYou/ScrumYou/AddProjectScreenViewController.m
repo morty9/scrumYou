@@ -41,7 +41,7 @@
     CrudProjects* Projects;
     CrudSprints* Sprints;
     
-    LoginScreenViewController* loginVC;
+    UserHomeScreenViewController* userHomeVC;
 }
 
 @synthesize token_dic = _token_dic;
@@ -60,6 +60,7 @@
     [super viewDidLoad];
     membersTableView.delegate = self;
     membersTableView.dataSource = self;
+    NSLog(@"TOKEN ADD PROJECT %@", _token_dic);
     
     [self designPage];
     
@@ -73,16 +74,10 @@
     Projects = [[CrudProjects alloc] init];
     Sprints = [[CrudSprints alloc] init];
     
-    loginVC = [[LoginScreenViewController alloc] init];
-    
     get_users = [[NSMutableArray<User*> alloc] init];
     members = [[NSMutableArray alloc] init];
     ids = [[NSMutableArray alloc] init];
     auth = [[NSDictionary alloc] init];
-    
-    currentDate = [NSDate date];
-    
-    NSLog(@"TOKEN %@", self.token_dic);
     
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
@@ -111,52 +106,58 @@
     
     __unsafe_unretained typeof(self) weakSelf = self;
     
-    [Projects addProjecTitle:projectNameTextField.text members:ids id_creator:[self.token_dic valueForKey:@"userId"] token:[self.token_dic valueForKey:@"token"] callback:^(NSError *error, BOOL success) {
-        if (success) {
-            NSLog(@"SUCCESS ADD PROJECT");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([Projects.dict_error valueForKey:@"type"] != nil) {
-                    NSString* title = [weakSelf->Projects.dict_error valueForKey:@"title"];
-                    NSString* message = [weakSelf->Projects.dict_error valueForKey:@"message"];
-                    
-                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                        
-                    }];
-                    
-                    [alert addAction:defaultAction];
-                    [weakSelf presentViewController:alert animated:YES completion:nil];
-                    
-                } else {
-                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre projet a été créé avec succès." preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                        
-                    }];
-                    
-                    [alert addAction:defaultAction];
-                    [weakSelf presentViewController:alert animated:YES completion:nil];
-                    
-                }
-            });
-        }
-    }];
-    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    currentDate = [NSDate date];
     endDate = [sprintEndDate date];
+    NSString* end_dateString = [formatter stringFromDate:endDate];
+    NSString* current_dateString = [formatter stringFromDate:currentDate];
     
-    NSLog(@"CURRENT DATE : %@", currentDate);
-    NSLog(@"END DATE : %@", endDate);
-    
-    [Sprints addSprintTitle:sprintNameTextField.text beginningDate:currentDate endDate:endDate callback:^(NSError *error, BOOL success) {
+    [Sprints addSprintTitle:sprintNameTextField.text beginningDate:current_dateString endDate:end_dateString callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS ADD SPRINT");
+            NSMutableArray* sprints = [[NSMutableArray alloc] init];
+            [sprints addObject:weakSelf->Sprints.sprint.id_sprint];
+            
+            [weakSelf->Projects addProjecTitle:weakSelf->projectNameTextField.text members:weakSelf->ids sprints:sprints id_creator:[weakSelf.token_dic valueForKey:@"userId"] token:[weakSelf.token_dic valueForKey:@"token"] status:NO callback:^(NSError *error, BOOL success) {
+                if (success) {
+                    NSLog(@"SUCCESS ADD PROJECT");
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        weakSelf->projectNameTextField.text = @"";
+                        weakSelf->addMembersTextField.text = @"";
+                        weakSelf->sprintNameTextField.text = @"";
+                        if ([Projects.dict_error valueForKey:@"type"] != nil) {
+                            NSString* title = [weakSelf->Projects.dict_error valueForKey:@"title"];
+                            NSString* message = [weakSelf->Projects.dict_error valueForKey:@"message"];
+                            
+                            UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                            
+                            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                                
+                            }];
+                            
+                            [alert addAction:defaultAction];
+                            [weakSelf presentViewController:alert animated:YES completion:nil];
+                            
+                        } else {
+                            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre projet a été créé avec succès." preferredStyle:UIAlertControllerStyleAlert];
+                            
+                            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                                userHomeVC = [[UserHomeScreenViewController alloc] init];
+                                weakSelf->userHomeVC.token = weakSelf.token_dic;
+                                [weakSelf.navigationController pushViewController:weakSelf->userHomeVC animated:YES];
+                            }];
+                            
+                            [alert addAction:defaultAction];
+                            [weakSelf presentViewController:alert animated:YES completion:nil];
+                            
+                        }
+                    });
+                }
+            }];
         }
     }];
     
-    projectNameTextField.text = @"";
-    addMembersTextField.text = @"";
-    sprintNameTextField.text = @"";
 }
 
 /**

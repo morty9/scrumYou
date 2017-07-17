@@ -49,6 +49,7 @@
             if (success) {
                 NSLog(@"SUCCESS PROJECT");
                 get_project = ProjectsCrud.projects_list;
+                NSLog(@"GET PROJECTS ARRAY : %@", get_project);
             }
         }];
     }
@@ -68,9 +69,9 @@
 - (IBAction)connectionButton:(id)sender {
     
     [Auth login:emailTextField.text password:pwdTextField.text callback:^(NSError *error, BOOL success) {
-        if (success) {
-            NSLog(@"CONNECTED");
-            dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (success) {
+                NSLog(@"CONNECTED");
                 NSLog(@"AUTH TOKEN %@", Auth.token);
                 addProjectVC.token_dic = Auth.token;
                 userHomeVC.token = Auth.token;
@@ -78,17 +79,20 @@
                 
                 [self checkIfMemberHaveProject:get_project tokenActive:Auth.token];
                 
+                
                 if (userHaveProject == true) {
-                    dispatch_async(dispatch_get_main_queue(), ^ {
+                    dispatch_async(dispatch_get_main_queue(), ^{
                         [self.navigationController pushViewController:userHomeVC animated:YES];
-                    }
-                );} else {
-                    dispatch_async(dispatch_get_main_queue(), ^ {
+                    });
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
                         [self.navigationController pushViewController:addProjectVC animated:YES];
-                    }
-                );}
-            });
-        }
+                    });
+                }
+            }
+
+        });
+    
     }];
 }
 
@@ -98,7 +102,7 @@
     
     for (Project* project in array_projects) {
         for (NSNumber* id_members in [project valueForKey:@"id_members"]) {
-            if (tokenUserId == id_members || [tokenUserId stringValue] == [project valueForKey:@"id_creator"]) {
+            if (tokenUserId == id_members || tokenUserId == [project valueForKey:@"id_creator"]) {
                 userHaveProject = true;
             }
         }
@@ -111,12 +115,12 @@
     //navigation bar customization
     self.navigationItem.title = [NSString stringWithFormat:@"Connexion"];
     
-    UINavigationBar* bar = [self.navigationController navigationBar];
-    [bar setHidden:false];
+//    UINavigationBar* bar = [self.navigationController navigationBar];
+//    [bar setHidden:false];
     
-    UIImage *cancel = [[UIImage imageNamed:@"error.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:cancel style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton:)];
-    self.navigationItem.leftBarButtonItem = cancelButton;
+//    UIImage *cancel = [[UIImage imageNamed:@"error.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:cancel style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton:)];
+//    self.navigationItem.leftBarButtonItem = cancelButton;
     
     //border email text field
     CALayer *borderEmail = [CALayer layer];
