@@ -46,7 +46,6 @@
     NSInteger countDone;
     
     UIBarButtonItem* addProjectButton;
-    UIBarButtonItem* logoutButton;
     
     Task* task;
     
@@ -75,8 +74,6 @@
         addProjectButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addProject:)];
         self.navigationItem.rightBarButtonItem = addProjectButton;
         
-        logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
-        self.navigationItem.leftBarButtonItem = logoutButton;
         
         get_projects = [[NSMutableArray<Project*> alloc] init];
         get_projects_by_user = [[NSMutableArray<Project*> alloc] init];
@@ -106,7 +103,7 @@
                 get_tasks = TasksCrud.tasksList;
             }
         }];
-        
+    
     }
     
     return self;
@@ -119,6 +116,8 @@
     
     Auth = [[CrudAuth alloc] init];
     accountSettingsVC = [[AccountSettingsScreenViewController alloc] init];
+    
+    NSLog(@"TOKEN USER HOME %@", _token);
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -138,12 +137,18 @@
     [self.collectionView reloadData];
     [self.otherCollectionView reloadData];
     
+    [self updateViewConstraints];
+    
 }
 
 - (void) designPage {
     
     self.navigationItem.title = [NSString stringWithFormat:@"Scrummary"];
     self.navigationItem.hidesBackButton = YES;
+    
+    UIImage *cancel = [[UIImage imageNamed:@"logout-button.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc] initWithImage:cancel style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
+    self.navigationItem.leftBarButtonItem = logoutButton;
     
 }
 
@@ -167,19 +172,20 @@
     
 }
 
+
 - (void) checkUsersProjects:(NSArray*)user_projects tokenActive:(NSDictionary*)tokenActive {
     
     NSNumber* tokenUserId = [tokenActive valueForKey:@"userId"];
     
-    NSLog(@"TOKEN USER ID %@", tokenUserId);
-    
     for (Project* project in user_projects) {
         for (NSNumber* id_members in [project valueForKey:@"id_members"]) {
-            if (tokenUserId == id_members || [tokenUserId stringValue] == [project valueForKey:@"id_creator"]) {
+            if (tokenUserId == id_members || tokenUserId == [project valueForKey:@"id_creator"]) {
                 [get_projects_by_user addObject:project];
+                break;
             }
         }
     }
+    NSLog(@"GET USERS PROJECTS BEFORE %@", get_projects_by_user);
     
 }
 
@@ -258,25 +264,31 @@
 
 - (void) getTaskById:(NSArray*)array_tasks {
     
+    NSLog(@"ARRAY TASKS %@", array_tasks);
+    
     NSMutableArray<Task*>* array_t = [[NSMutableArray alloc] init];
     countTodo = 0;
     countProgress = 0;
     countDone = 0;
     
     for (Task* tasks in get_tasks) {
-        for (NSNumber* id_tasks in array_tasks) {
-            if ([tasks valueForKey:@"_id_task"] == id_tasks) {
-                [array_t addObject:tasks];
-                if ([[tasks valueForKey:@"_status"] isEqualToString:@"A faire"]) {
-                    countTodo += 1;
-                } else if ([[tasks valueForKey:@"_status"] isEqualToString:@"En cours"]) {
-                    countProgress += 1;
-                } else {
-                    countDone += 1;
+        if (![array_tasks isKindOfClass:[NSNull class]]) {
+            for (NSNumber* id_tasks in array_tasks) {
+                if ([tasks valueForKey:@"_id_task"] == id_tasks) {
+                    [array_t addObject:tasks];
+                    if ([[tasks valueForKey:@"_status"] isEqualToString:@"A faire"]) {
+                        countTodo += 1;
+                    } else if ([[tasks valueForKey:@"_status"] isEqualToString:@"En cours"]) {
+                        countProgress += 1;
+                    } else {
+                        countDone += 1;
+                    }
                 }
             }
         }
     }
+    
+    NSLog(@"ARRAY T %@", array_t);
     
 }
 
@@ -326,13 +338,13 @@
     
 }
 
-- (IBAction)refreshUHView:(id)sender {
-    [self viewWillAppear:YES];
-}
+//- (IBAction)refreshUHView:(id)sender {
+//    [self viewWillAppear:YES];
+//}
 
 - (void) addProject:(id)sender {
     addProjectVC = [[AddProjectScreenViewController alloc] init];
-//    addProjectVC.token = self.token;
+    addProjectVC.token_dic = self.token;
     [self.navigationController pushViewController:addProjectVC animated:YES];
 }
 

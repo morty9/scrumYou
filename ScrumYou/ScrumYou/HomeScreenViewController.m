@@ -30,8 +30,6 @@
 
 - (void) designPage {
     
-    UINavigationBar* bar = [self.navigationController navigationBar];
-    [bar setHidden:TRUE];
 }
 
 - (IBAction)connectionPage:(id)sender {

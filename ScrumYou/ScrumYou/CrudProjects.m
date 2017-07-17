@@ -32,16 +32,18 @@
 /*
  *  POST -> add project to database
  */
-- (void) addProjecTitle:(NSString*)title members:(NSMutableArray*)members id_creator:(NSNumber*)id_creator token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) addProjecTitle:(NSString*)title members:(NSMutableArray*)members sprints:(NSMutableArray*)sprints id_creator:(NSNumber*)id_creator token:(NSString*)token status:(BOOL)status callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSURL* url = [NSURL URLWithString:kProject_api];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"POST"];
     
-    NSDictionary<NSString*, NSString*>* jsonData =
+    NSDictionary* jsonData =
     @{@"title" : title,
       @"id_members" : members,
-      @"id_creator" : id_creator};
+      @"id_sprint" : sprints,
+      @"id_creator" : id_creator,
+      @"status" : [NSString stringWithFormat:@"%d", status]};
     
     NSData* postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
     [request setHTTPBody:postData];

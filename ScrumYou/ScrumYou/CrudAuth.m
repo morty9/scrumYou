@@ -31,7 +31,8 @@
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"POST"];
     
-    NSDictionary<NSString*, NSString*> *jsonData = @{@"email" : email, @"password" : password};
+    NSDictionary<NSString*, NSString*> *jsonData = @{@"email" : email,
+                                                     @"password" : password};
     
     NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
     [request setHTTPBody:postData];
@@ -87,6 +88,7 @@
         }
                 
         callback(error, true);
+        
     }] resume];
 }
 

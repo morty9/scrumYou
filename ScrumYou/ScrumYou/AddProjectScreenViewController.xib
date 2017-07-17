@@ -204,11 +204,6 @@
                 <constraint firstItem="JBU-YO-alh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="yBy-X7-EMr"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="Mpq-bE-cO6"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="-57.5" y="90.5"/>
         </view>
     </objects>
