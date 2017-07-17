@@ -39,7 +39,7 @@
 /*
  *  DELETE -> delete task by id
  */
-- (void) deleteTaskWithId:(NSString*)id_task callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) deleteTaskWithId:(NSString*)id_task andIdSprint:(NSString*)id_sprint callback:(void (^)(NSError *error, BOOL success))callback;
 
 @end
 
