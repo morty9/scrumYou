@@ -321,14 +321,7 @@
         });
     }];
 }
-
-
-
-/*
- *  IBAction -> button "delete" 
- *  Call deleteProject web service
- */
-/*- (IBAction)deleteProject:(id)sender {
+- (IBAction)deleteProject:(id)sender {
     
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation supression" message:@"Êtes-vous sûr de vouloir supprimer ce projet ?" preferredStyle: UIAlertControllerStyleAlert];

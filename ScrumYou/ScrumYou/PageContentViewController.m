@@ -27,6 +27,7 @@
     NSArray* keys;
     
     Task* current_task;
+    Sprint* current_sprint;
     
     ScrumBoardScreenViewController* scrumBoardVC;
     AddTaskScreenViewController* addTaskVC;
@@ -48,12 +49,14 @@
     
     
     NSLog(@"dico %@", self.dictionary_section);
+    NSLog(@"sprint %@", self.array_sprint);
     
     self.label.text = self.txtTitle;
     
     addTaskVC = [[AddTaskScreenViewController alloc] init];
     
     current_task = [[Task alloc] init];
+    current_sprint = [[Sprint alloc] init];
     array = [[NSMutableArray<NSMutableArray*> alloc] init];
     tasks = [[NSMutableArray<Task*> alloc] init];
     searchResults = [[NSArray alloc] init];
@@ -62,6 +65,11 @@
     self.menuSprints.dataSource = self;
     
     keys = [self.dictionary_section allKeys];
+    
+    NSLog(@"KEYS %@", keys);
+    
+    current_sprint = [self.array_sprint objectAtIndex:0];
+    NSLog(@"SPRINT1 %@", current_sprint.id_sprint);
     
     self.scrumBoardCollectionView.delegate = self;
     self.scrumBoardCollectionView.dataSource = self;
@@ -102,6 +110,8 @@
 - (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     
     tasks = [self.dictionary_section objectForKey:[keys objectAtIndex:row]];
+    current_sprint = [self.array_sprint objectAtIndex:row];
+    NSLog(@"SPRINT %@", current_sprint.id_sprint);
     
     [self.scrumBoardCollectionView reloadData];
 }
@@ -141,6 +151,12 @@ static NSString* cellId = @"SBCell";
     }
     current_task = task;
     
+    if ([task.id_task isEqual:@""]) {
+        cell.userInteractionEnabled = false;
+    } else {
+        cell.userInteractionEnabled = true;
+    }
+    
     cell.layer.cornerRadius = 6;
     cell.titleCell.text = task.title;
     cell.descriptionCell.text = task.description;
@@ -174,6 +190,7 @@ static NSString* cellId = @"SBCell";
     addTaskVC.status = 1;
     addTaskVC.mTask = current_task;
     addTaskVC.cProject = self.current_project;
+    addTaskVC.cSprint = current_sprint;
     addTaskVC.sprintsByProject = self.array_sprint;
     [self.navigationController pushViewController:addTaskVC animated:YES];
 }

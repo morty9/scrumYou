@@ -165,6 +165,10 @@
             return;
         }
         
+        if ([jsonDict valueForKey:@"type"] != nil) {
+            _dict_error = jsonDict;
+        }
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             for (NSDictionary* tasks in jsonDict) {
                 NSString* tmp_id = [tasks valueForKey:@"id"];
@@ -213,19 +217,24 @@
         NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
         
-        NSString* tmp_id = [jsonDict valueForKey:@"id"];
-        NSString* tmp_title = [jsonDict valueForKey:@"title"];
-        NSString* tmp_description = [jsonDict valueForKey:@"description"];
-        NSString* tmp_difficulty = [jsonDict valueForKey:@"difficulty"];
-        NSString* tmp_priority = [jsonDict valueForKey:@"priority"];
-        NSString* tmp_id_category = [jsonDict valueForKey:@"id_category"];
-        NSString* tmp_businessValue = [jsonDict valueForKey:@"businessValue"];
-        NSString* tmp_duration = [jsonDict valueForKey:@"duration"];
-        NSString* tmp_status = [jsonDict valueForKey:@"status"];
-        NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
-        NSMutableArray<NSString*>* tmp_id_members = [jsonDict valueForKey:@"id_members"];
-        
-        self.task = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
+        if ([jsonDict valueForKey:@"type"] != nil) {
+            _dict_error = jsonDict;
+        } else {
+            NSString* tmp_id = [jsonDict valueForKey:@"id"];
+            NSString* tmp_title = [jsonDict valueForKey:@"title"];
+            NSString* tmp_description = [jsonDict valueForKey:@"description"];
+            NSString* tmp_difficulty = [jsonDict valueForKey:@"difficulty"];
+            NSString* tmp_priority = [jsonDict valueForKey:@"priority"];
+            NSString* tmp_id_category = [jsonDict valueForKey:@"id_category"];
+            NSString* tmp_businessValue = [jsonDict valueForKey:@"businessValue"];
+            NSString* tmp_duration = [jsonDict valueForKey:@"duration"];
+            NSString* tmp_status = [jsonDict valueForKey:@"status"];
+            NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
+            NSMutableArray<NSString*>* tmp_id_members = [jsonDict valueForKey:@"id_members"];
+            
+            self.task = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
+
+        }
         
         callback(error, true);
     }
@@ -305,6 +314,10 @@
     
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
+        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+        
         if (error != nil) {
             NSLog(@"Error: %@", error.localizedDescription);
             return;
@@ -318,6 +331,10 @@
             return;
         }
         
+        if ([jsonDict valueForKey:@"type"] != nil) {
+            _dict_error = jsonDict;
+        }
+        
         callback(error, true);
         
     }] resume];
@@ -328,9 +345,11 @@
 /*
  *  DELETE -> delete task by id
  */
-- (void) deleteTaskWithId:(NSString*)id_task callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) deleteTaskWithId:(NSString*)id_task andIdSprint:(NSString*)id_sprint callback:(void (^)(NSError *error, BOOL success))callback {
     
-    NSURL* url = [NSURL URLWithString:[kTask_api stringByAppendingString:[@"/" stringByAppendingString:id_task]]];
+    NSString* extensionUrl = [@"/" stringByAppendingString:[id_task stringByAppendingString:[@"/" stringByAppendingString:id_sprint]]];
+    NSLog(@"URL EXT %@", extensionUrl);
+    NSURL* url = [NSURL URLWithString:[kTask_api stringByAppendingString:extensionUrl]];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"DELETE"];
     

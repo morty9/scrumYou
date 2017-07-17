@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Task.h"
 #import "Project.h"
+#import "Sprint.h"
 
 @interface AddTaskScreenViewController : UIViewController
 {
@@ -51,6 +52,7 @@
     
     Project* _cProject;
     Task* _mTask;
+    Sprint* _cSprint;
     
     BOOL _status;
     
@@ -71,6 +73,7 @@
 @property (nonatomic) BOOL status;
 @property (nonatomic, strong) Task* mTask;
 @property (nonatomic, strong) Project* cProject;
+@property (nonatomic, strong) Sprint* cSprint;
 @property (nonatomic, weak) UILabel* labelTitle;
 @property (nonatomic, weak) UILabel* labelDescription;
 @property (nonatomic, weak) UILabel* labelDifficulty;
