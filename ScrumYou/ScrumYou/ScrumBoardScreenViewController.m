@@ -80,7 +80,7 @@
         accountSettingsVC = [[AccountSettingsScreenViewController alloc] init];
         addTaskVC = [[AddTaskScreenViewController alloc] init];
         
-        self.id_project = @"54";
+        //self.id_project = @"54";
     }
     
     return self;
@@ -169,34 +169,80 @@
 }
 
 - (void) initializeDictionarys:(NSArray*)tasks andSprint:(NSArray*)sprints {
+
+//    for (Sprint* sprint in sprints) {
+//        
+//        NSLog(@"SPRINT ID %@", sprint.id_sprint);
+//        
+//        arrayTodo = [[NSMutableArray alloc] init];
+//        arrayProgress = [[NSMutableArray alloc] init];
+//        arrayDone = [[NSMutableArray alloc] init];
+//        
+//        for (NSNumber* idT in [sprint valueForKey:@"id_listTasks"]) {
+//            for (Task* t in tasks) {
+//                if ([t.id_task isEqual:idT]) {
+//                    if ([[t valueForKey:@"status"]  isEqual: @"A faire"]) {
+//                        [arrayTodo addObject:t];
+//                        [tasks_array_todo setObject:arrayTodo forKey:sprint.title];
+//                    } else if ([[t valueForKey:@"status"] isEqual:@"En cours"]) {
+//                        [arrayProgress addObject:t];
+//                        [tasks_array_progress setObject:arrayProgress forKey:sprint.title];
+//                    } else {
+//                        [arrayDone addObject:t];
+//                        [tasks_array_done setObject:arrayDone forKey:sprint.title];
+//                    }
+//                }
+//            }
+//        }
+//    }
     
-    for (Sprint* sprint in sprints) {
-    
+    for (int i = (int)sprints.count-1; i >= 0; i--) {
+        NSLog(@"SPRINT ID %@", [sprints[i] valueForKey:@"id_sprint"]);
+        
         arrayTodo = [[NSMutableArray alloc] init];
         arrayProgress = [[NSMutableArray alloc] init];
         arrayDone = [[NSMutableArray alloc] init];
         
-        for (NSNumber* idT in [sprint valueForKey:@"id_listTasks"]) {
+        for (NSNumber* idT in [sprints[i] valueForKey:@"id_listTasks"]) {
             for (Task* t in tasks) {
                 if ([t.id_task isEqual:idT]) {
-                    if ([[t valueForKey:@"status"]  isEqual: @"A faire"]) {
+                    if ([[t valueForKey:@"status"] isEqual: @"A faire"]) {
                         [arrayTodo addObject:t];
-                        [tasks_array_todo setObject:arrayTodo forKey:sprint.title];
+                        [tasks_array_todo setObject:arrayTodo forKey:[sprints[i] valueForKey:@"title"]];
                     } else if ([[t valueForKey:@"status"] isEqual:@"En cours"]) {
                         [arrayProgress addObject:t];
-                        [tasks_array_progress setObject:arrayProgress forKey:sprint.title];
+                        [tasks_array_progress setObject:arrayProgress forKey:[sprints[i] valueForKey:@"title"]];
                     } else {
                         [arrayDone addObject:t];
-                        [tasks_array_done setObject:arrayDone forKey:sprint.title];
+                        [tasks_array_done setObject:arrayDone forKey:[sprints[i] valueForKey:@"title"]];
                     }
                 }
             }
         }
+        
+        if (arrayTodo.count == 0) {
+            Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:@"" businessValue:@"" duration:@"" status:@"" id_creator:@"" id_members:nil];
+            NSLog(@"empty task %@", emptyTask.title);
+            [arrayTodo addObject:emptyTask];
+            [tasks_array_todo setObject:arrayTodo forKey:[sprints[i] valueForKey:@"title"]];
+        }
+        
+        if (arrayProgress.count == 0) {
+            Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:@"" businessValue:@"" duration:@"" status:@"" id_creator:@"" id_members:nil];
+            NSLog(@"empty task %@", emptyTask.title);
+            [arrayProgress addObject:emptyTask];
+            [tasks_array_progress setObject:arrayProgress forKey:[sprints[i] valueForKey:@"title"]];
+        }
+        
+        if (arrayDone.count == 0) {
+            Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:@"" businessValue:@"" duration:@"" status:@"" id_creator:@"" id_members:nil];
+            NSLog(@"empty task %@", emptyTask.title);
+            [arrayDone addObject:emptyTask];
+            [tasks_array_done setObject:arrayDone forKey:[sprints[i] valueForKey:@"title"]];
+        }
+
     }
-//    
-//    NSLog(@"task todo %@", tasks_array_todo);
-//    NSLog(@"task progress %@", tasks_array_progress);
-//    NSLog(@"task done %@", tasks_array_done);
+    
 }
 
 #pragma mark - Page View Controller Data Source
@@ -301,6 +347,10 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTask)];
     addButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
     self.navigationItem.rightBarButtonItem = addButton;
+    
+    UIImage *settings = [[UIImage imageNamed:@"settings.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:settings style:UIBarButtonItemStylePlain target:self action:@selector(settingsProject)];
+    self.navigationItem.rightBarButtonItem = settingsButton;
 }
 
 /*

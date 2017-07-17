@@ -64,6 +64,7 @@
 @synthesize status = _status;
 @synthesize mTask = _mTask;
 @synthesize cProject = _cProject;
+@synthesize cSprint = _cSprint;
 @synthesize labelTitle = _labelTitle;
 @synthesize labelDescription = _labelDescription;
 @synthesize labelCost = _labelCost;
@@ -257,6 +258,36 @@
     
 }
 
+- (IBAction)deleteTask:(id)sender {
+    
+    newTask.id_task = self.id_task;
+    
+    NSLog(@"SPR %@", self.cSprint.id_sprint);
+    
+    [Tasks deleteTaskWithId:[NSString stringWithFormat:@"%@", newTask.id_task] andIdSprint:[NSString stringWithFormat:@"%@", self.cSprint.id_sprint] callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"DELETE TASK SUCCESS");
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Supression réussie" message:@"Votre tâche a été supprimée." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
+                    scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", self.cProject.id_project];
+                    [self.navigationController pushViewController:scrumBoardVC animated:YES];
+                        
+                }];
+                    
+                [alert addAction:defaultAction];
+                [self presentViewController:alert animated:YES completion:nil];
+                    
+            });
+        }
+    }];
+    
+}
+
+
 /*
  *  SPRINTS VIEW
  */
@@ -296,7 +327,17 @@
     } else {
         [self finalValidationTask];
     }
+    
+    NSLog(@"id task %@", self.id_task);
+    
     NSMutableArray* list_task = [[NSMutableArray alloc] initWithArray:spr.id_listTasks];
+    
+    for (int i = 0; i < list_task.count; i++) {
+        if (list_task[i] == newTask.id_task) {
+            [list_task removeObjectAtIndex:i];
+        }
+    }
+    
     [list_task addObject:newTask.id_task];
     spr.id_listTasks = list_task;
     
