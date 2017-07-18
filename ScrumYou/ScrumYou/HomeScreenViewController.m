@@ -29,7 +29,7 @@
 }
 
 - (void) designPage {
-    
+    self.navigationItem.hidesBackButton = YES;
 }
 
 - (IBAction)connectionPage:(id)sender {

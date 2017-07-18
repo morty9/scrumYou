@@ -73,6 +73,7 @@
         
         addProjectButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addProject:)];
         self.navigationItem.rightBarButtonItem = addProjectButton;
+        addProjectButton.tintColor = [UIColor colorWithRed:0.15 green:0.22 blue:0.26 alpha:1.0];
         
         
         get_projects = [[NSMutableArray<Project*> alloc] init];
