@@ -47,7 +47,6 @@
     
     [self designPage];
     
-    
     NSLog(@"dico %@", self.dictionary_section);
     NSLog(@"sprint %@", self.array_sprint);
     
@@ -84,6 +83,9 @@
     [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     [self.searchController.searchBar setHidden:true];
+    
+    //self.menuSprints.backgroundColor = [UIColor colorWithRed:0.69 green:0.62 blue:0.77 alpha:1.0];
+    self.menuSprints.tintColor = [UIColor colorWithRed:0.69 green:0.62 blue:0.77 alpha:1.0];
     
     [self.scrumBoardCollectionView registerNib:[UINib nibWithNibName:@"ScrumBoardCell" bundle:nil]forCellWithReuseIdentifier:@"SBCell"];
     
@@ -155,6 +157,16 @@ static NSString* cellId = @"SBCell";
         cell.userInteractionEnabled = false;
     } else {
         cell.userInteractionEnabled = true;
+    }
+    
+    if ([task.status isEqualToString:@"A faire"]) {
+        cell.backgroundColor = [UIColor colorWithRed:0.86 green:0.28 blue:0.31 alpha:1.0];
+    } else if ([task.status isEqualToString:@"En cours"]) {
+        cell.backgroundColor = [UIColor colorWithRed:0.99 green:0.52 blue:0.18 alpha:1.0];
+    } else if ([task.status isEqualToString:@"Finies"]) {
+        cell.backgroundColor = [UIColor colorWithRed:0.18 green:0.64 blue:0.15 alpha:1.0];
+    } else {
+        cell.backgroundColor = [UIColor colorWithRed:0.77 green:0.77 blue:0.77 alpha:1.0];
     }
     
     cell.layer.cornerRadius = 6;
