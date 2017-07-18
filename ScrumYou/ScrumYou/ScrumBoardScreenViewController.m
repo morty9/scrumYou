@@ -9,6 +9,7 @@
 #import "ScrumBoardScreenViewController.h"
 #import "UserHomeScreenViewController.h"
 #import "AccountSettingsScreenViewController.h"
+#import "ProjectSettingsScreenViewController.h"
 #import "AddTaskScreenViewController.h"
 #import "PageContentViewController.h"
 #import "PageViewController.h"
@@ -26,6 +27,8 @@
 
 - (void) addTask;
 
+- (void) settingsProject;
+
 @end
 
 @implementation ScrumBoardScreenViewController {
@@ -34,6 +37,7 @@
     PageContentViewController *pageContentVC;
     AccountSettingsScreenViewController* accountSettingsVC;
     AddTaskScreenViewController* addTaskVC;
+    ProjectSettingsScreenViewController* projectSettingsVC;
     
     CrudTasks* TasksCrud;
     CrudProjects* ProjectsCrud;
@@ -79,8 +83,7 @@
         userHomeVC = [[UserHomeScreenViewController alloc] init];
         accountSettingsVC = [[AccountSettingsScreenViewController alloc] init];
         addTaskVC = [[AddTaskScreenViewController alloc] init];
-        
-        //self.id_project = @"54";
+        projectSettingsVC = [[ProjectSettingsScreenViewController alloc] init];
     }
     
     return self;
@@ -90,17 +93,6 @@
     [super viewDidLoad];
     
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
-    
-    //UIBarButtonItem *newBackButton =
-//    [[UIBarButtonItem alloc] initWithTitle:@"TEST"
-//                                     style:UIBarButtonItemStylePlain
-//                                    target:nil
-//                                    action:nil];
-//    [[self navigationItem] setBackBarButtonItem:newBackButton];
-//    //[newBackButton release];
-    //self.navigationController.navigationBar.backItem
-    //UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:nil];
-    //self.navigationController.navigationItem.backBarButtonItem = @" ";
     
     NSLog(@"VIEW DID LOAD");
     
@@ -121,11 +113,15 @@
 
     // Create page view controllerinstantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController = [[PageViewController alloc] initWithNibName:@"PageViewController" bundle:nil];
+    self.pageViewController = [[PageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.dataSource = self;
     
     PageContentViewController *startingViewController = [self viewControllerAtIndex:0];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    
+    
+    
     
     // Change the size of page view controller
     self.pageViewController.view.frame = CGRectMake(0, 30, self.view.frame.size.width, self.view.frame.size.height - 75);
@@ -198,7 +194,6 @@
 //            }
 //        }
 //    }
-    
     for (int i = (int)sprints.count-1; i >= 0; i--) {
         NSLog(@"SPRINT ID %@", [sprints[i] valueForKey:@"id_sprint"]);
         
@@ -335,8 +330,13 @@
 }
 
 - (IBAction)userSettings:(id)sender {
-    //accountSettingsVC.token = self.token;
+    accountSettingsVC.token = self.token;
     [self.navigationController pushViewController:accountSettingsVC animated:YES];
+}
+
+- (void) settingsProject {
+    projectSettingsVC.token_dic = _token;
+    [self.navigationController pushViewController:projectSettingsVC animated:YES];
 }
 
 - (void) addTask {
@@ -349,13 +349,16 @@
 - (void) designPage {
     self.navigationItem.title = project.title;
     
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
+    
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTask)];
     addButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
-    self.navigationItem.rightBarButtonItem = addButton;
     
     UIImage *settings = [[UIImage imageNamed:@"settings.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:settings style:UIBarButtonItemStylePlain target:self action:@selector(settingsProject)];
-    self.navigationItem.rightBarButtonItem = settingsButton;
+    
+    [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:settingsButton, addButton, nil]];
 }
 
 /*

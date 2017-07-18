@@ -26,16 +26,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    UIPageControl *pageControl = [UIPageControl appearance];
+    pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
+    pageControl.currentPageIndicatorTintColor = [UIColor darkGrayColor];
+    pageControl.backgroundColor = [UIColor clearColor];
+    
     LoginScreenViewController* tvb = [[LoginScreenViewController alloc] init];
     UIWindow* w = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     w.rootViewController = [[UINavigationController alloc] initWithRootViewController:tvb];
     [w makeKeyAndVisible];
     self.window = w;
-    
-    UIPageControl *pageControl = [UIPageControl appearance];
-    pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-    pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
-    pageControl.backgroundColor = [UIColor blackColor];
     
     return YES;
 }

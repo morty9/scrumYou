@@ -41,10 +41,10 @@
                     </constraints>
                 </pickerView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9J4-fU-T58">
-                    <rect key="frame" x="16" y="170" width="343" height="422"/>
+                    <rect key="frame" x="16" y="170" width="343" height="420"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="UaZ-9x-Yac">
-                            <rect key="frame" x="0.0" y="0.0" width="343" height="422"/>
+                            <rect key="frame" x="0.0" y="0.0" width="343" height="420"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="343" id="bNJ-Zt-wAi"/>
@@ -61,7 +61,7 @@
                     <constraints>
                         <constraint firstItem="UaZ-9x-Yac" firstAttribute="top" secondItem="9J4-fU-T58" secondAttribute="top" id="3go-rm-fip"/>
                         <constraint firstAttribute="bottom" secondItem="UaZ-9x-Yac" secondAttribute="bottom" id="8TD-tj-pG1"/>
-                        <constraint firstAttribute="height" constant="422" id="FD4-c0-dh4"/>
+                        <constraint firstAttribute="height" constant="420" id="FD4-c0-dh4"/>
                         <constraint firstItem="UaZ-9x-Yac" firstAttribute="leading" secondItem="9J4-fU-T58" secondAttribute="leading" id="Teh-lE-nQL"/>
                         <constraint firstAttribute="width" constant="343" id="cZP-57-Y9s"/>
                         <constraint firstAttribute="trailing" secondItem="UaZ-9x-Yac" secondAttribute="trailing" id="dBb-8t-dOL"/>
