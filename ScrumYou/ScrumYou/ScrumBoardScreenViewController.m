@@ -107,6 +107,7 @@
     [ProjectsCrud getProjectById:self.id_project callback:^(NSError *error, BOOL success) {
         if (success) {
             project = ProjectsCrud.project;
+            NSLog(@"PROJECT %@", project);
             self.navigationItem.title = project.title;
             [self getSprintsByProject:project.id_sprints];
             [self getTasksBySprint:get_sprints];
@@ -156,13 +157,15 @@
 - (void) getTasksBySprint:(NSMutableArray*)get_sprint {
     
     for (Sprint* sprint in get_sprint) {
-        for (NSNumber* id_tasks in [sprint valueForKey:@"id_listTasks"]) {
-            NSString* idT = [NSString stringWithFormat:@"%@", id_tasks];
-            [TasksCrud getTaskById:idT callback:^(NSError *error, BOOL success) {
-                if (success) {
-                    [get_tasks addObject:TasksCrud.task];
-                }
-            }];
+        if (![sprint.id_listTasks isKindOfClass:[NSNull class]]) {
+            for (NSNumber* id_tasks in sprint.id_listTasks) {
+                NSString* idT = [NSString stringWithFormat:@"%@", id_tasks];
+                [TasksCrud getTaskById:idT callback:^(NSError *error, BOOL success) {
+                    if (success) {
+                        [get_tasks addObject:TasksCrud.task];
+                    }
+                }];
+            }
         }
     }
     
@@ -203,18 +206,20 @@
         arrayProgress = [[NSMutableArray alloc] init];
         arrayDone = [[NSMutableArray alloc] init];
         
-        for (NSNumber* idT in [sprints[i] valueForKey:@"id_listTasks"]) {
-            for (Task* t in tasks) {
-                if ([t.id_task isEqual:idT]) {
-                    if ([[t valueForKey:@"status"] isEqual: @"A faire"]) {
-                        [arrayTodo addObject:t];
-                        [tasks_array_todo setObject:arrayTodo forKey:[sprints[i] valueForKey:@"title"]];
-                    } else if ([[t valueForKey:@"status"] isEqual:@"En cours"]) {
-                        [arrayProgress addObject:t];
-                        [tasks_array_progress setObject:arrayProgress forKey:[sprints[i] valueForKey:@"title"]];
-                    } else {
-                        [arrayDone addObject:t];
-                        [tasks_array_done setObject:arrayDone forKey:[sprints[i] valueForKey:@"title"]];
+        if (![[sprints[i] valueForKey:@"id_listTasks"] isKindOfClass:[NSNull class]]) {
+            for (NSNumber* idT in [sprints[i] valueForKey:@"id_listTasks"]) {
+                for (Task* t in tasks) {
+                    if ([t.id_task isEqual:idT]) {
+                        if ([[t valueForKey:@"status"] isEqual: @"A faire"]) {
+                            [arrayTodo addObject:t];
+                            [tasks_array_todo setObject:arrayTodo forKey:[sprints[i] valueForKey:@"title"]];
+                        } else if ([[t valueForKey:@"status"] isEqual:@"En cours"]) {
+                            [arrayProgress addObject:t];
+                            [tasks_array_progress setObject:arrayProgress forKey:[sprints[i] valueForKey:@"title"]];
+                        } else {
+                            [arrayDone addObject:t];
+                            [tasks_array_done setObject:arrayDone forKey:[sprints[i] valueForKey:@"title"]];
+                        }
                     }
                 }
             }

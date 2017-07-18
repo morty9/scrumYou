@@ -104,6 +104,8 @@
 **/
 - (IBAction)didTouchAddButton:(id)sender {
     
+    NSLog(@"token %@", _token_dic);
+    
     __unsafe_unretained typeof(self) weakSelf = self;
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
