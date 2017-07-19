@@ -91,6 +91,7 @@
     [membersTableView reloadData];
 }
 
+
 /**
  * Get users form database
  **/
@@ -296,12 +297,8 @@
     //navigation bar customization
     self.navigationItem.title = [NSString stringWithFormat:@"Ajouter un projet"];
     
-    UINavigationBar* bar = [self.navigationController navigationBar];
-    [bar setHidden:false];
-    
-//    UIImage *cancel = [[UIImage imageNamed:@"error.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:cancel style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton:)];
-//    self.navigationItem.leftBarButtonItem = cancelButton;
+    //UINavigationBar* bar = [self.navigationController navigationBar];
+    //[bar setHidden:false];
     
     //border projectName text field
     CALayer *borderProjectName = [CALayer layer];

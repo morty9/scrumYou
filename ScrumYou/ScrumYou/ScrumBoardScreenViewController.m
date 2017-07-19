@@ -59,6 +59,7 @@
 
 @synthesize id_project = _id_project;
 @synthesize token = _token;
+@synthesize comeUpdateTask = _comeUpdateTask;
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -80,7 +81,6 @@
         arrayProgress = [[NSMutableArray<Task*> alloc] init];
         arrayDone = [[NSMutableArray<Task*> alloc] init];
         
-        userHomeVC = [[UserHomeScreenViewController alloc] init];
         accountSettingsVC = [[AccountSettingsScreenViewController alloc] init];
         addTaskVC = [[AddTaskScreenViewController alloc] init];
         projectSettingsVC = [[ProjectSettingsScreenViewController alloc] init];
@@ -92,7 +92,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    //self.navigationController.interactivePopGestureRecognizer.delegate = self;
     
     NSLog(@"VIEW DID LOAD");
     
@@ -109,6 +109,8 @@
     
     [self designPage];
     
+    NSLog(@"USER TOKEN SB %@", _token);
+    
     _pageTitles = @[@"A faire", @"En cours", @"Finies"];
 
     // Create page view controllerinstantiateViewControllerWithIdentifier:@"PageViewController"];
@@ -119,9 +121,6 @@
     PageContentViewController *startingViewController = [self viewControllerAtIndex:0];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    
-    
-    
     
     // Change the size of page view controller
     self.pageViewController.view.frame = CGRectMake(0, 30, self.view.frame.size.width, self.view.frame.size.height - 75);
@@ -169,31 +168,6 @@
 
 - (void) initializeDictionarys:(NSArray*)tasks andSprint:(NSArray*)sprints {
 
-//    for (Sprint* sprint in sprints) {
-//        
-//        NSLog(@"SPRINT ID %@", sprint.id_sprint);
-//        
-//        arrayTodo = [[NSMutableArray alloc] init];
-//        arrayProgress = [[NSMutableArray alloc] init];
-//        arrayDone = [[NSMutableArray alloc] init];
-//        
-//        for (NSNumber* idT in [sprint valueForKey:@"id_listTasks"]) {
-//            for (Task* t in tasks) {
-//                if ([t.id_task isEqual:idT]) {
-//                    if ([[t valueForKey:@"status"]  isEqual: @"A faire"]) {
-//                        [arrayTodo addObject:t];
-//                        [tasks_array_todo setObject:arrayTodo forKey:sprint.title];
-//                    } else if ([[t valueForKey:@"status"] isEqual:@"En cours"]) {
-//                        [arrayProgress addObject:t];
-//                        [tasks_array_progress setObject:arrayProgress forKey:sprint.title];
-//                    } else {
-//                        [arrayDone addObject:t];
-//                        [tasks_array_done setObject:arrayDone forKey:sprint.title];
-//                    }
-//                }
-//            }
-//        }
-//    }
     for (int i = (int)sprints.count-1; i >= 0; i--) {
         NSLog(@"SPRINT ID %@", [sprints[i] valueForKey:@"id_sprint"]);
         
@@ -287,6 +261,7 @@
     pageContentVC.array_sprint = get_sprints;
     NSLog(@"CURRENT PROJECT %@", project);
     pageContentVC.current_project = project;
+    pageContentVC.token = self.token;
     if (index == 0) {
         pageContentVC.dictionary_section = tasks_array_todo;
         [pageContentVC.scrumBoardCollectionView reloadData];
@@ -318,6 +293,8 @@
  *  IBAction -> Back to user Home controller
  */
 - (IBAction)backToUserHome:(id)sender {
+    userHomeVC = [[UserHomeScreenViewController alloc] init];
+    userHomeVC.token = self.token;
     [self.navigationController pushViewController:userHomeVC animated:YES];
 }
 
@@ -347,7 +324,16 @@
 }
 
 - (void) designPage {
+    
     self.navigationItem.title = project.title;
+    
+    if (_comeUpdateTask == true) {
+        self.navigationItem.hidesBackButton = YES;
+        UIImage *back = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:back style:UIBarButtonItemStylePlain target:self action:@selector(backToUserHome:)];
+        self.navigationItem.leftBarButtonItem = newBackButton;
+        _comeUpdateTask = false;
+    }
     
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];

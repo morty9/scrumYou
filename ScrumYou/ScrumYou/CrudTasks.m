@@ -203,6 +203,8 @@
  */
 - (void) getTaskById:(NSString*)id_task callback:(void (^)(NSError *error, BOOL success))callback {
     
+    self.task = [[Task alloc] init];
+    
     NSURL *url = [NSURL URLWithString:[kTask_api stringByAppendingString:[@"/" stringByAppendingString:id_task]]];
     
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -296,12 +298,12 @@
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"PUT"];
     
-    NSDictionary<NSString*, NSString*> *jsonData = @{@"id_task" : id_task,
+    NSDictionary<NSString*, NSString*> *jsonData = @{@"id" : id_task,
                                                      @"title" : title,
                                                      @"description" : description,
                                                      @"difficulty" : difficulty,
                                                      @"priority" : priority,
-                                                     @"id_category" : id_category,
+                                                     @"category" : id_category,
                                                      @"businessValue" : businessValue,
                                                      @"duration" : duration,
                                                      @"status" : status,
@@ -331,7 +333,7 @@
             return;
         }
         
-        if ([jsonDict valueForKey:@"type"] != nil) {
+        if ([jsonDict valueForKey:@"type"] != nil && ![[jsonDict valueForKey:@"type"] isEqual: @"success"]) {
             _dict_error = jsonDict;
         }
         

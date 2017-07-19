@@ -40,6 +40,7 @@
 @synthesize searchController = _searchController;
 @synthesize searchBar = _searchBar;
 @synthesize current_project = _current_project;
+@synthesize token = _token;
 
 - (void)viewDidLoad {
     
@@ -84,9 +85,6 @@
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     [self.searchController.searchBar setHidden:true];
     
-    //self.menuSprints.backgroundColor = [UIColor colorWithRed:0.69 green:0.62 blue:0.77 alpha:1.0];
-    self.menuSprints.tintColor = [UIColor colorWithRed:0.69 green:0.62 blue:0.77 alpha:1.0];
-    
     [self.scrumBoardCollectionView registerNib:[UINib nibWithNibName:@"ScrumBoardCell" bundle:nil]forCellWithReuseIdentifier:@"SBCell"];
     
     [self.scrumBoardCollectionView reloadData];
@@ -108,6 +106,7 @@
     }
     return [keys objectAtIndex:row];
 }
+
 
 - (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     
@@ -204,6 +203,7 @@ static NSString* cellId = @"SBCell";
     addTaskVC.cProject = self.current_project;
     addTaskVC.cSprint = current_sprint;
     addTaskVC.sprintsByProject = self.array_sprint;
+    addTaskVC.token_dic = self.token;
     [self.navigationController pushViewController:addTaskVC animated:YES];
 }
 
@@ -211,7 +211,8 @@ static NSString* cellId = @"SBCell";
 // SEARCHBAR
 
 - (void) initializeSearchController {
-    [self.searchController.searchBar setHidden:false];
+    
+    self.searchController.searchBar.hidden = false;
     
     if (self.scrumBoardCollectionView.frame.origin.y == 0) {
         self.scrumBoardCollectionView.frame = CGRectMake(0, 40, self.taskView.frame.size.width, self.scrumBoardCollectionView.frame.size.height - 40);
@@ -252,15 +253,5 @@ static NSString* cellId = @"SBCell";
     self.label.layer.masksToBounds = YES;
     
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
