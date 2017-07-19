@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ScrumBoardScreenViewController : UIViewController {
-    
     NSString* _id_project;
     NSDictionary* _token;
 }

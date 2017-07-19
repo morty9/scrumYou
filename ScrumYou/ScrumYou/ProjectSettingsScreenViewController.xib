@@ -19,6 +19,7 @@
                 <outlet property="nameTextField" destination="utE-R5-fuR" id="bc6-Wj-KyK"/>
                 <outlet property="sprintEndDate" destination="G0J-Ca-cbd" id="w4Y-RB-cFy"/>
                 <outlet property="sprintNameTextField" destination="oDC-p7-JfW" id="PTq-8T-DKb"/>
+                <outlet property="validateButton" destination="AY4-oD-6JJ" id="skx-Xs-loR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
