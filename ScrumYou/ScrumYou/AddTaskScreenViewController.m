@@ -8,6 +8,7 @@
 
 #import "AddTaskScreenViewController.h"
 #import "ScrumBoardScreenViewController.h"
+#import "UserHomeScreenViewController.h"
 #import "APIKeys.h"
 #import "CrudUsers.h"
 #import "CrudTasks.h"
@@ -17,13 +18,17 @@
 
 - (void) editTask;
 
+- (void) backToUserHome;
+
 @end
 
 @implementation AddTaskScreenViewController {
     ScrumBoardScreenViewController* scrumBoardVC;
+    UserHomeScreenViewController* userHomeVC;
     
     NSMutableArray<User*>* get_users;
     NSMutableArray<Sprint*>* get_sprints;
+    NSMutableArray<User*>* users_in;
     
     NSMutableArray* members;
     NSMutableArray* ids;
@@ -38,6 +43,7 @@
     NSNumber* ids_sprint;
     NSInteger priority;
     NSInteger nMember;
+    NSInteger nMemberTask;
     NSInteger category;
     
     Task* newTask;
@@ -85,6 +91,7 @@
         
         get_users = [[NSMutableArray<User*> alloc] init];
         get_sprints = [[NSMutableArray<Sprint*> alloc] init];
+        users_in = [[NSMutableArray<User*> alloc] init];
         
         members = [[NSMutableArray alloc] init];
         ids = [[NSMutableArray alloc] init];
@@ -106,6 +113,7 @@
     membersTableView.dataSource = self;
     
     [self getUsers];
+    [self getUserByTask];
     
     pickerStatus.delegate = self;
     pickerStatus.dataSource = self;
@@ -131,6 +139,7 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    //[super viewDidLoad];
     [self designPage];
 }
 
@@ -219,6 +228,8 @@
     
     NSLog(@"STATUS %@", statusTask);
     
+    [self getIdUser];
+    
     newTask.id_task = self.id_task;
     
     [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids callback:^(NSError *error, BOOL success) {
@@ -243,7 +254,9 @@
                     
                     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                         scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
+                        userHomeVC = [[UserHomeScreenViewController alloc] init];
                         scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", self.cProject.id_project];
+                        scrumBoardVC.comeUpdateTask = true;
                         [self.navigationController pushViewController:scrumBoardVC animated:YES];
                         
                     }];
@@ -257,6 +270,7 @@
     }];
     
 }
+
 
 - (IBAction)deleteTask:(id)sender {
     
@@ -287,10 +301,7 @@
     
 }
 
-
-/*
- *  SPRINTS VIEW
- */
+ // SPRINTS VIEW
 
 /*
  * Show sprint view
@@ -363,7 +374,6 @@
  * Show add members view
 **/
 - (IBAction)showAddMembersView:(id)sender {
-    //[self getUsername];
     [membersView setHidden:false];
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
@@ -372,13 +382,13 @@
     [self.view insertSubview:blurEffectView belowSubview:membersView];
 }
 
+
 /**
  * Get users form database
  **/
 - (void) getUsers {
     [Users getUsers:^(NSError *error, BOOL success) {
         if (success) {
-            NSLog(@"SUCCESS GET USERS");
             get_users = Users.userList;
             [membersTableView reloadData];
         }
@@ -390,6 +400,27 @@
         return searchResultsUser.count;
     }else {
         return [get_users count];
+    }
+}
+
+
+/*
+ *  VOID -> get all users link to the current project
+ *  Call getUserById web service
+ */
+- (void) getUserByTask {
+    
+    for (NSNumber* membersArray in self.mTask.id_members) {
+        NSString* result = [NSString stringWithFormat:@"%@",membersArray];
+        [Users getUserById:result callback:^(NSError *error, BOOL success) {
+            if (success) {
+                NSLog(@"SUCCESS USERS IN");
+                [users_in addObject:Users.user];
+                nMemberTask = users_in.count;
+                self.taskMembersTextField.text = [@(nMemberTask)stringValue];
+            }
+            [membersTableView reloadData];
+        }];
     }
 }
 
@@ -410,10 +441,21 @@
         username = [get_users objectAtIndex:indexPath.row];
     }
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", username.fullname];
-
+    for (User* user in users_in) {
+        if ([user.fullname isEqualToString:[get_users objectAtIndex:indexPath.row].fullname]) {
+            cell.textLabel.text = [NSString stringWithFormat:@"%@", username.fullname];
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            nMember+=1;
+            [members addObject:user.fullname];
+        }else {
+            cell.textLabel.text = [NSString stringWithFormat:@"%@", username.fullname];
+        }
+        
+    }
+    
     return cell;
 }
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [membersTableView cellForRowAtIndexPath:indexPath];
@@ -484,6 +526,7 @@
         [self.searchController setActive:NO];
     }
     [self getIdUser];
+    NSLog(@"MEMBERS %@", members);
 }
 
 /**
@@ -528,6 +571,9 @@
 - (void) designPage {
     
     //navigation bar customization
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
+    
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editTask)];
     editButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
     self.navigationItem.rightBarButtonItem = editButton;
@@ -542,6 +588,9 @@
         
     } else {
         self.navigationItem.title = self.mTask.title;
+        
+        buttonModify.hidden = YES;
+        buttonDelete.hidden = YES;
         
         self.taskTitleTextField.enabled = false;
         self.taskCostTextField.enabled = false;
@@ -565,6 +614,7 @@
         self.taskDurationTextField.text = [NSString stringWithFormat:@"%@",self.mTask.duration];
         [self.categorySegmentation setSelectedSegmentIndex:[self.mTask.id_category integerValue]];
         [self.prioritySegmentation setSelectedSegmentIndex:[self.mTask.priority integerValue]-1];
+        
     }
     
     //border taskTitle text field
@@ -623,6 +673,8 @@
     buttonMembersView.enabled = true;
     pickerStatus.userInteractionEnabled = true;
     stepperDuration.enabled = true;
+    
+    self.status = 0;
 }
 
 

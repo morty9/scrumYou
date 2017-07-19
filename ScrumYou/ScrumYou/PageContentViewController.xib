@@ -34,9 +34,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <pickerView contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="7Cy-L6-QxZ">
-                    <rect key="frame" x="17" y="100" width="343" height="54"/>
+                    <rect key="frame" x="17" y="84" width="343" height="77"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="54" id="sJZ-PK-V4S"/>
+                        <constraint firstAttribute="height" constant="77" id="sJZ-PK-V4S"/>
                         <constraint firstAttribute="width" constant="343" id="vbM-QW-7oJ"/>
                     </constraints>
                 </pickerView>
@@ -71,8 +71,8 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="oUx-vM-wYp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="54" id="0eO-N1-XDG"/>
-                <constraint firstItem="9J4-fU-T58" firstAttribute="top" secondItem="7Cy-L6-QxZ" secondAttribute="bottom" constant="16" id="2ok-aE-3gV"/>
-                <constraint firstItem="7Cy-L6-QxZ" firstAttribute="top" secondItem="oUx-vM-wYp" secondAttribute="bottom" constant="13" id="CqZ-z4-69j"/>
+                <constraint firstItem="9J4-fU-T58" firstAttribute="top" secondItem="7Cy-L6-QxZ" secondAttribute="bottom" constant="9" id="2ok-aE-3gV"/>
+                <constraint firstItem="7Cy-L6-QxZ" firstAttribute="top" secondItem="oUx-vM-wYp" secondAttribute="bottom" constant="-3" id="CqZ-z4-69j"/>
                 <constraint firstAttribute="trailing" secondItem="9J4-fU-T58" secondAttribute="trailing" constant="16" id="I06-8V-6qC"/>
                 <constraint firstItem="oUx-vM-wYp" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="hlZ-ws-bte"/>
                 <constraint firstAttribute="trailing" secondItem="7Cy-L6-QxZ" secondAttribute="trailing" constant="15" id="w1J-94-sAm"/>

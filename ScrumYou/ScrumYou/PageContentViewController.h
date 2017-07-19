@@ -16,6 +16,7 @@
     NSArray<Task*>* _array_section;
     NSArray<Sprint*>* _array_sprint;
     Project* _current_project;
+    NSDictionary* _token;
 }
 
 @property (nonatomic, strong) NSDictionary* dictionary_section;
@@ -28,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIPickerView *menuSprints;
 @property (nonatomic, strong) Project* current_project;
+@property (nonatomic, strong) NSDictionary* token;
 @property NSUInteger pageIndex;
 @property NSString *txtTitle;
 
