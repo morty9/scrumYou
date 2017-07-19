@@ -313,6 +313,7 @@
 
 - (void) settingsProject {
     projectSettingsVC.token_dic = _token;
+    projectSettingsVC.currentProject = project;
     [self.navigationController pushViewController:projectSettingsVC animated:YES];
 }
 

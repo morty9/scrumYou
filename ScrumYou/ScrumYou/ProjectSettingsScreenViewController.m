@@ -16,13 +16,10 @@
 
 @interface ProjectSettingsScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating>
 
-- (void) cancelButton;
 
 @end
 
 @implementation ProjectSettingsScreenViewController {
-    
-    Project* projects;
     
     NSMutableArray<User*>* get_users;
     NSMutableArray<User*>* users_in;
@@ -45,9 +42,15 @@
     CrudProjects* ProjectsCrud;
     CrudSprints* SprintsCrud;
     
+    UIBarButtonItem* updateButtonEdit;
+    UIBarButtonItem* updateButtonCancel;
+    
+    bool hasClickedOnModifyButton;
+    
 }
 
 @synthesize token_dic = _token_dic;
+@synthesize currentProject = _currentProject;
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -75,12 +78,16 @@
     
     [self designPage];
     
+    hasClickedOnModifyButton = NO;
+    
+    updateButtonEdit = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(enableTextField:)];
+    self.navigationItem.rightBarButtonItem = updateButtonEdit;
+    updateButtonCancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(enableTextField:)];
+    
     get_users = [[NSMutableArray<User*> alloc] init];
     users_in = [[NSMutableArray<User*> alloc] init];
     members = [[NSMutableArray<User*> alloc] init];
     ids = [[NSMutableArray alloc] init];
-    
-    currentDate = [NSDate date];
     
     nMember = 0;
     
@@ -90,16 +97,8 @@
         }
     }];
     
-    idProject = @"60";
-    
-    [ProjectsCrud getProjectById:idProject callback:^(NSError *error, BOOL success) {
-        if (success) {
-            NSLog(@"SUCCESS PROJECT");
-            projects = ProjectsCrud.project;
-            [self displayTitleProject];
-            [self getUserByProject];
-        }
-    }];
+    [self displayTitleProject:self.currentProject];
+    [self getUserByProject];
     
     [membersTableView reloadData];
 }
@@ -107,10 +106,10 @@
 /*
  *  VOID -> dipslay the title of the current project in the name text field
  */
-- (void) displayTitleProject {
+- (void) displayTitleProject:(Project*)curProject {
 
-    nameTextField.text = projects.title;
-    self.navigationItem.title = projects.title;
+    nameTextField.text = curProject.title;
+    self.navigationItem.title = curProject.title;
 }
 
 /*
@@ -119,7 +118,7 @@
  */
 - (void) getUserByProject {
     
-    for (NSNumber* membersArray in projects.id_members) {
+    for (NSNumber* membersArray in self.currentProject.id_members) {
         NSString* result = [@"/" stringByAppendingString:[NSString stringWithFormat:@"%@",[membersArray stringValue]]];
         [UsersCrud getUserById:result callback:^(NSError *error, BOOL success) {
             if (success) {
@@ -283,9 +282,15 @@
 
 - (IBAction)addSprint:(id)sender {
     
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    currentDate = [NSDate date];
     endDate = [sprintEndDate date];
+    NSString* end_dateString = [formatter stringFromDate:endDate];
+    NSString* current_dateString = [formatter stringFromDate:currentDate];
+
     
-    [SprintsCrud addSprintTitle:sprintNameTextField.text beginningDate:currentDate endDate:endDate callback:^(NSError *error, BOOL success) {
+    [SprintsCrud addSprintTitle:sprintNameTextField.text beginningDate:current_dateString endDate:end_dateString callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS ADD SPRINT");
         }
@@ -293,6 +298,32 @@
     
     sprintNameTextField.text = @"";
     endDate = currentDate;
+}
+
+
+
+// Modify a project
+
+- (void) enableTextField:(id)sender {
+    if (hasClickedOnModifyButton == NO) {
+        hasClickedOnModifyButton = YES;
+        validateButton.hidden = false;
+        nameTextField.enabled = true;
+        nameTextField.textColor = [UIColor lightGrayColor];
+        
+        self.navigationItem.rightBarButtonItem = updateButtonCancel;
+        
+    } else {
+        hasClickedOnModifyButton = NO;
+        validateButton.hidden = true;
+        nameTextField.enabled = false;
+        nameTextField.textColor = [UIColor blackColor];
+        nameTextField.text = self.currentProject.title;
+        
+        self.navigationItem.rightBarButtonItem = updateButtonEdit;
+        
+    }
+    
 }
 
 /**
@@ -346,16 +377,10 @@
 }*/
 
 
-- (void) cancelButton {
-    
-    
-}
-
 - (void) designPage {
     
-    UIImage *cancel = [[UIImage imageNamed:@"error.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:cancel style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton)];
-    self.navigationItem.leftBarButtonItem = cancelButton;
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
 
     //border name project text field
     CALayer *borderName = [CALayer layer];

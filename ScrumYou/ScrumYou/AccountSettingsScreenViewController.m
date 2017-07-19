@@ -61,8 +61,6 @@
     self.navigationItem.rightBarButtonItem = updateButtonEdit;
     updateButtonCancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(enableTextField:)];
     
-    
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         [UsersCrud getUserById:userId callback:^(NSError *error, BOOL success) {
             if (success) {
