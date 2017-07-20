@@ -28,28 +28,23 @@
                         <constraint firstAttribute="height" constant="44" id="a0b-ba-A7b"/>
                     </constraints>
                     <items>
-                        <barButtonItem enabled="NO" width="10" id="2Hp-8X-0ZR"/>
-                        <barButtonItem image="mini-logo-toolbar3" width="70" id="OYI-DS-b9L">
+                        <barButtonItem enabled="NO" width="40" id="2Hp-8X-0ZR"/>
+                        <barButtonItem image="mini-logo-toolbar3" width="75" id="OYI-DS-b9L">
                             <connections>
                                 <action selector="backToUserHome:" destination="-1" id="Csr-ye-Nhl"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem image="search-toolbar" width="65" id="a9L-7G-U4N">
+                        <barButtonItem image="search-toolbar" width="75" id="a9L-7G-U4N">
                             <connections>
                                 <action selector="searchTask:" destination="-1" id="n6z-99-ken"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem image="chat-toolbar" width="65" id="lOh-IC-0cZ">
-                            <connections>
-                                <action selector="chatView:" destination="-1" id="MMN-3e-0aF"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem image="profil-1" width="65" id="BUk-fO-rUR">
+                        <barButtonItem image="profil-1" width="75" id="BUk-fO-rUR">
                             <connections>
                                 <action selector="userSettings:" destination="-1" id="feD-7R-MHc"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem enabled="NO" width="10" id="bxm-Kr-Fe0"/>
+                        <barButtonItem enabled="NO" width="40" id="bxm-Kr-Fe0"/>
                     </items>
                     <color key="tintColor" red="0.14117647059999999" green="0.2156862745" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
                 </toolbar>
@@ -64,7 +59,6 @@
         </view>
     </objects>
     <resources>
-        <image name="chat-toolbar" width="25" height="25"/>
         <image name="mini-logo-toolbar3" width="27" height="27"/>
         <image name="profil-1" width="25" height="25"/>
         <image name="search-toolbar" width="25" height="25"/>
