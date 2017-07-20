@@ -26,6 +26,8 @@
     NSArray* searchResults;
     NSArray* keys;
     
+    NSDate* currentDate;
+    
     Task* current_task;
     Sprint* current_sprint;
     
@@ -157,6 +159,11 @@ static NSString* cellId = @"SBCell";
     } else {
         cell.userInteractionEnabled = true;
     }
+    
+    /*NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    currentDate = [NSDate date];
+    NSString* current_dateString = [formatter stringFromDate:currentDate];*/
     
     if ([task.status isEqualToString:@"A faire"]) {
         cell.backgroundColor = [UIColor colorWithRed:0.86 green:0.28 blue:0.31 alpha:1.0];

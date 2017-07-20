@@ -49,6 +49,8 @@
     Task* newTask;
     Sprint* spr;
     
+    NSDate* currentDate;
+    
     CrudUsers* Users;
     CrudTasks* Tasks;
     CrudSprints* Sprints;
@@ -226,13 +228,24 @@
 
 - (void) ValidateSprintandModifyTask {
     
+    NSString* current_dateString;
+    
     NSLog(@"STATUS %@", statusTask);
     
     [self getIdUser];
     
     newTask.id_task = self.id_task;
     
-    [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids callback:^(NSError *error, BOOL success) {
+    /*if ([statusTask isEqualToString:@"Finies"]) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+        currentDate = [NSDate date];
+        current_dateString = [formatter stringFromDate:currentDate];*/
+    //} else {
+        //current_dateString = @"";
+    //}
+    
+    [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids /*taskDone:current_dateString*/ callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"UPDATE SUCCESS");
             if ([Tasks.dict_error valueForKey:@"type"] != nil) {
@@ -268,7 +281,6 @@
             }
         }
     }];
-    
 }
 
 

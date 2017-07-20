@@ -19,6 +19,7 @@
     NSString* _duration;
     NSString* _status;
     NSString* _id_creator;
+    NSString* _taskDone;
     NSMutableArray* _id_members;
 }
 
@@ -32,8 +33,9 @@
 @property (nonatomic, strong) NSString* duration;
 @property (nonatomic, strong) NSString* status;
 @property (nonatomic, strong) NSString* id_creator;
+@property (nonatomic, strong) NSString* taskDone;
 @property (nonatomic, strong) NSMutableArray* id_members;
 
-- (instancetype) initWithId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSString*)priority id_category:(NSString*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_creator:(NSString*)id_creator id_members:(NSMutableArray*)id_members;
+- (instancetype) initWithId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSString*)priority id_category:(NSString*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_creator:(NSString*)id_creator taskDone:(NSString*)taskDone id_members:(NSMutableArray*)id_members;
 
 @end

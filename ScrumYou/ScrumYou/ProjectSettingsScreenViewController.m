@@ -79,6 +79,10 @@
     [self designPage];
     
     hasClickedOnModifyButton = NO;
+    nameTextField.enabled = false;
+    membersCount.enabled = false;
+    editButtonMembers.enabled = false;
+    validateModification.hidden = true;
     
     updateButtonEdit = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(enableTextField:)];
     self.navigationItem.rightBarButtonItem = updateButtonEdit;
@@ -280,15 +284,15 @@
     }
 }
 
-- (IBAction)addSprint:(id)sender {
-    
+
+- (IBAction)addSprintButton:(id)sender {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     currentDate = [NSDate date];
     endDate = [sprintEndDate date];
     NSString* end_dateString = [formatter stringFromDate:endDate];
     NSString* current_dateString = [formatter stringFromDate:currentDate];
-
+    
     
     [SprintsCrud addSprintTitle:sprintNameTextField.text beginningDate:current_dateString endDate:end_dateString callback:^(NSError *error, BOOL success) {
         if (success) {
@@ -301,25 +305,31 @@
 }
 
 
-
 // Modify a project
 
 - (void) enableTextField:(id)sender {
     if (hasClickedOnModifyButton == NO) {
-        hasClickedOnModifyButton = YES;
-        validateButton.hidden = false;
+        validateModification.hidden = false;
         nameTextField.enabled = true;
         nameTextField.textColor = [UIColor lightGrayColor];
+        membersCount.enabled = true;
+        membersCount.textColor = [UIColor lightGrayColor];
+        editButtonMembers.enabled = true;
         
+        hasClickedOnModifyButton = YES;
         self.navigationItem.rightBarButtonItem = updateButtonCancel;
         
     } else {
-        hasClickedOnModifyButton = NO;
-        validateButton.hidden = true;
+        validateModification.hidden = true;
         nameTextField.enabled = false;
         nameTextField.textColor = [UIColor blackColor];
         nameTextField.text = self.currentProject.title;
+        membersCount.enabled = false;
+        membersCount.textColor = [UIColor blackColor];
+        editButtonMembers.enabled = false;
         
+        
+        hasClickedOnModifyButton = NO;
         self.navigationItem.rightBarButtonItem = updateButtonEdit;
         
     }
