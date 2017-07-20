@@ -60,6 +60,8 @@
 @synthesize id_project = _id_project;
 @synthesize token = _token;
 @synthesize comeUpdateTask = _comeUpdateTask;
+@synthesize comeDeleteTask = _comeDeleteTask;
+@synthesize comeAddTask = _comeAddTask;
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -168,6 +170,21 @@
 
 - (void) initializeDictionarys:(NSArray*)tasks andSprint:(NSArray*)sprints {
 
+    if (sprints.count == 0) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Sprint manquant" message:@"Pour accéder au Scrum Board vous devez créer au moins un sprint" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            projectSettingsVC = [[ProjectSettingsScreenViewController alloc] init];
+            projectSettingsVC.token_dic = _token;
+            //projectSettingsVC.current_project = [NSString stringWithFormat:@"%@", project.id_project];
+            [self.navigationController pushViewController:projectSettingsVC animated:YES];
+            
+        }];
+        
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    
     for (int i = (int)sprints.count-1; i >= 0; i--) {
         NSLog(@"SPRINT ID %@", [sprints[i] valueForKey:@"id_sprint"]);
         
@@ -327,13 +344,23 @@
     
     self.navigationItem.title = project.title;
     
-    if (_comeUpdateTask == true) {
+    if (_comeUpdateTask == true || _comeAddTask == true || _comeDeleteTask == true) {
         self.navigationItem.hidesBackButton = YES;
-        UIImage *back = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:back style:UIBarButtonItemStylePlain target:self action:@selector(backToUserHome:)];
+        UIImage *backFromModify = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:backFromModify style:UIBarButtonItemStylePlain target:self action:@selector(backToUserHome:)];
         self.navigationItem.leftBarButtonItem = newBackButton;
         _comeUpdateTask = false;
+        _comeDeleteTask = false;
+        _comeAddTask = false;
     }
+    
+//    if (_comeDeleteTask == true) {
+//        self.navigationItem.hidesBackButton = YES;
+//        UIImage *backFromDelete = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:backFromDelete style:UIBarButtonItemStylePlain target:self action:@selector(backToUserHome:)];
+//        self.navigationItem.leftBarButtonItem = backButton;
+//        _comeDeleteTask = false;
+//    }
     
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
