@@ -77,9 +77,10 @@
             NSString* tmp_duration = [jsonDict valueForKey:@"duration"];
             NSString* tmp_status = [jsonDict valueForKey:@"status"];
             NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
+            NSString* tmp_taskDone = [jsonDict valueForKey:@"taskDone"];
             NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
             
-            Task* t = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
+            Task* t = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator taskDone:tmp_taskDone id_members:tmp_id_members];
             
             self.task = t;
         }
@@ -181,10 +182,10 @@
                 NSString* tmp_duration = [tasks valueForKey:@"duration"];
                 NSString* tmp_status = [tasks valueForKey:@"status"];
                 NSString* tmp_id_creator = [tasks valueForKey:@"id_creator"];
-
+                NSString* tmp_taskDone = [jsonDict valueForKey:@"taskDone"];
                 NSMutableArray* tmp_id_members = [tasks valueForKey:@"id_members"];
                 
-                Task* t = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
+                Task* t = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator taskDone:tmp_taskDone id_members:tmp_id_members];
                 
                 [self.tasksList addObject:t];
 
@@ -232,9 +233,10 @@
             NSString* tmp_duration = [jsonDict valueForKey:@"duration"];
             NSString* tmp_status = [jsonDict valueForKey:@"status"];
             NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
+            NSString* tmp_taskDone = [jsonDict valueForKey:@"taskDone"];
             NSMutableArray<NSString*>* tmp_id_members = [jsonDict valueForKey:@"id_members"];
             
-            self.task = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
+            self.task = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator taskDone:tmp_taskDone id_members:tmp_id_members];
 
         }
         
@@ -292,7 +294,7 @@
 /*
  *  UPDATE -> update task with id
  */
-- (void) updateTaskId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) updateTaskId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members /*taskDone:(NSString*)taskDone*/ callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSURL *url = [NSURL URLWithString:[kTask_api stringByAppendingString:[@"/" stringByAppendingString:id_task]]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -307,7 +309,8 @@
                                                      @"businessValue" : businessValue,
                                                      @"duration" : duration,
                                                      @"status" : status,
-                                                     @"id_members" : id_members};
+                                                     @"id_members" : id_members
+                                                     /*@"taskDone" : taskDone*/};
     
     
     NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];

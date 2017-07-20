@@ -11,7 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProjectSettingsScreenViewController">
             <connections>
-                <outlet property="addSprint" destination="9NH-Ex-zzI" id="ko3-kN-lAY"/>
+                <outlet property="addSprintButton" destination="9NH-Ex-zzI" id="ihi-86-riJ"/>
+                <outlet property="editButtonMembers" destination="dDk-yR-bjZ" id="tER-EO-TqF"/>
                 <outlet property="membersCount" destination="ENE-9L-PgS" id="KBM-Y9-y84"/>
                 <outlet property="membersTableView" destination="cPw-d6-1M2" id="8dP-lj-tB8"/>
                 <outlet property="membersTextField" destination="pxv-Xr-Eim" id="NCV-la-Qjg"/>
@@ -19,7 +20,7 @@
                 <outlet property="nameTextField" destination="utE-R5-fuR" id="bc6-Wj-KyK"/>
                 <outlet property="sprintEndDate" destination="G0J-Ca-cbd" id="w4Y-RB-cFy"/>
                 <outlet property="sprintNameTextField" destination="oDC-p7-JfW" id="PTq-8T-DKb"/>
-                <outlet property="validateButton" destination="AY4-oD-6JJ" id="skx-Xs-loR"/>
+                <outlet property="validateModification" destination="AY4-oD-6JJ" id="ZCs-xa-pjQ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -151,11 +152,11 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="addSprint:" destination="-1" eventType="touchUpInside" id="qwg-VV-rgx"/>
+                        <action selector="addSprintButton:" destination="-1" eventType="touchUpInside" id="YpF-aO-4FY"/>
                     </connections>
                 </button>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nJN-FE-WGF">
-                    <rect key="frame" x="51.5" y="134.5" width="272" height="300"/>
+                    <rect key="frame" x="51.5" y="120.5" width="272" height="300"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cPw-d6-1M2">
                             <rect key="frame" x="8" y="21" width="256" height="232"/>
@@ -240,11 +241,6 @@
                 <constraint firstAttribute="bottom" secondItem="9QP-zJ-FeG" secondAttribute="bottom" constant="20" id="zcL-Dv-XtJ"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="nJN-FE-WGF"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="34.5" y="53.5"/>
         </view>
     </objects>
