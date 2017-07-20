@@ -54,6 +54,7 @@
     CrudSprints* Sprints;
     
     BOOL isModify;
+    BOOL sprintChoosen;
 }
 
 @synthesize token_dic = _token_dic;
@@ -97,6 +98,7 @@
         ids = [[NSMutableArray alloc] init];
         
         isModify = NO;
+        sprintChoosen = NO;
         self.status = false;
         statusTask = @"A faire";
         statusArray = @[@"A faire", @"En cours", @"Finies"];
@@ -144,55 +146,6 @@
 }
 
 
-- (void) finalValidationTask {
-    __unsafe_unretained typeof(self) weakSelf = self;
-    
-    [Tasks addTaskTitle:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids callback:^(NSError *error, BOOL success) {
-        if (success) {
-            NSLog(@"SUCCESS ADD TASK");
-            if ([Tasks.dict_error valueForKey:@"type"] != nil) {
-                NSString* title = [weakSelf->Tasks.dict_error valueForKey:@"title"];
-                NSString* message = [weakSelf->Tasks.dict_error valueForKey:@"message"];
-                    
-                UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-                
-                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                        
-                }];
-                    
-                [alert addAction:defaultAction];
-                [weakSelf presentViewController:alert animated:YES completion:nil];
-                    
-            } else {
-                newTask = Tasks.task;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre tâche a été créée." preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                        scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
-                        weakSelf->scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", weakSelf.cProject.id_project];
-                        [weakSelf.navigationController pushViewController:weakSelf->scrumBoardVC animated:YES];
-                        
-                    }];
-                    
-                    [alert addAction:defaultAction];
-                    [weakSelf presentViewController:alert animated:YES completion:nil];
-
-                });
-            }
-        }
-    }];
-    
-    self.taskTitleTextField.text = @"";
-    self.taskDescriptionTextField.text = @"";
-    self.taskDifficultyTextField.text = @"";
-    self.taskMembersTextField.text = @"";
-    self.taskCostTextField.text = @"";
-    self.taskDurationTextField.text = @"";
-    [self.categorySegmentation setSelectedSegmentIndex:0];
-    [self.prioritySegmentation setSelectedSegmentIndex:0];
-}
-
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)thePickerView {
     return 1;
 }
@@ -224,92 +177,15 @@
     
 }
 
-- (void) ValidateSprintandModifyTask {
-    
-    NSLog(@"STATUS %@", statusTask);
-    
-    [self getIdUser];
-    
-    newTask.id_task = self.id_task;
-    
-    [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids callback:^(NSError *error, BOOL success) {
-        if (success) {
-            NSLog(@"UPDATE SUCCESS");
-            if ([Tasks.dict_error valueForKey:@"type"] != nil) {
-                NSString* title = [Tasks.dict_error valueForKey:@"title"];
-                NSString* message = [Tasks.dict_error valueForKey:@"message"];
-                
-                UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-                
-                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                    
-                }];
-                
-                [alert addAction:defaultAction];
-                [self presentViewController:alert animated:YES completion:nil];
-                
-            } else {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Modification réussie" message:@"Votre tâche a été modifiée." preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                        scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
-                        userHomeVC = [[UserHomeScreenViewController alloc] init];
-                        scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", self.cProject.id_project];
-                        scrumBoardVC.comeUpdateTask = true;
-                        [self.navigationController pushViewController:scrumBoardVC animated:YES];
-                        
-                    }];
-                    
-                    [alert addAction:defaultAction];
-                    [self presentViewController:alert animated:YES completion:nil];
-                    
-                });
-            }
-        }
-    }];
-    
-}
-
-
-- (IBAction)deleteTask:(id)sender {
-    
-    newTask.id_task = self.id_task;
-    
-    NSLog(@"SPR %@", self.cSprint.id_sprint);
-    
-    [Tasks deleteTaskWithId:[NSString stringWithFormat:@"%@", newTask.id_task] andIdSprint:[NSString stringWithFormat:@"%@", self.cSprint.id_sprint] callback:^(NSError *error, BOOL success) {
-        if (success) {
-            NSLog(@"DELETE TASK SUCCESS");
-
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Supression réussie" message:@"Votre tâche a été supprimée." preferredStyle:UIAlertControllerStyleAlert];
-                    
-                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                    scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
-                    scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", self.cProject.id_project];
-                    [self.navigationController pushViewController:scrumBoardVC animated:YES];
-                        
-                }];
-                    
-                [alert addAction:defaultAction];
-                [self presentViewController:alert animated:YES completion:nil];
-                    
-            });
-        }
-    }];
-    
-}
-
- // SPRINTS VIEW
+// SPRINTS VIEW
 
 /*
  * Show sprint view
  */
-- (IBAction)showSprintView:(id)sender {
-    if ([sender tag] == 1) {
+- (void)showSprintView {
+    /*if ([sender tag] == 1) {
         isModify = true;
-    }
+    }*/
     [sprintView setHidden:false];
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
@@ -332,12 +208,12 @@
  *  Call update sprint web service
  */
 - (IBAction)validateSprint:(id)sender {
-    if (isModify == true) {
+    /*if (isModify == true) {
         [self ValidateSprintandModifyTask];
         isModify = false;
     } else {
         [self finalValidationTask];
-    }
+    }*/
     
     NSLog(@"id task %@", self.id_task);
     
@@ -364,7 +240,144 @@
         }
     }];
     
+    userHomeVC = [[UserHomeScreenViewController alloc] init];
+    scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", self.cProject.id_project];
+    
+    [self.navigationController pushViewController:scrumBoardVC animated:YES];
+    
 }
+
+- (IBAction)updateTask:(id)sender {
+    
+    NSLog(@"STATUS %@", statusTask);
+    
+    [self getIdUser];
+    
+    newTask.id_task = self.id_task;
+
+    [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"UPDATE SUCCESS");
+            if ([Tasks.dict_error valueForKey:@"type"] != nil) {
+                NSString* title = [Tasks.dict_error valueForKey:@"title"];
+                NSString* message = [Tasks.dict_error valueForKey:@"message"];
+                
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    
+                }];
+                
+                [alert addAction:defaultAction];
+                [self presentViewController:alert animated:YES completion:nil];
+                
+            } else {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Modification réussie" message:@"Votre tâche a été modifiée." preferredStyle:UIAlertControllerStyleAlert];
+                        
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        [self showSprintView];
+                        scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
+                        scrumBoardVC.comeUpdateTask = true;
+                    }];
+                        
+                    [alert addAction:defaultAction];
+                    [self presentViewController:alert animated:YES completion:nil];
+                        
+                });
+                
+            }
+        }
+    }];
+    
+}
+
+- (IBAction)validateNewTask:(id)sender {
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    [Tasks addTaskTitle:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"SUCCESS ADD TASK");
+            if ([Tasks.dict_error valueForKey:@"type"] != nil) {
+                NSString* title = [weakSelf->Tasks.dict_error valueForKey:@"title"];
+                NSString* message = [weakSelf->Tasks.dict_error valueForKey:@"message"];
+                
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    
+                }];
+                
+                [alert addAction:defaultAction];
+                [weakSelf presentViewController:alert animated:YES completion:nil];
+                
+            } else {
+                newTask = Tasks.task;
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre tâche a été créée." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        [weakSelf showSprintView];
+                        scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
+                        weakSelf->scrumBoardVC.comeAddTask = true;
+                        //scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
+                        //weakSelf->scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", weakSelf.cProject.id_project];
+                        //[weakSelf.navigationController pushViewController:weakSelf->scrumBoardVC animated:YES];
+                        
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    
+                });
+            }
+        }
+    }];
+    
+    self.taskTitleTextField.text = @"";
+    self.taskDescriptionTextField.text = @"";
+    self.taskDifficultyTextField.text = @"";
+    self.taskMembersTextField.text = @"";
+    self.taskCostTextField.text = @"";
+    self.taskDurationTextField.text = @"";
+    [self.categorySegmentation setSelectedSegmentIndex:0];
+    [self.prioritySegmentation setSelectedSegmentIndex:0];
+}
+
+
+- (IBAction)deleteTask:(id)sender {
+    
+    newTask.id_task = self.id_task;
+    
+    NSLog(@"SPR %@", self.cSprint.id_sprint);
+    
+    [Tasks deleteTaskWithId:[NSString stringWithFormat:@"%@", newTask.id_task] andIdSprint:[NSString stringWithFormat:@"%@", self.cSprint.id_sprint] callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"DELETE TASK SUCCESS");
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Supression réussie" message:@"Votre tâche a été supprimée." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
+                    scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", self.cProject.id_project];
+                    scrumBoardVC.comeDeleteTask = true;
+                    scrumBoardVC.token = _token_dic;
+                    [self.navigationController pushViewController:scrumBoardVC animated:YES];
+                        
+                }];
+                    
+                [alert addAction:defaultAction];
+                [self presentViewController:alert animated:YES completion:nil];
+                    
+            });
+        }
+    }];
+    
+}
+
 
 /**
  * MEMBERS VIEW
@@ -382,6 +395,14 @@
     [self.view insertSubview:blurEffectView belowSubview:membersView];
 }
 
+/**
+ *  VOID ->
+ *  Get users form database
+ **/
+- (void) getUsername {
+    get_users = Users.userList;
+    [membersTableView reloadData];
+}
 
 /**
  * Get users form database
@@ -390,19 +411,11 @@
     [Users getUsers:^(NSError *error, BOOL success) {
         if (success) {
             get_users = Users.userList;
+            NSLog(@"USERS %@", get_users);
             [membersTableView reloadData];
         }
     }];
 }
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(self.searchController.isActive) {
-        return searchResultsUser.count;
-    }else {
-        return [get_users count];
-    }
-}
-
 
 /*
  *  VOID -> get all users link to the current project
@@ -421,6 +434,14 @@
             }
             [membersTableView reloadData];
         }];
+    }
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(self.searchController.isActive) {
+        return searchResultsUser.count;
+    }else {
+        return [get_users count];
     }
 }
 
@@ -452,6 +473,8 @@
         }
         
     }
+    
+    cell.textLabel.text = username.fullname;
     
     return cell;
 }

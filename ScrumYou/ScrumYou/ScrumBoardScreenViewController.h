@@ -13,6 +13,8 @@
     NSDictionary* _token;
     
     BOOL _comeUpdateTask;
+    BOOL _comeDeleteTask;
+    BOOL _comeAddTask;
 }
 
 @property (weak, nonatomic) IBOutlet UIButton *startAgain;
@@ -20,5 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchButtonItem;
 @property (nonatomic, strong) NSDictionary *token;
 @property (nonatomic) BOOL comeUpdateTask;
+@property (nonatomic) BOOL comeDeleteTask;
+@property (nonatomic) BOOL comeAddTask;
 
 @end

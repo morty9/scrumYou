@@ -202,7 +202,7 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="showSprintView:" destination="-1" eventType="touchUpInside" id="yc6-je-6Ld"/>
+                        <action selector="validateNewTask:" destination="-1" eventType="touchUpInside" id="Mbz-uf-AAI"/>
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Priorité" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75y-lL-Sew">
@@ -243,7 +243,7 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="showSprintView:" destination="-1" eventType="touchUpInside" id="zui-O6-vTR"/>
+                        <action selector="updateTask:" destination="-1" eventType="touchUpInside" id="a8j-Bs-tqc"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2qe-Ad-KhI" userLabel="Add Member(s) Button">
