@@ -165,7 +165,7 @@
 - (IBAction)deleteAccountUser:(id)sender {
     NSString* tok = [_token valueForKey:@"token"];
     NSString* userId = [_token valueForKey:@"userId"];
-    NSString* tokenId = [_token valueForKey:@"id"];
+    NSString* tokenId = [_token valueForKey:@"tokenId"];
     
     [self checkIfCreator];
     
@@ -175,6 +175,7 @@
                 NSLog(@"LOGOUT OK !!!!!!!!!");
                 [UsersCrud deleteUserWithId:[NSString stringWithFormat:@"%@", userId] token:tok callback:^(NSError *error, BOOL success) {
                     if (success) {
+                        NSLog(@"DELETE USER OK ");
                         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Suppression de l'utilisateur" message:@"La suppression de l'utilisateur a bien été prise en compte." preferredStyle:UIAlertControllerStyleAlert];
                         
                         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {

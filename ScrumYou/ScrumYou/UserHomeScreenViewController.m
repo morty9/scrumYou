@@ -148,8 +148,6 @@
     self.navigationItem.hidesBackButton = YES;
     
     UIImage *cancel = [[UIImage imageNamed:@"logout-button.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc] initWithImage:cancel style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
-    self.navigationItem.leftBarButtonItem = logoutButton;
     
 }
 
@@ -349,7 +347,7 @@
     [self.navigationController pushViewController:addProjectVC animated:YES];
 }
 
-- (void) logout:(id)sender {
+- (IBAction)logoutButton:(id)sender {
     homeScreenVC = [[HomeScreenViewController alloc] init];
     
     NSString* tokenid = [self.token valueForKey:@"tokenId"];
