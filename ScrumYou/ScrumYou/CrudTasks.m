@@ -33,7 +33,7 @@
 /*
  *  POST -> add task to database
  */
-- (void) addTaskTitle:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) addTaskTitle:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSInteger)priority id_category:(NSInteger)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
     
     self.dict_error = [[NSDictionary alloc] init];
     
@@ -45,8 +45,8 @@
     NSDictionary<NSString*, NSString*> *jsonData = @{@"title" : title,
                                                      @"description" : description,
                                                      @"difficulty" : difficulty,
-                                                     @"priority" : priority,
-                                                     @"id_category" : id_category,
+                                                     @"priority" : [NSNumber numberWithInteger:priority],
+                                                     @"category" : [NSNumber numberWithInteger:id_category],
                                                      @"businessValue" : businessValue,
                                                      @"duration" : duration,
                                                      @"status" : status,
@@ -73,7 +73,7 @@
             NSString* tmp_description = [jsonDict valueForKey:@"description"];
             NSString* tmp_difficulty = [jsonDict valueForKey:@"difficulty"];
             NSString* tmp_priority = [jsonDict valueForKey:@"priority"];
-            NSString* tmp_id_category = [jsonDict valueForKey:@"id_category"];
+            NSString* tmp_id_category = [jsonDict valueForKey:@"category"];
             NSString* tmp_businessValue = [jsonDict valueForKey:@"businessValue"];
             NSString* tmp_duration = [jsonDict valueForKey:@"duration"];
             NSString* tmp_status = [jsonDict valueForKey:@"status"];
@@ -170,7 +170,7 @@
             NSString* tmp_description = [jsonDict valueForKey:@"description"];
             NSString* tmp_difficulty = [jsonDict valueForKey:@"difficulty"];
             NSString* tmp_priority = [jsonDict valueForKey:@"priority"];
-            NSString* tmp_id_category = [jsonDict valueForKey:@"id_category"];
+            NSString* tmp_id_category = [jsonDict valueForKey:@"category"];
             NSString* tmp_businessValue = [jsonDict valueForKey:@"businessValue"];
             NSString* tmp_duration = [jsonDict valueForKey:@"duration"];
             NSString* tmp_status = [jsonDict valueForKey:@"status"];

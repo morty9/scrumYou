@@ -293,8 +293,9 @@
     NSString* end_dateString = [formatter stringFromDate:endDate];
     NSString* current_dateString = [formatter stringFromDate:currentDate];
     
+    NSString* token = [self.token_dic valueForKey:@"token"];
     
-    [SprintsCrud addSprintTitle:sprintNameTextField.text beginningDate:current_dateString endDate:end_dateString token:[self.token_dic valueForKey:@"tokenId"] callback:^(NSError *error, BOOL success) {
+    [SprintsCrud addSprintTitle:sprintNameTextField.text beginningDate:current_dateString endDate:end_dateString token:token callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS ADD SPRINT");
         }

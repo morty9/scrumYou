@@ -106,6 +106,7 @@
 - (IBAction)didTouchAddButton:(id)sender {
     
     NSLog(@"token %@", _token_dic);
+    NSString* token = [self.token_dic valueForKey:@"token"];
     
     __unsafe_unretained typeof(self) weakSelf = self;
     
@@ -116,7 +117,7 @@
     NSString* end_dateString = [formatter stringFromDate:endDate];
     NSString* current_dateString = [formatter stringFromDate:currentDate];
     
-    [Sprints addSprintTitle:sprintNameTextField.text beginningDate:current_dateString endDate:end_dateString token:[self.token_dic valueForKey:@"tokenId"] callback:^(NSError *error, BOOL success) {
+    [Sprints addSprintTitle:sprintNameTextField.text beginningDate:current_dateString endDate:end_dateString token:token callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS ADD SPRINT");
             NSMutableArray* sprints = [[NSMutableArray alloc] init];
@@ -296,9 +297,6 @@
     
     //navigation bar customization
     self.navigationItem.title = [NSString stringWithFormat:@"Ajouter un projet"];
-    
-    //UINavigationBar* bar = [self.navigationController navigationBar];
-    //[bar setHidden:false];
     
     //border projectName text field
     CALayer *borderProjectName = [CALayer layer];
