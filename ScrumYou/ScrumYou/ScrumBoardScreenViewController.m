@@ -345,13 +345,21 @@
     
     self.navigationItem.title = project.title;
     
-    if (_comeUpdateTask == true || _comeAddTask == true || _comeDeleteTask == true) {
+//    if (_comeUpdateTask == true || _comeAddTask == true || _comeDeleteTask == true) {
+//        self.navigationItem.hidesBackButton = YES;
+//        UIImage *backFromModify = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:backFromModify style:UIBarButtonItemStylePlain target:self action:@selector(backToUserHome:)];
+//        self.navigationItem.leftBarButtonItem = newBackButton;
+//        _comeUpdateTask = false;
+//        _comeDeleteTask = false;
+//        _comeAddTask = false;
+//    }
+    
+    if (_comeAddTask == true) {
         self.navigationItem.hidesBackButton = YES;
         UIImage *backFromModify = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:backFromModify style:UIBarButtonItemStylePlain target:self action:@selector(backToUserHome:)];
         self.navigationItem.leftBarButtonItem = newBackButton;
-        _comeUpdateTask = false;
-        _comeDeleteTask = false;
         _comeAddTask = false;
     }
     

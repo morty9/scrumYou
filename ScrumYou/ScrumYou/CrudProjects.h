@@ -38,6 +38,6 @@
 /*
  *  DELETE -> delete project by id
  */
-- (void) deleteProjectWithId:(NSString*)id_project token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) updateProjectId:(NSString*)id_project title:(NSString*)title id_creator:(NSString*)id_creator members:(NSMutableArray*)members token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
 
 @end
