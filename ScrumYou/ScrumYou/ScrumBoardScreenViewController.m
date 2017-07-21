@@ -91,6 +91,7 @@
         accountSettingsVC = [[AccountSettingsScreenViewController alloc] init];
         addTaskVC = [[AddTaskScreenViewController alloc] init];
         projectSettingsVC = [[ProjectSettingsScreenViewController alloc] init];
+        
     }
     
     return self;
@@ -341,7 +342,6 @@
     addTaskVC.cProject = project;
     addTaskVC.sprintsByProject = get_sprints;
     addTaskVC.token_dic = self.token;
-    addTaskVC.editButton = nil;
     [self.navigationController pushViewController:addTaskVC animated:YES];
 }
 
