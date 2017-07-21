@@ -19,11 +19,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t9E-wQ-mmo">
-                    <rect key="frame" x="16" y="27" width="343" height="64"/>
+                    <rect key="frame" x="16" y="91" width="343" height="64"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="343" id="MlC-48-efk"/>
                         <constraint firstAttribute="height" constant="64" id="dOc-NO-aCH"/>
@@ -33,7 +33,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iH-Iv-MeX">
-                    <rect key="frame" x="16" y="236" width="343" height="40"/>
+                    <rect key="frame" x="16" y="300" width="343" height="40"/>
                     <color key="backgroundColor" red="0.6913306713104248" green="0.6201586127281189" blue="0.7731316089630127" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="343" id="JNm-Sh-4xV"/>
@@ -48,14 +48,14 @@
                     </connections>
                 </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mot de passe" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ryi-Ua-vYr">
-                    <rect key="frame" x="16" y="121" width="343" height="65"/>
+                    <rect key="frame" x="16" y="185" width="343" height="65"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="343" id="LRf-GH-tPt"/>
                         <constraint firstAttribute="height" constant="65" id="Vky-TG-S62"/>
                     </constraints>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                 </textField>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -70,7 +70,6 @@
                 <constraint firstItem="4iH-Iv-MeX" firstAttribute="top" secondItem="ryi-Ua-vYr" secondAttribute="bottom" constant="50" id="vAA-Gk-bvh"/>
                 <constraint firstItem="ryi-Ua-vYr" firstAttribute="top" secondItem="t9E-wQ-mmo" secondAttribute="bottom" constant="30" id="yx9-g0-xDC"/>
             </constraints>
-            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
             <point key="canvasLocation" x="118" y="-145"/>
         </view>
     </objects>
