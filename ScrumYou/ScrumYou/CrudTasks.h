@@ -35,7 +35,7 @@
 /*
  *  UPDATE -> update task with id
  */
-- (void) updateTaskId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members /*taskDone:(NSString*)taskDone*/ callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) updateTaskId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members taskDone:(NSString*)taskDone callback:(void (^)(NSError *error, BOOL success))callback;
 /*
  *  DELETE -> delete task by id
  */

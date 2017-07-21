@@ -259,16 +259,20 @@
     
     newTask.id_task = self.id_task;
     
-    /*if ([statusTask isEqualToString:@"Finies"]) {
+    if ([statusTask isEqualToString:@"Finies"]) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd"];
+        [formatter setDateFormat:@"dd/MM/yyyy"];
         currentDate = [NSDate date];
-        current_dateString = [formatter stringFromDate:currentDate];*/
-    //} else {
-        //current_dateString = @"";
-    //}
+        current_dateString = [formatter stringFromDate:currentDate];
+    } else {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"00-00-0000"];
+        currentDate = [NSDate date];
+        current_dateString = [formatter stringFromDate:currentDate];
+        NSLog(@"CURRENT DATE : %@", currentDate);
+    }
     
-    [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids /*taskDone:current_dateString*/ callback:^(NSError *error, BOOL success) {
+    [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids taskDone:current_dateString callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"UPDATE SUCCESS");
             if ([Tasks.dict_error valueForKey:@"type"] != nil) {
@@ -335,6 +339,8 @@
                         [weakSelf showSprintView];
                         scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
                         weakSelf->scrumBoardVC.comeAddTask = true;
+                        weakSelf->scrumBoardVC.token = weakSelf.token_dic;
+                        NSLog(@"TOKEN DU SCRUMBOARD %@", weakSelf->scrumBoardVC.token);
                         //scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
                         //weakSelf->scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", weakSelf.cProject.id_project];
                         //[weakSelf.navigationController pushViewController:weakSelf->scrumBoardVC animated:YES];
