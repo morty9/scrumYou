@@ -54,6 +54,8 @@
     Task* _mTask;
     Sprint* _cSprint;
     
+    UIBarButtonItem* _editButton;
+    
     BOOL _status;
     
 }
@@ -79,6 +81,7 @@
 @property (nonatomic, weak) UILabel* labelDifficulty;
 @property (nonatomic, weak) UILabel* labelCost;
 @property (nonatomic, strong) NSArray* sprintsByProject;
+@property (nonatomic, retain) UIBarButtonItem* editButton;
 
 
 @end

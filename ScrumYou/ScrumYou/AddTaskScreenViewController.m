@@ -77,6 +77,7 @@
 @synthesize labelCost = _labelCost;
 @synthesize labelDifficulty = _labelDifficulty;
 @synthesize sprintsByProject = _sprintsByProject;
+@synthesize editButton = _editButton;
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -242,6 +243,8 @@
     
     userHomeVC = [[UserHomeScreenViewController alloc] init];
     scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", self.cProject.id_project];
+    scrumBoardVC.token = self.token_dic;
+    NSLog(@"TOKEN DU SCRUMBOARD %@", scrumBoardVC.token);
     
     [self.navigationController pushViewController:scrumBoardVC animated:YES];
     
@@ -337,8 +340,6 @@
                         [weakSelf showSprintView];
                         scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
                         weakSelf->scrumBoardVC.comeAddTask = true;
-                        weakSelf->scrumBoardVC.token = weakSelf.token_dic;
-                        NSLog(@"TOKEN DU SCRUMBOARD %@", weakSelf->scrumBoardVC.token);
                         //scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
                         //weakSelf->scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", weakSelf.cProject.id_project];
                         //[weakSelf.navigationController pushViewController:weakSelf->scrumBoardVC animated:YES];
@@ -614,9 +615,9 @@
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
     
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editTask)];
-    editButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
-    self.navigationItem.rightBarButtonItem = editButton;
+    self.editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editTask)];
+    self.editButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
+    self.navigationItem.rightBarButtonItem = self.editButton;
 
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.21 blue:0.27 alpha:1.0];
 
