@@ -22,7 +22,7 @@
 /*
  *  POST -> add sprint to database
  */
-- (void) addSprintTitle:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) addSprintTitle:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
 
 /*
  *  GET -> Get all sprints from database
@@ -37,12 +37,12 @@
 /*
  * UPDATE -> update sprint with id
  */
-- (void) updateSprintId:(NSString*)id_sprint title:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate id_members:(NSMutableArray*)id_members id_listTasks:(NSMutableArray*)id_listTasks callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) updateSprintId:(NSString*)id_sprint title:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate id_members:(NSMutableArray*)id_members id_listTasks:(NSMutableArray*)id_listTasks token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
 
 /*
  *  DELETE -> delete sprint by id
  */
-- (void) deleteSprintWithId:(NSString*)id_sprint callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) deleteSprintWithId:(NSString*)id_sprint token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
 
 
 @end

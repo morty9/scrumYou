@@ -18,8 +18,6 @@
 
 - (void) editTask;
 
-- (void) backToUserHome;
-
 @end
 
 @implementation AddTaskScreenViewController {
@@ -236,7 +234,7 @@
     NSString* end_date = spr.endDate;
     NSMutableArray* id_members = spr.id_members;
     
-    [Sprints updateSprintId:id_sprint title:title beginningDate:beginning_date endDate:end_date id_members:id_members id_listTasks:list_task callback:^(NSError *error, BOOL success) {
+    [Sprints updateSprintId:id_sprint title:title beginningDate:beginning_date endDate:end_date id_members:id_members id_listTasks:list_task token:[self.token_dic valueForKey:@"tokenId"] callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"UPDATE SPRINT SUCCESS");
         }
@@ -272,7 +270,7 @@
         NSLog(@"CURRENT DATE : %@", currentDate);
     }
     
-    [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids taskDone:current_dateString callback:^(NSError *error, BOOL success) {
+    [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids taskDone:current_dateString token:[self.token_dic valueForKey:@"tokenId"] callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"UPDATE SUCCESS");
             if ([Tasks.dict_error valueForKey:@"type"] != nil) {
@@ -313,7 +311,7 @@
 - (IBAction)validateNewTask:(id)sender {
     __unsafe_unretained typeof(self) weakSelf = self;
     
-    [Tasks addTaskTitle:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids callback:^(NSError *error, BOOL success) {
+    [Tasks addTaskTitle:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids token:[self.token_dic valueForKey:@"tokenId"] callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS ADD TASK");
             if ([Tasks.dict_error valueForKey:@"type"] != nil) {
@@ -372,7 +370,7 @@
     
     NSLog(@"SPR %@", self.cSprint.id_sprint);
     
-    [Tasks deleteTaskWithId:[NSString stringWithFormat:@"%@", newTask.id_task] andIdSprint:[NSString stringWithFormat:@"%@", self.cSprint.id_sprint] callback:^(NSError *error, BOOL success) {
+    [Tasks deleteTaskWithId:[NSString stringWithFormat:@"%@", newTask.id_task] andIdSprint:[NSString stringWithFormat:@"%@", self.cSprint.id_sprint] token:[self.token_dic valueForKey:@"tpkenId"] callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"DELETE TASK SUCCESS");
 
