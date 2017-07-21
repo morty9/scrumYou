@@ -115,12 +115,10 @@
     //navigation bar customization
     self.navigationItem.title = [NSString stringWithFormat:@"Connexion"];
     
-//    UINavigationBar* bar = [self.navigationController navigationBar];
-//    [bar setHidden:false];
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
     
-//    UIImage *cancel = [[UIImage imageNamed:@"error.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:cancel style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton:)];
-//    self.navigationItem.leftBarButtonItem = cancelButton;
+    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0] forKey:NSForegroundColorAttributeName];
     
     //border email text field
     CALayer *borderEmail = [CALayer layer];

@@ -8,12 +8,14 @@
 
 #import "ScrumBoardScreenViewController.h"
 #import "UserHomeScreenViewController.h"
+#import "HomeScreenViewController.h"
 #import "AccountSettingsScreenViewController.h"
 #import "ProjectSettingsScreenViewController.h"
 #import "AddTaskScreenViewController.h"
 #import "PageContentViewController.h"
 #import "PageViewController.h"
 #import "CrudTasks.h"
+#import "CrudAuth.h"
 #import "Task.h"
 #import "Sprint.h"
 #import "Project.h"
@@ -38,10 +40,12 @@
     AccountSettingsScreenViewController* accountSettingsVC;
     AddTaskScreenViewController* addTaskVC;
     ProjectSettingsScreenViewController* projectSettingsVC;
+    HomeScreenViewController* homeScreenVC;
     
     CrudTasks* TasksCrud;
     CrudProjects* ProjectsCrud;
     CrudSprints* SprintsCrud;
+    CrudAuth* Auth;
     
     Project* project;
     
@@ -70,6 +74,7 @@
         TasksCrud = [[CrudTasks alloc] init];
         ProjectsCrud = [[CrudProjects alloc] init];
         SprintsCrud = [[CrudSprints alloc] init];
+        Auth = [[CrudAuth alloc] init];
         
         get_tasks = [[NSMutableArray<Task*> alloc] init];
         get_sprints = [[NSMutableArray<Sprint*> alloc] init];
@@ -319,9 +324,6 @@
     [pageContentVC initializeSearchController];
 }
 
-- (IBAction)chatView:(id)sender {
-    NSLog(@"CHAT");
-}
 
 - (IBAction)userSettings:(id)sender {
     accountSettingsVC.token = self.token;
@@ -340,6 +342,25 @@
     addTaskVC.sprintsByProject = get_sprints;
     [self.navigationController pushViewController:addTaskVC animated:YES];
 }
+
+- (IBAction)logoutButton:(id)sender {
+    homeScreenVC = [[HomeScreenViewController alloc] init];
+    
+    NSString* tokenid = [self.token valueForKey:@"tokenId"];
+    NSString* tokenToken = [self.token valueForKey:@"token"];
+    
+    NSLog(@"TOKENID to delete: %@", tokenid);
+    NSLog(@"TOKEN: %@", self.token);
+    
+    [Auth logout:tokenid tokenToken:tokenToken callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"LOGOUT OK !!!!!!!!!");
+        }
+    }];
+    
+    [self.navigationController pushViewController:homeScreenVC animated:YES];
+}
+
 
 - (void) designPage {
     
@@ -371,7 +392,7 @@
 //        _comeDeleteTask = false;
 //    }
     
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+    //[[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
     
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTask)];

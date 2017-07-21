@@ -26,23 +26,28 @@
                     <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                     <color key="backgroundColor" red="0.88225668670000001" green="0.88240832089999999" blue="0.88224714989999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <items>
-                        <barButtonItem enabled="NO" width="40" id="HCL-o2-iiy"/>
-                        <barButtonItem image="mini-logo-toolbar3" width="75" style="plain" id="ST2-0O-u18" userLabel="Home">
+                        <barButtonItem enabled="NO" width="15" id="HCL-o2-iiy"/>
+                        <barButtonItem image="mini-logo-toolbar3" width="65" style="plain" id="ST2-0O-u18" userLabel="Home">
                             <connections>
                                 <action selector="refreshUHView:" destination="-1" id="8lg-hs-AdV"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem image="search-toolbar" width="75" style="plain" id="DBp-B2-LAr" userLabel="Search">
+                        <barButtonItem image="search-toolbar" width="65" style="plain" id="DBp-B2-LAr" userLabel="Search">
                             <connections>
                                 <action selector="searchProjects:" destination="-1" id="uBs-fS-676"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem image="profil-1" width="75" style="plain" id="Edy-7E-20n" userLabel="Account">
+                        <barButtonItem image="profil-1" width="65" style="plain" id="Edy-7E-20n" userLabel="Account">
                             <connections>
                                 <action selector="userSettings:" destination="-1" id="Upc-VM-UVr"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem enabled="NO" width="40" id="eMn-Sz-VLU"/>
+                        <barButtonItem image="logout-button" width="65" id="umb-Jg-ed6">
+                            <connections>
+                                <action selector="logoutButton:" destination="-1" id="5Xx-CN-gp4"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem enabled="NO" width="20" id="eMn-Sz-VLU"/>
                     </items>
                     <color key="tintColor" red="0.14117647059999999" green="0.2156862745" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
                 </toolbar>
@@ -135,6 +140,7 @@
     </objects>
     <resources>
         <image name="checked" width="32" height="32"/>
+        <image name="logout-button" width="32" height="32"/>
         <image name="mini-logo-toolbar3" width="27" height="27"/>
         <image name="profil-1" width="25" height="25"/>
         <image name="search-toolbar" width="25" height="25"/>
