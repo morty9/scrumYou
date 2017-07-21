@@ -184,9 +184,6 @@
  * Show sprint view
  */
 - (void)showSprintView {
-    /*if ([sender tag] == 1) {
-        isModify = true;
-    }*/
     [sprintView setHidden:false];
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
@@ -209,20 +206,19 @@
  *  Call update sprint web service
  */
 - (IBAction)validateSprint:(id)sender {
-    /*if (isModify == true) {
-        [self ValidateSprintandModifyTask];
-        isModify = false;
-    } else {
-        [self finalValidationTask];
-    }*/
-    
+
     NSLog(@"id task %@", self.id_task);
     
-    NSMutableArray* list_task = [[NSMutableArray alloc] initWithArray:spr.id_listTasks];
+    NSString* token = [self.token_dic valueForKey:@"token"];
+    NSMutableArray* list_task = [[NSMutableArray alloc] init];
     
-    for (int i = 0; i < list_task.count; i++) {
-        if (list_task[i] == newTask.id_task) {
-            [list_task removeObjectAtIndex:i];
+    if (![spr.id_listTasks isKindOfClass:[NSNull class]]) {
+        NSMutableArray* list_task = spr.id_listTasks;
+        
+        for (int i = 0; i < list_task.count; i++) {
+            if (list_task[i] == newTask.id_task) {
+                [list_task removeObjectAtIndex:i];
+            }
         }
     }
     
@@ -233,9 +229,8 @@
     NSString* title = spr.title;
     NSString* beginning_date = spr.beginningDate;
     NSString* end_date = spr.endDate;
-    NSMutableArray* id_members = spr.id_members;
     
-    [Sprints updateSprintId:id_sprint title:title beginningDate:beginning_date endDate:end_date id_members:id_members id_listTasks:list_task token:[self.token_dic valueForKey:@"tokenId"] callback:^(NSError *error, BOOL success) {
+    [Sprints updateSprintId:id_sprint title:title beginningDate:beginning_date endDate:end_date id_listTasks:list_task token:token callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"UPDATE SPRINT SUCCESS");
         }
@@ -251,6 +246,8 @@
 }
 
 - (IBAction)updateTask:(id)sender {
+    
+    NSString* token = [self.token_dic valueForKey:@"token"];
     
     NSString* current_dateString;
     
@@ -273,7 +270,7 @@
         NSLog(@"CURRENT DATE : %@", currentDate);
     }
     
-    [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids taskDone:current_dateString token:[self.token_dic valueForKey:@"tokenId"] callback:^(NSError *error, BOOL success) {
+    [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids taskDone:current_dateString token:token callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"UPDATE SUCCESS");
             if ([Tasks.dict_error valueForKey:@"type"] != nil) {
@@ -314,7 +311,9 @@
 - (IBAction)validateNewTask:(id)sender {
     __unsafe_unretained typeof(self) weakSelf = self;
     
-    [Tasks addTaskTitle:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids token:[self.token_dic valueForKey:@"tokenId"] callback:^(NSError *error, BOOL success) {
+    NSString* token = [self.token_dic valueForKey:@"token"];
+    
+    [Tasks addTaskTitle:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:priority id_category:category businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids token:token callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS ADD TASK");
             if ([Tasks.dict_error valueForKey:@"type"] != nil) {
@@ -332,6 +331,7 @@
                 
             } else {
                 newTask = Tasks.task;
+                weakSelf->_id_task = newTask.id_task;
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre tâche a été créée." preferredStyle:UIAlertControllerStyleAlert];
@@ -340,9 +340,6 @@
                         [weakSelf showSprintView];
                         scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
                         weakSelf->scrumBoardVC.comeAddTask = true;
-                        //scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
-                        //weakSelf->scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", weakSelf.cProject.id_project];
-                        //[weakSelf.navigationController pushViewController:weakSelf->scrumBoardVC animated:YES];
                         
                     }];
                     
@@ -367,11 +364,13 @@
 
 - (IBAction)deleteTask:(id)sender {
     
+    NSString* token = [self.token_dic valueForKey:@"token"];
+    
     newTask.id_task = self.id_task;
     
     NSLog(@"SPR %@", self.cSprint.id_sprint);
     
-    [Tasks deleteTaskWithId:[NSString stringWithFormat:@"%@", newTask.id_task] andIdSprint:[NSString stringWithFormat:@"%@", self.cSprint.id_sprint] token:[self.token_dic valueForKey:@"tpkenId"] callback:^(NSError *error, BOOL success) {
+    [Tasks deleteTaskWithId:[NSString stringWithFormat:@"%@", newTask.id_task] andIdSprint:[NSString stringWithFormat:@"%@", self.cSprint.id_sprint] token:token callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"DELETE TASK SUCCESS");
 
@@ -586,7 +585,7 @@
  * Priority segmented control
 **/
 - (IBAction)priorityChanged:(UISegmentedControl *)sender {
-    priority = [sender selectedSegmentIndex];
+    priority = [sender selectedSegmentIndex] + 1;
 }
 
 
