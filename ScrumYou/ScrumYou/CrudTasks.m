@@ -105,55 +105,39 @@
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"GET"];
     
-    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
+    NSError *error;
+    NSURLResponse *response;
+    NSData *data = [synchronousMethod sendSynchronousRequest:request returningResponse:&response error:&error];
+    
+    if (data) {
         NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
         
-        if (error != nil) {
-            NSLog(@"Error: %@", error.localizedDescription);
-            return;
-        }
-        
-        if (data == nil) {
-            return;
-        }
-        
-        if (response == nil) {
-            return;
-        }
-        
-        if ([jsonDict valueForKey:@"type"] != nil) {
-            _dict_error = jsonDict;
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            for (NSDictionary* tasks in jsonDict) {
-                NSString* tmp_id = [tasks valueForKey:@"id"];
-                NSString* tmp_title = [tasks valueForKey:@"title"];
-                NSString* tmp_description = [tasks valueForKey:@"description"];
-                NSString* tmp_difficulty = [tasks valueForKey:@"difficulty"];
-                NSString* tmp_priority = [tasks valueForKey:@"priority"];
-                NSString* tmp_id_category = [tasks valueForKey:@"id_category"];
-                NSString* tmp_businessValue = [tasks valueForKey:@"businessValue"];
-                NSString* tmp_duration = [tasks valueForKey:@"duration"];
-                NSString* tmp_status = [tasks valueForKey:@"status"];
-                NSString* tmp_id_creator = [tasks valueForKey:@"id_creator"];
-                NSString* tmp_taskDone = [jsonDict valueForKey:@"taskDone"];
-                NSMutableArray* tmp_id_members = [tasks valueForKey:@"id_members"];
-                
-                Task* t = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator taskDone:tmp_taskDone id_members:tmp_id_members];
-                
-                [self.tasksList addObject:t];
-
-            }
+        for (NSDictionary* tasks in jsonDict) {
+            NSString* tmp_id = [tasks valueForKey:@"id"];
+            NSString* tmp_title = [tasks valueForKey:@"title"];
+            NSString* tmp_description = [tasks valueForKey:@"description"];
+            NSString* tmp_difficulty = [tasks valueForKey:@"difficulty"];
+            NSString* tmp_priority = [tasks valueForKey:@"priority"];
+            NSString* tmp_id_category = [tasks valueForKey:@"id_category"];
+            NSString* tmp_businessValue = [tasks valueForKey:@"businessValue"];
+            NSString* tmp_duration = [tasks valueForKey:@"duration"];
+            NSString* tmp_status = [tasks valueForKey:@"status"];
+            NSString* tmp_id_creator = [tasks valueForKey:@"id_creator"];
+            NSString* tmp_taskDone = [jsonDict valueForKey:@"taskDone"];
+            NSMutableArray* tmp_id_members = [tasks valueForKey:@"id_members"];
             
-            callback(error, true);
-        });
+            Task* t = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator taskDone:tmp_taskDone id_members:tmp_id_members];
+            
+            [self.tasksList addObject:t];
+        }
         
-    }] resume];
-    
+        callback(error, true);
+    } else {
+        NSLog(@"Error: %@", error.localizedDescription);
+        return;
+    }
 }
 
 

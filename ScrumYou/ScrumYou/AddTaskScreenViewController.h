@@ -57,6 +57,7 @@
     UIBarButtonItem* _editButton;
     
     BOOL _status;
+    BOOL _editButtonIsHidden;
     
 }
 
@@ -73,6 +74,7 @@
 @property (weak, nonatomic) UISegmentedControl* prioritySegmentation;
 @property (weak, nonatomic) UISegmentedControl* categorySegmentation;
 @property (nonatomic) BOOL status;
+@property (nonatomic) BOOL editButtonIsHidden;
 @property (nonatomic, strong) Task* mTask;
 @property (nonatomic, strong) Project* cProject;
 @property (nonatomic, strong) Sprint* cSprint;

@@ -67,44 +67,11 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self != nil) {
         NSLog(@"INIT");
-        ProjectsCrud = [[CrudProjects alloc] init];
-        SprintsCrud = [[CrudSprints alloc] init];
-        TasksCrud = [[CrudTasks alloc] init];
         
         addProjectButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addProject:)];
         self.navigationItem.rightBarButtonItem = addProjectButton;
         addProjectButton.tintColor = [UIColor colorWithRed:0.15 green:0.22 blue:0.26 alpha:1.0];
         
-        
-        get_projects = [[NSMutableArray<Project*> alloc] init];
-        get_projects_by_user = [[NSMutableArray<Project*> alloc] init];
-        get_sprints = [[NSMutableArray<Sprint*> alloc] init];
-        get_tasks = [[NSMutableArray<Task*> alloc] init];
-        
-        finishedProject = [[NSMutableArray alloc] init];
-        progressProject = [[NSMutableArray alloc] init];
-        
-        task = [[Task alloc] init];
-        
-        [ProjectsCrud getProjects:^(NSError *error, BOOL success) {
-            if (success) {
-                get_projects = ProjectsCrud.projects_list;
-                NSLog(@"GET PROJECTS ARRAY : %@", get_projects);
-            }
-        }];
-        
-        [SprintsCrud getSprints:^(NSError *error, BOOL success) {
-            if (success) {
-                get_sprints = SprintsCrud.sprints_list;
-            }
-        }];
-        
-        [TasksCrud getTasks:^(NSError *error, BOOL success) {
-            if (success) {
-                get_tasks = TasksCrud.tasksList;
-            }
-        }];
-    
     }
     
     return self;
@@ -114,6 +81,42 @@
     
     [super viewDidLoad];
     [self designPage];
+    
+    ProjectsCrud = [[CrudProjects alloc] init];
+    SprintsCrud = [[CrudSprints alloc] init];
+    TasksCrud = [[CrudTasks alloc] init];
+    
+    
+    get_projects = [[NSMutableArray<Project*> alloc] init];
+    get_projects_by_user = [[NSMutableArray<Project*> alloc] init];
+    get_sprints = [[NSMutableArray<Sprint*> alloc] init];
+    get_tasks = [[NSMutableArray<Task*> alloc] init];
+    
+    finishedProject = [[NSMutableArray alloc] init];
+    progressProject = [[NSMutableArray alloc] init];
+    
+    task = [[Task alloc] init];
+    
+    [ProjectsCrud getProjects:^(NSError *error, BOOL success) {
+        if (success) {
+            get_projects = ProjectsCrud.projects_list;
+            NSLog(@"GET PROJECTS ARRAY : %@", get_projects);
+        }
+    }];
+    
+    [SprintsCrud getSprints:^(NSError *error, BOOL success) {
+        if (success) {
+            get_sprints = SprintsCrud.sprints_list;
+            NSLog(@"GET SPRINTS ARRAY : %@", get_sprints);
+        }
+    }];
+    
+    [TasksCrud getTasks:^(NSError *error, BOOL success) {
+        if (success) {
+            get_tasks = TasksCrud.tasksList;
+            NSLog(@"GET TASKS ARRAY : %@", get_tasks);
+        }
+    }];
     
     Auth = [[CrudAuth alloc] init];
     accountSettingsVC = [[AccountSettingsScreenViewController alloc] init];
@@ -135,8 +138,9 @@
     NSLog(@"GET USERS PROJECTS %@", get_projects_by_user);
     [self countProject];
     
-    [self.collectionView reloadData];
-    [self.otherCollectionView reloadData];
+    
+//    [self.collectionView reloadData];
+//    [self.otherCollectionView reloadData];
     
     [self updateViewConstraints];
     
@@ -319,11 +323,8 @@
     
 }
 
-
-- (IBAction)userSettings:(id)sender {
-    accountSettingsVC.token = self.token;
-    accountSettingsVC.projects_by_user = get_projects_by_user;
-    [self.navigationController pushViewController:accountSettingsVC animated:YES];
+- (IBAction)refreshUserHome:(id)sender {
+    [self viewDidLoad];
 }
 
 - (IBAction)searchProjects:(id)sender {
@@ -336,6 +337,12 @@
     [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     
+}
+
+- (IBAction)userSettings:(id)sender {
+    accountSettingsVC.token = self.token;
+    accountSettingsVC.projects_by_user = get_projects_by_user;
+    [self.navigationController pushViewController:accountSettingsVC animated:YES];
 }
 
 
