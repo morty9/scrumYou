@@ -200,7 +200,7 @@
 /*
  * UPDATE -> update project with id
  */
-- (void) updateProjectId:(NSString*)id_project title:(NSString*)title members:(NSMutableArray*)members token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) updateProjectId:(NSString*)id_project title:(NSString*)title id_creator:(NSString*)id_creator members:(NSMutableArray*)members token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSLog(@"ID_PROJECT %@", id_project);
     NSLog(@"TITLE %@", title);
@@ -211,7 +211,9 @@
     [request setHTTPMethod:@"PUT"];
     [request setValue:token forHTTPHeaderField:@"Authorization"];
     
-    NSDictionary<NSString*, NSString*> *jsonData = @{@"title" : title, @"id_members" : members};
+    NSDictionary<NSString*, NSString*> *jsonData = @{@"title" : title,
+                                                     @"id_creator" : id_creator,
+                                                     @"id_members" : members};
     
     NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
     [request setHTTPBody:postData];

@@ -11,7 +11,9 @@
 #import "UserHomeScreenViewController.h"
 #import "CrudAuth.h"
 #import "CrudUsers.h"
+#import "CrudProjects.h"
 #import "HomeScreenViewController.h"
+#import "Project.h"
 
 @interface AccountSettingsScreenViewController ()
 
@@ -22,18 +24,24 @@
 
 @implementation AccountSettingsScreenViewController {
     
-    NSDictionary* token;
+    //NSDictionary* token;
     User* currentUser;
     bool isToUpdate;
     
     CrudAuth* Auth;
     CrudUsers* UsersCrud;
+    CrudProjects* ProjectsCrud;
+    
+    NSString* newCreator;
     
     UIBarButtonItem* updateButtonEdit;
     UIBarButtonItem* updateButtonCancel;
+    
+    UIVisualEffectView *blurEffectView;
 }
 
 @synthesize token = _token;
+@synthesize projects_by_user = _projects_by_user;
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -42,7 +50,7 @@
         Auth = [[CrudAuth alloc] init];
         UsersCrud = [[CrudUsers alloc] init];
         currentUser = [[User alloc] init];
-
+        ProjectsCrud = [[CrudProjects alloc] init];
         
     }
     return self;
@@ -159,32 +167,78 @@
 - (IBAction)deleteAccountUser:(id)sender {
     NSString* tok = [_token valueForKey:@"token"];
     NSString* userId = [_token valueForKey:@"userId"];
+    NSString* tokenId = [_token valueForKey:@"id"];
+    
+    [self checkIfCreator];
+    
+    if (userId == currentUser.id_user) {
+        [Auth logout:tokenId tokenToken:tok callback:^(NSError *error, BOOL success) {
+            if (success) {
+                NSLog(@"LOGOUT OK !!!!!!!!!");
+                [UsersCrud deleteUserWithId:[NSString stringWithFormat:@"%@", userId] token:tok callback:^(NSError *error, BOOL success) {
+                    if (success) {
+                        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Suppression de l'utilisateur" message:@"La suppression de l'utilisateur a bien été prise en compte." preferredStyle:UIAlertControllerStyleAlert];
+                        
+                        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                            HomeScreenViewController* homeVc = [[HomeScreenViewController alloc] init];
+                            [self.navigationController pushViewController:homeVc animated:YES];
+                        }];
+                        
+                        [alert addAction:defaultAction];
+                        [self presentViewController:alert animated:YES completion:nil];
+                    }
+                }];
+            }
+        }];
+    } else {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Alerte !" message:@"Vous n'êtes pas l'utilisateur de ce compte." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            HomeScreenViewController* homeVc = [[HomeScreenViewController alloc] init];
+            [self.navigationController pushViewController:homeVc animated:YES];
+        }];
+        
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
 
-    [UsersCrud deleteUserWithId:[NSString stringWithFormat:@"%@", userId] token:tok callback:^(NSError *error, BOOL success) {
-        if (success) {
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Suppression de l'utilisateur" message:@"La suppression de l'utilisateur a bien été prise en compte." preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                HomeScreenViewController* homeVc = [[HomeScreenViewController alloc] init];
-                [self.navigationController pushViewController:homeVc animated:YES];
-            }];
-            
-            [alert addAction:defaultAction];
-            [self presentViewController:alert animated:YES completion:nil];
-        }
-    }];
+    
 }
 
+- (void) checkIfCreator {
+    NSString* tok = [_token valueForKey:@"token"];
+    
+    for (Project* project in self.projects_by_user) {
+        if (project.id_creator == [self.token valueForKey:@"userId"]) {
+            NSLog(@"Project creator before %@", project.id_creator);
+            project.id_creator = [project.id_members objectAtIndex:0];
+            NSLog(@"Project creator after %@", project.id_creator);
+        }
+        
+        NSMutableArray* newMembers = [[NSMutableArray alloc] init];
+        
+        for (NSString* members in project.id_members) {
+            if (members != [self.token valueForKey:@"userId"]) {
+                [newMembers addObject:members];
+            }
+        }
+        
+        NSLog(@"MEMBERS %@", newMembers);
+        
+        [ProjectsCrud updateProjectId:[NSString stringWithFormat:@"%@", project.id_project] title:project.title id_creator:project.id_creator members:newMembers token:tok callback:^(NSError *error, BOOL success) {
+            if (success) {
+                NSLog(@"UPDATE PROJECT USER CREATOR SUCCESS");
+            }
+        }];
+    }
+    
+    
+}
 
 
 - (void) designPage {
     
     self.navigationItem.title = [NSString stringWithFormat:@"Profil"];
-    
-    //edit button navbar
-//    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editProfil:)];
-//    editButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
-//    self.navigationItem.rightBarButtonItem = editButton;
     
     //image profil
     profilImage.layer.cornerRadius = profilImage.frame.size.width / 2;
@@ -198,15 +252,6 @@
     borderName.borderWidth = borderWidthName;
     [nameTextField.layer addSublayer:borderName];
     nameTextField.layer.masksToBounds = YES;
-    
-    //border firstname text field
-//    CALayer *borderFirstname = [CALayer layer];
-//    CGFloat borderWidthFirstname = 1;
-//    borderFirstname.borderColor = [UIColor darkGrayColor].CGColor;
-//    borderFirstname.frame = CGRectMake(0, firstnameTextField.frame.size.height - borderWidthFirstname, firstnameTextField.frame.size.width, firstnameTextField.frame.size.height);
-//    borderFirstname.borderWidth = borderWidthFirstname;
-//    [firstnameTextField.layer addSublayer:borderFirstname];
-//    firstnameTextField.layer.masksToBounds = YES;
     
     //border nickname text field
     CALayer *borderNickname = [CALayer layer];
@@ -238,18 +283,5 @@
     
 }
 
-- (void) editProfil {
-    
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

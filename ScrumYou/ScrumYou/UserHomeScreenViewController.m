@@ -326,6 +326,7 @@
 
 - (IBAction)userSettings:(id)sender {
     accountSettingsVC.token = self.token;
+    accountSettingsVC.projects_by_user = get_projects_by_user;
     [self.navigationController pushViewController:accountSettingsVC animated:YES];
 }
 
@@ -341,9 +342,6 @@
     
 }
 
-//- (IBAction)refreshUHView:(id)sender {
-//    [self viewWillAppear:YES];
-//}
 
 - (void) addProject:(id)sender {
     addProjectVC = [[AddProjectScreenViewController alloc] init];
