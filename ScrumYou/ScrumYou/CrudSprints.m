@@ -33,7 +33,7 @@
 /*
  *  POST -> add sprint to database
  */
-- (void) addSprintTitle:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) addSprintTitle:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSURL* url = [NSURL URLWithString:kSprint_api];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -46,6 +46,7 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
     [request setHTTPBody:postData];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
     
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
@@ -80,8 +81,6 @@
         
         self.sprint = [[Sprint alloc] initWithId:tmp_id title:tmp_title beginningDate:tmp_beginningDate endDate:tmp_endDate id_creator:tmp_id_creator id_listTasks:tmp_id_listTasks id_members:tmp_id_members];
         
-        NSLog(@"Sprint %@", self.sprint);
-      
         callback(error, true);
         
     }] resume];
@@ -221,7 +220,7 @@
 /*
  * UPDATE -> update sprint with id
  */
-- (void) updateSprintId:(NSString*)id_sprint title:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate id_members:(NSMutableArray*)id_members id_listTasks:(NSMutableArray*)id_listTasks callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) updateSprintId:(NSString*)id_sprint title:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate id_members:(NSMutableArray*)id_members id_listTasks:(NSMutableArray*)id_listTasks token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSLog(@"ID_SPRINT %@", id_sprint);
     NSLog(@"TITLE %@", title);
@@ -233,6 +232,7 @@
     NSURL *url = [NSURL URLWithString:[kSprint_api stringByAppendingString:[@"/" stringByAppendingString:id_sprint]]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"PUT"];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
     
     NSDictionary<NSString*, NSString*> *jsonData = @{@"id" : id_sprint,
                                                      @"title" : title,
@@ -273,11 +273,12 @@
 /*
  *  DELETE -> delete sprint by id
  */
-- (void) deleteSprintWithId:(NSString*)id_sprint callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) deleteSprintWithId:(NSString*)id_sprint token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSURL* url = [NSURL URLWithString:[kSprint_api stringByAppendingString:[@"/" stringByAppendingString:id_sprint]]];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"DELETE"];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
     
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         

@@ -88,8 +88,6 @@
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"GET"];
     
-//    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-    
     NSError *error;
     NSURLResponse *response;
     NSData *data = [synchronousMethod sendSynchronousRequest:request returningResponse:&response error:&error];
@@ -156,43 +154,6 @@
         NSLog(@"Error: %@", error.localizedDescription);
         return;
     }
-
-    
-//    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        
-//        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-//        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
-//        
-//        if (error != nil) {
-//            NSLog(@"Error: %@", error.localizedDescription);
-//            return;
-//        }
-//        
-//        if (data == nil) {
-//            return;
-//        }
-//        
-//        if (response == nil) {
-//            return;
-//        }
-//        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            NSString* tmp_id = [jsonDict valueForKey:@"id"];
-//            NSString* tmp_title = [jsonDict valueForKey:@"title"];
-//            NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
-//            NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
-//            NSMutableArray* tmp_id_sprints = [jsonDict valueForKey:@"id_sprint"];
-//            NSString* tmp_status = [jsonDict valueForKey:@"status"];
-//            
-//            self.project = [[Project alloc] initWithId:tmp_id title:tmp_title id_creator:tmp_id_creator id_members:tmp_id_members id_sprints:tmp_id_sprints status:tmp_status];
-//            
-//            NSLog(@"Project WS %@", self.project);
-//            
-//            callback(error, true);
-//        });
-//        
-//    }] resume];
     
 }
 

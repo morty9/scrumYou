@@ -33,13 +33,14 @@
 /*
  *  POST -> add task to database
  */
-- (void) addTaskTitle:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) addTaskTitle:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
     
     self.dict_error = [[NSDictionary alloc] init];
     
     NSURL* url = [NSURL URLWithString:kTask_api];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"POST"];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
     
     NSDictionary<NSString*, NSString*> *jsonData = @{@"title" : title,
                                                      @"description" : description,
@@ -91,49 +92,6 @@
         NSLog(@"Error: %@", error.localizedDescription);
         return;
     }
-    
-//    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        
-//        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-//        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
-//        
-//        if (error != nil) {
-//            NSLog(@"Error: %@", error.localizedDescription);
-//            return;
-//        }
-//        
-//        if (data == nil) {
-//            return;
-//        }
-//        
-//        if (response == nil) {
-//            return;
-//        }
-//       
-//        if ([jsonDict valueForKey:@"type"] != nil) {
-//            _dict_error = jsonDict;
-//        }
-//        
-//        NSString* tmp_id = [jsonDict valueForKey:@"id"];
-//        NSString* tmp_title = [jsonDict valueForKey:@"title"];
-//        NSString* tmp_description = [jsonDict valueForKey:@"description"];
-//        NSString* tmp_difficulty = [jsonDict valueForKey:@"difficulty"];
-//        NSString* tmp_priority = [jsonDict valueForKey:@"priority"];
-//        NSString* tmp_id_category = [jsonDict valueForKey:@"id_category"];
-//        NSString* tmp_businessValue = [jsonDict valueForKey:@"businessValue"];
-//        NSString* tmp_duration = [jsonDict valueForKey:@"duration"];
-//        NSString* tmp_status = [jsonDict valueForKey:@"status"];
-//        NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
-//        NSMutableArray* tmp_id_members = [jsonDict valueForKey:@"id_members"];
-//        
-//        Task* t = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
-//        
-//        self.task = t;
-//        
-//        callback(error, true);
-//        
-//    }] resume];
 
 }
 
@@ -246,60 +204,19 @@
         NSLog(@"Error: %@", error.localizedDescription);
         return;
     }
-    
-//    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        
-//        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-//        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
-//        
-//        if (error != nil) {
-//            NSLog(@"Error: %@", error.localizedDescription);
-//            return;
-//        }
-//        
-//        if (data == nil) {
-//            return;
-//        }
-//        
-//        if (response == nil) {
-//            return;
-//        }
-//        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            NSString* tmp_id = [jsonDict valueForKey:@"id"];
-//            NSString* tmp_title = [jsonDict valueForKey:@"title"];
-//            NSString* tmp_description = [jsonDict valueForKey:@"description"];
-//            NSString* tmp_difficulty = [jsonDict valueForKey:@"difficuty"];
-//            NSString* tmp_priority = [jsonDict valueForKey:@"priority"];
-//            NSString* tmp_id_category = [jsonDict valueForKey:@"id_category"];
-//            NSString* tmp_color = [jsonDict valueForKey:@"color"];
-//            NSString* tmp_businessValue = [jsonDict valueForKey:@"businessValue"];
-//            NSString* tmp_duration = [jsonDict valueForKey:@"duration"];
-//            NSString* tmp_status = [jsonDict valueForKey:@"status"];
-//            NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
-//            NSMutableArray<NSString*>* tmp_id_members = [jsonDict valueForKey:@"id_members"];
-//            
-//            self.task = [[Task alloc] initWithId:tmp_id title:tmp_title description:tmp_description difficulty:tmp_difficulty priority:tmp_priority id_category:tmp_id_category color:tmp_color businessValue:tmp_businessValue duration:tmp_duration status:tmp_status id_creator:tmp_id_creator id_members:tmp_id_members];
-//            
-//            callback(error, true);
-//        });
-//        
-//    }] resume];
-
-    
 }
 
 
 /*
  *  UPDATE -> update task with id
  */
-- (void) updateTaskId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members taskDone:(NSString*)taskDone callback:(void (^)(NSError *error, BOOL success))callback {
-    NSLog(@"STATUS STATUS : %@", status);
-    NSLog(@"ID ID : %@", id_task);
+- (void) updateTaskId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members taskDone:(NSString*)taskDone token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
+
+    
     NSURL *url = [NSURL URLWithString:[kTask_api stringByAppendingString:[@"/" stringByAppendingString:id_task]]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"PUT"];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
     
     NSDictionary<NSString*, NSString*> *jsonData = @{@"id" : id_task,
                                                      @"title" : title,
@@ -351,13 +268,14 @@
 /*
  *  DELETE -> delete task by id
  */
-- (void) deleteTaskWithId:(NSString*)id_task andIdSprint:(NSString*)id_sprint callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) deleteTaskWithId:(NSString*)id_task andIdSprint:(NSString*)id_sprint token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSString* extensionUrl = [@"/" stringByAppendingString:[id_task stringByAppendingString:[@"/" stringByAppendingString:id_sprint]]];
     NSLog(@"URL EXT %@", extensionUrl);
     NSURL* url = [NSURL URLWithString:[kTask_api stringByAppendingString:extensionUrl]];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"DELETE"];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
     
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         

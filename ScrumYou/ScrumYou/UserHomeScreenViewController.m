@@ -147,8 +147,6 @@
     self.navigationItem.title = [NSString stringWithFormat:@"Scrummary"];
     self.navigationItem.hidesBackButton = YES;
     
-    UIImage *cancel = [[UIImage imageNamed:@"logout-button.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
 }
 
 - (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView {

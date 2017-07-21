@@ -116,7 +116,7 @@
     NSString* end_dateString = [formatter stringFromDate:endDate];
     NSString* current_dateString = [formatter stringFromDate:currentDate];
     
-    [Sprints addSprintTitle:sprintNameTextField.text beginningDate:current_dateString endDate:end_dateString callback:^(NSError *error, BOOL success) {
+    [Sprints addSprintTitle:sprintNameTextField.text beginningDate:current_dateString endDate:end_dateString token:[self.token_dic valueForKey:@"tokenId"] callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS ADD SPRINT");
             NSMutableArray* sprints = [[NSMutableArray alloc] init];
@@ -350,16 +350,5 @@
     [self.navigationController pushViewController:scrumBoardVc animated:YES];
 }
 
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

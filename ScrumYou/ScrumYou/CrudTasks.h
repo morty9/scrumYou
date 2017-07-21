@@ -23,7 +23,7 @@
 /*
  *  POST -> add task to database
  */
-- (void) addTaskTitle:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) addTaskTitle:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
 /*
  *  GET -> get all tasks
  */
@@ -35,11 +35,11 @@
 /*
  *  UPDATE -> update task with id
  */
-- (void) updateTaskId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members taskDone:(NSString*)taskDone callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) updateTaskId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members taskDone:(NSString*)taskDone token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
 /*
  *  DELETE -> delete task by id
  */
-- (void) deleteTaskWithId:(NSString*)id_task andIdSprint:(NSString*)id_sprint callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) deleteTaskWithId:(NSString*)id_task andIdSprint:(NSString*)id_sprint token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
 
 @end
 
