@@ -338,6 +338,7 @@
     addTaskVC.status = 0;
     addTaskVC.cProject = project;
     addTaskVC.sprintsByProject = get_sprints;
+    NSLog(@"TOKEN ADD TASK %@", self.token);
     [self.navigationController pushViewController:addTaskVC animated:YES];
 }
 
