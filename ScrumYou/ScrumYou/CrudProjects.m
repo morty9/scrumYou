@@ -161,7 +161,7 @@
 /*
  * UPDATE -> update project with id
  */
-- (void) updateProjectId:(NSString*)id_project title:(NSString*)title id_creator:(NSString*)id_creator members:(NSMutableArray*)members token:(NSString*)token id_sprints:(NSMutableArray*)id_sprints callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) updateProjectId:(NSString*)id_project title:(NSString*)title id_creator:(NSString*)id_creator members:(NSMutableArray*)members token:(NSString*)token id_sprints:(NSMutableArray*)id_sprints status:(BOOL)status callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSLog(@"ID_PROJECT %@", id_project);
     NSLog(@"TITLE %@", title);
@@ -170,16 +170,17 @@
     NSURL *url = [NSURL URLWithString:[kProject_api stringByAppendingString:[@"/" stringByAppendingString:id_project]]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"PUT"];
-    [request setValue:token forHTTPHeaderField:@"Authorization"];
     
     NSDictionary<NSString*, NSString*> *jsonData = @{@"title" : title,
                                                      @"id_creator" : id_creator,
                                                      @"id_members" : members,
-                                                     @"id_sprint" : id_sprints};
+                                                     @"id_sprint" : id_sprints,
+                                                     @"status" : [NSString stringWithFormat:@"%d", status]};
     
     NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
     [request setHTTPBody:postData];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
     
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         

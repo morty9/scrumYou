@@ -292,12 +292,6 @@
     }
 }
 
-
-- (IBAction)addSprintButton:(id)sender {
-    
-}
-
-
 // Modify a project
 
 - (void) enableTextField:(id)sender {
@@ -365,6 +359,48 @@
     
 }
 
+- (IBAction)projectFinished:(id)sender {
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    NSString* token = [self.token_dic valueForKey:@"token"];
+    NSMutableArray* id_sprints = [weakSelf addSprintToCurrentProject];
+    
+    [weakSelf->ProjectsCrud updateProjectId:[NSString stringWithFormat:@"%@",weakSelf.currentProject.id_project] title:nameTextField.text id_creator:weakSelf.currentProject.id_creator members:weakSelf.currentProject.id_members token:token id_sprints:id_sprints status:YES callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"SUCCESS ADD PROJECT");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([ProjectsCrud.dict_error valueForKey:@"type"] != nil) {
+                    NSString* title = [weakSelf->ProjectsCrud.dict_error valueForKey:@"title"];
+                    NSString* message = [weakSelf->ProjectsCrud.dict_error valueForKey:@"message"];
+                    
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    
+                } else {
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Projet terminé" message:@"Votre projet a été placé dans les projets terminés avec succès." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        userHomeVC = [[UserHomeScreenViewController alloc] init];
+                        weakSelf->userHomeVC.token = weakSelf.token_dic;
+                        [weakSelf.navigationController pushViewController:weakSelf->userHomeVC animated:YES];
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    
+                }
+            });
+        }
+    }];
+
+}
+
 - (void) updateProject {
     
     __unsafe_unretained typeof(self) weakSelf = self;
@@ -372,7 +408,7 @@
     NSString* token = [self.token_dic valueForKey:@"token"];
     NSMutableArray* id_sprints = [weakSelf addSprintToCurrentProject];
     
-    [weakSelf->ProjectsCrud updateProjectId:[NSString stringWithFormat:@"%@",weakSelf.currentProject.id_project] title:nameTextField.text id_creator:weakSelf.currentProject.id_creator members:weakSelf->ids token:token id_sprints:id_sprints callback:^(NSError *error, BOOL success) {
+    [weakSelf->ProjectsCrud updateProjectId:[NSString stringWithFormat:@"%@",weakSelf.currentProject.id_project] title:nameTextField.text id_creator:weakSelf.currentProject.id_creator members:weakSelf->ids token:token id_sprints:id_sprints status:NO callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS ADD PROJECT");
             dispatch_async(dispatch_get_main_queue(), ^{
