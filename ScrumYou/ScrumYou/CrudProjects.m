@@ -161,7 +161,7 @@
 /*
  * UPDATE -> update project with id
  */
-- (void) updateProjectId:(NSString*)id_project title:(NSString*)title id_creator:(NSString*)id_creator members:(NSMutableArray*)members token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) updateProjectId:(NSString*)id_project title:(NSString*)title id_creator:(NSString*)id_creator members:(NSMutableArray*)members token:(NSString*)token id_sprints:(NSMutableArray*)id_sprints callback:(void (^)(NSError *error, BOOL success))callback {
     
     NSLog(@"ID_PROJECT %@", id_project);
     NSLog(@"TITLE %@", title);
@@ -174,7 +174,8 @@
     
     NSDictionary<NSString*, NSString*> *jsonData = @{@"title" : title,
                                                      @"id_creator" : id_creator,
-                                                     @"id_members" : members};
+                                                     @"id_members" : members,
+                                                     @"id_sprint" : id_sprints};
     
     NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
     [request setHTTPBody:postData];
