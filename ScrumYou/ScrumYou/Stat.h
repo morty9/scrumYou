@@ -10,16 +10,11 @@
 
 @interface Stat : NSObject {
     NSString* _id_stats;
-    NSMutableArray* _id_listTasks;
-    NSString* _sprintDuration;
-    NSString* _beginningDateProject;
+    NSString* _id_project;
 }
 
 @property (nonatomic, strong) NSString* id_stats;
-@property (nonatomic, strong) NSMutableArray* id_listTasks;
-@property (nonatomic, strong) NSString* sprintDuration;
-@property (nonatomic, strong) NSString* beginningDateProject;
+@property (nonatomic, strong) NSString* id_project;
 
-- (instancetype) initWithId:(NSString*)id_stats id_listTasks:(NSMutableArray*)id_listTasks sprintDuration:(NSString*)sprintDuration beginningDateProject:(NSString*)beginningDateProject;
-
+- (instancetype) initWithId:(NSString*)id_stats id_project:(NSString*)id_project;
 @end

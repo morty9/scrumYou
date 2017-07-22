@@ -112,9 +112,8 @@
             NSString* tmp_endDate = [sprint valueForKey:@"endDate"];
             NSString* tmp_id_creator = [sprint valueForKey:@"id_creator"];
             NSMutableArray* tmp_id_listTasks = [sprint valueForKey:@"id_listTasks"];
-            NSMutableArray* tmp_id_members = [sprint valueForKey:@"id_members"];
             
-            Sprint* s = [[Sprint alloc] initWithId:tmp_id title:tmp_title beginningDate:tmp_beginningDate endDate:tmp_endDate id_creator:tmp_id_creator id_listTasks:tmp_id_listTasks id_members:tmp_id_members];
+            Sprint* s = [[Sprint alloc] initWithId:tmp_id title:tmp_title beginningDate:tmp_beginningDate endDate:tmp_endDate id_creator:tmp_id_creator id_listTasks:tmp_id_listTasks];
             
             [self.sprints_list addObject:s];
         }

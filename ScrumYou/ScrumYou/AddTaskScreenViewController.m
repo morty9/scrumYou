@@ -208,12 +208,30 @@
 - (IBAction)validateSprint:(id)sender {
 
     NSLog(@"id task %@", self.id_task);
+    NSLog(@"id current sprint %@", self.cSprint.id_sprint);
     
     NSString* token = [self.token_dic valueForKey:@"token"];
     NSMutableArray* list_task = [[NSMutableArray alloc] init];
+    NSMutableArray* list_tasksCurrentSprint = [[NSMutableArray alloc] initWithArray:self.cSprint.id_listTasks];
+    
+    if (spr.id_sprint != self.cSprint.id_sprint && self.cSprint.id_sprint != nil) {
+        for (int i = 0; i < self.cSprint.id_listTasks.count ; i++) {
+            if (self.cSprint.id_listTasks[i] == self.id_task) {
+                NSLog(@"ARRAY BEFORE %@", list_tasksCurrentSprint);
+                [list_tasksCurrentSprint removeObjectAtIndex:i];
+                NSLog(@"ARRAY AFTER %@", list_tasksCurrentSprint);
+            }
+        }
+        [Sprints updateSprintId:[NSString stringWithFormat:@"%@", self.cSprint.id_sprint] title:self.cSprint.title beginningDate:self.cSprint.beginningDate endDate:self.cSprint.endDate id_listTasks:list_tasksCurrentSprint token:token callback:^(NSError *error, BOOL success) {
+            if (success) {
+                NSLog(@"OLD SPRINTS UPDATES");
+            }
+        }];
+    }
+
     
     if (![spr.id_listTasks isKindOfClass:[NSNull class]]) {
-        NSMutableArray* list_task = spr.id_listTasks;
+        list_task = [[NSMutableArray alloc] initWithArray: spr.id_listTasks];
         
         for (int i = 0; i < list_task.count; i++) {
             if (list_task[i] == newTask.id_task) {

@@ -11,20 +11,16 @@
 @implementation Stat
 
 @synthesize id_stats = _id_stats;
-@synthesize id_listTasks = _id_listTasks;
-@synthesize sprintDuration = _sprintDuration;
-@synthesize beginningDateProject = _beginningDateProject;
+@synthesize id_project = _id_project;
 
 
-- (instancetype) initWithId:(NSString*)id_stats id_listTasks:(NSMutableArray*)id_listTasks sprintDuration:(NSString*)sprintDuration beginningDateProject:(NSString*)beginningDateProject {
+- (instancetype) initWithId:(NSString*)id_stats id_project:(NSString*)id_project {
     
     self = [super init];
     
     if (self != nil) {
         self.id_stats = id_stats;
-        self.id_listTasks = id_listTasks;
-        self.sprintDuration = sprintDuration;
-        self.beginningDateProject = beginningDateProject;
+        self.id_project = id_project;
     }
     
     return self;
