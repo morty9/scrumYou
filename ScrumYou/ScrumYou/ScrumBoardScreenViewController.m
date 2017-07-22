@@ -138,6 +138,7 @@
     PageContentViewController *startingViewController = [self viewControllerAtIndex:0];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+
     
     // Change the size of page view controller
     self.pageViewController.view.frame = CGRectMake(0, 30, self.view.frame.size.width, self.view.frame.size.height - 75);
@@ -163,7 +164,6 @@
             }
         }];
     }
-    
 }
 
 - (void) getTasksBySprint:(NSMutableArray*)get_sprint {
@@ -185,70 +185,82 @@
 
 - (void) initializeDictionarys:(NSArray*)tasks andSprint:(NSArray*)sprints {
 
-    if (sprints.count == 0) {
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Sprint manquant" message:@"Pour accéder au Scrum Board vous devez créer au moins un sprint" preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            projectSettingsVC = [[ProjectSettingsScreenViewController alloc] init];
-            projectSettingsVC.token_dic = _token;
-            //projectSettingsVC.current_project = [NSString stringWithFormat:@"%@", project.id_project];
-            [self.navigationController pushViewController:projectSettingsVC animated:YES];
-            
-        }];
-        
-        [alert addAction:defaultAction];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    
-    for (int i = (int)sprints.count-1; i >= 0; i--) {
-        NSLog(@"SPRINT ID %@", [sprints[i] valueForKey:@"id_sprint"]);
-        
-        arrayTodo = [[NSMutableArray alloc] init];
-        arrayProgress = [[NSMutableArray alloc] init];
-        arrayDone = [[NSMutableArray alloc] init];
-        
-        if (![[sprints[i] valueForKey:@"id_listTasks"] isKindOfClass:[NSNull class]]) {
-            for (NSNumber* idT in [sprints[i] valueForKey:@"id_listTasks"]) {
-                for (Task* t in tasks) {
-                    if ([t.id_task isEqual:idT]) {
-                        if ([[t valueForKey:@"status"] isEqual: @"A faire"]) {
-                            [arrayTodo addObject:t];
-                            [tasks_array_todo setObject:arrayTodo forKey:[sprints[i] valueForKey:@"title"]];
-                        } else if ([[t valueForKey:@"status"] isEqual:@"En cours"]) {
-                            [arrayProgress addObject:t];
-                            [tasks_array_progress setObject:arrayProgress forKey:[sprints[i] valueForKey:@"title"]];
-                        } else {
-                            [arrayDone addObject:t];
-                            [tasks_array_done setObject:arrayDone forKey:[sprints[i] valueForKey:@"title"]];
+    if (sprints.count != 0) {
+        for (int i = (int)sprints.count-1; i >= 0; i--) {
+            NSLog(@"SPRINT ID %@", [sprints[i] valueForKey:@"id_sprint"]);
+            if ([sprints[i] valueForKey:@"id_sprint"] != nil) {
+                arrayTodo = [[NSMutableArray alloc] init];
+                arrayProgress = [[NSMutableArray alloc] init];
+                arrayDone = [[NSMutableArray alloc] init];
+                
+                if (![[sprints[i] valueForKey:@"id_listTasks"] isKindOfClass:[NSNull class]]) {
+                    for (NSNumber* idT in [sprints[i] valueForKey:@"id_listTasks"]) {
+                        for (Task* t in tasks) {
+                            if ([t.id_task isEqual:idT]) {
+                                if ([[t valueForKey:@"status"] isEqual: @"A faire"]) {
+                                    [arrayTodo addObject:t];
+                                    [tasks_array_todo setObject:arrayTodo forKey:[sprints[i] valueForKey:@"title"]];
+                                } else if ([[t valueForKey:@"status"] isEqual:@"En cours"]) {
+                                    [arrayProgress addObject:t];
+                                    [tasks_array_progress setObject:arrayProgress forKey:[sprints[i] valueForKey:@"title"]];
+                                } else {
+                                    [arrayDone addObject:t];
+                                    [tasks_array_done setObject:arrayDone forKey:[sprints[i] valueForKey:@"title"]];
+                                }
+                            }
                         }
                     }
                 }
+                
+                if (arrayTodo.count == 0) {
+                    Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:@"" businessValue:@"" duration:@"" status:@"" id_creator:@"" taskDone:nil id_members:nil];
+                    NSLog(@"empty task %@", emptyTask.title);
+                    [arrayTodo addObject:emptyTask];
+                    [tasks_array_todo setObject:arrayTodo forKey:[sprints[i] valueForKey:@"title"]];
+                }
+                
+                if (arrayProgress.count == 0) {
+                    Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:@"" businessValue:@"" duration:@"" status:@"" id_creator:@"" taskDone:nil id_members:nil];
+                    NSLog(@"empty task %@", emptyTask.title);
+                    [arrayProgress addObject:emptyTask];
+                    [tasks_array_progress setObject:arrayProgress forKey:[sprints[i] valueForKey:@"title"]];
+                }
+                
+                if (arrayDone.count == 0) {
+                    Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:@"" businessValue:@"" duration:@"" status:@"" id_creator:@"" taskDone:nil id_members:nil];
+                    NSLog(@"empty task %@", emptyTask.title);
+                    [arrayDone addObject:emptyTask];
+                    [tasks_array_done setObject:arrayDone forKey:[sprints[i] valueForKey:@"title"]];
+                }
+                
+            } else {
+                [self sprintNil];
             }
+            
         }
+    } else {
         
-        if (arrayTodo.count == 0) {
-            Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:@"" businessValue:@"" duration:@"" status:@"" id_creator:@"" taskDone:nil id_members:nil];
-            NSLog(@"empty task %@", emptyTask.title);
-            [arrayTodo addObject:emptyTask];
-            [tasks_array_todo setObject:arrayTodo forKey:[sprints[i] valueForKey:@"title"]];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+        [self sprintNil];    
+        });
         
-        if (arrayProgress.count == 0) {
-            Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:@"" businessValue:@"" duration:@"" status:@"" id_creator:@"" taskDone:nil id_members:nil];
-            NSLog(@"empty task %@", emptyTask.title);
-            [arrayProgress addObject:emptyTask];
-            [tasks_array_progress setObject:arrayProgress forKey:[sprints[i] valueForKey:@"title"]];
-        }
-        
-        if (arrayDone.count == 0) {
-            Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:@"" businessValue:@"" duration:@"" status:@"" id_creator:@"" taskDone:nil id_members:nil];
-            NSLog(@"empty task %@", emptyTask.title);
-            [arrayDone addObject:emptyTask];
-            [tasks_array_done setObject:arrayDone forKey:[sprints[i] valueForKey:@"title"]];
-        }
-
     }
     
+}
+
+- (void) sprintNil {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Sprint manquant" message:@"Pour accéder au Scrum Board vous devez créer au moins un sprint" preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        projectSettingsVC.token_dic = _token;
+        projectSettingsVC.currentProject = project;
+        [self.navigationController pushViewController:projectSettingsVC animated:YES];
+            
+    }];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - Page View Controller Data Source
