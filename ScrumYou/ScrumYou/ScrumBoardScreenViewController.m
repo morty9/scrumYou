@@ -15,6 +15,7 @@
 #import "PageContentViewController.h"
 #import "PageViewController.h"
 #import "CrudTasks.h"
+#import "CrudStats.h"
 #import "CrudAuth.h"
 #import "Task.h"
 #import "Sprint.h"
@@ -46,6 +47,7 @@
     CrudProjects* ProjectsCrud;
     CrudSprints* SprintsCrud;
     CrudAuth* Auth;
+    CrudStats* Stats;
     
     Project* project;
     
@@ -75,6 +77,7 @@
         ProjectsCrud = [[CrudProjects alloc] init];
         SprintsCrud = [[CrudSprints alloc] init];
         Auth = [[CrudAuth alloc] init];
+        Stats = [[CrudStats alloc] init];
         
         get_tasks = [[NSMutableArray<Task*> alloc] init];
         get_sprints = [[NSMutableArray<Sprint*> alloc] init];
@@ -112,6 +115,12 @@
             [self getSprintsByProject:project.id_sprints];
             [self getTasksBySprint:get_sprints];
             [self initializeDictionarys:get_tasks andSprint:get_sprints];
+        }
+    }];
+    
+    [Stats addStats:[NSString stringWithFormat:@"%@", self.id_project] token:[self.token valueForKey:@"token"] callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"STATS SUCCESS");
         }
     }];
     
