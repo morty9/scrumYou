@@ -19,6 +19,7 @@
 #import "CrudSprints.h"
 #import "CrudTasks.h"
 #import "CrudAuth.h"
+#import "CrudStats.h"
 #import "Task.h"
 #import "SynchronousMethod.h"
 
@@ -32,6 +33,7 @@
     CrudSprints* SprintsCrud;
     CrudTasks* TasksCrud;
     CrudAuth* Auth;
+    CrudStats* Stats;
     
     NSMutableArray<Project*>* get_projects;
     NSMutableArray<Project*>* get_projects_by_user;
@@ -48,6 +50,7 @@
     UIBarButtonItem* addProjectButton;
     
     Task* task;
+    Project* currentDataProject;
     
     AccountSettingsScreenViewController* accountSettingsVC;
     ScrumBoardScreenViewController* scrumBoardVC;
@@ -85,7 +88,7 @@
     ProjectsCrud = [[CrudProjects alloc] init];
     SprintsCrud = [[CrudSprints alloc] init];
     TasksCrud = [[CrudTasks alloc] init];
-    
+    Stats = [[CrudStats alloc] init];
     
     get_projects = [[NSMutableArray<Project*> alloc] init];
     get_projects_by_user = [[NSMutableArray<Project*> alloc] init];
@@ -96,6 +99,7 @@
     progressProject = [[NSMutableArray alloc] init];
     
     task = [[Task alloc] init];
+    currentDataProject = [[Project alloc] init];
     
     [ProjectsCrud getProjects:^(NSError *error, BOOL success) {
         if (success) {
@@ -224,8 +228,10 @@
     } else {
         if (collectionView == self.collectionView) {
             project = [progressProject objectAtIndex:indexPath.row];
+            [cell.buttonStats addTarget:self action:@selector(addStatsProgress:) forControlEvents:UIControlEventTouchUpInside];
         } else {
             project = [finishedProject objectAtIndex:indexPath.row];
+            [cell.buttonStats addTarget:self action:@selector(addStatsFinished:) forControlEvents:UIControlEventTouchUpInside];
         }
 
     }
@@ -248,6 +254,81 @@
     
     return cell;
     
+}
+
+- (void) addStatsProgress:(UIButton*)sender {
+    
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.collectionView];
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:buttonPosition];
+    
+    NSLog(@"INDEX PATH %@", indexPath);
+    
+    currentDataProject = [self collectionView:self.collectionView didSelect:indexPath];
+    
+    NSLog(@"PROJET SELECTED %@", currentDataProject.title);
+    
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    [Stats addStats:[NSString stringWithFormat:@"%@", currentDataProject.id_project] token:[self.token valueForKey:@"token"] callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"STATS SUCCESS");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Données envoyées" message:@"Vos données ont bien été envoyées. Pour les consulter, veuillez vous rendre sur l'application Evolution" preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                }];
+                
+                [alert addAction:defaultAction];
+                [weakSelf presentViewController:alert animated:YES completion:nil];
+            });
+        }
+    }];
+}
+
+- (void) addStatsFinished:(UIButton*)sender {
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.otherCollectionView];
+    NSIndexPath *indexPath = [self.otherCollectionView indexPathForItemAtPoint:buttonPosition];
+    
+    currentDataProject = [self collectionView:self.otherCollectionView didSelect:indexPath];
+    
+    NSLog(@"PROJET SELECTED %@", currentDataProject.title);
+    
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    [Stats addStats:[NSString stringWithFormat:@"%@", currentDataProject.id_project] token:[self.token valueForKey:@"token"] callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"STATS SUCCESS");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Données envoyées" message:@"Vos données ont bien été envoyées. Pour les consulter, veuillez vous rendre sur l'application Evolution" preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [weakSelf presentViewController:alert animated:YES completion:nil];
+            });
+        }
+    }];
+    
+}
+
+- (Project*) collectionView:(UICollectionView *)collectionView didSelect:(NSIndexPath *)indexPath {
+        Project* data = nil;
+        if(self.searchController.isActive) {
+            if (collectionView == self.collectionView) {
+                data = [searchResultsProgress objectAtIndex:indexPath.row];
+            } else {
+                data = [searchResultsFinished objectAtIndex:indexPath.row];
+            }
+        }else {
+            if (collectionView == self.collectionView) {
+                data = [progressProject objectAtIndex:indexPath.row];
+            } else {
+                data = [finishedProject objectAtIndex:indexPath.row];
+            }
+        }
+    
+    return data;
 }
 
 - (void) getSprintsById:(NSArray*)array_sprints {
