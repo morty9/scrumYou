@@ -118,12 +118,6 @@
         }
     }];
     
-    [Stats addStats:[NSString stringWithFormat:@"%@", self.id_project] token:[self.token valueForKey:@"token"] callback:^(NSError *error, BOOL success) {
-        if (success) {
-            NSLog(@"STATS SUCCESS");
-        }
-    }];
-    
     [self designPage];
     
     NSLog(@"USER TOKEN SB %@", _token);

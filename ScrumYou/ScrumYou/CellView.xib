@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -108,6 +108,14 @@
                         <color key="textColor" red="0.1473388931411071" green="0.65208597715736039" blue="0.085212301413461006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HxY-lI-Nsh">
+                        <rect key="frame" x="153" y="89" width="22" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="22" id="1gq-Iq-s7X"/>
+                            <constraint firstAttribute="height" constant="22" id="ks7-Ks-KLF"/>
+                        </constraints>
+                        <state key="normal" image="stats"/>
+                    </button>
                 </subviews>
             </view>
             <color key="backgroundColor" white="0.83269427882300484" alpha="0.41515946061643838" colorSpace="calibratedWhite"/>
@@ -124,23 +132,29 @@
                 <constraint firstItem="gP7-yo-ZnP" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="DUf-0X-6oR"/>
                 <constraint firstItem="KmK-lk-cYg" firstAttribute="top" secondItem="5Uj-br-TcN" secondAttribute="bottom" constant="-7" id="FAl-rj-Q0l"/>
                 <constraint firstItem="gIF-ZK-V05" firstAttribute="top" secondItem="l3O-Dc-IQ3" secondAttribute="bottom" constant="-7" id="FOz-U2-E4A"/>
+                <constraint firstItem="HxY-lI-Nsh" firstAttribute="top" secondItem="gP7-yo-ZnP" secondAttribute="bottom" constant="47" id="FqN-B5-UJk"/>
                 <constraint firstItem="FhE-nl-eOp" firstAttribute="top" secondItem="gP7-yo-ZnP" secondAttribute="bottom" constant="42" id="HRA-Ln-Hp9"/>
                 <constraint firstItem="FhE-nl-eOp" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="MoZ-Ad-jpT"/>
+                <constraint firstAttribute="trailing" secondItem="HxY-lI-Nsh" secondAttribute="trailing" constant="25" id="OGk-7x-xdD"/>
                 <constraint firstItem="STK-F8-pMQ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="PDH-dE-yRr"/>
+                <constraint firstItem="l3O-Dc-IQ3" firstAttribute="top" secondItem="HxY-lI-Nsh" secondAttribute="bottom" constant="34" id="UGf-d2-Nnh"/>
                 <constraint firstItem="l3O-Dc-IQ3" firstAttribute="leading" secondItem="KmK-lk-cYg" secondAttribute="trailing" constant="17" id="XCj-zk-7c1"/>
                 <constraint firstItem="DtD-a7-IcL" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="c49-u7-4sR"/>
+                <constraint firstItem="HxY-lI-Nsh" firstAttribute="trailing" secondItem="l3O-Dc-IQ3" secondAttribute="trailing" constant="-5" id="cq7-0w-69I"/>
                 <constraint firstItem="5Uj-br-TcN" firstAttribute="top" secondItem="gP7-yo-ZnP" secondAttribute="bottom" constant="103" id="dfV-88-hVB"/>
                 <constraint firstItem="STK-F8-pMQ" firstAttribute="top" secondItem="gP7-yo-ZnP" secondAttribute="bottom" constant="103" id="jHL-HL-2V5"/>
                 <constraint firstAttribute="trailing" secondItem="gP7-yo-ZnP" secondAttribute="trailing" constant="8" id="lYq-wD-5C1"/>
                 <constraint firstAttribute="bottom" secondItem="gP7-yo-ZnP" secondAttribute="bottom" constant="158" id="nIm-BB-7oM"/>
                 <constraint firstItem="5Uj-br-TcN" firstAttribute="leading" secondItem="STK-F8-pMQ" secondAttribute="trailing" constant="14" id="nbK-Rg-kNZ"/>
                 <constraint firstItem="DtD-a7-IcL" firstAttribute="top" secondItem="FhE-nl-eOp" secondAttribute="bottom" constant="-7" id="pko-uO-p75"/>
+                <constraint firstAttribute="bottom" secondItem="HxY-lI-Nsh" secondAttribute="bottom" constant="89" id="qiT-e0-p0N"/>
                 <constraint firstItem="l3O-Dc-IQ3" firstAttribute="leading" secondItem="5Uj-br-TcN" secondAttribute="trailing" constant="14" id="vg8-Et-4PY"/>
                 <constraint firstAttribute="trailing" secondItem="l3O-Dc-IQ3" secondAttribute="trailing" constant="20" id="wDf-4j-glq"/>
                 <constraint firstAttribute="trailing" secondItem="gIF-ZK-V05" secondAttribute="trailing" constant="20" id="wIh-9W-9hT"/>
             </constraints>
             <size key="customSize" width="200" height="200"/>
             <connections>
+                <outlet property="buttonStats" destination="HxY-lI-Nsh" id="Tre-Fj-z3I"/>
                 <outlet property="label" destination="gP7-yo-ZnP" id="eUq-qf-2w0"/>
                 <outlet property="nSprint" destination="DtD-a7-IcL" id="QmD-S0-af8"/>
                 <outlet property="nTaskDone" destination="gIF-ZK-V05" id="Yuc-uQ-tdp"/>
@@ -150,4 +164,7 @@
             <point key="canvasLocation" x="109" y="232"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="stats" width="16" height="16"/>
+    </resources>
 </document>

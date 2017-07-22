@@ -21,7 +21,6 @@
     __weak IBOutlet UIDatePicker *sprintEndDate;
     
     __weak IBOutlet UIButton *editButtonMembers;
-    __weak IBOutlet UIButton *addSprintButton;
     __weak IBOutlet UIButton *validateModification;
     
     Project* _currentProject;

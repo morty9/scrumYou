@@ -15,6 +15,7 @@
 @synthesize nTaskTodo = _nTaskTodo;
 @synthesize nTaskProgress = _nTaskProgress;
 @synthesize nTaskDone = _nTaskDone;
+@synthesize buttonStats = buttonStats;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
