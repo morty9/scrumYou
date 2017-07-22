@@ -34,7 +34,7 @@
 /*
  * UPDATE -> update project with id
  */
-- (void) updateProjectId:(NSString*)id_project title:(NSString*)title id_creator:(NSString*)id_creator members:(NSMutableArray*)members token:(NSString*)token id_sprints:(NSMutableArray*)id_sprints callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) updateProjectId:(NSString*)id_project title:(NSString*)title id_creator:(NSString*)id_creator members:(NSMutableArray*)members token:(NSString*)token id_sprints:(NSMutableArray*)id_sprints status:(BOOL)status callback:(void (^)(NSError *error, BOOL success))callback;
 /*
  *  DELETE -> delete project by id
  */

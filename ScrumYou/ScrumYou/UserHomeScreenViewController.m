@@ -143,8 +143,8 @@
     [self countProject];
     
     
-//    [self.collectionView reloadData];
-//    [self.otherCollectionView reloadData];
+    [self.collectionView reloadData];
+    [self.otherCollectionView reloadData];
     
     [self updateViewConstraints];
     
