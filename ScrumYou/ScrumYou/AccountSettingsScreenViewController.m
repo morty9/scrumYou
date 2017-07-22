@@ -224,7 +224,7 @@
         
         NSLog(@"MEMBERS %@", newMembers);
         
-        [ProjectsCrud updateProjectId:[NSString stringWithFormat:@"%@", project.id_project] title:project.title id_creator:project.id_creator members:newMembers token:tok callback:^(NSError *error, BOOL success) {
+        [ProjectsCrud updateProjectId:[NSString stringWithFormat:@"%@", project.id_project] title:project.title id_creator:project.id_creator members:newMembers token:tok id_sprints:project.id_sprints callback:^(NSError *error, BOOL success) {
             if (success) {
                 NSLog(@"UPDATE PROJECT USER CREATOR SUCCESS");
             }

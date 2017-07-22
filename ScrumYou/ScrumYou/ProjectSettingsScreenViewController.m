@@ -10,9 +10,11 @@
 #import "HomeScreenViewController.h"
 #import "APIKeys.h"
 #import "Project.h"
+#import "Sprint.h"
 #import "CrudUsers.h"
 #import "CrudProjects.h"
 #import "CrudSprints.h"
+#import "UserHomeScreenViewController.h"
 
 @interface ProjectSettingsScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating>
 
@@ -32,6 +34,8 @@
     NSDate* currentDate;
     NSDate* endDate;
     
+    UserHomeScreenViewController* userHomeVC;
+    
     UIVisualEffectView *blurEffectView;
     
     NSInteger nMember;
@@ -44,6 +48,8 @@
     
     UIBarButtonItem* updateButtonEdit;
     UIBarButtonItem* updateButtonCancel;
+    
+    Sprint* newSprint;
     
     bool hasClickedOnModifyButton;
     
@@ -64,6 +70,8 @@
         UsersCrud = [[CrudUsers alloc] init];
         ProjectsCrud = [[CrudProjects alloc] init];
         SprintsCrud = [[CrudSprints alloc] init];
+        
+        userHomeVC = [[UserHomeScreenViewController alloc] init];
         
     }
     
@@ -286,23 +294,7 @@
 
 
 - (IBAction)addSprintButton:(id)sender {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    currentDate = [NSDate date];
-    endDate = [sprintEndDate date];
-    NSString* end_dateString = [formatter stringFromDate:endDate];
-    NSString* current_dateString = [formatter stringFromDate:currentDate];
     
-    NSString* token = [self.token_dic valueForKey:@"token"];
-    
-    [SprintsCrud addSprintTitle:sprintNameTextField.text beginningDate:current_dateString endDate:end_dateString token:token callback:^(NSError *error, BOOL success) {
-        if (success) {
-            NSLog(@"SUCCESS ADD SPRINT");
-        }
-    }];
-    
-    sprintNameTextField.text = @"";
-    endDate = currentDate;
 }
 
 
@@ -313,7 +305,6 @@
         validateModification.hidden = false;
         nameTextField.enabled = true;
         nameTextField.textColor = [UIColor lightGrayColor];
-        membersCount.enabled = true;
         membersCount.textColor = [UIColor lightGrayColor];
         editButtonMembers.enabled = true;
         
@@ -321,11 +312,12 @@
         self.navigationItem.rightBarButtonItem = updateButtonCancel;
         
     } else {
+        NSLog(@"USERS IN %@", users_in);
         validateModification.hidden = true;
         nameTextField.enabled = false;
         nameTextField.textColor = [UIColor blackColor];
         nameTextField.text = self.currentProject.title;
-        membersCount.enabled = false;
+        membersCount.text = [@(nMemberProject)stringValue];
         membersCount.textColor = [UIColor blackColor];
         editButtonMembers.enabled = false;
         
@@ -341,35 +333,105 @@
  *  IBAction -> Update project in database
  *  Call updateProject web service
  **/
-/*- (IBAction)validationModification:(id)sender {
+- (IBAction)validationModification:(id)sender {
     if (ids.count == 0) {
         for (NSString* usr in users_in) {
             [ids addObject:[usr valueForKey:@"id_user"]];
         }
     }
-    [ProjectsCrud updateProjectId:idProject title:nameTextField.text members:ids token:[self.token_dic valueForKey:@"token"] callback:^(NSError *error, BOOL success) {
-        NSLog(@"SUCCESS UPDATE");
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Modification terminée"message:@"Les modifications de votre projet ont été prises en compte." preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                [self viewDidLoad];
-            }];
-            
-            [alert addAction:defaultAction];
-            [self presentViewController:alert animated:YES completion:nil];
-
-        });
-    }];
+    
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    currentDate = [NSDate date];
+    endDate = [sprintEndDate date];
+    NSString* end_dateString = [formatter stringFromDate:endDate];
+    NSString* current_dateString = [formatter stringFromDate:currentDate];
+    NSString* token = [self.token_dic valueForKey:@"token"];
+    
+    
+    if ([sprintNameTextField.text  isEqual:@""] || ([sprintEndDate date] == currentDate)) {
+        [weakSelf updateProject];
+    } else {
+        [SprintsCrud addSprintTitle:sprintNameTextField.text beginningDate:current_dateString endDate:end_dateString token:token callback:^(NSError *error, BOOL success) {
+            if (success) {
+                NSLog(@"SUCCESS ADD SPRINT");
+                newSprint = SprintsCrud.sprint;
+                [weakSelf updateProject];
+            }
+        }];
+    }
+    
 }
+
+- (void) updateProject {
+    
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    NSString* token = [self.token_dic valueForKey:@"token"];
+    NSMutableArray* id_sprints = [weakSelf addSprintToCurrentProject];
+    
+    [weakSelf->ProjectsCrud updateProjectId:[NSString stringWithFormat:@"%@",weakSelf.currentProject.id_project] title:nameTextField.text id_creator:weakSelf.currentProject.id_creator members:weakSelf->ids token:token id_sprints:id_sprints callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"SUCCESS ADD PROJECT");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([ProjectsCrud.dict_error valueForKey:@"type"] != nil) {
+                    NSString* title = [weakSelf->ProjectsCrud.dict_error valueForKey:@"title"];
+                    NSString* message = [weakSelf->ProjectsCrud.dict_error valueForKey:@"message"];
+                    
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    
+                } else {
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Modification réussie" message:@"Votre projet a été modifié avec succès." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        userHomeVC = [[UserHomeScreenViewController alloc] init];
+                        weakSelf->userHomeVC.token = weakSelf.token_dic;
+                        [weakSelf.navigationController pushViewController:weakSelf->userHomeVC animated:YES];
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    
+                }
+            });
+        }
+    }];
+
+    
+}
+
+- (NSMutableArray*) addSprintToCurrentProject {
+    
+    NSMutableArray* list_sprints = [NSMutableArray new];
+    
+    if (![self.currentProject.id_sprints isKindOfClass:[NSNull class]]) {
+        list_sprints = [[NSMutableArray alloc] initWithArray:self.currentProject.id_sprints];
+    }
+    
+    if (newSprint.id_sprint != nil) {
+        [list_sprints addObject:newSprint.id_sprint];
+    }
+    
+    return list_sprints;
+}
+
+
 - (IBAction)deleteProject:(id)sender {
-    
-    
+ 
+ 
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation supression" message:@"Êtes-vous sûr de vouloir supprimer ce projet ?" preferredStyle: UIAlertControllerStyleAlert];
         
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [ProjectsCrud deleteProjectWithId:idProject token:[self.token_dic valueForKey:@"token"] callback:^(NSError *error, BOOL success) {
+        [ProjectsCrud deleteProjectWithId:[NSString stringWithFormat:@"%@", self.currentProject.id_project] token:[self.token_dic valueForKey:@"token"] callback:^(NSError *error, BOOL success) {
             if (success) {
                 NSLog(@"SUCCESS DELETE");
                 //TODO!!!!!!!!!!!!!!!!!!!!!
@@ -385,7 +447,7 @@
     [alert addAction:defaultAction];
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
-}*/
+}
 
 
 - (void) designPage {
