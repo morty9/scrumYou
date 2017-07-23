@@ -646,8 +646,9 @@
         [ProjectsCrud deleteProjectWithId:[NSString stringWithFormat:@"%@", self.currentProject.id_project] token:[self.token_dic valueForKey:@"token"] callback:^(NSError *error, BOOL success) {
             if (success) {
                 NSLog(@"SUCCESS DELETE");
-                //TODO!!!!!!!!!!!!!!!!!!!!!
-                NSLog(@"RETURN TO HOME USER SCREEN");
+                userHomeVC = [[UserHomeScreenViewController alloc] init];
+                userHomeVC.token = self.token_dic;
+                [self.navigationController pushViewController:userHomeVC animated:YES];
             }
         }];
     }];
