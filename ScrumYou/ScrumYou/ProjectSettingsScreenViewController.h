@@ -22,6 +22,8 @@
     
     __weak IBOutlet UIButton *editButtonMembers;
     __weak IBOutlet UIButton *validateModification;
+    __weak IBOutlet UIView *sprintsView;
+    __weak IBOutlet UITableView *sprintsTableView;
     
     Project* _currentProject;
     

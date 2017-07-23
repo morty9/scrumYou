@@ -31,7 +31,7 @@
     pageControl.currentPageIndicatorTintColor = [UIColor darkGrayColor];
     pageControl.backgroundColor = [UIColor clearColor];
     
-    HomeScreenViewController* tvb = [[HomeScreenViewController alloc] init];
+    LoginScreenViewController* tvb = [[LoginScreenViewController alloc] init];
     UIWindow* w = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     w.rootViewController = [[UINavigationController alloc] initWithRootViewController:tvb];
     [w makeKeyAndVisible];

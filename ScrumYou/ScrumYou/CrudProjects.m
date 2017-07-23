@@ -166,6 +166,8 @@
     NSLog(@"ID_PROJECT %@", id_project);
     NSLog(@"TITLE %@", title);
     NSLog(@"MEMBERS %@", members);
+    NSLog(@"SPRINTS %@", id_sprints);
+    
     
     NSURL *url = [NSURL URLWithString:[kProject_api stringByAppendingString:[@"/" stringByAppendingString:id_project]]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -182,7 +184,31 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:token forHTTPHeaderField:@"Authorization"];
     
-    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSError *error;
+    NSURLResponse *response;
+    NSData *data = [synchronousMethod sendSynchronousRequest:request returningResponse:&response error:&error];
+    
+    if(data){
+        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+        
+        if ([jsonDict valueForKey:@"type"] != nil) {
+            _dict_error = jsonDict;
+        }
+        
+        callback(error, true);
+    }
+    else{
+        NSLog(@"Error: %@", error.localizedDescription);
+        return;
+    }
+    
+    /*[[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
         
         if (error != nil) {
             NSLog(@"Error: %@", error.localizedDescription);
@@ -197,9 +223,13 @@
             return;
         }
         
+        if ([jsonDict valueForKey:@"type"] != nil) {
+            _dict_error = jsonDict;
+        }
+        
         callback(error, true);
         
-    }] resume];
+    }] resume];*/
     
 }
 

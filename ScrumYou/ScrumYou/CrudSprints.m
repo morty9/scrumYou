@@ -74,7 +74,7 @@
         NSString* tmp_id = [jsonDict valueForKey:@"id"];
         NSString* tmp_title = [jsonDict valueForKey:@"title"];
         NSString* tmp_beginningDate = [jsonDict valueForKey:@"beginningDate"];
-        NSString* tmp_endDate = [jsonDict valueForKey:@"endDate"];
+        NSDate* tmp_endDate = [jsonDict valueForKey:@"endDate"];
         NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
         NSMutableArray* tmp_id_listTasks = [jsonDict valueForKey:@"id_listTasks"];
         
@@ -109,7 +109,7 @@
             NSString* tmp_id = [sprint valueForKey:@"id"];
             NSString* tmp_title = [sprint valueForKey:@"title"];
             NSString* tmp_beginningDate = [sprint valueForKey:@"beginningDate"];
-            NSString* tmp_endDate = [sprint valueForKey:@"endDate"];
+            NSDate* tmp_endDate = [sprint valueForKey:@"endDate"];
             NSString* tmp_id_creator = [sprint valueForKey:@"id_creator"];
             NSMutableArray* tmp_id_listTasks = [sprint valueForKey:@"id_listTasks"];
             
@@ -148,7 +148,7 @@
         NSString* tmp_id = [jsonDict valueForKey:@"id"];
         NSString* tmp_title = [jsonDict valueForKey:@"title"];
         NSString* tmp_beginningDate = [jsonDict valueForKey:@"beginningDate"];
-        NSString* tmp_endDate = [jsonDict valueForKey:@"endDate"];
+        NSDate* tmp_endDate = [jsonDict valueForKey:@"endDate"];
         NSString* tmp_id_creator = [jsonDict valueForKey:@"id_creator"];
         NSMutableArray* tmp_id_listTasks = [jsonDict valueForKey:@"id_listTasks"];
         

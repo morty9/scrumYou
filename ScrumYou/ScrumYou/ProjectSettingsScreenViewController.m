@@ -25,6 +25,7 @@
     
     NSMutableArray<User*>* get_users;
     NSMutableArray<User*>* users_in;
+    NSMutableArray<Sprint*>* get_sprints;
     
     NSMutableArray* members;
     NSMutableArray* ids;
@@ -35,6 +36,7 @@
     NSDate* endDate;
     
     UserHomeScreenViewController* userHomeVC;
+    ProjectSettingsScreenViewController* projectSettingsVC;
     
     UIVisualEffectView *blurEffectView;
     
@@ -50,8 +52,10 @@
     UIBarButtonItem* updateButtonCancel;
     
     Sprint* newSprint;
+    Sprint* sprintSelected;
     
     bool hasClickedOnModifyButton;
+    bool toAdd;
     
 }
 
@@ -65,6 +69,7 @@
         get_users = [[NSMutableArray<User*> alloc] init];
         users_in = [[NSMutableArray<User*> alloc] init];
         members = [[NSMutableArray<User*> alloc] init];
+        get_sprints = [[NSMutableArray<Sprint*> alloc] init];
         ids = [[NSMutableArray alloc] init];
         
         UsersCrud = [[CrudUsers alloc] init];
@@ -84,6 +89,9 @@
     membersTableView.delegate = self;
     membersTableView.dataSource = self;
     
+    sprintsTableView.delegate = self;
+    sprintsTableView.dataSource = self;
+    
     [self designPage];
     
     hasClickedOnModifyButton = NO;
@@ -96,12 +104,13 @@
     self.navigationItem.rightBarButtonItem = updateButtonEdit;
     updateButtonCancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(enableTextField:)];
     
-    get_users = [[NSMutableArray<User*> alloc] init];
-    users_in = [[NSMutableArray<User*> alloc] init];
-    members = [[NSMutableArray<User*> alloc] init];
-    ids = [[NSMutableArray alloc] init];
+//    get_users = [[NSMutableArray<User*> alloc] init];
+//    users_in = [[NSMutableArray<User*> alloc] init];
+//    members = [[NSMutableArray<User*> alloc] init];
+//    ids = [[NSMutableArray alloc] init];
     
     nMember = 0;
+    toAdd = false;
     
     [UsersCrud getUsers:^(NSError *error, BOOL success) {
         if (success) {
@@ -110,9 +119,11 @@
     }];
     
     [self displayTitleProject:self.currentProject];
+    [self getSprintByProject];
     [self getUserByProject];
     
     [membersTableView reloadData];
+    [sprintsTableView reloadData];
 }
 
 /*
@@ -144,6 +155,18 @@
     }
 }
 
+- (void) getSprintByProject {
+    for (NSNumber* sprints in self.currentProject.id_sprints) {
+        NSString* result = [@"/" stringByAppendingString:[NSString stringWithFormat:@"%@",[sprints stringValue]]];
+        [SprintsCrud getSprintById:result callback:^(NSError *error, BOOL success) {
+            if (success) {
+                NSLog(@"SUCCESS GET SPRINT");
+                [get_sprints addObject:SprintsCrud.sprint];
+            }
+        }];
+    }
+}
+
 
 /*
  *  IBAction -> button "+" show members windows
@@ -171,7 +194,11 @@
     if(self.searchController.isActive) {
         return searchResults.count;
     }else {
-        return [get_users count];
+        if (tableView == membersView) {
+            return [get_users count];
+        } else {
+            return [get_sprints count];
+        }
     }
 }
 
@@ -186,22 +213,28 @@
     }
     
     User* username;
+    Sprint* sprint;
     if(self.searchController.isActive) {
         username = [searchResults objectAtIndex:indexPath.row];
     }else {
-        username = [get_users objectAtIndex:indexPath.row];
-    }
-    
-    for (User* user in users_in) {
-        if ([user.fullname isEqualToString:[get_users objectAtIndex:indexPath.row].fullname]) {
-            cell.textLabel.text = [NSString stringWithFormat:@"%@", username.fullname];
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            nMember+=1;
-            [members addObject:user.fullname];
-        }else {
-            cell.textLabel.text = [NSString stringWithFormat:@"%@", username.fullname];
+        if (tableView == membersView) {
+            username = [get_users objectAtIndex:indexPath.row];
+            for (User* user in users_in) {
+                if ([user.fullname isEqualToString:[get_users objectAtIndex:indexPath.row].fullname]) {
+                    cell.textLabel.text = [NSString stringWithFormat:@"%@", username.fullname];
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    nMember+=1;
+                    [members addObject:user.fullname];
+                }else {
+                    cell.textLabel.text = [NSString stringWithFormat:@"%@", username.fullname];
+                }
+                
+            }
+        } else {
+            sprint = [get_sprints objectAtIndex:indexPath.row];
+            cell.textLabel.text = [NSString stringWithFormat:@"%@", sprint.title];
         }
-
+        
     }
 
     return cell;
@@ -210,16 +243,50 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [membersTableView cellForRowAtIndexPath:indexPath];
-    if (cell.accessoryType) {
-        cell.accessoryType = NO;
-        [members removeObject:cell.textLabel.text];
-        nMember-=1;
+
+    if (tableView == membersView) {
+        if (cell.accessoryType) {
+            cell.accessoryType = NO;
+            [members removeObject:cell.textLabel.text];
+            nMember-=1;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            [members addObject:cell.textLabel.text];
+            nMember+=1;
+        }
+
     } else {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        [members addObject:cell.textLabel.text];
-        nMember+=1;
+        sprintSelected = [get_sprints objectAtIndex:indexPath.row];
+        [self modifySprint];
+        sprintNameTextField.text = sprintSelected.title;
+//        NSLog(@"DATE BDD  %@", sprintSelected.endDate);
+//        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+//        [formatter setDateFormat:@"yyyy-MM-dd"];
+//        NSString* dateString = [formatter stringFromDate:sprintSelected.endDate];
+//        NSLog(@"date sprint %@", dateString);
+//        NSString *date = [self convertDate:@"2010-08-24T00:00:00.0000Z" fromFormat:@"yyyy-MM-dd'T'HH:mm:ssZ" toFormat:@"hh:mm a"];
+        //[sprintEndDate setDate:sprintSelected.endDate];
     }
 }
+
+//- (NSString *)convertDate:(NSString *)inDateString
+//               fromFormat:(NSString *)fromFormat
+//                 toFormat:(NSString *)toFormat
+//{
+//    NSDateFormatter *dateFormatter = nil;
+//    NSString *outDateString = nil;
+//    NSDate *date = nil;
+//    
+//    dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:fromFormat];
+//    
+//    date = [dateFormatter dateFromString:inDateString];
+//    
+//    [dateFormatter setDateFormat:toFormat];
+//    outDateString = [dateFormatter stringFromDate:date];
+//    
+//    return outDateString;
+//}
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchString = searchController.searchBar.text;
@@ -323,11 +390,72 @@
     
 }
 
-/**
- *  IBAction -> Update project in database
- *  Call updateProject web service
- **/
-- (IBAction)validationModification:(id)sender {
+
+/*
+ *  SPRINTS VIEW
+ */
+
+- (void)modifySprint {
+    [self getUsername];
+    [sprintsView setHidden:false];
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = self.view.bounds;
+    
+    [self.view insertSubview:blurEffectView belowSubview:sprintsView];
+}
+
+
+- (IBAction)addSprint:(id)sender {
+    toAdd = true;
+    [self getUsername];
+    [sprintsView setHidden:false];
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = self.view.bounds;
+    
+    [self.view insertSubview:blurEffectView belowSubview:sprintsView];
+}
+
+- (void) hideSprintView {
+    [get_sprints removeAllObjects];
+    [self getSprintByProject];
+    [sprintsView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    [sprintsTableView reloadData];
+}
+
+- (void) validModifSprint {
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    currentDate = [NSDate date];
+    endDate = [sprintEndDate date];
+    NSString* end_dateString = [formatter stringFromDate:endDate];
+    NSString* token = [self.token_dic valueForKey:@"token"];
+    
+    [SprintsCrud updateSprintId:[NSString stringWithFormat:@"%@", sprintSelected.id_sprint] title:sprintNameTextField.text beginningDate:sprintSelected.beginningDate endDate:end_dateString id_listTasks:sprintSelected.id_listTasks token:token callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"UPDATE SPRINTS OK");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Sprint mis à jour" message:@"Votre sprint a été mis à jour avec succès." preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    //[get_sprints removeAllObjects];
+                    //[self getSprintByProject];
+                    [self hideSprintView];
+                }];
+                
+                [alert addAction:defaultAction];
+                [self presentViewController:alert animated:YES completion:nil];
+            });
+        }
+    }];
+    
+    toAdd = false;
+}
+
+- (void) validAddSprint {
     if (ids.count == 0) {
         for (NSString* usr in users_in) {
             [ids addObject:[usr valueForKey:@"id_user"]];
@@ -346,17 +474,61 @@
     
     
     if ([sprintNameTextField.text  isEqual:@""] || ([sprintEndDate date] == currentDate)) {
-        [weakSelf updateProject];
+        [self updateProject];
     } else {
         [SprintsCrud addSprintTitle:sprintNameTextField.text beginningDate:current_dateString endDate:end_dateString token:token callback:^(NSError *error, BOOL success) {
             if (success) {
                 NSLog(@"SUCCESS ADD SPRINT");
                 newSprint = SprintsCrud.sprint;
-                [weakSelf updateProject];
+                NSString* token = [weakSelf.token_dic valueForKey:@"token"];
+                NSMutableArray* id_sprints = [weakSelf addSprintToCurrentProject];
+                
+                if (ids.count == 0) {
+                    ids = weakSelf.currentProject.id_members;
+                }
+                
+                //NSLog(@"ids %@", ids);
+                
+                [weakSelf->ProjectsCrud updateProjectId:[NSString stringWithFormat:@"%@",weakSelf.currentProject.id_project] title:weakSelf->nameTextField.text id_creator:weakSelf.currentProject.id_creator members:weakSelf->ids token:token id_sprints:id_sprints status:NO callback:^(NSError *error, BOOL success) {
+                    if (success) {
+                        NSLog(@"SUCCESS ADD PROJECT");
+                    }
+                }];
+                //[weakSelf updateProject];
+                //[weakSelf->get_sprints removeAllObjects];
+                //[weakSelf getSprintByProject];
+                //[weakSelf hideSprintView];
             }
         }];
     }
+}
+
+- (IBAction)validationSprintView {
+    if (toAdd == true) {
+        [self validAddSprint];
+    } else {
+        [self validModifSprint];
+    }
     
+}
+
+
+- (IBAction)closeSprintView:(id)sender {
+    [sprintsView setHidden:true];
+    [blurEffectView removeFromSuperview];
+    if(self.searchController.isActive) {
+        [self.searchController setActive:NO];
+    }
+}
+
+
+
+/**
+ *  IBAction -> Add sprints in database
+ *  Call AddSprint web service
+ **/
+- (IBAction)finalValidation:(id)sender {
+    [self updateProject];
 }
 
 - (IBAction)projectFinished:(id)sender {
@@ -403,18 +575,22 @@
 
 - (void) updateProject {
     
-    __unsafe_unretained typeof(self) weakSelf = self;
-    
     NSString* token = [self.token_dic valueForKey:@"token"];
-    NSMutableArray* id_sprints = [weakSelf addSprintToCurrentProject];
+    NSMutableArray* id_sprints = [self addSprintToCurrentProject];
     
-    [weakSelf->ProjectsCrud updateProjectId:[NSString stringWithFormat:@"%@",weakSelf.currentProject.id_project] title:nameTextField.text id_creator:weakSelf.currentProject.id_creator members:weakSelf->ids token:token id_sprints:id_sprints status:NO callback:^(NSError *error, BOOL success) {
+    if (ids.count == 0) {
+        ids = self.currentProject.id_members;
+    }
+    
+    NSLog(@"ids %@", ids);
+    
+    [ProjectsCrud updateProjectId:[NSString stringWithFormat:@"%@",self.currentProject.id_project] title:nameTextField.text id_creator:self.currentProject.id_creator members:ids token:token id_sprints:id_sprints status:NO callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS ADD PROJECT");
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([ProjectsCrud.dict_error valueForKey:@"type"] != nil) {
-                    NSString* title = [weakSelf->ProjectsCrud.dict_error valueForKey:@"title"];
-                    NSString* message = [weakSelf->ProjectsCrud.dict_error valueForKey:@"message"];
+                    NSString* title = [ProjectsCrud.dict_error valueForKey:@"title"];
+                    NSString* message = [ProjectsCrud.dict_error valueForKey:@"message"];
                     
                     UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
                     
@@ -423,19 +599,19 @@
                     }];
                     
                     [alert addAction:defaultAction];
-                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    [self presentViewController:alert animated:YES completion:nil];
                     
                 } else {
                     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Modification réussie" message:@"Votre projet a été modifié avec succès." preferredStyle:UIAlertControllerStyleAlert];
                     
                     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                         userHomeVC = [[UserHomeScreenViewController alloc] init];
-                        weakSelf->userHomeVC.token = weakSelf.token_dic;
-                        [weakSelf.navigationController pushViewController:weakSelf->userHomeVC animated:YES];
+                        userHomeVC.token = self.token_dic;
+                        [self.navigationController pushViewController:userHomeVC animated:YES];
                     }];
                     
                     [alert addAction:defaultAction];
-                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    [self presentViewController:alert animated:YES completion:nil];
                     
                 }
             });

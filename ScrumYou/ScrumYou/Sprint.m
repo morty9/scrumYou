@@ -17,7 +17,7 @@
 @synthesize id_creator = _id_creator;
 @synthesize id_listTasks = _id_listTasks;
 
-- (instancetype) initWithId:(NSString*)id_sprint title:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate id_creator:(NSString*)id_creator id_listTasks:(NSMutableArray*)id_listTasks {
+- (instancetype) initWithId:(NSString*)id_sprint title:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSDate*)endDate id_creator:(NSString*)id_creator id_listTasks:(NSMutableArray*)id_listTasks {
     
     self = [super init];
     
