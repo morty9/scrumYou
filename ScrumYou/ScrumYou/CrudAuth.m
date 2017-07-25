@@ -13,18 +13,20 @@
 @implementation CrudAuth
 
 @synthesize token = _token;
+@synthesize dict_error = _dict_error;
 
 - (instancetype) init {
     self = [super init];
     
     if (self != nil) {
-        
+        self.dict_error = [[NSDictionary alloc] init];
     }
     return self;
 }
 
 - (void) login:(NSString*)email password:(NSString*)password callback:(void (^)(NSError *error, BOOL success))callback {
     
+    self.dict_error = [[NSDictionary alloc] init];
     self.token = [[NSDictionary alloc] init];
     
     NSURL *url = [NSURL URLWithString:kAuthLogin_api];
@@ -57,8 +59,13 @@
             return;
         }
         
+        if ([jsonDict valueForKey:@"type"] != nil) {
+            _dict_error = jsonDict;
+        }
+        
         NSLog(@"JSON DICT %@", jsonDict);
         self.token = jsonDict;
+        
         
         callback(error, true);
         

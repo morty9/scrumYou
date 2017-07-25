@@ -14,6 +14,7 @@
 #import "Project.h"
 #import "AccountSettingsScreenViewController.h"
 #import "AddProjectScreenViewController.h"
+#import "ErrorsViewController.h"
 
 @interface LoginScreenViewController ()
 
@@ -32,6 +33,7 @@
     AddProjectScreenViewController* addProjectVC;
     AccountSettingsScreenViewController* accountSettings;
     UserHomeScreenViewController* userHomeVC;
+    ErrorsViewController* errors;
 
 }
 
@@ -42,6 +44,9 @@
     if (self != nil) {
         
         ProjectsCrud = [[CrudProjects alloc] init];
+        
+        errors = [[ErrorsViewController alloc] init];
+        
         get_project = [[NSMutableArray<Project*> alloc] init];
         userHaveProject = false;
         
@@ -73,20 +78,25 @@
             if (success) {
                 NSLog(@"CONNECTED");
                 NSLog(@"AUTH TOKEN %@", Auth.token);
-                addProjectVC.token_dic = Auth.token;
-                userHomeVC.token = Auth.token;
-                
-                
-                [self checkIfMemberHaveProject:get_project tokenActive:Auth.token];
-                
-                
-                if (userHaveProject == true) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.navigationController pushViewController:userHomeVC animated:YES];
-                    });
+                if ([Auth.dict_error valueForKey:@"type"] != nil) {
+                    [errors bddErrorsTitle:[Auth.dict_error valueForKey:@"title"] message:[Auth.dict_error valueForKey:@"message"] viewController:self];
                 } else {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.navigationController pushViewController:addProjectVC animated:YES];
+                        addProjectVC.token_dic = Auth.token;
+                        userHomeVC.token = Auth.token;
+                        
+                        [self checkIfMemberHaveProject:get_project tokenActive:Auth.token];
+                        
+                        
+                        if (userHaveProject == true) {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self.navigationController pushViewController:userHomeVC animated:YES];
+                            });
+                        } else {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self.navigationController pushViewController:addProjectVC animated:YES];
+                            });
+                        }
                     });
                 }
             }

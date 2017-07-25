@@ -43,6 +43,7 @@
 		08E23AD51E708483007534E0 /* SignUpScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08E23AD31E708483007534E0 /* SignUpScreenViewController.xib */; };
 		08E7A5361EC7699400A87DA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08E7A5351EC7699400A87DA0 /* Assets.xcassets */; };
 		08FB03CE1ED9AC6F00D30A19 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB03CD1ED9AC6F00D30A19 /* User.m */; };
+		08FD63CC1F26C066004DDBF9 /* ErrorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FD63CB1F26C066004DDBF9 /* ErrorsViewController.m */; };
 		BB09D45D1F0E8C6A009D4CC2 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D45C1F0E8C6A009D4CC2 /* Task.m */; };
 		BB09D4611F0F8ED1009D4CC2 /* Sprint.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D4601F0F8ED1009D4CC2 /* Sprint.m */; };
 		BB09D4691F0F934E009D4CC2 /* Stat.m in Sources */ = {isa = PBXBuildFile; fileRef = BB09D4681F0F934E009D4CC2 /* Stat.m */; };
@@ -120,6 +121,8 @@
 		08E7A5351EC7699400A87DA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		08FB03CC1ED9AC6F00D30A19 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		08FB03CD1ED9AC6F00D30A19 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		08FD63CA1F26C066004DDBF9 /* ErrorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorsViewController.h; sourceTree = "<group>"; };
+		08FD63CB1F26C066004DDBF9 /* ErrorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorsViewController.m; sourceTree = "<group>"; };
 		BB09D45B1F0E8C6A009D4CC2 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		BB09D45C1F0E8C6A009D4CC2 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 		BB09D45F1F0F8ED1009D4CC2 /* Sprint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprint.h; sourceTree = "<group>"; };
@@ -369,6 +372,7 @@
 				08E23AAC1E708338007534E0 /* AppDelegate.m */,
 				0861BAA71EF0433D0077D43B /* WebServicesMethods */,
 				086A02B11ED314AE00BC675D /* APIKey */,
+				08FD63C61F26BF27004DDBF9 /* Errors */,
 				08E23ABF1E708359007534E0 /* HomeScreen */,
 				08E23AC51E7083F1007534E0 /* LoginScreen */,
 				08E23AD01E70846C007534E0 /* SignUpScreen */,
@@ -435,6 +439,15 @@
 				08FB03CD1ED9AC6F00D30A19 /* User.m */,
 			);
 			name = Users;
+			sourceTree = "<group>";
+		};
+		08FD63C61F26BF27004DDBF9 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				08FD63CA1F26C066004DDBF9 /* ErrorsViewController.h */,
+				08FD63CB1F26C066004DDBF9 /* ErrorsViewController.m */,
+			);
+			name = Errors;
 			sourceTree = "<group>";
 		};
 		BB09D45A1F0E8C38009D4CC2 /* Tasks */ = {
@@ -582,6 +595,7 @@
 				0885DFD51F12DED800AEF8B6 /* ScrumBoardCell.m in Sources */,
 				08B07FB31F1643D3007451FC /* SynchronousMethod.m in Sources */,
 				08C2C8711E7087E200609F97 /* ProjectSettingsScreenViewController.m in Sources */,
+				08FD63CC1F26C066004DDBF9 /* ErrorsViewController.m in Sources */,
 				08C2C85F1E70875F00609F97 /* UserHomeScreenViewController.m in Sources */,
 				08E23AD41E708483007534E0 /* SignUpScreenViewController.m in Sources */,
 			);

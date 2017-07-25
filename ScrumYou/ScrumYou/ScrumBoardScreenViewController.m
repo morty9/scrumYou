@@ -131,7 +131,13 @@
     
     PageContentViewController *startingViewController = [self viewControllerAtIndex:0];
     NSArray *viewControllers = @[startingViewController];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    
+    //if ([[viewControllers objectAtIndex:0] objectAtIndex:0] != nil) {
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    //} else {
+     //   [self sprintNil];
+    //}
+    
 
     
     // Change the size of page view controller
@@ -234,27 +240,37 @@
         }
     } else {
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        //dispatch_async(dispatch_get_main_queue(), ^{
         [self sprintNil];    
-        });
+        //});
         
     }
     
 }
 
 - (void) sprintNil {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Sprint manquant" message:@"Pour accéder au Scrum Board vous devez créer au moins un sprint" preferredStyle:UIAlertControllerStyleAlert];
-        
-        
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        projectSettingsVC.token_dic = _token;
-        projectSettingsVC.currentProject = project;
-        [self.navigationController pushViewController:projectSettingsVC animated:YES];
-            
-    }];
+//    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Sprint manquant" message:@"Pour accéder au Scrum Board vous devez créer au moins un sprint" preferredStyle:UIAlertControllerStyleAlert];
+//        
+//        
+//    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+//        projectSettingsVC.token_dic = _token;
+//        projectSettingsVC.currentProject = project;
+//        [self.navigationController pushViewController:projectSettingsVC animated:YES];
+//            
+//    }];
+//    
+//    [alert addAction:defaultAction];
+//    [self presentViewController:alert animated:YES completion:nil];
     
-    [alert addAction:defaultAction];
-    [self presentViewController:alert animated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Données envoyées" message:@"Vos données ont bien été envoyées. Pour les consulter, veuillez vous rendre sur l'application Evolution" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        }];
+        
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    });
 }
 
 #pragma mark - Page View Controller Data Source

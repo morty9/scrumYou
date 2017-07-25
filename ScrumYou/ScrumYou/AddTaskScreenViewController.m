@@ -9,6 +9,7 @@
 #import "AddTaskScreenViewController.h"
 #import "ScrumBoardScreenViewController.h"
 #import "UserHomeScreenViewController.h"
+#import "ErrorsViewController.h"
 #import "APIKeys.h"
 #import "CrudUsers.h"
 #import "CrudTasks.h"
@@ -23,6 +24,7 @@
 @implementation AddTaskScreenViewController {
     ScrumBoardScreenViewController* scrumBoardVC;
     UserHomeScreenViewController* userHomeVC;
+    ErrorsViewController* errors;
     
     NSMutableArray<User*>* get_users;
     NSMutableArray<Sprint*>* get_sprints;
@@ -87,6 +89,8 @@
         Users = [[CrudUsers alloc] init];
         Tasks = [[CrudTasks alloc] init];
         Sprints = [[CrudSprints alloc] init];
+        
+        errors = [[ErrorsViewController alloc] init];
         
         newTask = [[Task alloc] init];
         spr = [[Sprint alloc] init];
@@ -292,17 +296,8 @@
         if (success) {
             NSLog(@"UPDATE SUCCESS");
             if ([Tasks.dict_error valueForKey:@"type"] != nil) {
-                NSString* title = [Tasks.dict_error valueForKey:@"title"];
-                NSString* message = [Tasks.dict_error valueForKey:@"message"];
                 
-                UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-                
-                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                    
-                }];
-                
-                [alert addAction:defaultAction];
-                [self presentViewController:alert animated:YES completion:nil];
+                [errors bddErrorsTitle:[Tasks.dict_error valueForKey:@"title"] message:[Tasks.dict_error valueForKey:@"message"] viewController:self];
                 
             } else {
                 
@@ -335,17 +330,8 @@
         if (success) {
             NSLog(@"SUCCESS ADD TASK");
             if ([Tasks.dict_error valueForKey:@"type"] != nil) {
-                NSString* title = [weakSelf->Tasks.dict_error valueForKey:@"title"];
-                NSString* message = [weakSelf->Tasks.dict_error valueForKey:@"message"];
-                
-                UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-                
-                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                    
-                }];
-                
-                [alert addAction:defaultAction];
-                [weakSelf presentViewController:alert animated:YES completion:nil];
+
+                [weakSelf->errors bddErrorsTitle:[weakSelf->Tasks.dict_error valueForKey:@"title"] message:[weakSelf->Tasks.dict_error valueForKey:@"message"] viewController:weakSelf];
                 
             } else {
                 newTask = Tasks.task;
