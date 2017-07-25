@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -57,7 +57,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AY4-oD-6JJ">
-                    <rect key="frame" x="16" y="453" width="343" height="38"/>
+                    <rect key="frame" x="16" y="517" width="343" height="38"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="343" id="N5C-2d-hjI"/>
@@ -103,7 +103,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9NH-Ex-zzI">
-                    <rect key="frame" x="16" y="499" width="343" height="38"/>
+                    <rect key="frame" x="16" y="563" width="343" height="38"/>
                     <color key="backgroundColor" red="0.69131666421890259" green="0.62006199359893799" blue="0.77718210220336914" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="343" id="F1D-yL-NfF"/>
@@ -118,10 +118,10 @@
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Mcd-Ll-gGh">
-                    <rect key="frame" x="16" y="276" width="343" height="106"/>
+                    <rect key="frame" x="16" y="282" width="343" height="170"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="106" id="GmV-N4-Flk"/>
+                        <constraint firstAttribute="height" constant="170" id="GmV-N4-Flk"/>
                         <constraint firstAttribute="width" constant="343" id="bgJ-VQ-7fc"/>
                     </constraints>
                     <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -136,28 +136,13 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NrD-yK-tzN">
-                    <rect key="frame" x="16" y="390" width="162" height="28"/>
-                    <color key="backgroundColor" red="0.69131666421890259" green="0.62006199359893799" blue="0.77718210220336914" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XwE-jb-vft">
+                    <rect key="frame" x="171" y="460" width="32" height="32"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="162" id="1wG-kL-mPK"/>
-                        <constraint firstAttribute="height" constant="28" id="J1o-HQ-Ypg"/>
+                        <constraint firstAttribute="height" constant="32" id="aUU-oD-WNT"/>
+                        <constraint firstAttribute="width" constant="32" id="pPY-45-dEU"/>
                     </constraints>
-                    <state key="normal" title="Modifier">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="modifySprint:" destination="-1" eventType="touchUpInside" id="cLn-ti-3fY"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XwE-jb-vft">
-                    <rect key="frame" x="197" y="390" width="162" height="28"/>
-                    <color key="backgroundColor" red="0.69131666421890259" green="0.62006199359893799" blue="0.77718210220336914" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="28" id="aUU-oD-WNT"/>
-                        <constraint firstAttribute="width" constant="162" id="pPY-45-dEU"/>
-                    </constraints>
-                    <state key="normal" title="Ajouter">
+                    <state key="normal" image="add">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -311,7 +296,7 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="ENE-9L-PgS" firstAttribute="top" secondItem="utE-R5-fuR" secondAttribute="bottom" constant="19" id="0wr-hy-vTf"/>
-                <constraint firstAttribute="trailing" secondItem="XwE-jb-vft" secondAttribute="trailing" constant="16" id="2f1-pR-Ltf"/>
+                <constraint firstAttribute="trailing" secondItem="XwE-jb-vft" secondAttribute="trailing" constant="172" id="2f1-pR-Ltf"/>
                 <constraint firstItem="TF0-AM-4Jr" firstAttribute="top" secondItem="pxv-Xr-Eim" secondAttribute="bottom" constant="21" id="5Yl-co-3cc"/>
                 <constraint firstAttribute="trailing" secondItem="Mcd-Ll-gGh" secondAttribute="trailing" constant="16" id="7UC-XP-ddn"/>
                 <constraint firstItem="ddw-rH-oHq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="51" id="8eq-es-BdB"/>
@@ -321,9 +306,7 @@
                 <constraint firstItem="ENE-9L-PgS" firstAttribute="top" secondItem="dDk-yR-bjZ" secondAttribute="bottom" constant="-48" id="Dd3-Rq-Dv8"/>
                 <constraint firstItem="ddw-rH-oHq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="200" id="Djz-8B-kil"/>
                 <constraint firstAttribute="trailing" secondItem="TF0-AM-4Jr" secondAttribute="trailing" constant="16" id="H9G-eU-qfo"/>
-                <constraint firstItem="NrD-yK-tzN" firstAttribute="top" secondItem="Mcd-Ll-gGh" secondAttribute="bottom" constant="8" id="J6G-AQ-Li2"/>
                 <constraint firstItem="9QP-zJ-FeG" firstAttribute="top" secondItem="AY4-oD-6JJ" secondAttribute="bottom" constant="54" id="JEl-Hg-dcF"/>
-                <constraint firstItem="AY4-oD-6JJ" firstAttribute="top" secondItem="NrD-yK-tzN" secondAttribute="bottom" constant="35" id="JfU-hP-3n8"/>
                 <constraint firstItem="Mcd-Ll-gGh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="Mdc-sp-grX"/>
                 <constraint firstAttribute="trailing" secondItem="9NH-Ex-zzI" secondAttribute="trailing" constant="16" id="OM8-Ro-m59"/>
                 <constraint firstItem="9QP-zJ-FeG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="S4Q-c8-5PO"/>
@@ -331,9 +314,8 @@
                 <constraint firstItem="utE-R5-fuR" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="75" id="WjW-YF-Pao"/>
                 <constraint firstItem="pxv-Xr-Eim" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="bKt-eS-yos"/>
                 <constraint firstItem="AY4-oD-6JJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="cCq-Rm-OBp"/>
-                <constraint firstItem="Mcd-Ll-gGh" firstAttribute="top" secondItem="TF0-AM-4Jr" secondAttribute="bottom" constant="2" id="cjT-nx-9si"/>
+                <constraint firstItem="Mcd-Ll-gGh" firstAttribute="top" secondItem="TF0-AM-4Jr" secondAttribute="bottom" constant="8" id="cjT-nx-9si"/>
                 <constraint firstAttribute="trailing" secondItem="9QP-zJ-FeG" secondAttribute="trailing" constant="16" id="csh-QH-mYW"/>
-                <constraint firstItem="NrD-yK-tzN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="f5c-Ad-vTU"/>
                 <constraint firstItem="utE-R5-fuR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="izP-cu-r3T"/>
                 <constraint firstItem="9NH-Ex-zzI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="qkS-Af-Hln"/>
                 <constraint firstItem="XwE-jb-vft" firstAttribute="top" secondItem="Mcd-Ll-gGh" secondAttribute="bottom" constant="8" id="rYV-Q4-4Zx"/>
@@ -345,6 +327,7 @@
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="nJN-FE-WGF"/>
+                    <exclude reference="ddw-rH-oHq"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="34.5" y="53.5"/>

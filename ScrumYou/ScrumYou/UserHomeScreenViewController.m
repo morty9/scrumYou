@@ -22,6 +22,7 @@
 #import "CrudStats.h"
 #import "Task.h"
 #import "SynchronousMethod.h"
+#import "ErrorsViewController.h"
 
 @interface UserHomeScreenViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
@@ -56,6 +57,7 @@
     ScrumBoardScreenViewController* scrumBoardVC;
     AddProjectScreenViewController* addProjectVC;
     HomeScreenViewController* homeScreenVC;
+    ErrorsViewController* errors;
     
     NSArray* searchResultsFinished;
     NSArray* searchResultsProgress;
@@ -70,6 +72,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self != nil) {
         NSLog(@"INIT");
+        
+        errors = [[ErrorsViewController alloc] init];
         
         addProjectButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addProject:)];
         self.navigationItem.rightBarButtonItem = addProjectButton;

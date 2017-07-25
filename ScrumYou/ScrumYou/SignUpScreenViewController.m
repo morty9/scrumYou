@@ -11,10 +11,12 @@
 #import "LoginScreenViewController.h"
 #import "APIKeys.h"
 #import "CrudUsers.h"
+#import "ErrorsViewController.h"
 
 @interface SignUpScreenViewController () {
     
     CrudUsers* Users;
+    ErrorsViewController* errors;
     
 }
 
@@ -31,6 +33,7 @@
     [super viewDidLoad];
     
     Users = [[CrudUsers alloc] init];
+    errors = [[ErrorsViewController alloc] init];
     
     [self designPage];
 }
@@ -47,17 +50,8 @@
         if (success) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([Users.dict_error valueForKey:@"type"] != nil) {
-                    NSString* title = [weakSelf->Users.dict_error valueForKey:@"title"];
-                    NSString* message = [weakSelf->Users.dict_error valueForKey:@"message"];
                     
-                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                        
-                    }];
-                    
-                    [alert addAction:defaultAction];
-                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    [weakSelf->errors bddErrorsTitle:[weakSelf->Users.dict_error valueForKey:@"title"] message:[weakSelf->Users.dict_error valueForKey:@"message"] viewController:weakSelf];
                     
                 } else {
                     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Inscription réussie" message:@"Votre inscription est réussie, veuillez vous connecter." preferredStyle:UIAlertControllerStyleAlert];
@@ -133,14 +127,5 @@
     [self.navigationController pushViewController:homeVc animated:YES];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

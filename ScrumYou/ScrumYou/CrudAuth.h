@@ -10,9 +10,11 @@
 
 @interface CrudAuth : NSObject {
     NSDictionary* _token;
+    NSDictionary* _dict_error;
 }
 
 @property (nonatomic, strong) NSDictionary* token;
+@property (nonatomic, strong) NSDictionary* dict_error;
 
 - (void) login:(NSString*)email password:(NSString*)password callback:(void (^)(NSError *error, BOOL success))callback;
 

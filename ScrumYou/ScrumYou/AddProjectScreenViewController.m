@@ -10,6 +10,7 @@
 #import "UserHomeScreenViewController.h"
 #import "ScrumBoardScreenViewController.h"
 #import "LoginScreenViewController.h"
+#import "ErrorsViewController.h"
 #import "APIKeys.h"
 #import "User.h"
 #import "CrudUsers.h"
@@ -25,6 +26,7 @@
     NSMutableArray<User*>* get_users;
     NSMutableArray* members;
     NSMutableArray* ids;
+    NSMutableArray* sprints;
     
     NSInteger nMember;
     
@@ -32,6 +34,8 @@
     NSDate *endDate;
     
     NSArray* searchResults;
+    
+    NSString* token;
     
     UIVisualEffectView *blurEffectView;
     
@@ -41,7 +45,10 @@
     CrudProjects* Projects;
     CrudSprints* Sprints;
     
+    Project* projectCreated;
+    
     UserHomeScreenViewController* userHomeVC;
+    ErrorsViewController* errors;
 }
 
 @synthesize token_dic = _token_dic;
@@ -50,6 +57,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     if (self != nil) {
+        
+        errors = [[ErrorsViewController alloc] init];
         
     }
     
@@ -74,6 +83,8 @@
     Projects = [[CrudProjects alloc] init];
     Sprints = [[CrudSprints alloc] init];
     
+    projectCreated = [[Project alloc] init];
+    
     get_users = [[NSMutableArray<User*> alloc] init];
     members = [[NSMutableArray alloc] init];
     ids = [[NSMutableArray alloc] init];
@@ -87,6 +98,8 @@
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    
+    token = [self.token_dic valueForKey:@"token"];
     
     [membersTableView reloadData];
 }
@@ -105,9 +118,6 @@
 **/
 - (IBAction)didTouchAddButton:(id)sender {
     
-    NSLog(@"token %@", _token_dic);
-    NSString* token = [self.token_dic valueForKey:@"token"];
-    
     __unsafe_unretained typeof(self) weakSelf = self;
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -120,45 +130,46 @@
     [Sprints addSprintTitle:sprintNameTextField.text beginningDate:current_dateString endDate:end_dateString token:token callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS ADD SPRINT");
-            NSMutableArray* sprints = [[NSMutableArray alloc] init];
-            [sprints addObject:weakSelf->Sprints.sprint.id_sprint];
-            
-            [weakSelf->Projects addProjecTitle:weakSelf->projectNameTextField.text members:weakSelf->ids sprints:sprints id_creator:[weakSelf.token_dic valueForKey:@"userId"] token:[weakSelf.token_dic valueForKey:@"token"] status:NO callback:^(NSError *error, BOOL success) {
-                if (success) {
-                    NSLog(@"SUCCESS ADD PROJECT");
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        weakSelf->projectNameTextField.text = @"";
-                        weakSelf->addMembersTextField.text = @"";
-                        weakSelf->sprintNameTextField.text = @"";
-                        if ([Projects.dict_error valueForKey:@"type"] != nil) {
-                            NSString* title = [weakSelf->Projects.dict_error valueForKey:@"title"];
-                            NSString* message = [weakSelf->Projects.dict_error valueForKey:@"message"];
-                            
-                            UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-                            
-                            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                                
-                            }];
-                            
-                            [alert addAction:defaultAction];
-                            [weakSelf presentViewController:alert animated:YES completion:nil];
-                            
-                        } else {
-                            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre projet a été créé avec succès." preferredStyle:UIAlertControllerStyleAlert];
-                            
-                            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                                userHomeVC = [[UserHomeScreenViewController alloc] init];
-                                weakSelf->userHomeVC.token = weakSelf.token_dic;
-                                [weakSelf.navigationController pushViewController:weakSelf->userHomeVC animated:YES];
-                            }];
-                            
-                            [alert addAction:defaultAction];
-                            [weakSelf presentViewController:alert animated:YES completion:nil];
-                            
-                        }
-                    });
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([Sprints.dict_error valueForKey:@"type"] != nil) {
+                 
+                 [weakSelf->errors bddErrorsTitle:[weakSelf->Sprints.dict_error valueForKey:@"title"] message:[weakSelf->Sprints.dict_error valueForKey:@"message"] viewController:weakSelf];
+                 
+                 } else {
+                     sprints = [[NSMutableArray alloc] init];
+                     [weakSelf->sprints addObject:weakSelf->Sprints.sprint.id_sprint];
+                     [weakSelf addProject];
                 }
-            }];
+            });
+        }
+    }];
+}
+
+- (void) addProject {
+    
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    [Projects addProjecTitle:projectNameTextField.text members:ids sprints:sprints id_creator:[self.token_dic valueForKey:@"userId"] token:token status:NO callback:^(NSError *error, BOOL success) {
+        if (success) {
+            NSLog(@"SUCCESS ADD PROJECT");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([Projects.dict_error valueForKey:@"type"] != nil) {
+                    
+                    [weakSelf->errors bddErrorsTitle:[weakSelf->Projects.dict_error valueForKey:@"title"] message:[weakSelf->Projects.dict_error valueForKey:@"message"] viewController:weakSelf];
+                    
+                } else {
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre projet a été créé avec succès." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        userHomeVC = [[UserHomeScreenViewController alloc] init];
+                        weakSelf->userHomeVC.token = weakSelf.token_dic;
+                        [weakSelf.navigationController pushViewController:weakSelf->userHomeVC animated:YES];
+                    }];
+                    
+                    [alert addAction:defaultAction];
+                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                }
+            });
         }
     }];
     
