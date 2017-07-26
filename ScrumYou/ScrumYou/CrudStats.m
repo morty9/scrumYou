@@ -23,8 +23,11 @@
     return self;
 }
 
-/*
- *  POST -> add user to database
+/**
+ * \brief Add stats to database.
+ * \details Function which calls the web services stats and the method create from the stats crud.
+ * \param id_project Id of the project.
+ * \param token Token of the connected user.
  */
 - (void) addStats:(NSString*)id_project token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
     

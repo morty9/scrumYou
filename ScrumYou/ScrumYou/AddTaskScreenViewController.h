@@ -54,8 +54,6 @@
     Task* _mTask;
     Sprint* _cSprint;
     
-    UIBarButtonItem* _editButton;
-    
     BOOL _status;
     BOOL _editButtonIsHidden;
     
