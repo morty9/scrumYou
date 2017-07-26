@@ -16,8 +16,9 @@
 #import "CrudProjects.h"
 #import "CrudSprints.h"
 #import "UserHomeScreenViewController.h"
+#import "ScrumBoardScreenViewController.h"
 
-@interface ProjectSettingsScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating>
+@interface ProjectSettingsScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UITextFieldDelegate>
 
 
 @end
@@ -40,6 +41,7 @@
     UserHomeScreenViewController* userHomeVC;
     ProjectSettingsScreenViewController* projectSettingsVC;
     ErrorsViewController* errors;
+    ScrumBoardScreenViewController* scrumBoardVC;
     
     UIVisualEffectView *blurEffectView;
     
@@ -99,6 +101,9 @@
     sprintsTableView.delegate = self;
     sprintsTableView.dataSource = self;
     
+    nameTextField.delegate = self;
+    sprintNameTextField.delegate = self;
+    
     [self designPage];
     
     token = [self.token_dic valueForKey:@"token"];
@@ -114,6 +119,12 @@
     
     [membersTableView reloadData];
     [sprintsTableView reloadData];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.view endEditing:YES];
+    return YES;
 }
 
 /*
@@ -240,8 +251,10 @@
     if(self.searchController.isActive || self.searchControllerSprints.isActive) {
         if (tableView == membersTableView) {
             username = [searchResultsUsers objectAtIndex:indexPath.row];
+            cell.textLabel.text = [NSString stringWithFormat:@"%@", username.fullname];
         } else {
             sprint = [searchResultsSprints objectAtIndex:indexPath.row];
+            cell.textLabel.text = [NSString stringWithFormat:@"%@", sprint.title];
         }
         
     }else {
@@ -269,7 +282,7 @@
 }
 
 /**
- *  VOID -> Allow to add a members to a project or show details of a selected sprint
+ *  VOID -> Allow to add a member to a project or show details of a selected sprint
  **/
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [membersTableView cellForRowAtIndexPath:indexPath];
@@ -289,13 +302,6 @@
         sprintSelected = [get_sprints objectAtIndex:indexPath.row];
         [self modifySprint];
         sprintNameTextField.text = sprintSelected.title;
-//        NSLog(@"DATE BDD  %@", sprintSelected.endDate);
-//        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-//        [formatter setDateFormat:@"yyyy-MM-dd"];
-//        NSString* dateString = [formatter stringFromDate:sprintSelected.endDate];
-//        NSLog(@"date sprint %@", dateString);
-//        NSString *date = [self convertDate:@"2010-08-24T00:00:00.0000Z" fromFormat:@"yyyy-MM-dd'T'HH:mm:ssZ" toFormat:@"hh:mm a"];
-        //[sprintEndDate setDate:sprintSelected.endDate];
     }
 }
 
@@ -328,20 +334,29 @@
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchString = searchController.searchBar.text;
-    [self searchForText:searchString];
-    [membersTableView reloadData];
-    [sprintsTableView reloadData];
+    
+    if(searchController == self.searchController) {
+        [self searchForTextUsers:searchString];
+        [membersTableView reloadData];
+    } else {
+        [self searchForTextSprints:searchString];
+        [sprintsTableView reloadData];
+    }
 }
 
-- (void)searchForText:(NSString*)searchText {
+- (void)searchForTextUsers:(NSString*)searchText {
     NSPredicate *predicateUsers = [NSPredicate predicateWithFormat:@"fullname contains[c] %@ OR nickname contains[c] %@", searchText, searchText];
-    NSPredicate *predicateSprints = [NSPredicate predicateWithFormat:@"title contains[c] %@", searchText];
     searchResultsUsers = [get_users filteredArrayUsingPredicate:predicateUsers];
+}
+
+- (void)searchForTextSprints:(NSString*)searchText {
+    NSPredicate *predicateSprints = [NSPredicate predicateWithFormat:@"_title contains[c] %@", searchText];
     searchResultsSprints = [get_sprints filteredArrayUsingPredicate:predicateSprints];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
     [self updateSearchResultsForSearchController:self.searchController];
+    [self updateSearchResultsForSearchController:self.searchControllerSprints];
 }
 
 
@@ -460,6 +475,10 @@
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     blurEffectView.frame = self.view.bounds;
+    
+    if (self.searchControllerSprints.isActive) {
+        [self.searchControllerSprints setActive:NO];
+    }
     
     [self.view insertSubview:blurEffectView belowSubview:sprintsView];
 }
@@ -680,7 +699,7 @@
 - (IBAction)deleteProject:(id)sender {
  
  
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation supression" message:@"Êtes-vous sûr de vouloir supprimer ce projet ?" preferredStyle: UIAlertControllerStyleAlert];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation suppression" message:@"Êtes-vous sûr de vouloir supprimer ce projet ?" preferredStyle: UIAlertControllerStyleAlert];
         
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         [ProjectsCrud deleteProjectWithId:[NSString stringWithFormat:@"%@", self.currentProject.id_project] token:[self.token_dic valueForKey:@"token"] callback:^(NSError *error, BOOL success) {
@@ -708,6 +727,13 @@
     [self.navigationController pushViewController:userHomeVC animated:YES];
 }
 
+- (void) backToScrumBoard {
+    scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
+    scrumBoardVC.token = self.token_dic;
+    scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", self.currentProject.id_project];
+    [self.navigationController pushViewController:scrumBoardVC animated:YES];
+}
+
 /**
  *  VOID -> Design component of view controller
  **/
@@ -721,6 +747,10 @@
     updateButtonEdit = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(enableTextField:)];
     self.navigationItem.rightBarButtonItem = updateButtonEdit;
     updateButtonCancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(enableTextField:)];
+    
+    UIImage *backFromModify = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:backFromModify style:UIBarButtonItemStylePlain target:self action:@selector(backToScrumBoard)];
+    self.navigationItem.leftBarButtonItem = newBackButton;
     
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
@@ -757,6 +787,9 @@
         self.navigationItem.leftBarButtonItem = newBackButton;
         self.isComeToSB = false;
     }
+    
+    //disable past date in UIDatePicker
+    sprintEndDate.minimumDate = [NSDate date];
     
     //border name project text field
     CALayer *borderName = [CALayer layer];

@@ -16,7 +16,7 @@
 #import "AddProjectScreenViewController.h"
 #import "ErrorsViewController.h"
 
-@interface LoginScreenViewController ()
+@interface LoginScreenViewController () <UITextFieldDelegate>
 
 @end
 
@@ -63,11 +63,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self designPage];
+    
+    emailTextField.delegate = self;
+    pwdTextField.delegate = self;
+    
     Auth = [[CrudAuth alloc] init];
     addProjectVC = [[AddProjectScreenViewController alloc] init];
     accountSettings = [[AccountSettingsScreenViewController alloc] init];
     userHomeVC = [[UserHomeScreenViewController alloc] init];
 }
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.view endEditing:YES];
+    return YES;
+}
+
 
 /**
  * \brief Connection button.

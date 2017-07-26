@@ -18,7 +18,7 @@
 #import "CrudSprints.h"
 #import "CrudAuth.h"
 
-@interface AddProjectScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
+@interface AddProjectScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UITextFieldDelegate>
 
 @end
 
@@ -67,16 +67,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     membersTableView.delegate = self;
     membersTableView.dataSource = self;
-    NSLog(@"TOKEN ADD PROJECT %@", _token_dic);
+    
+    projectNameTextField.delegate = self;
+    addMembersTextField.delegate = self;
+    sprintNameTextField.delegate = self;
     
     [self designPage];
     
     Users = [[CrudUsers alloc] init];
     [Users getUsers:^(NSError *error, BOOL success) {
         if (success) {
-            NSLog(@"SUCCESS GET USERS");
         }
     }];
     
@@ -95,18 +98,26 @@
     [membersTableView reloadData];
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.view endEditing:YES];
+    return YES;
+}
 
 /**
- * Get users form database
- **/
+ * \fn (void) getUsername
+ * \brief Get users form database
+ * \details Get users form database
+ */
 - (void) getUsername {
     get_users = Users.userList;
     [membersTableView reloadData];
 }
 
 /**
- * Add project to database and clear textfield content
-**/
+ * \brief Add project button.
+ * \details Add project to database with the service web and clear textfield content
+ */
 - (IBAction)didTouchAddButton:(id)sender {
     
     __unsafe_unretained typeof(self) weakSelf = self;
@@ -120,7 +131,6 @@
     
     [Sprints addSprintTitle:sprintNameTextField.text beginningDate:current_dateString endDate:end_dateString token:token callback:^(NSError *error, BOOL success) {
         if (success) {
-            NSLog(@"SUCCESS ADD SPRINT");
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([Sprints.dict_error valueForKey:@"type"] != nil) {
                  
@@ -136,6 +146,11 @@
     }];
 }
 
+/**
+ * \fn (IBAction)didTouchAddButton:(id)sender
+ * \brief Add project to database and clear textfield content
+ * \details Add project to database with the service web and clear textfield content
+ */
 - (void) addProject {
     
     __unsafe_unretained typeof(self) weakSelf = self;
@@ -176,8 +191,10 @@
  **/
 
 /**
- * Show add members view
- **/
+ * \fn (IBAction)showAddMembersView:(id)sender
+ * \brief Show add members view
+ * \details Show add members view
+ */
 - (IBAction)showAddMembersView:(id)sender {
     [self getUsername];
     [membersView setHidden:false];
@@ -247,8 +264,10 @@
 
 
 /**
- * Get id User from get_users dictionary
- **/
+ * \fn (void) getIdUser
+ * \brief Get id User from get_users dictionary
+ * \details Get id User from get_users dictionary
+ */
 - (void) getIdUser {
     [ids removeAllObjects];
     for (NSString* name in members) {
@@ -264,8 +283,12 @@
 }
 
 /**
- * Clean occurrences - check if key exist in array
- **/
+ * \fn (BOOL) cleanOccurrences:(NSString*)key
+ * \brief Clean occurrences - check if key exist in array
+ * \details Clean occurrences - check if key exist in array
+ *
+ * \return a boolean true if the key exist
+ */
 - (BOOL) cleanOccurrences:(NSString*)key {
     for (NSString* keys in ids) {
         if (keys == key) {
@@ -275,9 +298,12 @@
     return false;
 }
 
+
 /**
- * Validate members
- **/
+ * \fn (IBAction)validateMembers:(id)sender
+ * \brief Validate members
+ * \details Validate members
+ */
 - (IBAction)validateMembers:(id)sender {
     [membersView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -288,9 +314,12 @@
     [self getIdUser];
 }
 
+
 /**
- * Close members windows
- **/
+ * \fn (IBAction)closeWindowMembers:(id)sender
+ * \brief Close members windows
+ * \details Close members windows
+ */
 - (IBAction)closeWindowMembers:(id)sender {
     [membersView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -315,7 +344,7 @@
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     
     //disable past date in UIDatePicker
-    sprintEndDate.minimumDate = currentDate;
+    sprintEndDate.minimumDate = [NSDate date];
     
     //border projectName text field
     CALayer *borderProjectName = [CALayer layer];
@@ -355,13 +384,21 @@
     
 }
 
-
+/**
+ * \fn (void) cancelButton:(id)sender
+ * \brief Cancel button
+ * \details Cancel button
+ */
 - (void) cancelButton:(id)sender {
     UserHomeScreenViewController* UserVc = [[UserHomeScreenViewController alloc] init];
     [self.navigationController pushViewController:UserVc animated:YES];
 }
 
-
+/**
+ * \fn (IBAction)addMembersButton:(id)sender
+ * \brief Add member button
+ * \details Add member button
+ */
 - (IBAction)addMembersButton:(id)sender {
     ScrumBoardScreenViewController* scrumBoardVc = [[ScrumBoardScreenViewController alloc] init];
     [self.navigationController pushViewController:scrumBoardVc animated:YES];

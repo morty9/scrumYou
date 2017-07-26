@@ -18,6 +18,7 @@
     __weak IBOutlet UITextField *nicknameTextField;
     __weak IBOutlet UITextField *emailTextField;
     __weak IBOutlet UITextField *pwdTextField;
+    
     __weak IBOutlet UIImageView *profilImage;
     
     __weak IBOutlet UIView *membersView;
