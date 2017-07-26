@@ -17,7 +17,7 @@
 #import "CrudSprints.h"
 #import "UserHomeScreenViewController.h"
 
-@interface ProjectSettingsScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating>
+@interface ProjectSettingsScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UITextFieldDelegate>
 
 
 @end
@@ -99,6 +99,9 @@
     sprintsTableView.delegate = self;
     sprintsTableView.dataSource = self;
     
+    nameTextField.delegate = self;
+    sprintNameTextField.delegate = self;
+    
     [self designPage];
     
     token = [self.token_dic valueForKey:@"token"];
@@ -114,6 +117,12 @@
     
     [membersTableView reloadData];
     [sprintsTableView reloadData];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.view endEditing:YES];
+    return YES;
 }
 
 /*
@@ -240,8 +249,10 @@
     if(self.searchController.isActive || self.searchControllerSprints.isActive) {
         if (tableView == membersTableView) {
             username = [searchResultsUsers objectAtIndex:indexPath.row];
+            cell.textLabel.text = [NSString stringWithFormat:@"%@", username.fullname];
         } else {
             sprint = [searchResultsSprints objectAtIndex:indexPath.row];
+            cell.textLabel.text = [NSString stringWithFormat:@"%@", sprint.title];
         }
         
     }else {
@@ -269,7 +280,7 @@
 }
 
 /**
- *  VOID -> Allow to add a members to a project or show details of a selected sprint
+ *  VOID -> Allow to add a member to a project or show details of a selected sprint
  **/
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [membersTableView cellForRowAtIndexPath:indexPath];
@@ -328,20 +339,29 @@
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchString = searchController.searchBar.text;
-    [self searchForText:searchString];
-    [membersTableView reloadData];
-    [sprintsTableView reloadData];
+    
+    if(searchController == self.searchController) {
+        [self searchForTextUsers:searchString];
+        [membersTableView reloadData];
+    } else {
+        [self searchForTextSprints:searchString];
+        [sprintsTableView reloadData];
+    }
 }
 
-- (void)searchForText:(NSString*)searchText {
+- (void)searchForTextUsers:(NSString*)searchText {
     NSPredicate *predicateUsers = [NSPredicate predicateWithFormat:@"fullname contains[c] %@ OR nickname contains[c] %@", searchText, searchText];
-    NSPredicate *predicateSprints = [NSPredicate predicateWithFormat:@"title contains[c] %@", searchText];
     searchResultsUsers = [get_users filteredArrayUsingPredicate:predicateUsers];
+}
+
+- (void)searchForTextSprints:(NSString*)searchText {
+    NSPredicate *predicateSprints = [NSPredicate predicateWithFormat:@"_title contains[c] %@", searchText];
     searchResultsSprints = [get_sprints filteredArrayUsingPredicate:predicateSprints];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
     [self updateSearchResultsForSearchController:self.searchController];
+    [self updateSearchResultsForSearchController:self.searchControllerSprints];
 }
 
 
@@ -460,6 +480,10 @@
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     blurEffectView.frame = self.view.bounds;
+    
+    if (self.searchControllerSprints.isActive) {
+        [self.searchControllerSprints setActive:NO];
+    }
     
     [self.view insertSubview:blurEffectView belowSubview:sprintsView];
 }
@@ -680,7 +704,7 @@
 - (IBAction)deleteProject:(id)sender {
  
  
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation supression" message:@"Êtes-vous sûr de vouloir supprimer ce projet ?" preferredStyle: UIAlertControllerStyleAlert];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation suppression" message:@"Êtes-vous sûr de vouloir supprimer ce projet ?" preferredStyle: UIAlertControllerStyleAlert];
         
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         [ProjectsCrud deleteProjectWithId:[NSString stringWithFormat:@"%@", self.currentProject.id_project] token:[self.token_dic valueForKey:@"token"] callback:^(NSError *error, BOOL success) {
@@ -756,6 +780,9 @@
         self.navigationItem.leftBarButtonItem = newBackButton;
         self.isComeToSB = false;
     }
+    
+    //disable past date in UIDatePicker
+    sprintEndDate.minimumDate = [NSDate date];
     
     //border name project text field
     CALayer *borderName = [CALayer layer];

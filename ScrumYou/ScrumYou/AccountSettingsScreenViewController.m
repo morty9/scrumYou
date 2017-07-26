@@ -15,7 +15,7 @@
 #import "HomeScreenViewController.h"
 #import "Project.h"
 
-@interface AccountSettingsScreenViewController ()
+@interface AccountSettingsScreenViewController () <UITextFieldDelegate>
 
 
 
@@ -60,6 +60,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self designPage];
+    
+    nameTextField.delegate = self;
+    nicknameTextField.delegate = self;
+    emailTextField.delegate = self;
+    pwdTextField.delegate = self;
+    
     Auth = [[CrudAuth alloc] init];
     isToUpdate = NO;
 
@@ -82,9 +88,10 @@
     });
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.view endEditing:YES];
+    return YES;
 }
 
 - (void) displayUser:(User*)curUser {

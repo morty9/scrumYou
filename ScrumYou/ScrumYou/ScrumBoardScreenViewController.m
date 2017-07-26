@@ -211,21 +211,21 @@
                 }
                 
                 if (arrayTodo.count == 0) {
-                    Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:[NSNumber numberWithInteger:2] businessValue:@"" duration:@"" status:@"" id_creator:@"" taskDone:nil id_members:nil];
+                    Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:[NSNumber numberWithInteger:3] businessValue:@"" duration:@"" status:@"" id_creator:@"" taskDone:nil id_members:nil];
                     NSLog(@"empty task %@", emptyTask.title);
                     [arrayTodo addObject:emptyTask];
                     [tasks_array_todo setObject:arrayTodo forKey:[sprints[i] valueForKey:@"title"]];
                 }
                 
                 if (arrayProgress.count == 0) {
-                    Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:[NSNumber numberWithInteger:2] businessValue:@"" duration:@"" status:@"" id_creator:@"" taskDone:nil id_members:nil];
+                    Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:[NSNumber numberWithInteger:3] businessValue:@"" duration:@"" status:@"" id_creator:@"" taskDone:nil id_members:nil];
                     NSLog(@"empty task %@", emptyTask.title);
                     [arrayProgress addObject:emptyTask];
                     [tasks_array_progress setObject:arrayProgress forKey:[sprints[i] valueForKey:@"title"]];
                 }
                 
                 if (arrayDone.count == 0) {
-                    Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:[NSNumber numberWithInteger:2] businessValue:@"" duration:@"" status:@"" id_creator:@"" taskDone:nil id_members:nil];
+                    Task* emptyTask = [[Task alloc] initWithId:@"" title:@"Pas de tâche" description:@"" difficulty:@"" priority:@"" id_category:[NSNumber numberWithInteger:3] businessValue:@"" duration:@"" status:@"" id_creator:@"" taskDone:nil id_members:nil];
                     NSLog(@"empty task %@", emptyTask.title);
                     [arrayDone addObject:emptyTask];
                     [tasks_array_done setObject:arrayDone forKey:[sprints[i] valueForKey:@"title"]];

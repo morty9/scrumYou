@@ -13,7 +13,7 @@
 #import "CrudUsers.h"
 #import "ErrorsViewController.h"
 
-@interface SignUpScreenViewController () {
+@interface SignUpScreenViewController () <UITextFieldDelegate> {
     
     CrudUsers* Users;
     ErrorsViewController* errors;
@@ -35,7 +35,18 @@
     Users = [[CrudUsers alloc] init];
     errors = [[ErrorsViewController alloc] init];
     
+    self.emailTextField.delegate = self;
+    self.pwdTextField.delegate = self;
+    self.nicknameTextField.delegate = self;
+    self.completeNameTextField.delegate = self;
+    
     [self designPage];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.view endEditing:YES];
+    return YES;
 }
 
 /*

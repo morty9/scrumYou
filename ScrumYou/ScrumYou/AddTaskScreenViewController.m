@@ -15,7 +15,7 @@
 #import "CrudTasks.h"
 #import "CrudSprints.h"
 
-@interface AddTaskScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface AddTaskScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
 
 - (void) editTask;
 
@@ -119,6 +119,14 @@
     membersTableView.delegate = self;
     membersTableView.dataSource = self;
     
+    self.taskTitleTextField.delegate = self;
+    self.taskDescriptionTextField.delegate = self;
+    self.taskDifficultyTextField.delegate = self;
+    self.taskDurationTextField.delegate = self;
+    self.taskMembersTextField.delegate = self;
+    self.taskCostTextField.delegate = self;
+    self.taskPriorityTextField.delegate = self;
+    
     [self getUsers];
     [self getUserByTask];
     
@@ -147,6 +155,12 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     [self designPage];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.view endEditing:YES];
+    return YES;
 }
 
 
