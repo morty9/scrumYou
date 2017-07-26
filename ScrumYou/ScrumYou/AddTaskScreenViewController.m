@@ -144,11 +144,25 @@
     [self designPage];
 }
 
-
+/**
+ * \fn (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)thePickerView
+ * \brief Number of components in picker view.
+ * \details Allow to know number of components in picker view.
+ * \param thePickerView Pickerview.
+ * \return An integer which represents number of components.
+ */
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)thePickerView {
     return 1;
 }
 
+/**
+ * \fn (NSInteger)pickerView:(UIPickerView *)thePickerView numberOfRowsInComponent:(NSInteger)component
+ * \brief Number of rows in components's picker view.
+ * \details Allow to know number of rows in components's picker view.
+ * \param thePickerView Pickerview.
+ * \param component Number of rows in component.
+ * \return An integer which represents number of rows in components's picker view.
+ */
 - (NSInteger)pickerView:(UIPickerView *)thePickerView numberOfRowsInComponent:(NSInteger)component {
     if (thePickerView == pickerStatus) {
         return statusArray.count;
@@ -157,6 +171,15 @@
     }
 }
 
+/**
+ * \fn (NSString *)pickerView:(UIPickerView *)thePickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+ * \brief Status title or sprint title in picker view.
+ * \details Allow to display status title or sprint title in picker view.
+ * \param thePickerView Pickerview.
+ * \param row Title for row.
+ * \param component Component.
+ * \return A string which represents status title or sprint title in picker view.
+ */
 - (NSString *)pickerView:(UIPickerView *)thePickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if (thePickerView == pickerStatus) {
         return [statusArray objectAtIndex:row];
@@ -166,6 +189,14 @@
     }
 }
 
+/**
+ * \fn (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+ * \brief Select the index in the picker view.
+ * \details Allow to select the index in the picker view.
+ * \param thePickerView Pickerview.
+ * \param row Did select row.
+ * \param component Component.
+ */
 - (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if (thePickerView == pickerStatus) {
         statusTask = [statusArray objectAtIndex:row];
@@ -204,7 +235,7 @@
 /**
  * \fn (IBAction)validateSprint:(id)sender
  * \brief Validate sprint button.
- * \details Allows to validate sprint.
+ * \details Allows to link modified task or added task to the sprint and remove task if sprint is different from the initial sprint.Then, update it.
  */
 - (IBAction)validateSprint:(id)sender {
     
@@ -259,7 +290,7 @@
 /**
  * \fn (IBAction)updateTask:(id)sender
  * \brief Update task button.
- * \details Allows to update task and redirect to the scrumboard.
+ * \details Allows to update task, to know if it's finished or not to get the end date, and redirect to the scrumboard.
  */
 - (IBAction)updateTask:(id)sender {
     
@@ -403,11 +434,6 @@
     
 }
 
-
-/**
- * MEMBERS VIEW
-**/
-
 /**
  * \fn (IBAction)showAddMembersView:(id)sender
  * \brief Show add members view button.
@@ -433,21 +459,23 @@
 }
 
 /**
- * Get users form database
- **/
+ * \fn (void) getUsers
+ * \brief Get users.
+ * \details Allows to get users.
+ */
 - (void) getUsers {
     [Users getUsers:^(NSError *error, BOOL success) {
         if (success) {
             get_users = Users.userList;
-            NSLog(@"USERS %@", get_users);
             [membersTableView reloadData];
         }
     }];
 }
 
-/*
- *  VOID -> get all users link to the current project
- *  Call getUserById web service
+/**
+ * \fn (void) getUserByTask
+ * \brief Get users by tasks.
+ * \details Allows to get users by tasks.
  */
 - (void) getUserByTask {
     
@@ -455,7 +483,6 @@
         NSString* result = [NSString stringWithFormat:@"%@",membersArray];
         [Users getUserById:result callback:^(NSError *error, BOOL success) {
             if (success) {
-                NSLog(@"SUCCESS USERS IN");
                 [users_in addObject:Users.user];
                 nMemberTask = users_in.count;
                 self.taskMembersTextField.text = [@(nMemberTask)stringValue];
@@ -465,6 +492,14 @@
     }
 }
 
+/**
+ * \fn (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+ * \brief Number of row in the section of table view.
+ * \details Allows to know the number of row in the section of table view.
+ * \param tableView TableView.
+ * \param section Number of row in section.
+ * \return Number of row in current section.
+ */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if(self.searchController.isActive) {
         return searchResultsUser.count;
@@ -473,7 +508,14 @@
     }
 }
 
-
+/**
+ * \fn (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+ * \brief Construction of each cells of the table view.
+ * \details Allows to construct each cells with title of the table view.
+ * \param tableView TableViewCell.
+ * \param indexPath Number which represents index path of cells.
+ * \return each cells.
+ */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString* const kCellId = @"cell";
@@ -527,6 +569,13 @@
     [membersTableView reloadData];
 }
 
+
+/**
+ * \fn (void)searchForText:(NSString*)searchText
+ * \brief Search text which corresponds to cells title.
+ * \details Allows to search the text written in the search bar in order to find a cell by title.
+ * \param searchText String written in the search bar.
+ */
 - (void)searchForText:(NSString*)searchText {
     NSPredicate *predicateUser = [NSPredicate predicateWithFormat:@"fullname contains[c] %@ OR nickname contains[c] %@", searchText, searchText];
     searchResultsUser = [get_users filteredArrayUsingPredicate:predicateUser];
@@ -538,8 +587,11 @@
 
 
 /**
- * Get id User from get_users dictionary
-**/
+ * \fn (void) getIdUser
+ * \brief Search text which corresponds to cells title.
+ * \details Allows to search the text written in the search bar in order to find a cell by title.
+ * \param searchText String written in the search bar.
+ */
 - (void) getIdUser {
     [ids removeAllObjects];
     for (NSString* name in members) {
