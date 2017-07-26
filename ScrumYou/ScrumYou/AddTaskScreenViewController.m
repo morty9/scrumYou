@@ -146,7 +146,6 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    //[super viewDidLoad];
     [self designPage];
 }
 
@@ -297,8 +296,10 @@
             NSLog(@"UPDATE SUCCESS");
             if ([Tasks.dict_error valueForKey:@"type"] != nil) {
                 
-                [errors bddErrorsTitle:[Tasks.dict_error valueForKey:@"title"] message:[Tasks.dict_error valueForKey:@"message"] viewController:self];
-                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [errors bddErrorsTitle:[Tasks.dict_error valueForKey:@"title"] message:[Tasks.dict_error valueForKey:@"message"] viewController:self];
+                });
+                    
             } else {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -331,7 +332,9 @@
             NSLog(@"SUCCESS ADD TASK");
             if ([Tasks.dict_error valueForKey:@"type"] != nil) {
 
-                [weakSelf->errors bddErrorsTitle:[weakSelf->Tasks.dict_error valueForKey:@"title"] message:[weakSelf->Tasks.dict_error valueForKey:@"message"] viewController:weakSelf];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf->errors bddErrorsTitle:[weakSelf->Tasks.dict_error valueForKey:@"title"] message:[weakSelf->Tasks.dict_error valueForKey:@"message"] viewController:weakSelf];
+                });
                 
             } else {
                 newTask = Tasks.task;

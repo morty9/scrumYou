@@ -385,33 +385,16 @@
     
     self.navigationItem.title = project.title;
     
-//    if (_comeUpdateTask == true || _comeAddTask == true || _comeDeleteTask == true) {
-//        self.navigationItem.hidesBackButton = YES;
-//        UIImage *backFromModify = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:backFromModify style:UIBarButtonItemStylePlain target:self action:@selector(backToUserHome:)];
-//        self.navigationItem.leftBarButtonItem = newBackButton;
-//        _comeUpdateTask = false;
-//        _comeDeleteTask = false;
-//        _comeAddTask = false;
-//    }
-    
-    if (_comeAddTask == true) {
+    if (_comeUpdateTask == true || _comeAddTask == true || _comeDeleteTask == true) {
         self.navigationItem.hidesBackButton = YES;
         UIImage *backFromModify = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:backFromModify style:UIBarButtonItemStylePlain target:self action:@selector(backToUserHome:)];
         self.navigationItem.leftBarButtonItem = newBackButton;
+        _comeUpdateTask = false;
+        _comeDeleteTask = false;
         _comeAddTask = false;
     }
     
-//    if (_comeDeleteTask == true) {
-//        self.navigationItem.hidesBackButton = YES;
-//        UIImage *backFromDelete = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:backFromDelete style:UIBarButtonItemStylePlain target:self action:@selector(backToUserHome:)];
-//        self.navigationItem.leftBarButtonItem = backButton;
-//        _comeDeleteTask = false;
-//    }
-    
-    //[[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
     
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTask)];
