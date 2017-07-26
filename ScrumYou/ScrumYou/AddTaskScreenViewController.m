@@ -44,7 +44,7 @@
     NSInteger priority;
     NSInteger nMember;
     NSInteger nMemberTask;
-    NSInteger category;
+    NSNumber* category;
     
     Task* newTask;
     Sprint* spr;
@@ -600,7 +600,7 @@
  * Category segmented control
 **/
 - (IBAction)categoryChanged:(UISegmentedControl *)sender {
-    category = [sender selectedSegmentIndex];
+    category = [NSNumber numberWithInteger:[sender selectedSegmentIndex]];
 }
 
 
@@ -658,7 +658,7 @@
         self.taskMembersTextField.text = [NSString stringWithFormat:@"%ld", self.mTask.id_members.count];
         self.taskCostTextField.text = [NSString stringWithFormat:@"%@" ,self.mTask.businessValue];
         self.taskDurationTextField.text = [NSString stringWithFormat:@"%@",self.mTask.duration];
-        [self.categorySegmentation setSelectedSegmentIndex:[self.mTask.id_category integerValue]];
+        [self.categorySegmentation setSelectedSegmentIndex:self.mTask.id_category];
         [self.prioritySegmentation setSelectedSegmentIndex:[self.mTask.priority integerValue]-1];
         
     }

@@ -33,7 +33,7 @@
 /*
  *  POST -> add task to database
  */
-- (void) addTaskTitle:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSInteger)priority id_category:(NSInteger)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) addTaskTitle:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSInteger)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
     
     self.dict_error = [[NSDictionary alloc] init];
     
@@ -46,7 +46,7 @@
                                                      @"description" : description,
                                                      @"difficulty" : difficulty,
                                                      @"priority" : [NSNumber numberWithInteger:priority],
-                                                     @"category" : [NSNumber numberWithInteger:id_category],
+                                                     @"category" : id_category,
                                                      @"businessValue" : businessValue,
                                                      @"duration" : duration,
                                                      @"status" : status,

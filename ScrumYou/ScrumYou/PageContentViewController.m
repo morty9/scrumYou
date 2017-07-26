@@ -167,17 +167,33 @@ static NSString* cellId = @"SBCell";
     
     if ([task.status isEqualToString:@"A faire"]) {
         cell.backgroundColor = [UIColor colorWithRed:0.86 green:0.28 blue:0.31 alpha:1.0];
+        cell.descriptionCell.backgroundColor = [UIColor colorWithRed:0.86 green:0.28 blue:0.31 alpha:1.0];
     } else if ([task.status isEqualToString:@"En cours"]) {
         cell.backgroundColor = [UIColor colorWithRed:0.99 green:0.52 blue:0.18 alpha:1.0];
+        cell.descriptionCell.backgroundColor = [UIColor colorWithRed:0.99 green:0.52 blue:0.18 alpha:1.0];
     } else if ([task.status isEqualToString:@"Finies"]) {
         cell.backgroundColor = [UIColor colorWithRed:0.18 green:0.64 blue:0.15 alpha:1.0];
+        cell.descriptionCell.backgroundColor = [UIColor colorWithRed:0.18 green:0.64 blue:0.15 alpha:1.0];
     } else {
         cell.backgroundColor = [UIColor colorWithRed:0.77 green:0.77 blue:0.77 alpha:1.0];
+        cell.descriptionCell.backgroundColor = [UIColor colorWithRed:0.77 green:0.77 blue:0.77 alpha:1.0];
     }
     
     cell.layer.cornerRadius = 6;
+    
     cell.titleCell.text = task.title;
     cell.descriptionCell.text = task.description;
+    cell.priorityCell.text = [NSString stringWithFormat:@"%@", task.priority];
+    
+    if ([task.id_category integerValue] == 1) {
+        cell.categoryCell.text = @"Bug";
+    } else if ([task.id_category integerValue] == 0) {
+        cell.categoryCell.text = @"Tâche";
+    } else {
+        cell.categoryCell.text = @"";
+    }
+    
+    cell.membersCell.text = [NSString stringWithFormat:@"%ld", task.id_members.count];
     
     [cell.pencil addTarget:self action:@selector(modifyTask) forControlEvents:UIControlEventTouchUpInside];
     
