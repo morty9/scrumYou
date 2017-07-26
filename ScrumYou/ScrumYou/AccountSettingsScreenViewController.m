@@ -99,7 +99,6 @@
     nameTextField.text = curUser.fullname;
     nicknameTextField.text = curUser.nickname;
     emailTextField.text = curUser.email;
-    pwdTextField.text = curUser.password;
 }
 
 - (void) enableTextField:(id)sender {
