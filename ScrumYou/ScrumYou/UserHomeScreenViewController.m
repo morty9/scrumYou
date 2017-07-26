@@ -71,7 +71,6 @@
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self != nil) {
-        NSLog(@"INIT");
         
         errors = [[ErrorsViewController alloc] init];
         
@@ -108,28 +107,23 @@
     [ProjectsCrud getProjects:^(NSError *error, BOOL success) {
         if (success) {
             get_projects = ProjectsCrud.projects_list;
-            NSLog(@"GET PROJECTS ARRAY : %@", get_projects);
         }
     }];
     
     [SprintsCrud getSprints:^(NSError *error, BOOL success) {
         if (success) {
             get_sprints = SprintsCrud.sprints_list;
-            NSLog(@"GET SPRINTS ARRAY : %@", get_sprints);
         }
     }];
     
     [TasksCrud getTasks:^(NSError *error, BOOL success) {
         if (success) {
             get_tasks = TasksCrud.tasksList;
-            NSLog(@"GET TASKS ARRAY : %@", get_tasks);
         }
     }];
     
     Auth = [[CrudAuth alloc] init];
     accountSettingsVC = [[AccountSettingsScreenViewController alloc] init];
-    
-    NSLog(@"TOKEN USER HOME %@", _token);
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -143,9 +137,7 @@
     
     [self checkUsersProjects:get_projects tokenActive:_token];
     
-    NSLog(@"GET USERS PROJECTS %@", get_projects_by_user);
     [self countProject];
-    
     
     [self.collectionView reloadData];
     [self.otherCollectionView reloadData];
@@ -181,7 +173,12 @@
     
 }
 
-
+/**
+ * \brief Check user projects.
+ * \details Function which checks if users have projects with their token. If yes, it adds projects in an array.
+ * \param user_projects Array of user's projects.
+ * \param tokenActive Token of the connected user.
+ */
 - (void) checkUsersProjects:(NSArray*)user_projects tokenActive:(NSDictionary*)tokenActive {
     
     NSNumber* tokenUserId = [tokenActive valueForKey:@"userId"];
@@ -194,10 +191,12 @@
             }
         }
     }
-    NSLog(@"GET USERS PROJECTS BEFORE %@", get_projects_by_user);
-    
 }
 
+/**
+ * \brief Sort user projects.
+ * \details Function which checks if users projects are in progress or finished and add projects in the good dictionnary.
+ */
 - (void) countProject {
     for (Project* p in get_projects_by_user) {
         if ([[p valueForKey:@"status"] boolValue] == NO) {
