@@ -166,6 +166,10 @@
     }
 }
 
+/**
+ *  VOID -> Get all sprints by project
+ *  Call GetSprintById web service
+ **/
 - (void) getSprintByProject {
     for (NSNumber* sprints in self.currentProject.id_sprints) {
         NSString* result = [@"/" stringByAppendingString:[NSString stringWithFormat:@"%@",[sprints stringValue]]];
@@ -200,6 +204,9 @@
     [membersTableView reloadData];
 }
 
+/**
+ *  NSInteger -> Return number of data in arrays
+ **/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if(self.searchController.isActive || self.searchControllerSprints.isActive) {
         if (tableView == membersTableView) {
@@ -216,7 +223,9 @@
     }
 }
 
-
+/**
+ *  UITableViewCell-> Put current data in a cell
+ **/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString* const kCellId = @"cell";
@@ -259,7 +268,9 @@
     return cell;
 }
 
-
+/**
+ *  VOID -> Allow to add a members to a project or show details of a selected sprint
+ **/
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [membersTableView cellForRowAtIndexPath:indexPath];
 
@@ -288,6 +299,9 @@
     }
 }
 
+/**
+ *  VOID -> Allow to call delete sprint web service when user slide left a row in the table view
+ **/
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
@@ -304,6 +318,9 @@
     }
 }
 
+/**
+ *  BOOL -> Allow to activate edition of row in the table view
+ **/
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
@@ -383,8 +400,10 @@
     }
 }
 
-// Modify a project
 
+/**
+ *  VOID -> Enable or disable component when user click on modify button
+ **/
 - (void) enableTextField:(id)sender {
     if (hasClickedOnModifyButton == NO) {
         validateModification.hidden = false;
@@ -418,6 +437,9 @@
  *  SPRINTS VIEW
  */
 
+/**
+ *  VOID -> Show sprint view when user select a row in table view
+ **/
 - (void)modifySprint {
     [self getUsername];
     [sprintsView setHidden:false];
@@ -428,7 +450,9 @@
     [self.view insertSubview:blurEffectView belowSubview:sprintsView];
 }
 
-
+/**
+ *  IBAction -> Show sprint view when user want to add a sprint
+ **/
 - (IBAction)addSprint:(id)sender {
     toAdd = true;
     [self getUsername];
@@ -440,6 +464,10 @@
     [self.view insertSubview:blurEffectView belowSubview:sprintsView];
 }
 
+
+/**
+ *  VOID -> Hide sprint view when user click on cross
+ **/
 - (void) hideSprintView {
     [get_sprints removeAllObjects];
     [self getSprintByProject];
@@ -448,6 +476,10 @@
     [sprintsTableView reloadData];
 }
 
+/**
+ *  VOID -> Validation of update sprint action
+ *  Call update sprint web service
+ **/
 - (void) validModifSprint {
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -474,6 +506,11 @@
     toAdd = false;
 }
 
+
+/**
+ *  VOID -> Validation of add sprint action
+ *  Call Add Sprint web services
+ **/
 - (void) validAddSprint {
     
     __unsafe_unretained typeof(self) weakSelf = self;
@@ -662,6 +699,9 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+/**
+ *  VOID -> Back to user home screen view controller
+ **/
 - (void) backToUserHome {
     userHomeVC = [[UserHomeScreenViewController alloc] init];
     userHomeVC.token = self.token_dic;

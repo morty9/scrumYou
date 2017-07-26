@@ -101,6 +101,8 @@
  */
 - (void) getTasks:(void (^)(NSError *error, BOOL success))callback {
     
+    self.dict_error = [[NSDictionary alloc] init];
+    
     NSURL* url = [NSURL URLWithString:kTask_api];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"GET"];
@@ -146,6 +148,7 @@
  */
 - (void) getTaskById:(NSString*)id_task callback:(void (^)(NSError *error, BOOL success))callback {
     
+    self.dict_error = [[NSDictionary alloc] init];
     self.task = [[Task alloc] init];
     
     NSURL *url = [NSURL URLWithString:[kTask_api stringByAppendingString:[@"/" stringByAppendingString:id_task]]];
@@ -196,6 +199,7 @@
  */
 - (void) updateTaskId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members taskDone:(NSString*)taskDone token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
 
+    self.dict_error = [[NSDictionary alloc] init];
     
     NSURL *url = [NSURL URLWithString:[kTask_api stringByAppendingString:[@"/" stringByAppendingString:id_task]]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -253,6 +257,8 @@
  *  DELETE -> delete task by id
  */
 - (void) deleteTaskWithId:(NSString*)id_task andIdSprint:(NSString*)id_sprint token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
+    
+    self.dict_error = [[NSDictionary alloc] init];
     
     NSString* extensionUrl = [@"/" stringByAppendingString:[id_task stringByAppendingString:[@"/" stringByAppendingString:id_sprint]]];
     NSLog(@"URL EXT %@", extensionUrl);
