@@ -749,6 +749,7 @@
     membersCount.enabled = false;
     validateModification.hidden = true;
     addSprint.enabled = false;
+    sprintsTableView.allowsSelection = false;
     
     if (self.isComeToSB == true) {
         UIImage *backFromModify = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];

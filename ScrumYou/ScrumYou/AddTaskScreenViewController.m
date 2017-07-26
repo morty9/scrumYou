@@ -80,6 +80,7 @@
 @synthesize labelDifficulty = _labelDifficulty;
 @synthesize sprintsByProject = _sprintsByProject;
 @synthesize editButton = _editButton;
+@synthesize editButtonIsHidden = _editButtonIsHidden;
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -103,8 +104,10 @@
         ids = [[NSMutableArray alloc] init];
         
         isModify = NO;
+        self.editButtonIsHidden = false;
         sprintChoosen = NO;
         self.status = false;
+        category = [NSNumber numberWithInt:1];
         statusTask = @"A faire";
         statusArray = @[@"A faire", @"En cours", @"Finies"];
     }
@@ -115,6 +118,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self designPage];
+    [self activeRightItem];
     
     membersTableView.delegate = self;
     membersTableView.dataSource = self;
@@ -127,15 +131,6 @@
     
     pickerSprint.delegate = self;
     pickerSprint.dataSource = self;
-    
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
-    membersTableView.tableHeaderView = self.searchController.searchBar;
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
-    [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
-    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     
     buttonValidate.hidden = YES;
     buttonModify.hidden = YES;
@@ -291,7 +286,7 @@
         NSLog(@"CURRENT DATE : %@", currentDate);
     }
     
-    [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:[NSNumber numberWithInteger:category] businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids taskDone:current_dateString token:token callback:^(NSError *error, BOOL success) {
+    [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:category businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids taskDone:current_dateString token:token callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"UPDATE SUCCESS");
             if ([Tasks.dict_error valueForKey:@"type"] != nil) {
@@ -326,6 +321,8 @@
     __unsafe_unretained typeof(self) weakSelf = self;
     
     NSString* token = [self.token_dic valueForKey:@"token"];
+    
+    NSLog(@"category %@", category);
     
     [Tasks addTaskTitle:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:priority id_category:category businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids token:token callback:^(NSError *error, BOOL success) {
         if (success) {
@@ -600,7 +597,9 @@
  * Category segmented control
 **/
 - (IBAction)categoryChanged:(UISegmentedControl *)sender {
-    category = [NSNumber numberWithInteger:[sender selectedSegmentIndex]];
+    NSInteger value = [sender selectedSegmentIndex] + 1;
+    NSLog(@"VALUE %ld", value);
+    category = [NSNumber numberWithInteger:[sender selectedSegmentIndex] + 1];
 }
 
 
@@ -620,13 +619,18 @@
     //navigation bar customization
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
-    
-    self.editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editTask)];
-    self.editButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
-    self.navigationItem.rightBarButtonItem = self.editButton;
 
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.21 blue:0.27 alpha:1.0];
-
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    membersTableView.tableHeaderView = self.searchController.searchBar;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
+    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    
     if (self.status == 0) {
         self.navigationItem.title = @"Ajouter une tâche";
         buttonValidate.hidden = NO;
@@ -658,9 +662,8 @@
         self.taskMembersTextField.text = [NSString stringWithFormat:@"%ld", self.mTask.id_members.count];
         self.taskCostTextField.text = [NSString stringWithFormat:@"%@" ,self.mTask.businessValue];
         self.taskDurationTextField.text = [NSString stringWithFormat:@"%@",self.mTask.duration];
-        [self.categorySegmentation setSelectedSegmentIndex:self.mTask.id_category];
+        [self.categorySegmentation setSelectedSegmentIndex:[self.mTask.id_category integerValue]];
         [self.prioritySegmentation setSelectedSegmentIndex:[self.mTask.priority integerValue]-1];
-        
     }
     
     //border taskTitle text field
@@ -702,6 +705,17 @@
     //border radius member view
     membersView.layer.cornerRadius = 2.0;
     
+}
+
+- (void) activeRightItem {
+    if (self.editButtonIsHidden == false) {
+        UIBarButtonItem* editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editTask)];
+        editButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
+        self.navigationItem.rightBarButtonItem = editButton;
+    } else {
+        self.navigationItem.rightBarButtonItem = nil;
+        self.editButtonIsHidden = false;
+    }
 }
 
 - (void) editTask {

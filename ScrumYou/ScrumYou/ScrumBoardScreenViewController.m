@@ -61,6 +61,8 @@
     NSMutableArray<Task*>* arrayTodo;
     NSMutableArray<Task*>* arrayProgress;
     NSMutableArray<Task*>* arrayDone;
+    
+    BOOL hasClickedOnSearch;
 }
 
 @synthesize id_project = _id_project;
@@ -117,6 +119,8 @@
     }];
     
     [self designPage];
+    
+    hasClickedOnSearch = NO;
     
     NSLog(@"USER TOKEN SB %@", _token);
     
@@ -265,6 +269,14 @@
 {
     NSUInteger index = ((PageContentViewController*) viewController).pageIndex;
     
+    if (pageContentVC.searchController.searchBar.hidden == NO) {
+        [pageContentVC.searchController.searchBar setHidden:YES];
+    }
+    
+    if (index == NSNotFound) {
+        return nil;
+    }
+    
     if ((index == 0) || (index == NSNotFound)) {
         return nil;
     }
@@ -276,6 +288,10 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
     NSUInteger index = ((PageContentViewController*) viewController).pageIndex;
+
+    if (pageContentVC.searchController.searchBar.hidden == NO) {
+        [pageContentVC.searchController.searchBar setHidden:YES];
+    }
     
     if (index == NSNotFound) {
         return nil;
@@ -296,12 +312,11 @@
     
     // Create a new view controller and pass suitable data.
     pageContentVC = [[PageContentViewController alloc] initWithNibName:@"PageContentViewController" bundle:nil];
-    
     pageContentVC.txtTitle = self.pageTitles[index];
     pageContentVC.array_sprint = get_sprints;
-    NSLog(@"CURRENT PROJECT %@", project);
     pageContentVC.current_project = project;
     pageContentVC.token = self.token;
+    
     if (index == 0) {
         pageContentVC.dictionary_section = tasks_array_todo;
         [pageContentVC.scrumBoardCollectionView reloadData];
@@ -355,6 +370,7 @@
 }
 
 - (void) addTask {
+    addTaskVC.editButtonIsHidden = true;
     addTaskVC.status = 0;
     addTaskVC.cProject = project;
     addTaskVC.sprintsByProject = get_sprints;
@@ -368,13 +384,8 @@
     NSString* tokenid = [self.token valueForKey:@"tokenId"];
     NSString* tokenToken = [self.token valueForKey:@"token"];
     
-    NSLog(@"TOKENID to delete: %@", tokenid);
-    NSLog(@"TOKEN: %@", self.token);
-    
     [Auth logout:tokenid tokenToken:tokenToken callback:^(NSError *error, BOOL success) {
-        if (success) {
-            NSLog(@"LOGOUT OK !!!!!!!!!");
-        }
+        if (success) {}
     }];
     
     [self.navigationController pushViewController:homeScreenVC animated:YES];
@@ -405,15 +416,5 @@
     
     [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:settingsButton, addButton, nil]];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

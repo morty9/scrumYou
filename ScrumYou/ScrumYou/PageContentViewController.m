@@ -48,12 +48,9 @@
     
     [super viewDidLoad];
     
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    
     [self designPage];
-    
-    NSLog(@"dico %@", self.dictionary_section);
-    NSLog(@"sprint %@", self.array_sprint);
-    
-    self.label.text = self.txtTitle;
     
     addTaskVC = [[AddTaskScreenViewController alloc] init];
     
@@ -76,7 +73,13 @@
     self.scrumBoardCollectionView.delegate = self;
     self.scrumBoardCollectionView.dataSource = self;
     
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    [self.scrumBoardCollectionView registerNib:[UINib nibWithNibName:@"ScrumBoardCell" bundle:nil]forCellWithReuseIdentifier:@"SBCell"];
+    
+    [self.scrumBoardCollectionView reloadData];
+    
+}
+
+- (void) viewWillAppear:(BOOL)animated {
     self.searchController.searchResultsUpdater = self;
     self.searchController.dimsBackgroundDuringPresentation = NO;
     self.searchController.searchBar.delegate = self;
@@ -85,13 +88,9 @@
     [self.taskView addSubview:self.searchController.searchBar];
     [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    [self.searchController.searchBar setHidden:true];
-    
-    [self.scrumBoardCollectionView registerNib:[UINib nibWithNibName:@"ScrumBoardCell" bundle:nil]forCellWithReuseIdentifier:@"SBCell"];
-    
-    [self.scrumBoardCollectionView reloadData];
-    
+    [self.searchController.searchBar setHidden:YES];
 }
+
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)thePickerView {
     return 1;
@@ -236,10 +235,15 @@ static NSString* cellId = @"SBCell";
 
 - (void) initializeSearchController {
     
-    self.searchController.searchBar.hidden = false;
-    
-    if (self.scrumBoardCollectionView.frame.origin.y == 0) {
-        self.scrumBoardCollectionView.frame = CGRectMake(0, 40, self.taskView.frame.size.width, self.scrumBoardCollectionView.frame.size.height - 40);
+    if (self.searchController.searchBar.isHidden) {
+        [self.searchController.searchBar setHidden:NO];
+        
+        if (self.scrumBoardCollectionView.frame.origin.y == 0) {
+            self.scrumBoardCollectionView.frame = CGRectMake(0, 50, self.taskView.frame.size.width, self.scrumBoardCollectionView.frame.size.height - 50);
+        }
+    } else {
+        [self.searchController.searchBar setHidden:YES];
+        self.scrumBoardCollectionView.frame = CGRectMake(0, 0, self.taskView.frame.size.width, self.scrumBoardCollectionView.frame.size.height + 50);
     }
 }
 
@@ -261,11 +265,13 @@ static NSString* cellId = @"SBCell";
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [self.searchController.searchBar setHidden:true];
-    self.scrumBoardCollectionView.frame = CGRectMake(0, 0, self.taskView.frame.size.width, self.scrumBoardCollectionView.frame.size.height + 40);
+    self.scrumBoardCollectionView.frame = CGRectMake(0, 0, self.taskView.frame.size.width, self.scrumBoardCollectionView.frame.size.height + 50);
 }
 
 
 - (void) designPage {
+    
+    self.label.text = self.txtTitle;
     
     //border taskCost text field
     CALayer *borderTitle = [CALayer layer];

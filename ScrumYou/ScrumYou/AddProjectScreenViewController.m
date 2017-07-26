@@ -90,15 +90,6 @@
     ids = [[NSMutableArray alloc] init];
     auth = [[NSDictionary alloc] init];
     
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
-    membersTableView.tableHeaderView = self.searchController.searchBar;
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
-    [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
-    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    
     token = [self.token_dic valueForKey:@"token"];
     
     [membersTableView reloadData];
@@ -149,6 +140,8 @@
     
     __unsafe_unretained typeof(self) weakSelf = self;
     
+    [ids addObject:[self.token_dic valueForKey:@"userId"]];
+    
     [Projects addProjecTitle:projectNameTextField.text members:ids sprints:sprints id_creator:[self.token_dic valueForKey:@"userId"] token:token status:NO callback:^(NSError *error, BOOL success) {
         if (success) {
             NSLog(@"SUCCESS ADD PROJECT");
@@ -158,16 +151,19 @@
                     [weakSelf->errors bddErrorsTitle:[weakSelf->Projects.dict_error valueForKey:@"title"] message:[weakSelf->Projects.dict_error valueForKey:@"message"] viewController:weakSelf];
                     
                 } else {
-                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre projet a été créé avec succès." preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                        userHomeVC = [[UserHomeScreenViewController alloc] init];
-                        weakSelf->userHomeVC.token = weakSelf.token_dic;
-                        [weakSelf.navigationController pushViewController:weakSelf->userHomeVC animated:YES];
-                    }];
-                    
-                    [alert addAction:defaultAction];
-                    [weakSelf presentViewController:alert animated:YES completion:nil];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Création réussie" message:@"Votre projet a été créé avec succès." preferredStyle:UIAlertControllerStyleAlert];
+                        
+                        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                            userHomeVC = [[UserHomeScreenViewController alloc] init];
+                            weakSelf->userHomeVC.token = weakSelf.token_dic;
+                            [weakSelf.navigationController pushViewController:weakSelf->userHomeVC animated:YES];
+                        }];
+                        
+                        [alert addAction:defaultAction];
+                        [weakSelf presentViewController:alert animated:YES completion:nil];
+
+                    });
                 }
             });
         }
@@ -308,6 +304,15 @@
     
     //navigation bar customization
     self.navigationItem.title = [NSString stringWithFormat:@"Ajouter un projet"];
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    membersTableView.tableHeaderView = self.searchController.searchBar;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
+    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     
     //disable past date in UIDatePicker
     sprintEndDate.minimumDate = currentDate;

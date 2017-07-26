@@ -10,28 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScrumYou/AddTaskScreenViewController.m"
-            timestampString = "522762731.055244"
+            timestampString = "522779003.695422"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "271"
-            endingLineNumber = "271"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
             landmarkName = "-updateTask:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ScrumYou/CrudTasks.m"
-            timestampString = "522762070.288303"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
-            landmarkName = "-updateTaskId:title:description:difficulty:priority:id_category:businessValue:duration:status:id_members:taskDone:token:callback:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
