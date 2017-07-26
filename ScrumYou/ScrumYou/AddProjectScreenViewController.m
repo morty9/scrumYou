@@ -314,6 +314,9 @@
     //navigation bar customization
     self.navigationItem.title = [NSString stringWithFormat:@"Ajouter un projet"];
     
+    //disable past date in UIDatePicker
+    sprintEndDate.minimumDate = currentDate;
+    
     //border projectName text field
     CALayer *borderProjectName = [CALayer layer];
     CGFloat borderWidthProjectName = 1.5;

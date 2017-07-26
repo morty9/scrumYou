@@ -183,6 +183,7 @@ static NSString* cellId = @"SBCell";
     
     cell.titleCell.text = task.title;
     cell.descriptionCell.text = task.description;
+    cell.descriptionCell.editable = NO;
     cell.priorityCell.text = [NSString stringWithFormat:@"%@", task.priority];
     
     if ([task.id_category integerValue] == 1) {

@@ -73,7 +73,7 @@
             NSString* tmp_description = [jsonDict valueForKey:@"description"];
             NSString* tmp_difficulty = [jsonDict valueForKey:@"difficulty"];
             NSString* tmp_priority = [jsonDict valueForKey:@"priority"];
-            NSString* tmp_id_category = [jsonDict valueForKey:@"category"];
+            NSNumber* tmp_id_category = [jsonDict valueForKey:@"category"];
             NSString* tmp_businessValue = [jsonDict valueForKey:@"businessValue"];
             NSString* tmp_duration = [jsonDict valueForKey:@"duration"];
             NSString* tmp_status = [jsonDict valueForKey:@"status"];
@@ -122,7 +122,7 @@
             NSString* tmp_description = [tasks valueForKey:@"description"];
             NSString* tmp_difficulty = [tasks valueForKey:@"difficulty"];
             NSString* tmp_priority = [tasks valueForKey:@"priority"];
-            NSString* tmp_id_category = [tasks valueForKey:@"id_category"];
+            NSNumber* tmp_id_category = [tasks valueForKey:@"id_category"];
             NSString* tmp_businessValue = [tasks valueForKey:@"businessValue"];
             NSString* tmp_duration = [tasks valueForKey:@"duration"];
             NSString* tmp_status = [tasks valueForKey:@"status"];
@@ -173,7 +173,7 @@
             NSString* tmp_description = [jsonDict valueForKey:@"description"];
             NSString* tmp_difficulty = [jsonDict valueForKey:@"difficulty"];
             NSString* tmp_priority = [jsonDict valueForKey:@"priority"];
-            NSString* tmp_id_category = [jsonDict valueForKey:@"category"];
+            NSNumber* tmp_id_category = [jsonDict valueForKey:@"category"];
             NSString* tmp_businessValue = [jsonDict valueForKey:@"businessValue"];
             NSString* tmp_duration = [jsonDict valueForKey:@"duration"];
             NSString* tmp_status = [jsonDict valueForKey:@"status"];
