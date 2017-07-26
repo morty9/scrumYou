@@ -191,15 +191,16 @@
         statusTask = [statusArray objectAtIndex:row];
     } else {
         spr = [self.sprintsByProject objectAtIndex:row];
-        NSLog(@"SPR %@", spr.id_sprint);
     }
     
 }
 
 // SPRINTS VIEW
 
-/*
- * Show sprint view
+/**
+ * \fn (void)showSprintView
+ * \brief Show sprint view.
+ * \details Function which allows to show sprint view.
  */
 - (void)showSprintView {
     [sprintView setHidden:false];
@@ -211,22 +212,21 @@
 }
 
 /**
- * Close sprint windows
- **/
+ * \fn (IBAction)closeWindowSprint:(id)sender
+ * \brief Close window sprint button.
+ * \details Allows to close window sprint when clicking on it.
+ */
 - (IBAction)closeWindowSprint:(id)sender {
     [sprintView setHidden:true];
     [blurEffectView removeFromSuperview];
 }
 
-/*
- *  Validate sprint
- *  Call method who add task to database
- *  Call update sprint web service
+/**
+ * \fn (IBAction)validateSprint:(id)sender
+ * \brief Validate sprint button.
+ * \details Allows to validate sprint.
  */
 - (IBAction)validateSprint:(id)sender {
-
-    NSLog(@"id task %@", self.id_task);
-    NSLog(@"id current sprint %@", self.cSprint.id_sprint);
     
     NSString* token = [self.token_dic valueForKey:@"token"];
     NSMutableArray* list_task = [[NSMutableArray alloc] init];
@@ -235,14 +235,11 @@
     if (spr.id_sprint != self.cSprint.id_sprint && self.cSprint.id_sprint != nil) {
         for (int i = 0; i < self.cSprint.id_listTasks.count ; i++) {
             if (self.cSprint.id_listTasks[i] == self.id_task) {
-                NSLog(@"ARRAY BEFORE %@", list_tasksCurrentSprint);
                 [list_tasksCurrentSprint removeObjectAtIndex:i];
-                NSLog(@"ARRAY AFTER %@", list_tasksCurrentSprint);
             }
         }
         [Sprints updateSprintId:[NSString stringWithFormat:@"%@", self.cSprint.id_sprint] title:self.cSprint.title beginningDate:self.cSprint.beginningDate endDate:self.cSprint.endDate id_listTasks:list_tasksCurrentSprint token:token callback:^(NSError *error, BOOL success) {
             if (success) {
-                NSLog(@"OLD SPRINTS UPDATES");
             }
         }];
     }
@@ -268,26 +265,27 @@
     
     [Sprints updateSprintId:id_sprint title:title beginningDate:beginning_date endDate:end_date id_listTasks:list_task token:token callback:^(NSError *error, BOOL success) {
         if (success) {
-            NSLog(@"UPDATE SPRINT SUCCESS");
         }
     }];
     
     userHomeVC = [[UserHomeScreenViewController alloc] init];
     scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", self.cProject.id_project];
     scrumBoardVC.token = self.token_dic;
-    NSLog(@"TOKEN DU SCRUMBOARD %@", scrumBoardVC.token);
     
     [self.navigationController pushViewController:scrumBoardVC animated:YES];
     
 }
 
+/**
+ * \fn (IBAction)updateTask:(id)sender
+ * \brief Update task button.
+ * \details Allows to update task and redirect to the scrumboard.
+ */
 - (IBAction)updateTask:(id)sender {
     
     NSString* token = [self.token_dic valueForKey:@"token"];
     
     NSString* current_dateString;
-    
-    NSLog(@"STATUS %@", statusTask);
     
     [self getIdUser];
     
@@ -303,12 +301,10 @@
         [formatter setDateFormat:@"00-00-0000"];
         currentDate = [NSDate date];
         current_dateString = [formatter stringFromDate:currentDate];
-        NSLog(@"CURRENT DATE : %@", currentDate);
     }
     
     [Tasks updateTaskId:[NSString stringWithFormat:@"%@", self.id_task] title:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:[NSNumber numberWithInteger:priority] id_category:category businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids taskDone:current_dateString token:token callback:^(NSError *error, BOOL success) {
         if (success) {
-            NSLog(@"UPDATE SUCCESS");
             if ([Tasks.dict_error valueForKey:@"type"] != nil) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -337,6 +333,11 @@
     
 }
 
+/**
+ * \fn (IBAction)validateNewTask:(id)sender
+ * \brief Add task button.
+ * \details Allows to add task and redirect to the scrumboard.
+ */
 - (IBAction)validateNewTask:(id)sender {
     __unsafe_unretained typeof(self) weakSelf = self;
     
@@ -346,7 +347,6 @@
     
     [Tasks addTaskTitle:self.taskTitleTextField.text description:self.taskDescriptionTextField.text difficulty:self.taskDifficultyTextField.text priority:priority id_category:category businessValue:self.taskCostTextField.text duration:self.taskDurationTextField.text status:statusTask id_members:ids token:token callback:^(NSError *error, BOOL success) {
         if (success) {
-            NSLog(@"SUCCESS ADD TASK");
             if ([Tasks.dict_error valueForKey:@"type"] != nil) {
 
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -385,7 +385,11 @@
     [self.prioritySegmentation setSelectedSegmentIndex:0];
 }
 
-
+/**
+ * \fn (IBAction)deleteTask:(id)sender
+ * \brief Delete task button.
+ * \details Allows to delete task and redirect to the scrumboard.
+ */
 - (IBAction)deleteTask:(id)sender {
     
     NSString* token = [self.token_dic valueForKey:@"token"];
@@ -425,8 +429,10 @@
 **/
 
 /**
- * Show add members view
-**/
+ * \fn (IBAction)showAddMembersView:(id)sender
+ * \brief Show add members view button.
+ * \details Allows to show add members view.
+ */
 - (IBAction)showAddMembersView:(id)sender {
     [membersView setHidden:false];
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];

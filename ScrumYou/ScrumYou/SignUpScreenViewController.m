@@ -51,7 +51,7 @@
 
 /**
  * \brief Add user button.
- * \details Redirect to the login page when clicking on it.
+ * \details Add an user in the databse when clicking on it.
  */
 - (IBAction)didTouchAddUser:(id)sender {
     

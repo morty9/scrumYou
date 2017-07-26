@@ -24,7 +24,6 @@
 
 @implementation AccountSettingsScreenViewController {
     
-    //NSDictionary* token;
     User* currentUser;
     bool isToUpdate;
     
@@ -101,6 +100,11 @@
     emailTextField.text = curUser.email;
 }
 
+/**
+ * \fn (void) enableTextField:(id)sender
+ * \brief Set textfields when it's ok for update
+ * \details Set textfields when it's ok for update
+ */
 - (void) enableTextField:(id)sender {
     if (isToUpdate == NO) {
         saveButton.hidden = false;
@@ -138,6 +142,11 @@
 
 }
 
+/**
+ * \fn (IBAction)saveModification:(id)sender
+ * \brief update the modification in input
+ * \details update the modification in input
+ */
 - (IBAction)saveModification:(id)sender {
     
     if (isToUpdate == YES) {
@@ -168,6 +177,11 @@
     }
 }
 
+/**
+ * \fn (IBAction)deleteAccountUser:(id)sender
+ * \brief delete the user account
+ * \details delete the user account
+ */
 - (IBAction)deleteAccountUser:(id)sender {
     NSString* tok = [_token valueForKey:@"token"];
     NSString* userId = [_token valueForKey:@"userId"];
@@ -178,10 +192,8 @@
     if (userId == currentUser.id_user) {
         [Auth logout:tokenId tokenToken:tok callback:^(NSError *error, BOOL success) {
             if (success) {
-                NSLog(@"LOGOUT OK !!!!!!!!!");
                 [UsersCrud deleteUserWithId:[NSString stringWithFormat:@"%@", userId] token:tok callback:^(NSError *error, BOOL success) {
                     if (success) {
-                        NSLog(@"DELETE USER OK ");
                         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Suppression de l'utilisateur" message:@"La suppression de l'utilisateur a bien été prise en compte." preferredStyle:UIAlertControllerStyleAlert];
                         
                         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
@@ -210,14 +222,17 @@
     
 }
 
+/**
+ * \fn (void) checkIfCreator
+ * \brief check if the user is the creator
+ * \details check if the user is the creator
+ */
 - (void) checkIfCreator {
     NSString* tok = [_token valueForKey:@"token"];
     
     for (Project* project in self.projects_by_user) {
         if (project.id_creator == [self.token valueForKey:@"userId"]) {
-            NSLog(@"Project creator before %@", project.id_creator);
             project.id_creator = [project.id_members objectAtIndex:0];
-            NSLog(@"Project creator after %@", project.id_creator);
         }
         
         NSMutableArray* newMembers = [[NSMutableArray alloc] init];
@@ -228,11 +243,9 @@
             }
         }
         
-        NSLog(@"MEMBERS %@", newMembers);
         
         [ProjectsCrud updateProjectId:[NSString stringWithFormat:@"%@", project.id_project] title:project.title id_creator:project.id_creator members:newMembers token:tok id_sprints:project.id_sprints status:NO callback:^(NSError *error, BOOL success) {
             if (success) {
-                NSLog(@"UPDATE PROJECT USER CREATOR SUCCESS");
             }
         }];
     }
