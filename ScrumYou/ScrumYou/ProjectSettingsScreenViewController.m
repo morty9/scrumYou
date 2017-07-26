@@ -16,6 +16,7 @@
 #import "CrudProjects.h"
 #import "CrudSprints.h"
 #import "UserHomeScreenViewController.h"
+#import "ScrumBoardScreenViewController.h"
 
 @interface ProjectSettingsScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UITextFieldDelegate>
 
@@ -40,6 +41,7 @@
     UserHomeScreenViewController* userHomeVC;
     ProjectSettingsScreenViewController* projectSettingsVC;
     ErrorsViewController* errors;
+    ScrumBoardScreenViewController* scrumBoardVC;
     
     UIVisualEffectView *blurEffectView;
     
@@ -300,13 +302,6 @@
         sprintSelected = [get_sprints objectAtIndex:indexPath.row];
         [self modifySprint];
         sprintNameTextField.text = sprintSelected.title;
-//        NSLog(@"DATE BDD  %@", sprintSelected.endDate);
-//        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-//        [formatter setDateFormat:@"yyyy-MM-dd"];
-//        NSString* dateString = [formatter stringFromDate:sprintSelected.endDate];
-//        NSLog(@"date sprint %@", dateString);
-//        NSString *date = [self convertDate:@"2010-08-24T00:00:00.0000Z" fromFormat:@"yyyy-MM-dd'T'HH:mm:ssZ" toFormat:@"hh:mm a"];
-        //[sprintEndDate setDate:sprintSelected.endDate];
     }
 }
 
@@ -732,6 +727,13 @@
     [self.navigationController pushViewController:userHomeVC animated:YES];
 }
 
+- (void) backToScrumBoard {
+    scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
+    scrumBoardVC.token = self.token_dic;
+    scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", self.currentProject.id_project];
+    [self.navigationController pushViewController:scrumBoardVC animated:YES];
+}
+
 /**
  *  VOID -> Design component of view controller
  **/
@@ -745,6 +747,10 @@
     updateButtonEdit = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(enableTextField:)];
     self.navigationItem.rightBarButtonItem = updateButtonEdit;
     updateButtonCancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(enableTextField:)];
+    
+    UIImage *backFromModify = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:backFromModify style:UIBarButtonItemStylePlain target:self action:@selector(backToScrumBoard)];
+    self.navigationItem.leftBarButtonItem = newBackButton;
     
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
