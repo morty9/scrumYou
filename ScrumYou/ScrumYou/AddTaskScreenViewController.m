@@ -648,7 +648,6 @@
         pickerStatus.userInteractionEnabled = false;
         stepperDuration.enabled = false;
         
-        
         self.id_task = self.mTask.id_task;
         self.taskTitleTextField.text = self.mTask.title;
         self.taskDescriptionTextField.text = self.mTask.description;

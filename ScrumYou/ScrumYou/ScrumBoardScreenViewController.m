@@ -103,8 +103,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //self.navigationController.interactivePopGestureRecognizer.delegate = self;
-    
     NSLog(@"VIEW DID LOAD");
     
     [ProjectsCrud getProjectById:self.id_project callback:^(NSError *error, BOOL success) {
@@ -129,16 +127,16 @@
     self.pageViewController = [[PageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.dataSource = self;
     
-    PageContentViewController *startingViewController = [self viewControllerAtIndex:0];
-    NSArray *viewControllers = @[startingViewController];
-    
-    //if ([[viewControllers objectAtIndex:0] objectAtIndex:0] != nil) {
+    if (get_sprints.count != 0) {
+        PageContentViewController *startingViewController = [self viewControllerAtIndex:0];
+        NSArray *viewControllers = @[startingViewController];
+        
         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    //} else {
-     //   [self sprintNil];
-    //}
+    } else {
+        [self sprintNil];
+    }
     
-
+    
     
     // Change the size of page view controller
     self.pageViewController.view.frame = CGRectMake(0, 30, self.view.frame.size.width, self.view.frame.size.height - 75);
@@ -185,7 +183,7 @@
 
 - (void) initializeDictionarys:(NSArray*)tasks andSprint:(NSArray*)sprints {
 
-    if (sprints.count != 0) {
+    if (get_sprints.count != 0) {
         for (int i = (int)sprints.count-1; i >= 0; i--) {
             NSLog(@"SPRINT ID %@", [sprints[i] valueForKey:@"id_sprint"]);
             if ([sprints[i] valueForKey:@"id_sprint"] != nil) {
@@ -239,38 +237,26 @@
             
         }
     } else {
-        
-        //dispatch_async(dispatch_get_main_queue(), ^{
-        [self sprintNil];    
-        //});
-        
+        [self sprintNil];
     }
     
 }
 
 - (void) sprintNil {
-//    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Sprint manquant" message:@"Pour accéder au Scrum Board vous devez créer au moins un sprint" preferredStyle:UIAlertControllerStyleAlert];
-//        
-//        
-//    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-//        projectSettingsVC.token_dic = _token;
-//        projectSettingsVC.currentProject = project;
-//        [self.navigationController pushViewController:projectSettingsVC animated:YES];
-//            
-//    }];
-//    
-//    [alert addAction:defaultAction];
-//    [self presentViewController:alert animated:YES completion:nil];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Données envoyées" message:@"Vos données ont bien été envoyées. Pour les consulter, veuillez vous rendre sur l'application Evolution" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Sprint manquant" message:@"Pour accéder au Scrum Board vous devez créer au moins un sprint" preferredStyle:UIAlertControllerStyleAlert];
         
-        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        }];
         
-        [alert addAction:defaultAction];
-        [self presentViewController:alert animated:YES completion:nil];
-    });
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        projectSettingsVC.isComeToSB = true;
+        projectSettingsVC.token_dic = _token;
+        projectSettingsVC.currentProject = project;
+        [self.navigationController pushViewController:projectSettingsVC animated:YES];
+            
+    }];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - Page View Controller Data Source

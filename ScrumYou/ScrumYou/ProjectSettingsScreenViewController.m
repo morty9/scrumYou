@@ -31,7 +31,8 @@
     NSMutableArray* members;
     NSMutableArray* ids;
     
-    NSArray* searchResults;
+    NSArray* searchResultsUsers;
+    NSArray* searchResultsSprints;
     
     NSDate* currentDate;
     NSDate* endDate;
@@ -65,6 +66,7 @@
 
 @synthesize token_dic = _token_dic;
 @synthesize currentProject = _currentProject;
+@synthesize isComeToSB = _isComeToSB;
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -99,27 +101,13 @@
     
     [self designPage];
     
-    hasClickedOnModifyButton = NO;
-    nameTextField.enabled = false;
-    membersCount.enabled = false;
-    editButtonMembers.enabled = false;
-    validateModification.hidden = true;
-    
     token = [self.token_dic valueForKey:@"token"];
-    
     nMember = 0;
     toAdd = false;
+    self.isComeToSB = false;
     
-    [ProjectsCrud getProjectById:[NSString stringWithFormat:@"%@", self.currentProject.id_project] callback:^(NSError *error, BOOL success) {
-        if (success) {
-            self.currentProject = ProjectsCrud.project;
-        }
-    }];
-    
-    [UsersCrud getUsers:^(NSError *error, BOOL success) {
-        if (success) {}
-    }];
-    
+    [self getProjectById];
+    [self getUsers];
     [self displayTitleProject:self.currentProject];
     [self getSprintByProject];
     [self getUserByProject];
@@ -129,12 +117,34 @@
 }
 
 /*
+ *  VOID -> Get project by current id
+ *  Call GetProjectById web services
+ */
+- (void) getProjectById {
+    
+    [ProjectsCrud getProjectById:[NSString stringWithFormat:@"%@", self.currentProject.id_project] callback:^(NSError *error, BOOL success) {
+        if (success) {
+            self.currentProject = ProjectsCrud.project;
+        }
+    }];
+    
+}
+
+/*
+ *  VOID -> get all users from database
+ *  Call GetUsers web service
+ */
+- (void) getUsers {
+    [UsersCrud getUsers:^(NSError *error, BOOL success) {
+        if (success) {}
+    }];
+}
+
+/*
  *  VOID -> dipslay the title of the current project in the name text field
  */
 - (void) displayTitleProject:(Project*)curProject {
-
     nameTextField.text = curProject.title;
-    self.navigationItem.title = curProject.title;
 }
 
 /*
@@ -191,10 +201,14 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(self.searchController.isActive) {
-        return searchResults.count;
+    if(self.searchController.isActive || self.searchControllerSprints.isActive) {
+        if (tableView == membersTableView) {
+            return [searchResultsUsers count];
+        } else {
+            return [searchResultsSprints count];
+        }
     }else {
-        if (tableView == membersView) {
+        if (tableView == membersTableView) {
             return [get_users count];
         } else {
             return [get_sprints count];
@@ -214,10 +228,15 @@
     
     User* username;
     Sprint* sprint;
-    if(self.searchController.isActive) {
-        username = [searchResults objectAtIndex:indexPath.row];
+    if(self.searchController.isActive || self.searchControllerSprints.isActive) {
+        if (tableView == membersTableView) {
+            username = [searchResultsUsers objectAtIndex:indexPath.row];
+        } else {
+            sprint = [searchResultsSprints objectAtIndex:indexPath.row];
+        }
+        
     }else {
-        if (tableView == membersView) {
+        if (tableView == membersTableView) {
             username = [get_users objectAtIndex:indexPath.row];
             for (User* user in users_in) {
                 if ([user.fullname isEqualToString:[get_users objectAtIndex:indexPath.row].fullname]) {
@@ -244,7 +263,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [membersTableView cellForRowAtIndexPath:indexPath];
 
-    if (tableView == membersView) {
+    if (tableView == membersTableView) {
         if (cell.accessoryType) {
             cell.accessoryType = NO;
             [members removeObject:cell.textLabel.text];
@@ -269,6 +288,22 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        Sprint* removedSprint = [get_sprints objectAtIndex:indexPath.row];
+        
+        [SprintsCrud deleteSprintWithId:[NSString stringWithFormat:@"%@", removedSprint.id_sprint] id_project:[NSString stringWithFormat:@"%@", self.currentProject.id_project] token:token callback:^(NSError *error, BOOL success) {
+            if (success) {
+                NSLog(@"SPRINT REMOVED SUCCESS");
+            }
+        }];
+        
+        [get_sprints removeObjectAtIndex:indexPath.row];
+        [sprintsTableView reloadData];
+    }
+}
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
@@ -278,11 +313,14 @@
     NSString *searchString = searchController.searchBar.text;
     [self searchForText:searchString];
     [membersTableView reloadData];
+    [sprintsTableView reloadData];
 }
 
 - (void)searchForText:(NSString*)searchText {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fullname contains[c] %@ OR nickname contains[c] %@", searchText, searchText];
-    searchResults = [get_users filteredArrayUsingPredicate:predicate];
+    NSPredicate *predicateUsers = [NSPredicate predicateWithFormat:@"fullname contains[c] %@ OR nickname contains[c] %@", searchText, searchText];
+    NSPredicate *predicateSprints = [NSPredicate predicateWithFormat:@"title contains[c] %@", searchText];
+    searchResultsUsers = [get_users filteredArrayUsingPredicate:predicateUsers];
+    searchResultsSprints = [get_sprints filteredArrayUsingPredicate:predicateSprints];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
@@ -354,6 +392,9 @@
         nameTextField.textColor = [UIColor lightGrayColor];
         membersCount.textColor = [UIColor lightGrayColor];
         editButtonMembers.enabled = true;
+        editButtonMembers.enabled = true;
+        addSprint.enabled = true;
+        sprintsTableView.allowsSelection = true;
         
         hasClickedOnModifyButton = YES;
         self.navigationItem.rightBarButtonItem = updateButtonCancel;
@@ -370,7 +411,6 @@
         hasClickedOnModifyButton = NO;
         self.navigationItem.rightBarButtonItem = updateButtonEdit;
     }
-    
 }
 
 
@@ -489,7 +529,6 @@
     } else {
         [self validModifSprint];
     }
-    
 }
 
 
@@ -528,7 +567,6 @@
                     [errors bddErrorsTitle:[ProjectsCrud.dict_error valueForKey:@"title"] message:[ProjectsCrud.dict_error valueForKey:@"message"] viewController:self];
                     
                 } else {
-                    
                     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Projet terminé" message:@"Votre projet a été placé dans les projets terminés avec succès." preferredStyle:UIAlertControllerStyleAlert];
                     
                     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
@@ -539,12 +577,10 @@
                     
                     [alert addAction:defaultAction];
                     [self presentViewController:alert animated:YES completion:nil];
-                    
                 }
             });
         }
     }];
-
 }
 
 
@@ -576,13 +612,10 @@
                     
                     [alert addAction:defaultAction];
                     [self presentViewController:alert animated:YES completion:nil];
-                    
                 }
             });
         }
     }];
-
-    
 }
 
 /**
@@ -622,20 +655,25 @@
         }];
     }];
         
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}];
         
     [alert addAction:defaultAction];
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+- (void) backToUserHome {
+    userHomeVC = [[UserHomeScreenViewController alloc] init];
+    userHomeVC.token = self.token_dic;
+    [self.navigationController pushViewController:userHomeVC animated:YES];
+}
 
 /**
  *  VOID -> Design component of view controller
  **/
 - (void) designPage {
+    
+    self.navigationItem.title = @"Paramètres";
     
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
@@ -643,7 +681,42 @@
     updateButtonEdit = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(enableTextField:)];
     self.navigationItem.rightBarButtonItem = updateButtonEdit;
     updateButtonCancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(enableTextField:)];
-
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    membersTableView.tableHeaderView = self.searchController.searchBar;
+    self.definesPresentationContext = YES;
+    [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
+    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    
+    self.searchControllerSprints = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchControllerSprints.searchResultsUpdater = self;
+    self.searchControllerSprints.dimsBackgroundDuringPresentation = NO;
+    self.searchControllerSprints.searchBar.delegate = self;
+    self.searchControllerSprints.hidesNavigationBarDuringPresentation = NO;
+    sprintsTableView.tableHeaderView = self.searchControllerSprints.searchBar;
+    self.definesPresentationContext = YES;
+    [self.searchControllerSprints.searchBar setBarTintColor:[UIColor whiteColor]];
+    self.searchControllerSprints.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    
+    editButtonMembers.enabled = false;
+    sprintsTableView.allowsSelection = false;
+    hasClickedOnModifyButton = false;
+    nameTextField.enabled = false;
+    membersCount.enabled = false;
+    validateModification.hidden = true;
+    addSprint.enabled = false;
+    
+    if (self.isComeToSB == true) {
+        UIImage *backFromModify = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:backFromModify style:UIBarButtonItemStylePlain target:self action:@selector(backToUserHome)];
+        self.navigationItem.leftBarButtonItem = newBackButton;
+        self.isComeToSB = false;
+    }
+    
     //border name project text field
     CALayer *borderName = [CALayer layer];
     CGFloat borderWidthName = 1.5;

@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProjectSettingsScreenViewController">
             <connections>
+                <outlet property="addSprint" destination="XwE-jb-vft" id="12i-dr-ulm"/>
                 <outlet property="editButtonMembers" destination="dDk-yR-bjZ" id="tER-EO-TqF"/>
                 <outlet property="membersCount" destination="ENE-9L-PgS" id="KBM-Y9-y84"/>
                 <outlet property="membersTableView" destination="cPw-d6-1M2" id="8dP-lj-tB8"/>
@@ -125,15 +126,16 @@
                         <constraint firstAttribute="width" constant="343" id="bgJ-VQ-7fc"/>
                     </constraints>
                     <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Liste des sprints" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TF0-AM-4Jr">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Liste des sprints" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TF0-AM-4Jr">
                     <rect key="frame" x="16" y="245" width="343" height="29"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="29" id="4oe-dq-8IL"/>
                         <constraint firstAttribute="width" constant="343" id="Stc-Zg-kpO"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                    <color key="textColor" red="0.13419717549999999" green="0.21487870810000001" blue="0.2690734863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XwE-jb-vft">
@@ -199,11 +201,6 @@
                         <constraint firstAttribute="trailing" secondItem="atw-ix-zpw" secondAttribute="trailing" constant="8" id="tdd-46-KM4"/>
                         <constraint firstAttribute="height" constant="300" id="y7d-4A-7LJ"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="subviews">
-                            <exclude reference="Ru5-IX-fPl"/>
-                        </mask>
-                    </variation>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ddw-rH-oHq" userLabel="Sprints View">
                     <rect key="frame" x="51" y="200" width="272" height="300"/>
@@ -324,12 +321,6 @@
                 <constraint firstItem="nJN-FE-WGF" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="zJe-Cj-QM0"/>
                 <constraint firstAttribute="bottom" secondItem="9QP-zJ-FeG" secondAttribute="bottom" constant="20" id="zcL-Dv-XtJ"/>
             </constraints>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="nJN-FE-WGF"/>
-                    <exclude reference="ddw-rH-oHq"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="34.5" y="53.5"/>
         </view>
     </objects>
