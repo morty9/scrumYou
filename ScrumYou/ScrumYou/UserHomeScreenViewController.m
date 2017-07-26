@@ -259,22 +259,22 @@
     
 }
 
+/**
+ * \fn (void) addStatsProgress:(UIButton*)sender
+ * \brief Add stat.
+ * \details Redirect to the login page when clicking on it.
+ */
 - (void) addStatsProgress:(UIButton*)sender {
     
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:buttonPosition];
     
-    NSLog(@"INDEX PATH %@", indexPath);
-    
     currentDataProject = [self collectionView:self.collectionView didSelect:indexPath];
-    
-    NSLog(@"PROJET SELECTED %@", currentDataProject.title);
     
     __unsafe_unretained typeof(self) weakSelf = self;
     
     [Stats addStats:[NSString stringWithFormat:@"%@", currentDataProject.id_project] token:[self.token valueForKey:@"token"] callback:^(NSError *error, BOOL success) {
         if (success) {
-            NSLog(@"STATS SUCCESS");
             dispatch_async(dispatch_get_main_queue(), ^{
                 UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Données envoyées" message:@"Vos données ont bien été envoyées. Pour les consulter, veuillez vous rendre sur l'application Evolution" preferredStyle:UIAlertControllerStyleAlert];
                 
@@ -288,19 +288,21 @@
     }];
 }
 
+/**
+ * \fn (void) addStatsFinished:(UIButton*)sender
+ * \brief Connection page button.
+ * \details Redirect to the login page when clicking on it.
+ */
 - (void) addStatsFinished:(UIButton*)sender {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.otherCollectionView];
     NSIndexPath *indexPath = [self.otherCollectionView indexPathForItemAtPoint:buttonPosition];
     
     currentDataProject = [self collectionView:self.otherCollectionView didSelect:indexPath];
     
-    NSLog(@"PROJET SELECTED %@", currentDataProject.title);
-    
     __unsafe_unretained typeof(self) weakSelf = self;
     
     [Stats addStats:[NSString stringWithFormat:@"%@", currentDataProject.id_project] token:[self.token valueForKey:@"token"] callback:^(NSError *error, BOOL success) {
         if (success) {
-            NSLog(@"STATS SUCCESS");
             dispatch_async(dispatch_get_main_queue(), ^{
                 UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Données envoyées" message:@"Vos données ont bien été envoyées. Pour les consulter, veuillez vous rendre sur l'application Evolution" preferredStyle:UIAlertControllerStyleAlert];
                     
@@ -334,12 +336,17 @@
     return data;
 }
 
+/**
+ * \fn (void) getSprintsById:(NSArray*)array_sprints
+ * \brief Get sprints by id.
+ * \details Function which get sprints by id.
+ * \param array_sprints Array of sprints.
+ */
 - (void) getSprintsById:(NSArray*)array_sprints {
     
     for (Sprint* sprints in get_sprints) {
         for (NSNumber* id_sprints in array_sprints) {
             if ([sprints valueForKey:@"_id_sprint"] == id_sprints) {
-                NSLog(@"GET TASK");
                 [self getTaskById:sprints.id_listTasks];
             }
         }
@@ -347,9 +354,13 @@
 
 }
 
+/**
+ * \fn (void) getTaskById:(NSArray*)array_sprints
+ * \brief Get tasks by id.
+ * \details Function which get tasks by id.
+ * \param array_tasks Array of sprints.
+ */
 - (void) getTaskById:(NSArray*)array_tasks {
-    
-    NSLog(@"ARRAY TASKS %@", array_tasks);
     
     NSMutableArray<Task*>* array_t = [[NSMutableArray alloc] init];
     countTodo = 0;
@@ -372,11 +383,14 @@
             }
         }
     }
-    
-    NSLog(@"ARRAY T %@", array_t);
-    
 }
 
+/**
+ * \fn (void) getStatusTasks:(Task*)currentTask
+ * \brief Get tasks's status.
+ * \details Function which get tasks's status in order to sort them in the scrumboard.
+ * \param currentTask Current task.
+ */
 - (void) getStatusTasks:(Task*)currentTask {
     
     if ([currentTask.status isEqualToString:@"A faire"]) {
@@ -394,11 +408,9 @@
     scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
     
     if (collectionView == self.collectionView) {
-        NSLog(@"OBJECT %@", [[progressProject objectAtIndex:indexPath.row] valueForKey:@"id_project"]);
         scrumBoardVC.token = _token;
         scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", [[progressProject objectAtIndex:indexPath.row] valueForKey:@"id_project"]];
     } else {
-        NSLog(@"OBJECT %@", [[finishedProject objectAtIndex:indexPath.row] valueForKey:@"id_project"]);
         scrumBoardVC.token = _token;
         scrumBoardVC.id_project = [NSString stringWithFormat:@"%@", [[finishedProject objectAtIndex:indexPath.row] valueForKey:@"id_project"]];
     }
@@ -407,10 +419,20 @@
     
 }
 
+/**
+ * \fn (IBAction)refreshUserHome:(id)sender
+ * \brief Refresh button.
+ * \details Refresh user home page when clicking on it.
+ */
 - (IBAction)refreshUserHome:(id)sender {
     [self viewDidLoad];
 }
 
+/**
+ * \fn (IBAction)searchProjects:(id)sender
+ * \brief Search button.
+ * \details Display searchbar to search projects when clicking on it.
+ */
 - (IBAction)searchProjects:(id)sender {
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
@@ -423,31 +445,41 @@
     
 }
 
+/**
+ * \fn (IBAction)userSettings:(id)sender
+ * \brief User settings button.
+ * \details Redirect to the account settings page when clicking on it.
+ */
 - (IBAction)userSettings:(id)sender {
     accountSettingsVC.token = self.token;
     accountSettingsVC.projects_by_user = get_projects_by_user;
     [self.navigationController pushViewController:accountSettingsVC animated:YES];
 }
 
-
+/**
+ * \fn (IBAction)addProjects:(id)sender
+ * \brief Add projects button.
+ * \details Redirect to the add project page when clicking on it.
+ */
 - (void) addProject:(id)sender {
     addProjectVC = [[AddProjectScreenViewController alloc] init];
     addProjectVC.token_dic = self.token;
     [self.navigationController pushViewController:addProjectVC animated:YES];
 }
 
+/**
+ * \fn (IBAction)logoutButton:(id)sender
+ * \brief Logout button.
+ * \details Redirect to home screen page, delete the token and deconnect the current user when clicking on it.
+ */
 - (IBAction)logoutButton:(id)sender {
     homeScreenVC = [[HomeScreenViewController alloc] init];
     
     NSString* tokenid = [self.token valueForKey:@"tokenId"];
     NSString* tokenToken = [self.token valueForKey:@"token"];
     
-    NSLog(@"TOKENID to delete: %@", tokenid);
-    NSLog(@"TOKEN: %@", self.token);
-    
     [Auth logout:tokenid tokenToken:tokenToken callback:^(NSError *error, BOOL success) {
         if (success) {
-            NSLog(@"LOGOUT OK !!!!!!!!!");
         }
     }];
     
