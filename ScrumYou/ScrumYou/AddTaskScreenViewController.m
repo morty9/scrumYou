@@ -443,9 +443,10 @@
 }
 
 /**
- *  VOID ->
- *  Get users form database
- **/
+ * \fn (void) getUsername
+ * \brief Get users names.
+ * \details Allows to get users names.
+ */
 - (void) getUsername {
     get_users = Users.userList;
     [membersTableView reloadData];
