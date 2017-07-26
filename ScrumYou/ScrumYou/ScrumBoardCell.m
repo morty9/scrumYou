@@ -12,6 +12,9 @@
 
 @synthesize titleCell = _titleCell;
 @synthesize descriptionCell = _descriptionCell;
+@synthesize priorityCell = _priorityCell;
+@synthesize categoryCell = _categoryCell;
+@synthesize membersCell = _membersCell;
 @synthesize pencil = _pencil;
 
 - (void)awakeFromNib {
