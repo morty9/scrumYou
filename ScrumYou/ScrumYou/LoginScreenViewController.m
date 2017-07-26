@@ -52,9 +52,7 @@
         
         [ProjectsCrud getProjects:^(NSError *error, BOOL success) {
             if (success) {
-                NSLog(@"SUCCESS PROJECT");
                 get_project = ProjectsCrud.projects_list;
-                NSLog(@"GET PROJECTS ARRAY : %@", get_project);
             }
         }];
     }
@@ -81,13 +79,16 @@
     return YES;
 }
 
+
+/**
+ * \brief Connection button.
+ * \details Redirect to the user homepage if user has projects or to the add project page if not, when clicking on it.
+ */
 - (IBAction)connectionButton:(id)sender {
     
     [Auth login:emailTextField.text password:pwdTextField.text callback:^(NSError *error, BOOL success) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (success) {
-                NSLog(@"CONNECTED");
-                NSLog(@"AUTH TOKEN %@", Auth.token);
                 if ([Auth.dict_error valueForKey:@"type"] != nil) {
                     [errors bddErrorsTitle:[Auth.dict_error valueForKey:@"title"] message:[Auth.dict_error valueForKey:@"message"] viewController:self];
                 } else {
@@ -96,7 +97,6 @@
                         userHomeVC.token = Auth.token;
                         
                         [self checkIfMemberHaveProject:get_project tokenActive:Auth.token];
-                        
                         
                         if (userHaveProject == true) {
                             dispatch_async(dispatch_get_main_queue(), ^{
@@ -116,6 +116,12 @@
     }];
 }
 
+/**
+ * \brief Check user projects.
+ * \details Function which checks if users have projects with their token.
+ * \param array_projects Array of projects.
+ * \param tokenActive Token of the connected user.
+ */
 - (void) checkIfMemberHaveProject:(NSArray*)array_projects tokenActive:(NSDictionary*)tokenActive {
     
     NSNumber* tokenUserId = [tokenActive valueForKey:@"userId"];

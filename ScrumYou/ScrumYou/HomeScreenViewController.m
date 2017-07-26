@@ -47,29 +47,22 @@
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
 }
 
+/**
+ * \brief Connection page button.
+ * \details Redirect to the login page when clicking on it.
+ */
 - (IBAction)connectionPage:(id)sender {
     LoginScreenViewController* loginVc = [[LoginScreenViewController alloc] init];
     [self.navigationController pushViewController:loginVc animated:YES];
 }
 
+/**
+ * \brief Inscription page button.
+ * \details Redirect to the inscription page when clicking on it.
+ */
 - (IBAction)inscriptionPage:(id)sender {
     SignUpScreenViewController* signUpVc = [[SignUpScreenViewController alloc] init];
     [self.navigationController pushViewController:signUpVc animated:YES];
 }
-
-- (IBAction)testProjectPage:(id)sender {
-    AddProjectScreenViewController* addProjectVc = [[AddProjectScreenViewController alloc] init];
-    [self.navigationController pushViewController:addProjectVc animated:YES];
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

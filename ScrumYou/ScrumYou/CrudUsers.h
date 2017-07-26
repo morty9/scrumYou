@@ -20,24 +20,46 @@
 @property (nonatomic, strong) NSDictionary* dict_error;
 
 
-/*
- *  POST -> add user to database
+/**
+ * \brief Add user to database.
+ * \details Function which calls the web services users and the method create from the users crud.
+ * \param nickname Nickname of the user.
+ * \param fullname Fullname of the user.
+ * \param email Email of the user.
+ * \param password Password of the user.
  */
 - (void) addNickname:(NSString*)nickname fullname:(NSString*)fullname email:(NSString*)email password:(NSString*)password callback:(void (^)(NSError *error, BOOL success))callback;
-/*
- *  GET -> get all users
+
+/**
+ * \brief Get all users.
+ * \details Function which calls the web services users and the method findAll from the users crud.
  */
 - (void) getUsers:(void (^)(NSError *error, BOOL success))callback;
-/*
- *  GET -> get user by id
+
+/**
+ * \brief Get user by id.
+ * \details Function which calls the web services users and the method findOne from the users crud.
+ * \param userId Id of the user.
  */
 - (void) getUserById:(NSString*)userId callback:(void (^)(NSError *error, BOOL success))callback;
-/*
- *  UPDATE -> update user with id
+
+/**
+ * \brief Update user.
+ * \details Function which calls the web services users and the method update from the users crud.
+ * \param id_user Id of the user.
+ * \param nickname Nickname of the user.
+ * \param fullname Fullname of the user.
+ * \param email Email of the user.
+ * \param password Password of the user.
+ * \param token Token of the connected user.
  */
 - (void) updateUserId:(NSString*)id_user nickname:(NSString*)nickname fullname:(NSString*)fullname email:(NSString*)email password:(NSString*)password token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
-/*
- *  DELETE -> delete user by id
+
+/**
+ * \brief Delete user.
+ * \details Function which calls the web services users and the method delete from the users crud.
+ * \param id_user Id of the user.
+ * \param token Token of the connected user.
  */
 - (void) deleteUserWithId:(NSString*)id_user token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
 

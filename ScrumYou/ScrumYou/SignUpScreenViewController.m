@@ -49,9 +49,9 @@
     return YES;
 }
 
-/*
- *  IBAction -> add user to database
- *  Call addUser web service
+/**
+ * \brief Add user button.
+ * \details Redirect to the login page when clicking on it.
  */
 - (IBAction)didTouchAddUser:(id)sender {
     
@@ -132,11 +132,5 @@
     _completeNameTextField.layer.masksToBounds = YES;
 
 }
-
-- (void) cancelButton:(id)sender {
-    HomeScreenViewController* homeVc = [[HomeScreenViewController alloc] init];
-    [self.navigationController pushViewController:homeVc animated:YES];
-}
-
 
 @end
