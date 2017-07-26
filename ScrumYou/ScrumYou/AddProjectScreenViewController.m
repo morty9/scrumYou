@@ -90,15 +90,6 @@
     ids = [[NSMutableArray alloc] init];
     auth = [[NSDictionary alloc] init];
     
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
-    membersTableView.tableHeaderView = self.searchController.searchBar;
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
-    [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
-    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    
     token = [self.token_dic valueForKey:@"token"];
     
     [membersTableView reloadData];
@@ -313,6 +304,15 @@
     
     //navigation bar customization
     self.navigationItem.title = [NSString stringWithFormat:@"Ajouter un projet"];
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    membersTableView.tableHeaderView = self.searchController.searchBar;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    [self.searchController.searchBar setBarTintColor:[UIColor whiteColor]];
+    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     
     //disable past date in UIDatePicker
     sprintEndDate.minimumDate = currentDate;

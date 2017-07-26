@@ -24,6 +24,12 @@
     return self;
 }
 
+/**
+ * \brief Allow to login of the application.
+ * \details Function which calls the web services auth and the method login.
+ * \param email Email of the user.
+ * \param password Password of the user.
+ */
 - (void) login:(NSString*)email password:(NSString*)password callback:(void (^)(NSError *error, BOOL success))callback {
     
     self.dict_error = [[NSDictionary alloc] init];
@@ -72,6 +78,12 @@
     }] resume];
 }
 
+/**
+ * \brief Allow to logout of the application.
+ * \details Function which calls the web services auth and the method logout.
+ * \param tokenId Id of the token.
+ * \param tokenToken Token of the connected user.
+ */
 - (void) logout:(NSString*)tokenId tokenToken:(NSString*)tokenToken callback:(void (^)(NSError *error, BOOL success))callback {
     NSURL *url = [NSURL URLWithString:[kAuthLogout_api stringByAppendingString:[@"/" stringByAppendingString:[NSString stringWithFormat:@"%@", tokenId]]]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
