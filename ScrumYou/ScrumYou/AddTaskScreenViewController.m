@@ -15,7 +15,7 @@
 #import "CrudTasks.h"
 #import "CrudSprints.h"
 
-@interface AddTaskScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface AddTaskScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
 
 - (void) editTask;
 
@@ -123,6 +123,14 @@
     membersTableView.delegate = self;
     membersTableView.dataSource = self;
     
+    self.taskTitleTextField.delegate = self;
+    self.taskDescriptionTextField.delegate = self;
+    self.taskDifficultyTextField.delegate = self;
+    self.taskDurationTextField.delegate = self;
+    self.taskMembersTextField.delegate = self;
+    self.taskCostTextField.delegate = self;
+    self.taskPriorityTextField.delegate = self;
+    
     [self getUsers];
     [self getUserByTask];
     
@@ -141,7 +149,19 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    self.editButtonIsHidden = NO;
     [self designPage];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.view endEditing:YES];
+    return YES;
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
 }
 
 
@@ -668,7 +688,7 @@
         self.taskMembersTextField.text = [NSString stringWithFormat:@"%ld", self.mTask.id_members.count];
         self.taskCostTextField.text = [NSString stringWithFormat:@"%@" ,self.mTask.businessValue];
         self.taskDurationTextField.text = [NSString stringWithFormat:@"%@",self.mTask.duration];
-        [self.categorySegmentation setSelectedSegmentIndex:[self.mTask.id_category integerValue]];
+        [self.categorySegmentation setSelectedSegmentIndex:[self.mTask.id_category integerValue]-1];
         [self.prioritySegmentation setSelectedSegmentIndex:[self.mTask.priority integerValue]-1];
     }
     

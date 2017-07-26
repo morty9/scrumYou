@@ -18,7 +18,7 @@
 #import "CrudSprints.h"
 #import "CrudAuth.h"
 
-@interface AddProjectScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
+@interface AddProjectScreenViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UITextFieldDelegate>
 
 @end
 
@@ -67,8 +67,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     membersTableView.delegate = self;
     membersTableView.dataSource = self;
+    
+    projectNameTextField.delegate = self;
+    addMembersTextField.delegate = self;
+    sprintNameTextField.delegate = self;
     
     [self designPage];
     
@@ -93,6 +98,11 @@
     [membersTableView reloadData];
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.view endEditing:YES];
+    return YES;
+}
 
 /**
  * \fn (void) getUsername
@@ -334,7 +344,7 @@
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     
     //disable past date in UIDatePicker
-    sprintEndDate.minimumDate = currentDate;
+    sprintEndDate.minimumDate = [NSDate date];
     
     //border projectName text field
     CALayer *borderProjectName = [CALayer layer];

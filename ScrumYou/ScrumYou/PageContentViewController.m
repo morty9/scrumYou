@@ -159,11 +159,6 @@ static NSString* cellId = @"SBCell";
         cell.userInteractionEnabled = true;
     }
     
-    /*NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    currentDate = [NSDate date];
-    NSString* current_dateString = [formatter stringFromDate:currentDate];*/
-    
     if ([task.status isEqualToString:@"A faire"]) {
         cell.backgroundColor = [UIColor colorWithRed:0.86 green:0.28 blue:0.31 alpha:1.0];
         cell.descriptionCell.backgroundColor = [UIColor colorWithRed:0.86 green:0.28 blue:0.31 alpha:1.0];
@@ -185,9 +180,9 @@ static NSString* cellId = @"SBCell";
     cell.descriptionCell.editable = NO;
     cell.priorityCell.text = [NSString stringWithFormat:@"%@", task.priority];
     
-    if ([task.id_category integerValue] == 1) {
+    if ([task.id_category integerValue] == 2) {
         cell.categoryCell.text = @"Bug";
-    } else if ([task.id_category integerValue] == 0) {
+    } else if ([task.id_category integerValue] == 1) {
         cell.categoryCell.text = @"Tâche";
     } else {
         cell.categoryCell.text = @"";
