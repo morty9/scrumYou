@@ -42,7 +42,7 @@
 /*
  *  DELETE -> delete sprint by id
  */
-- (void) deleteSprintWithId:(NSString*)id_sprint token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
+- (void) deleteSprintWithId:(NSString*)id_sprint id_project:(NSString*)id_project token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
 
 
 @end

@@ -211,9 +211,13 @@
 /*
  *  DELETE -> delete sprint by id
  */
-- (void) deleteSprintWithId:(NSString*)id_sprint token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
+- (void) deleteSprintWithId:(NSString*)id_sprint id_project:(NSString*)id_project token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback {
     
-    NSURL* url = [NSURL URLWithString:[kSprint_api stringByAppendingString:[@"/" stringByAppendingString:id_sprint]]];
+    NSLog(@"id_sprint %@", id_sprint);
+    NSLog(@"kSprint_API %@", kSprint_api);
+    
+    NSURL* url = [NSURL URLWithString:[kSprint_api stringByAppendingString:[@"/" stringByAppendingString:[id_sprint stringByAppendingString:[@"/" stringByAppendingString:id_project]]]]];
+    
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"DELETE"];
     [request setValue:token forHTTPHeaderField:@"Authorization"];
