@@ -80,6 +80,7 @@
 @synthesize labelDifficulty = _labelDifficulty;
 @synthesize sprintsByProject = _sprintsByProject;
 @synthesize editButton = _editButton;
+@synthesize editButtonIsHidden = _editButtonIsHidden;
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -103,6 +104,7 @@
         ids = [[NSMutableArray alloc] init];
         
         isModify = NO;
+        self.editButtonIsHidden = false;
         sprintChoosen = NO;
         self.status = false;
         statusTask = @"A faire";
@@ -115,6 +117,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self designPage];
+    [self activeRightItem];
     
     membersTableView.delegate = self;
     membersTableView.dataSource = self;
@@ -620,13 +623,9 @@
     //navigation bar customization
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
-    
-    self.editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editTask)];
-    self.editButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
-    self.navigationItem.rightBarButtonItem = self.editButton;
 
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.14 green:0.21 blue:0.27 alpha:1.0];
-
+    
     if (self.status == 0) {
         self.navigationItem.title = @"Ajouter une tâche";
         buttonValidate.hidden = NO;
@@ -660,7 +659,6 @@
         self.taskDurationTextField.text = [NSString stringWithFormat:@"%@",self.mTask.duration];
         [self.categorySegmentation setSelectedSegmentIndex:self.mTask.id_category];
         [self.prioritySegmentation setSelectedSegmentIndex:[self.mTask.priority integerValue]-1];
-        
     }
     
     //border taskTitle text field
@@ -702,6 +700,17 @@
     //border radius member view
     membersView.layer.cornerRadius = 2.0;
     
+}
+
+- (void) activeRightItem {
+    if (self.editButtonIsHidden == false) {
+        UIBarButtonItem* editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editTask)];
+        editButton.tintColor = [UIColor colorWithRed:0.14 green:0.22 blue:0.27 alpha:1.0];
+        self.navigationItem.rightBarButtonItem = editButton;
+    } else {
+        self.navigationItem.rightBarButtonItem = nil;
+        self.editButtonIsHidden = false;
+    }
 }
 
 - (void) editTask {

@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScrumYou/AddTaskScreenViewController.m"
-            timestampString = "522762731.055244"
+            timestampString = "522774218.995692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "271"
-            endingLineNumber = "271"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
             landmarkName = "-updateTask:"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScrumYou/CrudTasks.m"
-            timestampString = "522762070.288303"
+            timestampString = "522775877.47505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
-            landmarkName = "-updateTaskId:title:description:difficulty:priority:id_category:businessValue:duration:status:id_members:taskDone:token:callback:"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "-addTaskTitle:description:difficulty:priority:id_category:businessValue:duration:status:id_members:token:callback:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

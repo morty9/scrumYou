@@ -355,6 +355,7 @@
 }
 
 - (void) addTask {
+    addTaskVC.editButtonIsHidden = true;
     addTaskVC.status = 0;
     addTaskVC.cProject = project;
     addTaskVC.sprintsByProject = get_sprints;
