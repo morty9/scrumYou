@@ -13,7 +13,13 @@
 @synthesize id_stats = _id_stats;
 @synthesize id_project = _id_project;
 
-
+/**
+ * \fn (instancetype) initWithId:(NSString*)id_stats id_project:(NSString*)id_project
+ * \brief Initiation of Stat model.
+ * \details Allows to initialize with data an object Stat.
+ * \param id_stats String corresponds to the id of the stat.
+ * \param id_project String corresponds to the id of the project.
+ */
 - (instancetype) initWithId:(NSString*)id_stats id_project:(NSString*)id_project {
     
     self = [super init];

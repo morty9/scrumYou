@@ -21,6 +21,7 @@
 
 
 /**
+ * \fn (void) addTaskTitle:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSInteger)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Add task to database.
  * \details Function which calls the web services tasks and the method create from the tasks crud.
  * \param title Title of the task.
@@ -37,12 +38,14 @@
 - (void) addTaskTitle:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSInteger)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
 
 /**
+ * \fn (void) getTasks:(void (^)(NSError *error, BOOL success))callback
  * \brief Get all tasks.
  * \details Function which calls the web services tasks and the method findAll from the tasks crud.
  */
 - (void) getTasks:(void (^)(NSError *error, BOOL success))callback;
 
 /**
+ * \fn (void) getTaskById:(NSString*)id_task callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Get task by id.
  * \details Function which calls the web services tasks and the method findOne from the tasks crud.
  * \param id_task Id of the task
@@ -50,6 +53,7 @@
 - (void) getTaskById:(NSString*)id_task callback:(void (^)(NSError *error, BOOL success))callback;
 
 /**
+ * \fn (void) updateTaskId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members taskDone:(NSString*)taskDone token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Update task.
  * \details Function which calls the web services tasks and the method update from the tasks crud.
  * \param id_task Id of the task.
@@ -68,6 +72,7 @@
 - (void) updateTaskId:(NSString*)id_task title:(NSString*)title description:(NSString*)description difficulty:(NSString*)difficulty priority:(NSNumber*)priority id_category:(NSNumber*)id_category businessValue:(NSString*)businessValue duration:(NSString*)duration status:(NSString*)status id_members:(NSMutableArray*)id_members taskDone:(NSString*)taskDone token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback;
 
 /**
+ * \fn (void) deleteTaskWithId:(NSString*)id_task andIdSprint:(NSString*)id_sprint token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Delete task.
  * \details Function which calls the web services tasks and the method delete from the tasks crud.
  * \param id_task Id of the task.

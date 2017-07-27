@@ -30,6 +30,7 @@
 
 
 /**
+ * \fn (void) addNickname:(NSString*)nickname fullname:(NSString*)fullname email:(NSString*)email password:(NSString*)password callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Add user to database.
  * \details Function which calls the web services users and the method create from the users crud.
  * \param nickname Nickname of the user.
@@ -85,6 +86,7 @@
 
 
 /**
+ * \fn (void) getUsers:(void (^)(NSError *error, BOOL success))callback
  * \brief Get all users.
  * \details Function which calls the web services users and the method findAll from the users crud.
  */
@@ -127,6 +129,7 @@
 
 
 /**
+ * \fn (void) getUserById:(NSString*)userId callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Get user by id.
  * \details Function which calls the web services users and the method findOne from the users crud.
  * \param userId Id of the user.
@@ -179,6 +182,7 @@
 
 
 /**
+ * \fn (void) updateUserId:(NSString*)id_user nickname:(NSString*)nickname fullname:(NSString*)fullname email:(NSString*)email password:(NSString*)password token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Update user.
  * \details Function which calls the web services users and the method update from the users crud.
  * \param id_user Id of the user.
@@ -228,6 +232,7 @@
 
 
 /**
+ * \fn (void) deleteUserWithId:(NSString*)id_user token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Delete user.
  * \details Function which calls the web services users and the method delete from the users crud.
  * \param id_user Id of the user.

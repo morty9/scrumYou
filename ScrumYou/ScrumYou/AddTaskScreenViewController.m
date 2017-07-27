@@ -153,18 +153,12 @@
     [self designPage];
 }
 
-/**
- * \fn (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)thePickerView
- * \brief Number of components in picker view.
- * \details Allow to know number of components in picker view.
- * \param thePickerView Pickerview.
- * \return An integer which represents number of components.
- */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self.view endEditing:YES];
     return YES;
 }
+
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -176,14 +170,7 @@
     return 1;
 }
 
-/**
- * \fn (NSInteger)pickerView:(UIPickerView *)thePickerView numberOfRowsInComponent:(NSInteger)component
- * \brief Number of rows in components's picker view.
- * \details Allow to know number of rows in components's picker view.
- * \param thePickerView Pickerview.
- * \param component Number of rows in component.
- * \return An integer which represents number of rows in components's picker view.
- */
+
 - (NSInteger)pickerView:(UIPickerView *)thePickerView numberOfRowsInComponent:(NSInteger)component {
     if (thePickerView == pickerStatus) {
         return statusArray.count;
@@ -192,15 +179,7 @@
     }
 }
 
-/**
- * \fn (NSString *)pickerView:(UIPickerView *)thePickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
- * \brief Status title or sprint title in picker view.
- * \details Allow to display status title or sprint title in picker view.
- * \param thePickerView Pickerview.
- * \param row Title for row.
- * \param component Component.
- * \return A string which represents status title or sprint title in picker view.
- */
+
 - (NSString *)pickerView:(UIPickerView *)thePickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if (thePickerView == pickerStatus) {
         return [statusArray objectAtIndex:row];
@@ -210,14 +189,7 @@
     }
 }
 
-/**
- * \fn (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
- * \brief Select the index in the picker view.
- * \details Allow to select the index in the picker view.
- * \param thePickerView Pickerview.
- * \param row Did select row.
- * \param component Component.
- */
+
 - (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if (thePickerView == pickerStatus) {
         statusTask = [statusArray objectAtIndex:row];
@@ -227,7 +199,6 @@
     
 }
 
-// SPRINTS VIEW
 
 /**
  * \fn (void)showSprintView
@@ -513,14 +484,7 @@
     }
 }
 
-/**
- * \fn (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
- * \brief Number of row in the section of table view.
- * \details Allows to know the number of row in the section of table view.
- * \param tableView TableView.
- * \param section Number of row in section.
- * \return Number of row in current section.
- */
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if(self.searchController.isActive) {
         return searchResultsUser.count;
@@ -529,14 +493,7 @@
     }
 }
 
-/**
- * \fn (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
- * \brief Construction of each cells of the table view.
- * \details Allows to construct each cells with title of the table view.
- * \param tableView TableViewCell.
- * \param indexPath Number which represents index path of cells.
- * \return each cells.
- */
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString* const kCellId = @"cell";
@@ -609,9 +566,8 @@
 
 /**
  * \fn (void) getIdUser
- * \brief Search text which corresponds to cells title.
- * \details Allows to search the text written in the search bar in order to find a cell by title.
- * \param searchText String written in the search bar.
+ * \brief Get user to add in the task.
+ * \details Allows to get the ids of each users selected in table view to add in the task.
  */
 - (void) getIdUser {
     [ids removeAllObjects];
@@ -628,8 +584,10 @@
 }
 
 /**
- * Clean occurrences - check if key exist in array
-**/
+ * \fn (BOOL) cleanOccurrences:(NSString*)key
+ * \brief Check the occurrences of ids array.
+ * \details Allows to check the occurrences of the ids array contains each users of the task.
+ */
 - (BOOL) cleanOccurrences:(NSString*)key {
     for (NSString* keys in ids) {
         if (keys == key) {
@@ -640,8 +598,10 @@
 }
 
 /**
- * Validate members
-**/
+ * \fn (IBAction)validateMembers:(id)sender
+ * \brief Validate each users selected.
+ * \details Allows to validate each users selected in members table view to add in the task.
+ */
 - (IBAction)validateMembers:(id)sender {
     [membersView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -650,12 +610,13 @@
         [self.searchController setActive:NO];
     }
     [self getIdUser];
-    NSLog(@"MEMBERS %@", members);
 }
 
 /**
- * Close members windows
-**/
+ * \fn (IBAction)closeWindowMembers:(id)sender
+ * \brief Close members window.
+ * \details Allows to close the members window.
+ */
 - (IBAction)closeWindowMembers:(id)sender {
     [membersView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -666,34 +627,41 @@
 
 
 /**
- * Priority segmented control
-**/
+ * \fn (IBAction)priorityChanged:(UISegmentedControl *)sender
+ * \brief Get current value of Segmented Control priority.
+ * \details Allows to get the selected value of the segmented control priority.
+ */
 - (IBAction)priorityChanged:(UISegmentedControl *)sender {
     priority = [sender selectedSegmentIndex] + 1;
 }
 
 
 /**
- * Category segmented control
-**/
+ * \fn (IBAction)categoryChanged:(UISegmentedControl *)sender
+ * \brief Get current value of Segmented Control category.
+ * \details Allows to get the selected value of the segmented control category.
+ */
 - (IBAction)categoryChanged:(UISegmentedControl *)sender {
     NSInteger value = [sender selectedSegmentIndex] + 1;
-    NSLog(@"VALUE %ld", value);
     category = [NSNumber numberWithInteger:[sender selectedSegmentIndex] + 1];
 }
 
 
 /**
- * Stepper task duration
-**/
+ * \fn (IBAction)stepperAction:(UIStepper*)sender
+ * \brief Get current value of Stepper duration.
+ * \details Allows to get the selected value of the stepper duration.
+ */
 - (IBAction)stepperAction:(UIStepper*)sender {
     NSUInteger value = sender.value;
     self.taskDurationTextField.text = [NSString stringWithFormat:@"%02lu", (unsigned long)value];
 }
 
 /**
- * Design the page
-**/
+ * \fn (void) designPage
+ * \brief Design current view controller.
+ * \details Allows to put different design on component of current view controller.
+ */
 - (void) designPage {
     
     //navigation bar customization
@@ -787,6 +755,11 @@
     
 }
 
+/**
+ * \fn (void) activeRightItem
+ * \brief Activation of right item of navigation bar.
+ * \details Allows to activate or not the right button item in the navigation bar allow to modify a task.
+ */
 - (void) activeRightItem {
     if (self.editButtonIsHidden == false) {
         UIBarButtonItem* editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(editTask)];
@@ -798,6 +771,11 @@
     }
 }
 
+/**
+ * \fn (void) editTask
+ * \brief Make the textfields enabled.
+ * \details Allows to make all text enabled when user clicked on modify button.
+ */
 - (void) editTask {
     buttonModify.hidden = NO;
     buttonDelete.hidden = NO;
@@ -819,8 +797,10 @@
 
 
 /**
- * Back to the previous view controller
-**/
+ * \fn (void) cancelButton:(id)sender
+ * \brief Cancel button.
+ * \details Allows to back to the scrum board view controller when user click on it.
+ */
 - (void) cancelButton:(id)sender {
     ScrumBoardScreenViewController* UserVc = [[ScrumBoardScreenViewController alloc] init];
     [self.navigationController pushViewController:UserVc animated:YES];

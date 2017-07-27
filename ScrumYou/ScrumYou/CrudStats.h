@@ -19,6 +19,7 @@
 
 
 /**
+ * \fn (void) addStats:(NSString*)id_project token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Add stat to database.
  * \details Function which calls the web services stats and the method create from the stats crud.
  * \param id_project Id of the project.
