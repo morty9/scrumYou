@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSDictionary* dict_error;
 
 /**
+ * \fn (void) login:(NSString*)email password:(NSString*)password callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Allow to login of the application.
  * \details Function which calls the web services auth and the method login.
  * \param email Email of the user.
@@ -25,6 +26,7 @@
 - (void) login:(NSString*)email password:(NSString*)password callback:(void (^)(NSError *error, BOOL success))callback;
 
 /**
+ * \fn (void) logout:(NSString*)tokenId tokenToken:(NSString*)tokenToken callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Allow to logout of the application.
  * \details Function which calls the web services auth and the method logout.
  * \param tokenId Id of the token.

@@ -31,6 +31,7 @@
 
 
 /**
+ * \fn (void) addSprintTitle:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Add sprint to database.
  * \details Function which calls the web services tasks and the method create from the tasks crud.
  * \param title Title of the sprint.
@@ -93,6 +94,7 @@
 
 
 /**
+ * \fn (void) getSprints:(void (^)(NSError *error, BOOL success))callback
  * \brief Get all sprints.
  * \details Function which calls the web services sprints and the method findAll from the sprints crud.
  */
@@ -133,6 +135,7 @@
 
 
 /**
+ * \fn (void) getSprintById:(NSString*)id_sprint callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Get sprint by id.
  * \details Function which calls the web services sprints and the method findOne from the sprints crud.
  * \param id_sprint Id of the sprint
@@ -173,6 +176,7 @@
 }
 
 /**
+ * \fn (void) updateSprintId:(NSString*)id_sprint title:(NSString*)title beginningDate:(NSString*)beginningDate endDate:(NSString*)endDate id_listTasks:(NSMutableArray*)id_listTasks token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Update sprint.
  * \details Function which calls the web services sprints and the method update from the sprints crud.
  * \param id_sprint Id of the sprint.
@@ -224,6 +228,7 @@
 
 
 /**
+ * \fn (void) deleteSprintWithId:(NSString*)id_sprint id_project:(NSString*)id_project token:(NSString*)token callback:(void (^)(NSError *error, BOOL success))callback
  * \brief Delete sprint.
  * \details Function which calls the web services sprints and the method delete from the sprints crud.
  * \param id_sprint Id of the sprint.

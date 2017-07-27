@@ -17,6 +17,17 @@
 @synthesize password = _password;
 @synthesize id_tasks = _id_tasks;
 
+/**
+ * \fn (instancetype) initWithId:(NSString*)id_user nickname:(NSString*)nickname fullname:(NSString*)fullname email:(NSString*)email password:(NSString*)password id_tasks:(NSMutableArray*)id_tasks
+ * \brief Initiation of User model.
+ * \details Allows to initialize with data an object User.
+ * \param id_user String corresponds to the id of the user.
+ * \param nickname String corresponds to the nickname of the user.
+ * \param fullname String corresponds to the fullname of the user.
+ * \param email String corresponds to the email of the user.
+ * \param password String corresponds to the password of the user.
+ * \param id_tasks Mutable Array corresponds to all tasks of the user.
+ */
 - (instancetype) initWithId:(NSString*)id_user nickname:(NSString*)nickname fullname:(NSString*)fullname email:(NSString*)email password:(NSString*)password id_tasks:(NSMutableArray*)id_tasks {
     self = [super init];
     if(self != nil) {
