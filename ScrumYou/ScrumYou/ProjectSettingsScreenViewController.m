@@ -127,9 +127,10 @@
     return YES;
 }
 
-/*
- *  VOID -> Get project by current id
- *  Call GetProjectById web services
+/**
+ * \fn (void) getProjectById
+ * \brief Get project by id.
+ * \details Allows to get project by id.
  */
 - (void) getProjectById {
     
@@ -141,9 +142,10 @@
     
 }
 
-/*
- *  VOID -> get all users from database
- *  Call GetUsers web service
+/**
+ * \fn (void) getUsers
+ * \brief Get users.
+ * \details Allows to get users.
  */
 - (void) getUsers {
     [UsersCrud getUsers:^(NSError *error, BOOL success) {
@@ -151,16 +153,20 @@
     }];
 }
 
-/*
- *  VOID -> dipslay the title of the current project in the name text field
+/**
+ * \fn (void) displayTitleProject:(Project*)curProject
+ * \brief Display current project title.
+ * \param curProject Current project.
+ * \details Allows to display current project title.
  */
 - (void) displayTitleProject:(Project*)curProject {
     nameTextField.text = curProject.title;
 }
 
-/*
- *  VOID -> get all users link to the current project
- *  Call getUserById web service
+/**
+ * \fn (void) getUserByProject
+ * \brief Get users by project.
+ * \details Allows to get users by project.
  */
 - (void) getUserByProject {
     
@@ -178,9 +184,10 @@
 }
 
 /**
- *  VOID -> Get all sprints by project
- *  Call GetSprintById web service
- **/
+ * \fn (void) getSprintByProject
+ * \brief Get sprints by project.
+ * \details Allows to get sprints by project.
+ */
 - (void) getSprintByProject {
     for (NSNumber* sprints in self.currentProject.id_sprints) {
         NSString* result = [@"/" stringByAppendingString:[NSString stringWithFormat:@"%@",[sprints stringValue]]];
@@ -193,8 +200,10 @@
 }
 
 
-/*
- *  IBAction -> button "+" show members windows
+/**
+ * \fn (IBAction)showAddMembersView:(id)sender
+ * \brief Show add members view button.
+ * \details Show add members view when clicking on it.
  */
 - (IBAction)showAddMembersView:(id)sender {
     [self getUsername];
@@ -207,17 +216,15 @@
 }
 
 /**
- *  VOID ->
- *  Get users form database
- **/
+ * \fn (void) getUsername
+ * \brief Get user name.
+ * \details Allows to get user name.
+ */
 - (void) getUsername {
     get_users = UsersCrud.userList;
     [membersTableView reloadData];
 }
 
-/**
- *  NSInteger -> Return number of data in arrays
- **/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if(self.searchController.isActive || self.searchControllerSprints.isActive) {
         if (tableView == membersTableView) {
@@ -234,9 +241,6 @@
     }
 }
 
-/**
- *  UITableViewCell-> Put current data in a cell
- **/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString* const kCellId = @"cell";
@@ -281,9 +285,6 @@
     return cell;
 }
 
-/**
- *  VOID -> Allow to add a member to a project or show details of a selected sprint
- **/
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [membersTableView cellForRowAtIndexPath:indexPath];
 
@@ -305,9 +306,6 @@
     }
 }
 
-/**
- *  VOID -> Allow to call delete sprint web service when user slide left a row in the table view
- **/
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
@@ -325,8 +323,10 @@
 }
 
 /**
- *  BOOL -> Allow to activate edition of row in the table view
- **/
+ * \fn (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ * \brief .
+ * \details .
+ */
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
@@ -344,11 +344,23 @@
     }
 }
 
+/**
+ * \fn (void)searchForTextUsers:(NSString*)searchText
+ * \brief Search text which corresponds to user.
+ * \details Allows to search the text written in the search bar in order to find a user by fullname or nickname.
+ * \param searchText String written in the search bar.
+ */
 - (void)searchForTextUsers:(NSString*)searchText {
     NSPredicate *predicateUsers = [NSPredicate predicateWithFormat:@"fullname contains[c] %@ OR nickname contains[c] %@", searchText, searchText];
     searchResultsUsers = [get_users filteredArrayUsingPredicate:predicateUsers];
 }
 
+/**
+ * \fn (void)searchForText:(NSString*)searchText
+ * \brief Search text which corresponds to sprint.
+ * \details Allows to search the text written in the search bar in order to find a sprint by title.
+ * \param searchText String written in the search bar.
+ */
 - (void)searchForTextSprints:(NSString*)searchText {
     NSPredicate *predicateSprints = [NSPredicate predicateWithFormat:@"_title contains[c] %@", searchText];
     searchResultsSprints = [get_sprints filteredArrayUsingPredicate:predicateSprints];
@@ -361,8 +373,10 @@
 
 
 /**
- * Get id User from get_users dictionary
- **/
+ * \fn (void) getIdUser
+ * \brief Get user id.
+ * \details .
+ */
 - (void) getIdUser {
     [ids removeAllObjects];
     for (NSString* name in members) {
@@ -378,8 +392,10 @@
 }
 
 /**
- * Clean occurrences - check if key exist in array
- **/
+ * \fn (BOOL) cleanOccurrences:(NSString*)key
+ * \brief .
+ * \details .
+ */
 - (BOOL) cleanOccurrences:(NSString*)key {
     for (NSString* keys in ids) {
         if (keys == key) {
@@ -390,9 +406,10 @@
 }
 
 /**
- *  IBAction -> button "Validate"
- *  Update members label
- **/
+ * \fn (IBAction)validateMembers:(id)sender
+ * \brief .
+ * \details .
+ */
 - (IBAction)validateMembers:(id)sender {
     [membersView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -405,8 +422,10 @@
 }
 
 /**
- *  IBAction -> Close members windows
- **/
+ * \fn (IBAction)closeWindowMembers:(id)sender
+ * \brief Close window members.
+ * \details Close window members when clicking on it.
+ */
 - (IBAction)closeWindowMembers:(id)sender {
     [membersView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -417,8 +436,10 @@
 
 
 /**
- *  VOID -> Enable or disable component when user click on modify button
- **/
+ * \fn (void) enableTextField:(id)sender
+ * \brief Enable/Disable text fields.
+ * \details Enable or disable components when user click on modify button.
+ */
 - (void) enableTextField:(id)sender {
     if (hasClickedOnModifyButton == NO) {
         validateModification.hidden = false;
@@ -448,13 +469,11 @@
 }
 
 
-/*
- *  SPRINTS VIEW
- */
-
 /**
- *  VOID -> Show sprint view when user select a row in table view
- **/
+ * \fn (void) modifySprint
+ * \brief Modify sprint.
+ * \details Show sprint view when user select a row in table view.
+ */
 - (void)modifySprint {
     [self getUsername];
     [sprintsView setHidden:false];
@@ -466,8 +485,10 @@
 }
 
 /**
- *  IBAction -> Show sprint view when user want to add a sprint
- **/
+ * \fn (IBAction)addSprint:(id)sender
+ * \brief Add sprint button.
+ * \details Show sprint view to add a new sprint when clicking on it.
+ */
 - (IBAction)addSprint:(id)sender {
     toAdd = true;
     [self getUsername];
@@ -485,8 +506,10 @@
 
 
 /**
- *  VOID -> Hide sprint view when user click on cross
- **/
+ * \fn (void) hideSprintView
+ * \brief Hise sprint view.
+ * \details .
+ */
 - (void) hideSprintView {
     [get_sprints removeAllObjects];
     [self getSprintByProject];
@@ -496,9 +519,10 @@
 }
 
 /**
- *  VOID -> Validation of update sprint action
- *  Call update sprint web service
- **/
+ * \fn (void) validModifSprint
+ * \brief Valid sprint modifications.
+ * \details Allow to valid sprint modifications, then update it.
+ */
 - (void) validModifSprint {
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -527,9 +551,10 @@
 
 
 /**
- *  VOID -> Validation of add sprint action
- *  Call Add Sprint web services
- **/
+ * \fn (void) validAddSprint
+ * \brief Valid sprint modifications.
+ * \details Allow to valid sprint, then add it.
+ */
 - (void) validAddSprint {
     
     __unsafe_unretained typeof(self) weakSelf = self;
@@ -576,9 +601,10 @@
 }
 
 /**
- *  IBAction -> Validate sprint view
- *  Call method for add or update a sprint
- **/
+ * \fn (IBAction)validationSprintView
+ * \brief Valid sprint view.
+ * \details Add or update sprint when clicking on it.
+ */
 - (IBAction)validationSprintView {
     if (toAdd == true) {
         [self validAddSprint];
@@ -589,8 +615,10 @@
 
 
 /**
- *  IBAction -> Close sprint view
- **/
+ * \fn (IBAction)closeSprintView
+ * \brief Close sprint view.
+ * \details Allow to close sprint view when clicking on it.
+ */
 - (IBAction)closeSprintView:(id)sender {
     [sprintsView setHidden:true];
     [blurEffectView removeFromSuperview];
@@ -601,18 +629,20 @@
 
 
 /**
- *  IBAction -> Add sprints in database
- *  Call AddSprint web service
- **/
+ * \fn (IBAction)finalValidation:(id)sender
+ * \brief Validation update project button.
+ * \details Update project when clicking on it.
+ */
 - (IBAction)finalValidation:(id)sender {
     [self updateProject];
 }
 
 
 /**
- *  IBAction -> Update project at finished status
- *  Call Update Project web services
- **/
+ * \fn (IBAction)projectFinished:(id)sender
+ * \brief Finish the project.
+ * \details Update project in "finished" and place it in the finish projects on the user home page when clicking on it.
+ */
 - (IBAction)projectFinished:(id)sender {
     
     [ProjectsCrud updateProjectId:[NSString stringWithFormat:@"%@",self.currentProject.id_project] title:nameTextField.text id_creator:self.currentProject.id_creator members:self.currentProject.id_members token:token id_sprints:self.currentProject.id_sprints status:YES callback:^(NSError *error, BOOL success) {
@@ -641,9 +671,10 @@
 
 
 /**
- *  VOID -> Update project
- *  Call Update Project web services
- **/
+ * \fn (void) updateProject
+ * \brief Update project.
+ * \details Allows to update a project.
+ */
 - (void) updateProject {
     
     if (ids.count == 0) {
@@ -675,8 +706,11 @@
 }
 
 /**
- *  NSMutableArray -> add new sprint at current project array id_sprints
- **/
+ * \fn (NSMutableArray*) addSprintToCurrentProject
+ * \brief Add sprint to current project.
+ * \details Add a sprint to a current project and add it in the sprint list dictionary.
+ * \return A dictionary updated with the new sprints.
+ */
 - (NSMutableArray*) addSprintToCurrentProject {
     
     NSMutableArray* list_sprints = [NSMutableArray new];
@@ -693,9 +727,10 @@
 }
 
 /**
- *  IBAction -> Delete project
- *  Call Delete Project web services
- **/
+ * \fn (void) deleteProject
+ * \brief Delete project.
+ * \details Allows to delete a project.
+ */
 - (IBAction)deleteProject:(id)sender {
  
  
@@ -719,14 +754,21 @@
 }
 
 /**
- *  VOID -> Back to user home screen view controller
- **/
+ * \fn (void) backToUserHome
+ * \brief Back to user home.
+ * \details Allows to go back to user home.
+ */
 - (void) backToUserHome {
     userHomeVC = [[UserHomeScreenViewController alloc] init];
     userHomeVC.token = self.token_dic;
     [self.navigationController pushViewController:userHomeVC animated:YES];
 }
 
+/**
+ * \fn (void) backToScrumBoard
+ * \brief Back to scrumboard.
+ * \details Allows to go back to scrumboard.
+ */
 - (void) backToScrumBoard {
     scrumBoardVC = [[ScrumBoardScreenViewController alloc] init];
     scrumBoardVC.token = self.token_dic;
@@ -734,9 +776,6 @@
     [self.navigationController pushViewController:scrumBoardVC animated:YES];
 }
 
-/**
- *  VOID -> Design component of view controller
- **/
 - (void) designPage {
     
     self.navigationItem.title = @"Paramètres";
