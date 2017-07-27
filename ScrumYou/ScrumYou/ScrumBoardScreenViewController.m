@@ -156,6 +156,12 @@
     self.navigationItem.title = project.title;
 }
 
+/**
+ * \fn (void) getSprintsByProject:(NSArray*)array_sprints
+ * \brief Get all sprints of the current project.
+ * \details Allows to get all sprints link to the current project in the database.
+ * \param array_sprints NSArray corresponds to all sprints of the database.
+ */
 - (void) getSprintsByProject:(NSArray*)array_sprints {
 
     for (NSNumber* id_sprints in array_sprints) {
@@ -168,6 +174,12 @@
     }
 }
 
+/**
+ * \fn (void) getTasksBySprint:(NSMutableArray*)get_sprint
+ * \brief Get all tasks of the sprints in the project.
+ * \details Allows to get all tasks link to the sprints of the current project in the database.
+ * \param get_sprint NSMutableArray corresponds to all sprints of the database.
+ */
 - (void) getTasksBySprint:(NSMutableArray*)get_sprint {
     
     for (Sprint* sprint in get_sprint) {
@@ -185,6 +197,13 @@
     
 }
 
+/**
+ * \fn (void) initializeDictionarys:(NSArray*)tasks andSprint:(NSArray*)sprints
+ * \brief Initialize a sorted dictionary.
+ * \details Allows to initilize a dictionary with sprint as key and array link to this sprint with all tasks.
+ * \param tasks NSArray contains all tasks of each sprints
+ * \param sprints NSArray contains all sprints of the project
+ */
 - (void) initializeDictionarys:(NSArray*)tasks andSprint:(NSArray*)sprints {
 
     if (get_sprints.count != 0) {
@@ -246,6 +265,11 @@
     
 }
 
+/**
+ * \fn (void) sprintNil
+ * \brief Initialize an error.
+ * \details Allows to initilize an error if the array sprints is nil and redirect to project settings for add a sprint.
+ */
 - (void) sprintNil {
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Sprint manquant" message:@"Pour accéder au Scrum Board vous devez créer au moins un sprint" preferredStyle:UIAlertControllerStyleAlert];
@@ -304,6 +328,12 @@
     return [self viewControllerAtIndex:index];
 }
 
+/**
+ * \fn (PageContentViewController *)viewControllerAtIndex:(NSUInteger)index
+ * \brief Initialize each page of the page wiew controller.
+ * \details Allows to initilize each page of the page view controller with correct data.
+ * \param index NSUInteger correspond to the index of each view in the page view controller
+ */
 - (PageContentViewController *)viewControllerAtIndex:(NSUInteger)index
 {
     if (([self.pageTitles count] == 0) || (index >= [self.pageTitles count])) {
@@ -342,10 +372,9 @@
     return 0;
 }
 
-//TOOLBAR
-
-/*
- *  IBAction -> Back to user Home controller
+/**
+ * \fn (IBAction)backToUserHome:(id)sender
+ * \brief Action of the back button in navbar.
  */
 - (IBAction)backToUserHome:(id)sender {
     userHomeVC = [[UserHomeScreenViewController alloc] init];
@@ -353,22 +382,37 @@
     [self.navigationController pushViewController:userHomeVC animated:YES];
 }
 
+/**
+ * \fn (IBAction)searchTask:(id)sender
+ * \brief Action of the search button in toolbar.
+ */
 - (IBAction)searchTask:(id)sender {
     [pageContentVC initializeSearchController];
 }
 
-
+/**
+ * \fn (IBAction)userSettings:(id)sender
+ * \brief Action of the account button in toolbar.
+ */
 - (IBAction)userSettings:(id)sender {
     accountSettingsVC.token = self.token;
     [self.navigationController pushViewController:accountSettingsVC animated:YES];
 }
 
+/**
+ * \fn (void) settingsProject
+ * \brief Go to the view controller settings project.
+ */
 - (void) settingsProject {
     projectSettingsVC.token_dic = _token;
     projectSettingsVC.currentProject = project;
     [self.navigationController pushViewController:projectSettingsVC animated:YES];
 }
 
+/**
+ * \fn (void) addTask
+ * \brief Go to the add task view controller.
+ */
 - (void) addTask {
     addTaskVC.editButtonIsHidden = true;
     addTaskVC.status = 0;
@@ -378,6 +422,10 @@
     [self.navigationController pushViewController:addTaskVC animated:YES];
 }
 
+/**
+ * \fn (IBAction)logoutButton:(id)sender
+ * \brief Logout the user.
+ */
 - (IBAction)logoutButton:(id)sender {
     homeScreenVC = [[HomeScreenViewController alloc] init];
     
@@ -392,6 +440,10 @@
 }
 
 
+/**
+ * \fn (void) designPage
+ * \brief Design the current view controller.
+ */
 - (void) designPage {
     
     self.navigationItem.title = project.title;

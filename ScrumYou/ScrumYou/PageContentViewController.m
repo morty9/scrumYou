@@ -226,8 +226,11 @@ static NSString* cellId = @"SBCell";
 }
 
 
-// SEARCHBAR
-
+/**
+ * \fn (void) initializeSearchController
+ * \brief Initialize the search controller.
+ * \details Allows to initilize the search controller for make research in the collection view.
+ */
 - (void) initializeSearchController {
     
     if (self.searchController.searchBar.isHidden) {
@@ -249,6 +252,10 @@ static NSString* cellId = @"SBCell";
     [self.scrumBoardCollectionView reloadData];
 }
 
+/**
+ * \fn (void)searchForText:(NSString*)searchText
+ * \brief Initialize a predicate with written text in searchbar.
+ */
 - (void)searchForText:(NSString*)searchText {
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"title contains[c] %@", searchText];
     searchResults = [tasks filteredArrayUsingPredicate:predicate];
@@ -263,7 +270,10 @@ static NSString* cellId = @"SBCell";
     self.scrumBoardCollectionView.frame = CGRectMake(0, 0, self.taskView.frame.size.width, self.scrumBoardCollectionView.frame.size.height + 50);
 }
 
-
+/**
+ * \fn (void) designPage
+ * \brief Initialize the design of the current view controller.
+ */
 - (void) designPage {
     
     self.label.text = self.txtTitle;
